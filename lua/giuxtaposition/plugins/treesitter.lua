@@ -31,6 +31,8 @@ treesitter.setup({
 		"vim",
 		"dockerfile",
 		"gitignore",
+		"markdown",
+		"markdown_inline",
 	},
 	-- auto install above language parsers
 	auto_install = true,

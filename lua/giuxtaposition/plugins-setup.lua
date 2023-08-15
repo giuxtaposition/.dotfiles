@@ -117,6 +117,14 @@ local plugins = {
 			"nvim-neotest/neotest-plenary",
 		},
 	},
+
+	-- markdown
+	{
+		"iamcco/markdown-preview.nvim",
+		config = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
 }
 
 local opts = {}
