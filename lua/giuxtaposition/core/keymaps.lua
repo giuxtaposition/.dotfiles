@@ -18,6 +18,10 @@ keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
 keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width
 keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
+keymap.set("", "<C-h>", "<C-w>h") -- move cursor to left split window
+keymap.set("", "<C-k>", "<C-w>k") -- move cursor to top split window
+keymap.set("", "<C-j>", "<C-w>j") -- move cursor to bottom split window
+keymap.set("", "<C-l>", "<C-w>l") -- move cursor to right split window
 
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
 keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
