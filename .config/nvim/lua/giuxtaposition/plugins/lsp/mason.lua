@@ -22,6 +22,7 @@ mason_lspconfig.setup({
 		"lua_ls",
 		"svelte",
 		"emmet_ls",
+		"marksman",
 	},
 	automatic_installation = true,
 })

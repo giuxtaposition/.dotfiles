@@ -93,3 +93,8 @@ lspconfig["lua_ls"].setup({
 		},
 	},
 })
+
+lspconfig["marksman"].setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})

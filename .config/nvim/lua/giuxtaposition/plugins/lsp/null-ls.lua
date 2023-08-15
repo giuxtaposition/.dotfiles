@@ -29,6 +29,7 @@ null_ls.setup({
 				"typescript",
 				"typescriptreact",
 				"lua",
+				"markdown",
 			},
 		}),
 	},
