@@ -18,10 +18,6 @@ keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
 keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
 keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width
 keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
-keymap.set("", "<C-h>", "<C-w>h") -- move cursor to left split window
-keymap.set("", "<C-k>", "<C-w>k") -- move cursor to top split window
-keymap.set("", "<C-j>", "<C-w>j") -- move cursor to bottom split window
-keymap.set("", "<C-l>", "<C-w>l") -- move cursor to right split window
 
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
 keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
@@ -51,3 +47,13 @@ keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
 keymap.set("n", "<leader>fx", "<cmd>Telescope resume<cr>") -- resume last telescope window
 keymap.set("n", "<leader>as", "<cmd>Telescope session-lens<cr>") -- search session
+
+-- smart-splits
+keymap.set("", "<C-h>", "<cmd>SmartCursorMoveLeft<cr>") -- move cursor to left split window
+keymap.set("", "<C-k>", "<cmd>SmartCursorMoveUp<cr>") -- move cursor to top split window
+keymap.set("", "<C-j>", "<cmd>SmartCursorMoveDown<cr>") -- move cursor to bottom split window
+keymap.set("", "<C-l>", "<cmd>SmartCursorMoveRight<cr>") -- move cursor to right split window
+keymap.set("", "<A-h>", "<cmd>SmartResizeLeft<cr>") -- resize split window left
+keymap.set("", "<A-k>", "<cmd>SmartResizeUp<cr>") -- resize split window top
+keymap.set("", "<A-j>", "<cmd>SmartResizeDown<cr>") -- resize split window bottom
+keymap.set("", "<A-l>", "<cmd>SmartResizeRight<cr>") -- resize split window right
