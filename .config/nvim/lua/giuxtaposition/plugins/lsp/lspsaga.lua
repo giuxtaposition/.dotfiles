@@ -10,9 +10,28 @@ saga.setup({
 	definition = {
 		keys = {
 			edit = "<CR>",
+			vsplit = "v",
+			split = "h",
 		},
+	},
+	finder = {
+		keys = {
+			edit = "<CR>",
+			toggle_or_open = "<TAB>",
+			vsplit = "v",
+			split = "h",
+		},
+	},
+	rename = {
+		keys = {
+			quit = "q",
+		},
+		in_select = false,
 	},
 	ui = {
 		kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
+		devicon = true,
+		expand = "󰁌",
+		collapse = "󰡍",
 	},
 })
