@@ -34,3 +34,12 @@ set -Ux FZF_DEFAULT_OPTS "\
 
 # starship
 starship init fish | source
+
+# Autocall nvm use if supported
+function __check_rvm --on-variable PWD --description 'Autocall nvm use'
+  status --is-command-substitution; and return
+  if test -f .nvmrc; and test -r .nvmrc;
+    nvm use
+  else
+  end
+end
