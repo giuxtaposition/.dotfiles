@@ -19,3 +19,7 @@ require("giuxtaposition.plugins.nvim-colorizer")
 require("giuxtaposition.plugins.bufferline")
 require("giuxtaposition.plugins.indent-blankline")
 require("giuxtaposition.plugins.neo-test")
+
+-- disable netrw as suggested by nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
