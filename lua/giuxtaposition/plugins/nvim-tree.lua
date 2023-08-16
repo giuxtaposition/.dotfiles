@@ -3,20 +3,34 @@ if not setup then
 	return
 end
 
--- recommended settings from nvim-tree documentation
-vim.g.loaded = 1
-vim.g.loaded_netrwPlugin = 1
-
 -- change color for arrows in tree to light blue
 vim.cmd([[ highlight NvimTreeIndentMarker guifg=#b4befe]])
 
 nvimtree.setup({
+	diagnostics = {
+		enable = true,
+		icons = {
+			hint = "",
+			info = "",
+			warning = "",
+			error = "",
+		},
+	},
 	renderer = {
 		icons = {
 			glyphs = {
 				folder = {
 					arrow_closed = "⮞", -- when folder is closed
 					arrow_open = "⮟", -- when folder is open
+				},
+				git = {
+					unstaged = "✗",
+					staged = "✓",
+					unmerged = "",
+					renamed = "➜",
+					untracked = "★",
+					deleted = "",
+					ignored = "◌",
 				},
 			},
 		},
@@ -28,4 +42,10 @@ nvimtree.setup({
 			},
 		},
 	},
+	update_cwd = true,
+	update_focused_file = {
+		enable = true,
+		update_cwd = false,
+	},
+	auto_close = true,
 })
