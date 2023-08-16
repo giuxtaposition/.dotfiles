@@ -125,6 +125,23 @@ local plugins = {
 			vim.fn["mkdp#util#install"]()
 		end,
 	},
+
+	-- session manager
+	{
+		"rmagatti/auto-session",
+		config = function()
+			require("auto-session").setup({
+				log_level = "error",
+				auto_session_suppress_dirs = { "~/", "/" },
+				session_lens = {
+					buftypes_to_ignore = {}, -- list of buffer types what should not be deleted from current session
+					load_on_setup = true,
+					theme_conf = { border = true },
+					previewer = true,
+				},
+			})
+		end,
+	},
 }
 
 local opts = {}
