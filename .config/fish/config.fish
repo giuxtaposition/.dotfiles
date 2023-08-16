@@ -15,6 +15,10 @@ if type -q exa
   alias ll "exa -l -g --icons"
   alias lla "ll -a"
 end
+# alias :q "exit"
+function :q --wraps=exit --description 'alias :q=exit'
+  exit
+end
 
 # PATH
 set -gx PATH bin $PATH
