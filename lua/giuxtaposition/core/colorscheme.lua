@@ -38,6 +38,7 @@ catppuccin.setup({
 		},
 		gitsigns = true,
 		neotest = true,
+		markdown = true,
 	},
 })
 
