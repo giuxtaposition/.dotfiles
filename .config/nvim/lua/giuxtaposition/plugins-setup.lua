@@ -142,6 +142,9 @@ local plugins = {
 			})
 		end,
 	},
+
+	-- smart splits with wezterm support
+	{ "mrjones2014/smart-splits.nvim", lazy = false },
 }
 
 local opts = {}
