@@ -73,6 +73,12 @@ local plugins = {
 			"nvim-treesitter/nvim-treesitter",
 		},
 	},
+	-- enhanced ui to diagnostics
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
+	},
 
 	-- alternative to typescript language server
 	{
