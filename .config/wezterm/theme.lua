@@ -1,4 +1,6 @@
 local wezterm = require("wezterm")
+local icons = require("icons")
+
 local module = {}
 
 function module.apply_to_config(config)
@@ -10,20 +12,6 @@ function module.apply_to_config(config)
 	config.colors = {
 		tab_bar = {
 			background = "#1e1e2e",
-
-			active_tab = {
-				bg_color = "#313244",
-				fg_color = "#cdd6f4",
-			},
-
-			inactive_tab = {
-				bg_color = "#1e1e2e",
-				fg_color = "#cdd6f4",
-			},
-			inactive_tab_hover = {
-				bg_color = "#313244",
-				fg_color = "#cdd6f4",
-			},
 
 			-- The new tab button that let you create new tabs
 			new_tab = {
@@ -44,6 +32,9 @@ function module.apply_to_config(config)
 	config.window_frame = {
 		font = wezterm.font("FiraCode Nerd Font"),
 	}
+	local basename = function(s)
+		return string.gsub(s, "(.*[/\\])(.*)", "%2")
+	end
 
 	wezterm.on("update-right-status", function(window, pane)
 		-- Workspace name
@@ -58,21 +49,14 @@ function module.apply_to_config(config)
 		end
 
 		-- Current working directory
-		local basename = function(s)
-			-- Nothing:wezterm little regex can't fix
-			return string.gsub(s, "(.*[/\\])(.*)", "%2")
-		end
 		local cwd = basename(pane:get_current_working_dir())
 		-- Current command
 		local cmd = basename(pane:get_foreground_process_name())
-
 		-- Time
 		local time = wezterm.strftime("%H:%M")
 
 		-- Let's add color to one of the components
 		window:set_right_status(wezterm.format({
-			-- Wezterm has a built-in nerd fonts
-			-- https://wezfurlong.org/wezterm/config/lua/wezterm/nerdfonts.html
 			{ Text = wezterm.nerdfonts.oct_table .. "  " .. stat },
 			{ Text = " | " },
 			{ Text = wezterm.nerdfonts.md_folder .. "  " .. cwd },
@@ -84,6 +68,51 @@ function module.apply_to_config(config)
 			{ Text = wezterm.nerdfonts.md_clock .. "  " .. time },
 			{ Text = " |" },
 		}))
+	end)
+
+	local function get_process(tab)
+		local process_name = basename(tab.active_pane.foreground_process_name)
+		return wezterm.format(icons.process_icons[process_name] or { { Text = string.format("[%s]", process_name) } })
+	end
+
+	local function tab_title(tab)
+		local current_dir = basename(tab.active_pane.current_working_dir)
+
+		return string.format(" %s %s  ", get_process(tab), current_dir)
+	end
+
+	wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_width)
+		local edge_background = "#181825"
+		local background = "#1e1e2e"
+		local foreground = "#cdd6f4"
+
+		if tab.is_active then
+			background = "#313244"
+			foreground = "#b4befe"
+		elseif hover then
+			background = "#313244"
+			foreground = "#cdd6f4"
+		end
+
+		local edge_foreground = background
+
+		local title = tab_title(tab)
+
+		-- ensure that the titles fit in the available space,
+		-- and that we have room for the edges.
+		title = wezterm.truncate_right(title, max_width - 2)
+
+		return {
+			{ Background = { Color = edge_background } },
+			{ Foreground = { Color = edge_foreground } },
+			{ Text = icons.LEFT_TAB_EDGE },
+			{ Background = { Color = background } },
+			{ Foreground = { Color = foreground } },
+			{ Text = title },
+			{ Background = { Color = edge_background } },
+			{ Foreground = { Color = edge_foreground } },
+			{ Text = icons.RIGHT_TAB_EDGE },
+		}
 	end)
 end
 
