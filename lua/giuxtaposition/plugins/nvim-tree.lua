@@ -3,7 +3,7 @@ if not setup then
 	return
 end
 
--- change color for arrows in tree to light blue
+-- change color for arrows in tree
 vim.cmd([[ highlight NvimTreeIndentMarker guifg=#b4befe]])
 
 nvimtree.setup({
