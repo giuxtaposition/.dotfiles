@@ -57,3 +57,23 @@ keymap.set("", "<A-h>", "<cmd>SmartResizeLeft<cr>") -- resize split window left
 keymap.set("", "<A-k>", "<cmd>SmartResizeUp<cr>") -- resize split window top
 keymap.set("", "<A-j>", "<cmd>SmartResizeDown<cr>") -- resize split window bottom
 keymap.set("", "<A-l>", "<cmd>SmartResizeRight<cr>") -- resize split window right
+
+-- trouble (better diagnostics)
+keymap.set("n", "<leader>xx", function()
+	require("trouble").open()
+end)
+keymap.set("n", "<leader>xw", function()
+	require("trouble").open("workspace_diagnostics")
+end)
+keymap.set("n", "<leader>xd", function()
+	require("trouble").open("document_diagnostics")
+end)
+keymap.set("n", "<leader>xq", function()
+	require("trouble").open("quickfix")
+end)
+keymap.set("n", "<leader>xl", function()
+	require("trouble").open("loclist")
+end)
+keymap.set("n", "gR", function()
+	require("trouble").open("lsp_references")
+end)
