@@ -39,6 +39,7 @@ catppuccin.setup({
 		gitsigns = true,
 		neotest = true,
 		markdown = true,
+		rainbow_delimiters = true,
 	},
 })
 
