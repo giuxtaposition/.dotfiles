@@ -1,10 +1,11 @@
-set fish_greeting "Hello Giu,
+function fish_greeting
+    echo ''(set_color b4befe)'Hello Giu,
 
-   ／l、             
+   ／l、               
  （ﾟ､ ｡ ７         
    l  ~ヽ       
-   じしf_,)ノ
-"
+   じしf_,)ノ'
+end
 
 set -gx TERM xterm-256color
 set -gx EDITOR nvim
