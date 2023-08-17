@@ -19,12 +19,12 @@ while IFS= read -r line; do
    packages+=("$line")
 done <$install_file
 
-yay -S --noconfirm --needed "${packages[*]}" &> /dev/null
+yay -S --noconfirm --needed "${packages[@]}" &> /dev/null
 
 function print_package_status {
-  if command -v $1 &> /dev/null
+  if pacman -Qi $1 > /dev/null; then
     echo "$1 installed" >> $log_file
-  then
+  else
     echo "$1 failed to install" >> $log_file
   fi
 }
