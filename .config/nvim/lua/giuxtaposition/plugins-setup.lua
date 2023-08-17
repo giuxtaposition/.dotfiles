@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 -- add list of plugins to install
 local plugins = {
 	"nvim-lua/plenary.nvim", -- lua functions that many plugins use
+
 	{ "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000 }, -- colorscheme
 	{ "anuvyklack/windows.nvim", dependencies = { "anuvyklack/middleclass" } }, -- maximizes and restores current window
 	"nvim-tree/nvim-tree.lua", -- file explorer
@@ -22,6 +23,7 @@ local plugins = {
 	"akinsho/bufferline.nvim", -- enhanced tab ui
 	"norcalli/nvim-colorizer.lua", -- color highlighter
 	"lukas-reineke/indent-blankline.nvim", -- color indentation
+	"HiPhish/rainbow-delimiters.nvim", -- color brackets
 
 	-- better ui for messages, cmdline and popupmenu
 	{
