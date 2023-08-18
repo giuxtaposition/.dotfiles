@@ -40,6 +40,7 @@ nvimtree.setup({
 			window_picker = {
 				enable = false,
 			},
+			quit_on_open = true,
 		},
 	},
 	update_cwd = true,
@@ -47,5 +48,4 @@ nvimtree.setup({
 		enable = true,
 		update_cwd = false,
 	},
-	auto_close = true,
 })
