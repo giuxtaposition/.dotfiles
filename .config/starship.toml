@@ -101,7 +101,7 @@ symbol = " "
 symbol = "🅢 "
 
 [character]
-success_symbol = "[[󱁇](maroon) ❯](sky)"
+success_symbol = "[[🌸](maroon) ❯](sky)"
 error_symbol = "[❯](red)"
 vimcmd_symbol = "[❮](green)"
 
