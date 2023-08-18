@@ -1,3 +1,6 @@
+# theme
+palette = "catppuccin_mocha"
+
 [aws]
 symbol = "  "
 
@@ -12,9 +15,6 @@ symbol = " "
 
 [dart]
 symbol = " "
-
-[directory]
-read_only = " "
 
 [docker_context]
 symbol = " "
@@ -100,9 +100,16 @@ symbol = " "
 [spack]
 symbol = "🅢 "
 
-# theme
-palette = "catppuccin_mocha"
+[character]
+success_symbol = "[[󱁇](maroon) ❯](sky)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
 
+[directory]
+truncation_length = 4
+style = "bold lavender"
+
+# palette tables should be last in the config ⚓️
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"
