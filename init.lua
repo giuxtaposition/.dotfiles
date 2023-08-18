@@ -20,6 +20,7 @@ require("giuxtaposition.plugins.bufferline")
 require("giuxtaposition.plugins.indent-blankline")
 require("giuxtaposition.plugins.neo-test")
 require("giuxtaposition.plugins.rainbow-delimiters")
+require("giuxtaposition.plugins.noice")
 
 -- disable netrw as suggested by nvim-tree
 vim.g.loaded_netrw = 1
