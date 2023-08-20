@@ -27,10 +27,10 @@ function module.apply_to_config(config)
 		},
 	}
 
-	config.font = wezterm.font("FiraCode Nerd Font")
+	config.font = wezterm.font("JetBrainsMono Nerd Font")
 
 	config.window_frame = {
-		font = wezterm.font("FiraCode Nerd Font"),
+		font = wezterm.font("JetBrainsMono Nerd Font"),
 	}
 	local basename = function(s)
 		return string.gsub(s, "(.*[/\\])(.*)", "%2")

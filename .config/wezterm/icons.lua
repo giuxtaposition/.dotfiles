@@ -7,6 +7,9 @@ local process_icons = {
 	["fish"] = {
 		{ Text = wezterm.nerdfonts.md_fish },
 	},
+	["node"] = {
+		{ Text = wezterm.nerdfonts.dev_nodejs_small },
+	},
 }
 
 local RIGHT_TAB_EDGE = wezterm.nerdfonts.ple_lower_left_triangle
