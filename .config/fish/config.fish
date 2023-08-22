@@ -44,3 +44,6 @@ function __check_rvm --on-variable PWD --description 'Autocall nvm use'
   else
   end
 end
+
+# vim mode
+set fish_key_bindings fish_user_key_bindings

@@ -4,10 +4,11 @@ vim.g.maplocalleader = ";"
 local keymap = vim.keymap
 
 -- General keymaps
-keymap.set("i", ";;", "<Esc>") -- map ;; to Esc in insert mode
-keymap.set("v", ";;", "<Esc>") -- map ;; to Esc in visual mode
+keymap.set("i", "jk", "<Esc>") -- map jk to Esc in insert mode
+keymap.set("v", "jk", "<Esc>") -- map jk to Esc in visual mode
 
 keymap.set("n", "x", '"_x') -- do not copy after deleting char
+keymap.set("v", "y", "ygv<Esc>") -- yank and remain at cursor position
 
 keymap.set("n", "<leader>nh", ":nohl<CR>") -- clear search highlights
 
@@ -28,8 +29,7 @@ keymap.set("n", "<leader>tp", ":tabp<CR>") -- go to previous tab
 keymap.set("n", "U", "<C-r>") -- Redo
 
 keymap.set("n", "<leader>vf", "$V%") -- selects a whole function definition, arrow function or object
-
-keymap.set("v", "y", "ygv<Esc>") -- yank and remain at cursor position
+keymap.set("n", "rw", "cw<C-r>0<ESC>") -- replace from under cursor until end of word with yanked text
 
 -- Plugins keymaps
 
