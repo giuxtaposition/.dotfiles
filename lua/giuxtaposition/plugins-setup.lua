@@ -1,3 +1,4 @@
+-- bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -13,28 +14,11 @@ vim.opt.rtp:prepend(lazypath)
 
 -- add list of plugins to install
 local plugins = {
+	-----------------------
+	---- General
+	-----------------------
 	"nvim-lua/plenary.nvim", -- lua functions that many plugins use
-
-	{ "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000 }, -- colorscheme
 	{ "anuvyklack/windows.nvim", dependencies = { "anuvyklack/middleclass" } }, -- maximizes and restores current window
-	"nvim-tree/nvim-tree.lua", -- file explorer
-	"nvim-tree/nvim-web-devicons", -- icons
-	"nvim-lualine/lualine.nvim", -- statusline
-	"akinsho/bufferline.nvim", -- enhanced tab ui
-	"norcalli/nvim-colorizer.lua", -- color highlighter
-	"lukas-reineke/indent-blankline.nvim", -- color indentation
-	"HiPhish/rainbow-delimiters.nvim", -- color brackets
-
-	-- better ui for messages, cmdline and popupmenu
-	{
-		"folke/noice.nvim",
-		event = "VeryLazy",
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"rcarriga/nvim-notify",
-		},
-	},
-
 	-- faster editing plugins
 	"tpope/vim-surround", -- surround word
 	"vim-scripts/ReplaceWithRegister", -- replace words
@@ -43,7 +27,64 @@ local plugins = {
 	-- fuzzy finding w/ telescope
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- dependency for better sorting performance
 	{ "nvim-telescope/telescope.nvim", branch = "0.1.x" }, -- fuzzy finder
+	-- session manager
+	{
+		"rmagatti/auto-session",
+		config = function()
+			require("auto-session").setup({
+				log_level = "error",
+				auto_session_suppress_dirs = { "~/", "/" },
+				session_lens = {
+					buftypes_to_ignore = {}, -- list of buffer types what should not be deleted from current session
+					load_on_setup = true,
+					theme_conf = { border = true },
+					previewer = true,
+				},
+			})
+		end,
+	},
+	-- smart splits with wezterm support
+	{ "mrjones2014/smart-splits.nvim", lazy = false },
 
+	-----------------------
+	---- UI
+	-----------------------
+	-- better ui for messages, cmdline and popupmenu
+	{ "catppuccin/nvim", name = "catppuccin", lazy = false, priority = 1000 }, -- colorscheme
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
+	},
+	"nvim-tree/nvim-tree.lua", -- file explorer
+	"nvim-tree/nvim-web-devicons", -- icons
+	"nvim-lualine/lualine.nvim", -- statusline
+	"akinsho/bufferline.nvim", -- enhanced tab ui
+	"norcalli/nvim-colorizer.lua", -- color highlighter
+	"lukas-reineke/indent-blankline.nvim", -- color indentation
+	"HiPhish/rainbow-delimiters.nvim", -- color brackets
+	-- enhanced ui for lsp
+	{
+		"glepnir/lspsaga.nvim",
+		branch = "main",
+		dependencies = {
+			"nvim-tree/nvim-web-devicons",
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
+	-- enhanced ui for diagnostics
+	{
+		"folke/trouble.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = {},
+	},
+
+	-----------------------
+	---- CODING
+	-----------------------
 	-- autocompletion
 	"hrsh7th/nvim-cmp", -- autocompletion plugin
 	"hrsh7th/cmp-buffer", -- source for recommending text in current buffer
@@ -63,23 +104,7 @@ local plugins = {
 	"neovim/nvim-lspconfig",
 	"hrsh7th/cmp-nvim-lsp", --  lsp servers as source for autocompletion
 
-	-- enhanced ui to lsp experience
-	{
-		"glepnir/lspsaga.nvim",
-		branch = "main",
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-			"nvim-treesitter/nvim-treesitter",
-		},
-	},
-	-- enhanced ui to diagnostics
-	{
-		"folke/trouble.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		opts = {},
-	},
-
-	-- alternative to typescript language server
+	-- faster alternative for typescript language server
 	{
 		"pmizio/typescript-tools.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -89,7 +114,7 @@ local plugins = {
 	"jose-elias-alvarez/null-ls.nvim", -- configure formatters & linters
 	"jayp0521/mason-null-ls.nvim", -- integration between mason and null-ls
 
-	-- treesitter configuration
+	-- highlight code
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = function()
@@ -132,26 +157,6 @@ local plugins = {
 			vim.fn["mkdp#util#install"]()
 		end,
 	},
-
-	-- session manager
-	{
-		"rmagatti/auto-session",
-		config = function()
-			require("auto-session").setup({
-				log_level = "error",
-				auto_session_suppress_dirs = { "~/", "/" },
-				session_lens = {
-					buftypes_to_ignore = {}, -- list of buffer types what should not be deleted from current session
-					load_on_setup = true,
-					theme_conf = { border = true },
-					previewer = true,
-				},
-			})
-		end,
-	},
-
-	-- smart splits with wezterm support
-	{ "mrjones2014/smart-splits.nvim", lazy = false },
 }
 
 local opts = {}
