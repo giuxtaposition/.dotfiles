@@ -10,6 +10,9 @@ local process_icons = {
 	["node"] = {
 		{ Text = wezterm.nerdfonts.dev_nodejs_small },
 	},
+	["git"] = {
+		{ Text = wezterm.nerdfonts.dev_git },
+	},
 }
 
 local RIGHT_TAB_EDGE = wezterm.nerdfonts.ple_lower_left_triangle

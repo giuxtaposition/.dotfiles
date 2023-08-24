@@ -103,6 +103,7 @@ function module.apply_to_config(config)
 			}),
 		},
 		{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+		{ key = "V", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
 	}
 
 	-- <leader> + index to quickly navigate to tab with index
