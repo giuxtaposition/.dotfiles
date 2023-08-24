@@ -4,7 +4,7 @@ if not setup then
 end
 
 -- change color for arrows in tree
-vim.cmd([[ highlight NvimTreeIndentMarker guifg=#b4befe]])
+vim.cmd([[ highlight NvimTreeIndentMarker guifg=#6c7086]])
 
 nvimtree.setup({
 	diagnostics = {
@@ -20,8 +20,8 @@ nvimtree.setup({
 		icons = {
 			glyphs = {
 				folder = {
-					arrow_closed = "⮞", -- when folder is closed
-					arrow_open = "⮟", -- when folder is open
+					arrow_closed = "", -- when folder is closed
+					arrow_open = "", -- when folder is open
 				},
 				git = {
 					unstaged = "✗",
