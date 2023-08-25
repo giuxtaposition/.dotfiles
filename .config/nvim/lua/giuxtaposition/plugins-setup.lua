@@ -81,6 +81,12 @@ local plugins = {
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {},
 	},
+	-- handle TODOs
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
+	},
 
 	-----------------------
 	---- CODING
