@@ -35,7 +35,4 @@ opt.clipboard:append("unnamedplus")
 opt.splitright = true
 opt.splitbelow = true
 
--- consider dash as part of a word
-opt.iskeyword:append("-")
-
 opt.spell = false
