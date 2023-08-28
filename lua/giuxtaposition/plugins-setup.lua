@@ -18,11 +18,11 @@ local plugins = {
 	---- General
 	-----------------------
 	"nvim-lua/plenary.nvim", -- lua functions that many plugins use
-	{ "anuvyklack/windows.nvim", dependencies = { "anuvyklack/middleclass" } }, -- maximizes and restores current window
+	{ "anuvyklack/windows.nvim", dependencies = { "anuvyklack/middleclass" }, opts = {} }, -- maximizes and restores current window
 	-- faster editing plugins
 	"tpope/vim-surround", -- surround word
 	"vim-scripts/ReplaceWithRegister", -- replace words
-	"numToStr/Comment.nvim", -- commenting lines with gc
+	{ "numToStr/Comment.nvim", opts = {} }, -- commenting lines with gc
 
 	-- fuzzy finding w/ telescope
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- dependency for better sorting performance
@@ -45,6 +45,21 @@ local plugins = {
 	},
 	-- smart splits with wezterm support
 	{ "mrjones2014/smart-splits.nvim", lazy = false },
+
+	-- zen mode
+	"folke/zen-mode.nvim",
+	opts = {
+		-- your configuration comes here
+		-- or leave it empty to use the default settings
+		-- refer to the configuration section below
+	},
+
+	-- establish good command workflow habit
+	-- {
+	-- 	"m4xshen/hardtime.nvim",
+	-- 	dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+	-- 	opts = {},
+	-- },
 
 	-----------------------
 	---- UI
@@ -134,7 +149,7 @@ local plugins = {
 	"windwp/nvim-ts-autotag", -- autoclose tags
 
 	-- git integration
-	"lewis6991/gitsigns.nvim", -- show line modifications on left hand side
+	{ "lewis6991/gitsigns.nvim", opts = {} }, -- show line modifications on left hand side
 	{
 		"NeogitOrg/neogit",
 		dependencies = {
