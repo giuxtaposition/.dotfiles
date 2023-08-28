@@ -1,6 +1,6 @@
 local status, indent_blankline = pcall(require, "indent_blankline")
 if not status then
-  return
+	return
 end
 
 vim.cmd([[highlight IndentBlanklineIndent1 guifg=#f7768e gui=nocombine]])
@@ -11,15 +11,15 @@ vim.cmd([[highlight IndentBlanklineIndent5 guifg=#bb9af7 gui=nocombine]])
 vim.cmd([[highlight IndentBlanklineIndent6 guifg=#7dcfff gui=nocombine]])
 
 indent_blankline.setup({
-  filetype_exclude = {},
-  show_current_context = true,
-  show_current_context_start = true,
-  char_highlight_list = {
-    "IndentBlanklineIndent1",
-    "IndentBlanklineIndent2",
-    "IndentBlanklineIndent3",
-    "IndentBlanklineIndent4",
-    "IndentBlanklineIndent5",
-    "IndentBlanklineIndent6",
-  },
+	filetype_exclude = {},
+	show_current_context = true,
+	show_current_context_start = true,
+	char_highlight_list = {
+		"IndentBlanklineIndent1",
+		"IndentBlanklineIndent2",
+		"IndentBlanklineIndent3",
+		"IndentBlanklineIndent4",
+		"IndentBlanklineIndent5",
+		"IndentBlanklineIndent6",
+	},
 })

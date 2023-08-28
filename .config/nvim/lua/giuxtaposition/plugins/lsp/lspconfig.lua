@@ -59,6 +59,12 @@ typescript_tools.setup({
 			"remove_unused",
 		},
 		complete_function_calls = true,
+		tsserver_file_preferences = {
+			includeInlayParameterNameHints = "all",
+			includeCompletionsForModuleExports = true,
+			quotePreference = "auto",
+			importModuleSpecifierPreference = "relative",
+		},
 	},
 })
 
