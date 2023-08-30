@@ -45,7 +45,7 @@ local on_attach = function(client, bufnr)
 		vim.lsp.buf.signature_help()
 	end, opts)
 
-	if client.name == "tsserver" then
+	if client.name == "typescript-tools" then
 		keymap.set("n", "<leader>lo", "<cmd>TSToolsOrganizeImports<cr>", opts)
 		keymap.set("n", "<leader>lO", "<cmd>TSToolsSortImports<cr>", opts)
 		keymap.set("n", "<leader>lu", "<cmd>TSToolsRemoveUnused<cr>", opts)
@@ -72,17 +72,20 @@ typescript_tools.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 	settings = {
-		expose_as_code_action = {
-			"fix_all",
-			"add_missing_imports",
-			"remove_unused",
-		},
+		expose_as_code_action = {},
 		complete_function_calls = true,
 		tsserver_file_preferences = {
 			includeInlayParameterNameHints = "all",
 			includeCompletionsForModuleExports = true,
 			quotePreference = "auto",
 			importModuleSpecifierPreference = "relative",
+			includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+			includeInlayFunctionParameterTypeHints = true,
+			includeInlayVariableTypeHints = true,
+			includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+			includeInlayPropertyDeclarationTypeHints = true,
+			includeInlayFunctionLikeReturnTypeHints = true,
+			includeInlayEnumMemberValueHints = true,
 		},
 	},
 })
