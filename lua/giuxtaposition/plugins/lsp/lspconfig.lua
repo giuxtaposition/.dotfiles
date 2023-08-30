@@ -13,6 +13,11 @@ if not status then
 	return
 end
 
+local lspsaga_status, lspsaga_diagnostics = pcall(require, "lspsaga.diagnostic")
+if not lspsaga_status then
+	return
+end
+
 local keymap = vim.keymap
 
 -- enable keybinds only for when lsp server available
@@ -27,13 +32,27 @@ local on_attach = function(client, bufnr)
 	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
 	keymap.set("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
 	keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
-	keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- jump to previous diagnostic in buffer
-	keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- jump to next diagnostic in buffer
+	keymap.set("n", "[d", "<cmd>lspsaga diagnostic_jump_prev<cr>", opts) -- jump to previous diagnostic in buffer
+	keymap.set("n", "]d", "<cmd>lspsaga diagnostic_jump_next<cr>", opts) -- jump to next diagnostic in buffer
+	keymap.set("n", "[e", function()
+		lspsaga_diagnostics:goto_prev({ severity = vim.diagnostic.severity.ERROR })
+	end, opts) -- jump to previous error in buffer
+	keymap.set("n", "]e", function()
+		lspsaga_diagnostics:goto_next({ severity = vim.diagnostic.severity.ERROR })
+	end, opts) -- jump to next error in buffer
 	keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
+	keymap.set("i", "gs", function()
+		vim.lsp.buf.signature_help()
+	end, opts)
 
 	if client.name == "tsserver" then
-		keymap.set("n", "<leader>oi", ":TSToolsOrganizeImports<CR>") -- organize imports
-		keymap.set("n", "<leader>ru", ":TSToolsRemoveUnused<CR>") -- remove unused statements
+		keymap.set("n", "<leader>lo", "<cmd>TSToolsOrganizeImports<cr>", opts)
+		keymap.set("n", "<leader>lO", "<cmd>TSToolsSortImports<cr>", opts)
+		keymap.set("n", "<leader>lu", "<cmd>TSToolsRemoveUnused<cr>", opts)
+		keymap.set("n", "<leader>lz", "<cmd>TSToolsGoToSourceDefinition<cr>", opts)
+		keymap.set("n", "<leader>lR", "<cmd>TSToolsRemoveUnusedImports<cr>", opts)
+		keymap.set("n", "<leader>lF", "<cmd>TSToolsFixAll<cr>", opts)
+		keymap.set("n", "<leader>lA", "<cmd>TSToolsAddMissingImports<cr>", opts)
 	end
 end
 
