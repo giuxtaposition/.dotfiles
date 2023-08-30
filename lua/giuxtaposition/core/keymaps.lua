@@ -4,8 +4,7 @@ vim.g.maplocalleader = ";"
 local keymap = vim.keymap
 
 -- General keymaps
-keymap.set("i", "jk", "<Esc>") -- map jk to Esc in insert mode
-keymap.set("v", "jk", "<Esc>") -- map jk to Esc in visual mode
+keymap.set({ "i", "v" }, "jk", "<Esc>") -- map jk to Esc in insert and visual mode
 
 keymap.set("n", "x", '"_x') -- do not copy after deleting char
 keymap.set("v", "y", "ygv<Esc>") -- yank and remain at cursor position
@@ -76,4 +75,15 @@ keymap.set("n", "<leader>xl", function()
 end)
 keymap.set("n", "gR", function()
 	require("trouble").open("lsp_references")
+end)
+
+-- refactoring
+vim.keymap.set("x", "<leader>re", ":Refactor extract ")
+vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ")
+vim.keymap.set("x", "<leader>rv", ":Refactor extract_var ")
+vim.keymap.set({ "n", "x" }, "<leader>ri", ":Refactor inline_var")
+vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
+vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
+vim.keymap.set({ "n", "x" }, "<leader>rr", function()
+	require("telescope").extensions.refactoring.refactors()
 end)
