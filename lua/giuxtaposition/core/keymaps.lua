@@ -45,7 +45,9 @@ keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>") -- find string u
 keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>") -- list open buffers in current neovim instance
 keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>") -- list available help tags
 keymap.set("n", "<leader>fx", "<cmd>Telescope resume<cr>") -- resume last telescope window
-keymap.set("n", "<leader>as", "<cmd>Telescope session-lens<cr>") -- search session
+keymap.set("n", "<leader>fg", "<cmd>Telescope git_status<cr>") -- list git status files
+keymap.set("n", "<leader>fr", "<cmd>Telescope registers<cr>") -- list registers
+keymap.set("n", "<leader>fm", "<cmd>Telescope marks<cr>") -- list marks
 
 -- smart-splits
 keymap.set("", "<C-h>", "<cmd>SmartCursorMoveLeft<cr>") -- move cursor to left split window
