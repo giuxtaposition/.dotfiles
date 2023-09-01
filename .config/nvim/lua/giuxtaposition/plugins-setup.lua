@@ -18,7 +18,11 @@ local plugins = {
 	---- General
 	-----------------------
 	"nvim-lua/plenary.nvim", -- lua functions that many plugins use
-	{ "anuvyklack/windows.nvim", dependencies = { "anuvyklack/middleclass" }, opts = {} }, -- maximizes and restores current window
+	{
+		"anuvyklack/windows.nvim",
+		dependencies = { "anuvyklack/middleclass" },
+		opts = { autowidth = { enable = false } },
+	}, -- maximizes and restores current window
 	-- faster editing plugins
 	"tpope/vim-surround", -- surround word
 	"vim-scripts/ReplaceWithRegister", -- replace words
@@ -27,32 +31,12 @@ local plugins = {
 	-- fuzzy finding w/ telescope
 	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" }, -- dependency for better sorting performance
 	{ "nvim-telescope/telescope.nvim", branch = "0.1.x" }, -- fuzzy finder
-	-- session manager
-	{
-		"rmagatti/auto-session",
-		config = function()
-			require("auto-session").setup({
-				log_level = "error",
-				auto_session_suppress_dirs = { "~/", "/" },
-				session_lens = {
-					buftypes_to_ignore = {}, -- list of buffer types what should not be deleted from current session
-					load_on_setup = true,
-					theme_conf = { border = true },
-					previewer = true,
-				},
-			})
-		end,
-	},
+
 	-- smart splits with wezterm support
 	{ "mrjones2014/smart-splits.nvim", lazy = false },
 
 	-- zen mode
 	"folke/zen-mode.nvim",
-	opts = {
-		-- your configuration comes here
-		-- or leave it empty to use the default settings
-		-- refer to the configuration section below
-	},
 
 	-- establish good command workflow habit
 	-- {
