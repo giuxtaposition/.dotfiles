@@ -99,7 +99,7 @@ local plugins = {
 	-- snippets
 	"L3MON4D3/LuaSnip", -- snippet engine
 	"saadparwaiz1/cmp_luasnip", -- recommend snippets for autocompletion with nvim-cmp
-	"rafamadriz/friendly-snippets", -- ful snippets
+	"rafamadriz/friendly-snippets", -- full snippets
 
 	-- managing & installing lsp servers, linters & formatters
 	"williamboman/mason.nvim", -- manages lsp servers, linters and formatters
@@ -109,11 +109,11 @@ local plugins = {
 	"neovim/nvim-lspconfig",
 	"hrsh7th/cmp-nvim-lsp", --  lsp servers as source for autocompletion
 
-	-- faster alternative for typescript language server
-	{
-		"pmizio/typescript-tools.nvim",
-		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
-	},
+	-- typescript language server
+	"jose-elias-alvarez/typescript.nvim",
+
+	-- lua development
+	{ "folke/neodev.nvim" },
 
 	-- formatting & linting
 	"jose-elias-alvarez/null-ls.nvim", -- configure formatters & linters

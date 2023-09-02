@@ -8,13 +8,18 @@ if not cmp_nvim_lsp_status then
 	return
 end
 
-local status, typescript_tools = pcall(require, "typescript-tools")
+local status, typescript = pcall(require, "typescript")
 if not status then
 	return
 end
 
 local lspsaga_status, lspsaga_diagnostics = pcall(require, "lspsaga.diagnostic")
 if not lspsaga_status then
+	return
+end
+
+local neodev_status, neodev = pcall(require, "neodev")
+if not neodev_status then
 	return
 end
 
@@ -45,14 +50,13 @@ local on_attach = function(client, bufnr)
 		vim.lsp.buf.signature_help()
 	end, opts)
 
-	if client.name == "typescript-tools" then
-		keymap.set("n", "<leader>lo", "<cmd>TSToolsOrganizeImports<cr>", opts)
-		keymap.set("n", "<leader>lO", "<cmd>TSToolsSortImports<cr>", opts)
-		keymap.set("n", "<leader>lu", "<cmd>TSToolsRemoveUnused<cr>", opts)
-		keymap.set("n", "<leader>lz", "<cmd>TSToolsGoToSourceDefinition<cr>", opts)
-		keymap.set("n", "<leader>lR", "<cmd>TSToolsRemoveUnusedImports<cr>", opts)
-		keymap.set("n", "<leader>lF", "<cmd>TSToolsFixAll<cr>", opts)
-		keymap.set("n", "<leader>lA", "<cmd>TSToolsAddMissingImports<cr>", opts)
+	if client.name == "tsserver" then
+		keymap.set("n", "<leader>lo", ":TypescriptOrganizeImports<cr>", opts)
+		keymap.set("n", "<leader>lu", ":TypescriptRemoveUnused<cr>", opts)
+		keymap.set("n", "<leader>lz", ":TypescriptGoToSourceDefinition<cr>", opts)
+		keymap.set("n", "<leader>lR", ":TypescriptRemoveUnused<cr>", opts)
+		keymap.set("n", "<leader>lF", ":TypescriptRenameFile<cr>", opts)
+		keymap.set("n", "<leader>lA", ":TypescriptAddMissingImports<cr>", opts)
 	end
 end
 
@@ -68,26 +72,22 @@ for type, icon in pairs(signs) do
 end
 
 -- configure typescript server
-typescript_tools.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-	settings = {
-		expose_as_code_action = {},
-		complete_function_calls = true,
-		tsserver_file_preferences = {
-			includeInlayParameterNameHints = "all",
-			includeCompletionsForModuleExports = true,
-			quotePreference = "auto",
-			importModuleSpecifierPreference = "relative",
-			includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-			includeInlayFunctionParameterTypeHints = true,
-			includeInlayVariableTypeHints = true,
-			includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-			includeInlayPropertyDeclarationTypeHints = true,
-			includeInlayFunctionLikeReturnTypeHints = true,
-			includeInlayEnumMemberValueHints = true,
+typescript.setup({
+	server = {
+		capabilities = capabilities,
+		on_attach = on_attach,
+		init_options = {
+			preferences = {
+				importModuleSpecifierPreference = "relative",
+				importModuleSpecifierEnding = "minimal",
+			},
 		},
 	},
+})
+
+-- neodev
+neodev.setup({
+	library = { plugins = { "neotest" }, types = true },
 })
 
 -- configure html server
@@ -130,6 +130,7 @@ lspconfig["lua_ls"].setup({
 	},
 })
 
+-- markdown
 lspconfig["marksman"].setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
