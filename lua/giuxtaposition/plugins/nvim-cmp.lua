@@ -21,6 +21,18 @@ require("luasnip/loaders/from_vscode").lazy_load()
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
+local function get_lsp_completion_context(completion, source)
+	local ok, source_name = pcall(function()
+		return source.source.client.config.name
+	end)
+	if not ok then
+		return nil
+	end
+	if source_name == "tsserver" then
+		return completion.detail
+	end
+end
+
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -46,8 +58,24 @@ cmp.setup({
 	-- configure lspkind for vs-code like icons
 	formatting = {
 		format = lspkind.cmp_format({
-			maxwidth = 50,
+			maxwidth = 60,
 			ellipsis_char = "...",
+			before = function(entry, vim_item)
+				local completion_context = get_lsp_completion_context(entry.completion_item, entry.source)
+
+				if completion_context ~= nil and completion_context ~= "" then
+					vim_item.menu = completion_context
+				else
+					vim_item.menu = ({
+						nvim_lsp = "[LSP]",
+						luasnip = "[Snippet]",
+						buffer = "[Buffer]",
+						path = "[Path]",
+					})[entry.source.name]
+				end
+
+				return vim_item
+			end,
 		}),
 	},
 })
