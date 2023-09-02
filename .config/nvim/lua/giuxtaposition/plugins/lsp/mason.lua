@@ -1,39 +1,47 @@
-local mason_status, mason = pcall(require, "mason")
-if not mason_status then
-	return
-end
-
-local mason_lspconfig_status, mason_lspconfig = pcall(require, "mason-lspconfig")
-if not mason_lspconfig_status then
-	return
-end
-
-local mason_null_ls_status, mason_null_ls = pcall(require, "mason-null-ls")
-if not mason_null_ls_status then
-	return
-end
-
-mason.setup()
-
-mason_lspconfig.setup({
-	ensure_installed = {
-		"html",
-		"cssls",
-		"lua_ls",
-		"svelte",
-		"emmet_ls",
-		"marksman",
+return {
+	"williamboman/mason.nvim",
+	dependencies = {
+		"williamboman/mason-lspconfig.nvim",
+		"jayp0521/mason-null-ls.nvim",
 	},
-	automatic_installation = true,
-})
+	config = function()
+		local mason = require("mason")
+		local mason_lspconfig = require("mason-lspconfig")
+		local mason_null_ls = require("mason-null-ls")
 
-mason_null_ls.setup({
-	-- list of formatters & linters for mason to install
-	ensure_installed = {
-		"prettier", -- ts/js formatter
-		"stylua", -- lua formatter
-		"eslint_d", -- ts/js linter
-	},
-	-- auto-install configured formatters & linters (with null-ls)
-	automatic_installation = true,
-})
+		-- enable mason and configure icons
+		mason.setup({
+			ui = {
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗",
+				},
+			},
+		})
+
+		mason_lspconfig.setup({
+			-- list of servers for mason to install
+			ensure_installed = {
+				"html",
+				"cssls",
+				"tsserver",
+				"lua_ls",
+				"svelte",
+				"emmet_ls",
+				"marksman",
+			},
+			automatic_installation = true,
+		})
+
+		mason_null_ls.setup({
+			-- list of formatters & linters for mason to install
+			ensure_installed = {
+				"prettier", -- ts/js formatter
+				"stylua", -- lua formatter
+				"eslint_d", -- ts/js linter
+			},
+			automatic_installation = true,
+		})
+	end,
+}
