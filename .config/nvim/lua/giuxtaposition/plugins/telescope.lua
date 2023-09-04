@@ -42,7 +42,7 @@ return {
 	keys = {
 		{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Fuzzy find files in cwd" },
 		{
-			"<leader>fr",
+			"<leader>fo",
 			"<cmd>Telescope oldfiles<cr>",
 			desc = "Fuzzy find recent files",
 		},
