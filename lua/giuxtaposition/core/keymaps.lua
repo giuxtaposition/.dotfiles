@@ -1,32 +1,61 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ";"
 
-local keymap = vim.keymap
+function Map(mode, lhs, rhs, opts)
+	local options = { noremap = true, silent = true }
+	if opts then
+		options = vim.tbl_extend("force", options, opts)
+	end
+	vim.keymap.set(mode, lhs, rhs, options)
+end
 
 -- General keymaps
-keymap.set({ "i", "v" }, "jk", "<Esc>") -- map jk to Esc in insert and visual mode
-keymap.set("t", "jk", "<C-\\><C-n>")
+Map({ "i", "v" }, "jk", "<Esc>", { desc = "Map jk to Esc" })
+Map("t", "jk", "<C-\\><C-n>", { desc = "Enter normal mode in terminal" })
 
-keymap.set("n", "x", '"_x') -- do not copy after deleting char
-keymap.set("v", "y", "ygv<Esc>") -- yank and remain at cursor position
+Map("n", "x", '"_x', { desc = "Do not copy after deleting char" })
+Map("v", "y", "ygv<Esc>", { desc = "Yank and remain at cursor position" })
 
-keymap.set("n", "<leader>nh", ":nohl<CR>") -- clear search highlights
+Map("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
-keymap.set("n", "<leader>+", "<C-a>") -- increment
-keymap.set("n", "<leader>-", "<C-x>") -- decrement
+Map("n", "<leader>+", "<C-a>", { desc = "Increment" })
+Map("n", "<leader>-", "<C-x>", { desc = "Decrement" })
 
-keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
-keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
-keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width
-keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
+Map("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
+Map("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" })
+Map("n", "<leader>sx", ":close<CR>", { desc = "Close current split window" })
 
-keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
-keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
-keymap.set("n", "<leader>tn", ":tabn<CR>") -- go to next tab
-keymap.set("n", "<Tab>", ":tabn<CR>") -- go to next tab
-keymap.set("n", "<leader>tp", ":tabp<CR>") -- go to previous tab
+Map("n", "<leader>to", ":tabnew<CR>", { desc = "Open new tab" })
+Map("n", "<leader>tx", ":tabclose<CR>", { desc = "Close current tab" })
+Map("n", "<leader>tn", ":tabn<CR>", { desc = "Go to next tab" })
+Map("n", "<leader>tp", ":tabp<CR>", { desc = "Go to previous tab" })
 
-keymap.set("n", "U", "<C-r>") -- Redo
+Map("n", "U", "<C-r>", { desc = "Redo" })
 
-keymap.set("n", "<leader>vf", "$V%") -- selects a whole function definition, arrow function or object
-keymap.set("n", "rw", "cw<C-r>0<ESC>") -- replace from under cursor until end of word with yanked text
+Map("n", "<leader>vf", "$V%", { desc = "Selects a whole function definition, arrow function or object" })
+Map("n", "rw", "viwpyiw", { desc = "Replace from under cursor until end of word with yanked text" })
+
+Map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
+Map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
+Map("n", "<leader>x", "<cmd>b#<cr>", { desc = "Close current buffer" })
+
+Map("n", "n", "nzz", { desc = "Center cursor/screen on next search find" })
+Map("n", "N", "Nzz", { desc = "Center cursor/screen on previous search find" })
+
+-- move over a closing element in insert mode
+Map("i", "<C-h>", "<Left>", { desc = "Move left in insert mode" })
+Map("i", "<C-j>", "<Down>", { desc = "Move down in insert mode" })
+Map("i", "<C-k>", "<Up>", { desc = "Move up in insert mode" })
+Map("i", "<C-l>", "<Right>", { desc = "Move right in insert mode" })
+
+-- Move Lines
+Map("n", "<A-S-j>", ":m .+1<cr>==", { desc = "Move line down" })
+Map("n", "<A-S-k>", ":m .-2<cr>==", { desc = "Move line up" })
+Map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
+Map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
+Map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move line down" })
+Map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move line up" })
+
+Map("n", "<C-A>", "<cmd> %y+<cr>", { desc = "Copy whole file" })
+
+Map("n", "<leader>s", ":%s/<C-r><C-w>/", { desc = "Find and replace all occurrences of word under cursor" })
