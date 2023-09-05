@@ -8,7 +8,7 @@ opt.number = true
 opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
-opt.autoindent = true
+opt.smartindent = true
 
 -- line wrapping
 opt.wrap = true
@@ -35,4 +35,9 @@ opt.clipboard:append("unnamedplus")
 opt.splitright = true
 opt.splitbelow = true
 
-opt.spell = false
+-- spell check
+opt.spelllang = { "en", "it" }
+
+-- file undo
+opt.undofile = true -- save undo history
+opt.undolevels = 10000
