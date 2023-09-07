@@ -38,9 +38,6 @@ return {
 				lspsaga_diagnostic:goto_next({ severity = vim.diagnostic.severity.ERROR })
 			end, opts) -- jump to next error in buffer
 			keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
-			keymap.set("i", "gs", function()
-				vim.lsp.buf.signature_help()
-			end, opts)
 
 			if client.name == "tsserver" then
 				keymap.set("n", "<leader>lo", ":TypescriptOrganizeImports<cr>", opts)
