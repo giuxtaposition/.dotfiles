@@ -42,6 +42,7 @@ return {
 					},
 				},
 				lualine_x = {
+					{ require("NeoComposer.ui").status_recording },
 					{ "diagnostics", symbols = { error = " ", warn = "  ", info = "󰋼 ", hint = "󰛩 " } },
 					{ require("giuxtaposition.plugins.lualine.lsp_status"), color = { fg = "#b4befe" } },
 				},
