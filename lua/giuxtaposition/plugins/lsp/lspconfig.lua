@@ -15,37 +15,40 @@ return {
 		local lspsaga_diagnostic = require("lspsaga.diagnostic")
 		local neodev = require("neodev")
 
-		local keymap = vim.keymap
-
 		-- enable keybinds only for when lsp server available
-		local on_attach = function(client, bufnr)
-			-- keybind options
-			local opts = { noremap = true, silent = true, buffer = bufnr }
+		local on_attach = function(client, buffer)
+			local Map = require("giuxtaposition.core.util").Map
 
-			-- set keybinds
-			keymap.set("n", "gf", "<cmd>Lspsaga finder<CR>", opts) -- show definition, references
-			keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
-			keymap.set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
-			keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
-			keymap.set("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
-			keymap.set("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- show diagnostics for cursor
-			keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts) -- jump to previous diagnostic in buffer
-			keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", opts) -- jump to next diagnostic in buffer
-			keymap.set("n", "[e", function()
+			Map("n", "gf", "<cmd>Lspsaga finder<CR>", { desc = "References", buffer = buffer })
+			Map("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { desc = "Goto Definition", buffer = buffer })
+			Map({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { desc = "Code Action", buffer = buffer })
+			Map("n", "<leader>cr", "<cmd>Lspsaga rename<CR>", { desc = "Rename", buffer = buffer })
+			Map(
+				"n",
+				"<leader>cD",
+				"<cmd>Lspsaga show_line_diagnostics<CR>",
+				{ desc = "Line Diagnostics", buffer = buffer }
+			)
+			Map(
+				"n",
+				"<leader>cd",
+				"<cmd>Lspsaga show_cursor_diagnostics<CR>",
+				{ desc = "Cursor Diagnostics", buffer = buffer }
+			)
+			Map("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", { desc = "Prev Diagnostic", buffer = buffer })
+			Map("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", { desc = "Next Diagnostic", buffer = buffer })
+			Map("n", "[e", function()
 				lspsaga_diagnostic:goto_prev({ severity = vim.diagnostic.severity.ERROR })
-			end, opts) -- jump to previous error in buffer
-			keymap.set("n", "]e", function()
+			end, { desc = "Prev Error", buffer = buffer })
+			Map("n", "]e", function()
 				lspsaga_diagnostic:goto_next({ severity = vim.diagnostic.severity.ERROR })
-			end, opts) -- jump to next error in buffer
-			keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- show documentation for what is under cursor
+			end, { desc = "Next Error", buffer = buffer })
+			Map("n", "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "Hover Documentation", buffer = buffer })
 
 			if client.name == "tsserver" then
-				keymap.set("n", "<leader>lo", ":TypescriptOrganizeImports<cr>", opts)
-				keymap.set("n", "<leader>lu", ":TypescriptRemoveUnused<cr>", opts)
-				keymap.set("n", "<leader>lz", ":TypescriptGoToSourceDefinition<cr>", opts)
-				keymap.set("n", "<leader>lR", ":TypescriptRemoveUnused<cr>", opts)
-				keymap.set("n", "<leader>lF", ":TypescriptRenameFile<cr>", opts)
-				keymap.set("n", "<leader>lA", ":TypescriptAddMissingImports<cr>", opts)
+				Map("n", "<leader>co", ":TypescriptOrganizeImports<cr>", { desc = "Organize Imports", buffer = buffer })
+				Map("n", "<leader>cc", ":TypescriptRemoveUnused<cr>", { desc = "Remove Unused", buffer = buffer })
+				Map("n", "<leader>cF", ":TypescriptRenameFile<cr>", { desc = "Rename File", buffer = buffer })
 			end
 		end
 

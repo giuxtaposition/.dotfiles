@@ -38,19 +38,12 @@ return {
 		},
 		opts = {},
 		keys = {
-			{ "<leader>re", ":Refactor extract ", mode = "x", desc = "Extract to function" },
-			{ "<leader>rf", ":Refactor extract_to_file ", mode = "x", desc = "Extract to file" },
-			{ "<leader>rv", ":Refactor extract_var ", mode = "x", desc = "Extract to variable" },
-			{ "<leader>ri", ":Refactor inline_var", mode = { "n", "x" }, desc = "Inline variable" },
-			{ "<leader>rb", ":Refactor extract_block", desc = "Extract block to function" },
-			{ "<leader>rbf", ":Refactor extract_block_to_file", desc = "Extract block to file" },
-			{
-				"<leader>rr",
-				function()
-					require("telescope").extensions.refactoring.refactors()
-				end,
-				desc = "List available refactorings",
-			},
+			{ "<leader>ce", ":Refactor extract ", mode = "x", desc = "Extract to function" },
+			{ "<leader>cf", ":Refactor extract_to_file ", mode = "x", desc = "Extract to file" },
+			{ "<leader>cv", ":Refactor extract_var ", mode = "x", desc = "Extract to variable" },
+			{ "<leader>ci", ":Refactor inline_var", mode = { "n", "x" }, desc = "Inline variable" },
+			{ "<leader>cb", ":Refactor extract_block", desc = "Extract block to function" },
+			{ "<leader>cbf", ":Refactor extract_block_to_file", desc = "Extract block to file" },
 		},
 	},
 }

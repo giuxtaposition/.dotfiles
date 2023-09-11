@@ -30,8 +30,8 @@ return {
 		end
 	end,
 	keys = {
-		{ "<leader>tth", "<cmd>ToggleTerm size=15 direction=horizontal<cr>", desc = "Horizontal Terminal" },
-		{ "<leader>ttv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical Terminal" },
+		{ "<leader>fh", "<cmd>ToggleTerm size=15 direction=horizontal<cr>", desc = "Horizontal Terminal" },
+		{ "<leader>fv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical Terminal" },
 		{ "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", desc = "Lazygit Terminal" },
 	},
 }

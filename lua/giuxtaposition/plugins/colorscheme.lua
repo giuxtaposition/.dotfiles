@@ -42,6 +42,7 @@ return {
 				neotest = true,
 				markdown = true,
 				rainbow_delimiters = true,
+				which_key = true,
 			},
 		})
 		-- setup must be called before loading
