@@ -5,6 +5,10 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
+		{
+			"nvim-telescope/telescope-live-grep-args.nvim",
+			version = "^1.0.0",
+		},
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -39,6 +43,7 @@ return {
 
 		telescope.load_extension("fzf")
 		telescope.load_extension("macros")
+		telescope.load_extension("live_grep_args")
 	end,
 	keys = {
 		{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Fuzzy find files in cwd" },
@@ -47,7 +52,13 @@ return {
 			"<cmd>Telescope oldfiles<cr>",
 			desc = "Fuzzy find recent files",
 		},
-		{ "<leader>fs", "<cmd>Telescope live_grep<cr>", desc = "Find string in cwd" },
+		{
+			"<leader>fs",
+			function()
+				require("telescope").extensions.live_grep_args.live_grep_args()
+			end,
+			desc = "Find string in cwd",
+		},
 		{ "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "Find string under cursor in cwd" },
 		{ "<leader>fx", "<cmd>Telescope resume<cr>", desc = "Resume last telescope window" },
 		{ "<leader>fr", "<cmd>Telescope registers<cr>", desc = "List registers" },

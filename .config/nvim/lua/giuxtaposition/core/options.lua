@@ -36,7 +36,7 @@ opt.splitright = true
 opt.splitbelow = true
 
 -- spell check
-opt.spelllang = { "en", "it" }
+opt.spelllang = { "en_us", "it_it" }
 
 -- file undo
 opt.undofile = true -- save undo history

@@ -1,27 +1,34 @@
 return {
 	"lukas-reineke/indent-blankline.nvim",
 	config = function()
-		local indent_blankline = require("indent_blankline")
+		local indent_blankline = require("ibl")
 
-		vim.cmd([[highlight IndentBlanklineIndent1 guifg=#f7768e gui=nocombine]])
-		vim.cmd([[highlight IndentBlanklineIndent2 guifg=#e0af68 gui=nocombine]])
-		vim.cmd([[highlight IndentBlanklineIndent3 guifg=#9ece6a gui=nocombine]])
-		vim.cmd([[highlight IndentBlanklineIndent4 guifg=#7aa2f7 gui=nocombine]])
-		vim.cmd([[highlight IndentBlanklineIndent5 guifg=#bb9af7 gui=nocombine]])
-		vim.cmd([[highlight IndentBlanklineIndent6 guifg=#7dcfff gui=nocombine]])
+		local highlight = {
+			"RainbowRed",
+			"RainbowYellow",
+			"RainbowBlue",
+			"RainbowOrange",
+			"RainbowGreen",
+			"RainbowViolet",
+			"RainbowCyan",
+		}
 
-		indent_blankline.setup({
-			filetype_exclude = {},
-			show_current_context = true,
-			show_current_context_start = true,
-			char_highlight_list = {
-				"IndentBlanklineIndent1",
-				"IndentBlanklineIndent2",
-				"IndentBlanklineIndent3",
-				"IndentBlanklineIndent4",
-				"IndentBlanklineIndent5",
-				"IndentBlanklineIndent6",
-			},
-		})
+		local hooks = require("ibl.hooks")
+		-- create the highlight groups in the highlight setup hook, so they are reset
+		-- every time the colorscheme changes
+		hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+			vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#f7768e" })
+			vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#e0af68" })
+			vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#7aa2f7" })
+			vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+			vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#9ece6a" })
+			vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#bb9af7" })
+			vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#7dcfff" })
+		end)
+
+		vim.g.rainbow_delimiters = { highlight = highlight }
+		indent_blankline.setup({ indent = { highlight = highlight } })
+
+		hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
 	end,
 }
