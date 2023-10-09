@@ -36,6 +36,11 @@ return {
 				"<cmd>lua require('neotest').output_panel.toggle()<cr>",
 				desc = "Toggle tests output panel",
 			},
+			{
+				"<leader>tC",
+				"<cmd>lua require('neotest').run.run({vim.loop.cwd(), jestCommand = 'jest --coverage ' })<cr>",
+				desc = "Run test coverage",
+			},
 		},
 	},
 	{
@@ -47,6 +52,27 @@ return {
 					require("neotest").run.run({ strategy = "dap" })
 				end,
 				desc = "Debug Nearest",
+			},
+		},
+	},
+	{
+		"andythigpen/nvim-coverage",
+		opts = {},
+		keys = {
+			{
+				"<leader>tc",
+				"<cmd>Coverage<cr>",
+				desc = "Load a coverage report and show results",
+			},
+			{
+				"<leader>tcc",
+				"<cmd>CoverageToggle<cr>",
+				desc = "Show/Hide test coverage",
+			},
+			{
+				"<leader>tcs",
+				"<cmd>CoverageSummary<cr>",
+				desc = "Display coverage summary",
 			},
 		},
 	},
