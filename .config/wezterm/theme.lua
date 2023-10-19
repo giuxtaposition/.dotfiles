@@ -27,10 +27,10 @@ function module.apply_to_config(config)
 		},
 	}
 
-	config.font = wezterm.font("JetBrainsMono Nerd Font")
+	config.font = wezterm.font_with_fallback({ "JetBrains Mono Nerd Font", "Symbols Nerd Font Mono" })
 
 	config.window_frame = {
-		font = wezterm.font("JetBrainsMono Nerd Font"),
+		font = wezterm.font("JetBrains Mono Nerd Font"),
 	}
 	local basename = function(s)
 		return string.gsub(s, "(.*[/\\])(.*)", "%2")
