@@ -45,8 +45,8 @@ Map("i", "<C-k>", "<Up>", { desc = "Move up in insert mode" })
 Map("i", "<C-l>", "<Right>", { desc = "Move right in insert mode" })
 
 -- Move Lines
-Map("n", "<leader>j>", ":m .+1<cr>==", { desc = "Move line down" })
-Map("n", "<leader>k>", ":m .-2<cr>==", { desc = "Move line up" })
+Map("n", "<S-A-j>", ":m .+1<cr>==", { desc = "Move line down" })
+Map("n", "<S-A-k>", ":m .-2<cr>==", { desc = "Move line up" })
 Map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
 Map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
 Map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move line down" })
