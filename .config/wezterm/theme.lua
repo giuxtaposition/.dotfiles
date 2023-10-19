@@ -27,7 +27,11 @@ function module.apply_to_config(config)
 		},
 	}
 
-	config.font = wezterm.font_with_fallback({ "JetBrains Mono Nerd Font", "Symbols Nerd Font Mono" })
+	config.font = wezterm.font_with_fallback({
+		"JetBrains Mono Nerd Font",
+		"Symbols Nerd Font Mono",
+		"Noto Serif CJK KR",
+	})
 
 	config.window_frame = {
 		font = wezterm.font("JetBrains Mono Nerd Font"),
