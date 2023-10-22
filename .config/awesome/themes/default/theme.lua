@@ -7,6 +7,17 @@ local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local theme_path = gfs.get_configuration_dir() .. "themes/default/"
 local theme = {}
+local beautiful = require("beautiful")
+local menubar_utils = require("menubar.utils")
+
+beautiful.icon_theme = "candy-icons"
+
+client.connect_signal("property::class", function(c)
+	if not c.class then
+		return
+	end
+	c.theme_icon = menubar_utils.lookup_icon(string.lower(c.class)) or c.icon
+end)
 
 theme.font = "JetBrainsMono Nerd Font 11"
 
@@ -32,6 +43,7 @@ theme.bg_light = "#313244"
 theme.bg_dark = "#11111b"
 
 theme.fg_normal = "#cdd6f4"
+theme.fg_dark = "#a6adc8"
 
 theme.border_width = dpi(2)
 theme.border_normal = "#313244"

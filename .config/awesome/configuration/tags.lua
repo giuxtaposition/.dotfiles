@@ -20,9 +20,5 @@ end)
 
 screen.connect_signal("request::desktop_decoration", function(s)
 	-- Each screen has its own tag table.
-	awful.tag(
-		{ " ", " ", " ", " ", " ", " ", " ", " ", " " },
-		s,
-		awful.layout.layouts[1]
-	)
+	awful.tag({ "", "", "", "", "", "", "", "", "" }, s, awful.layout.layouts[1])
 end)

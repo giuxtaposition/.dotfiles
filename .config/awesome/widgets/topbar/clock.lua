@@ -2,13 +2,17 @@ local wibox = require("wibox")
 local gears = require("gears")
 local beautiful = require("beautiful")
 
+local clock_format = "%A %B %d, %H:%M"
+local clock = wibox.widget.textclock()
+clock.format = "<span foreground='" .. beautiful.fg_dark .. "'>" .. clock_format .. "</span>"
+
 -- Clock widget
 local clock_widget = {
 	{
 		{
 			{
 				{
-					widget = wibox.widget.textclock(),
+					widget = clock,
 				},
 				left = 6,
 				right = 6,
