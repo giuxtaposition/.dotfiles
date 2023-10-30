@@ -16,6 +16,7 @@ wezterm **\<leader\>** key = <kbd>Ctrl + a</kbd>
 | <kbd>Alt + w </kbd>                                   | print description of command under cursor                                                        | fish     |
 | <kbd>Alt + c </kbd>                                   | capitalise current word under cursor                                                             | fish     |
 | <kbd>Alt + u </kbd>                                   | make uppercase current word under cursor                                                         | fish     |
+| <kbd>Alt + s </kbd>                                   | add sudo to last command                                                                         | fish     |
 | <kbd>Ctrl + l </kbd>                                  | clear screen                                                                                     | fish     |
 | <kbd>Ctrl + Alt + f </kbd>                            | search directory                                                                                 | fzf.fish |
 | <kbd>Ctrl + Alt + l </kbd>                            | git log                                                                                          | fzf.fish |
