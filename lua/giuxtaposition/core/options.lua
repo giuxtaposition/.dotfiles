@@ -1,5 +1,7 @@
 local opt = vim.opt
 
+opt.termguicolors = true
+
 -- line numbers
 opt.relativenumber = true
 opt.number = true
@@ -9,6 +11,14 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 opt.expandtab = true
 opt.smartindent = true
+
+-- fold
+opt.foldcolumn = "1" -- '0' is not bad
+opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+opt.foldlevelstart = 99
+opt.foldenable = true
+
+opt.inccommand = "split" -- Get a preview of replacements
 
 -- line wrapping
 opt.wrap = true

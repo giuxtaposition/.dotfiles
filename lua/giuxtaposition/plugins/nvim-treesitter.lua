@@ -11,6 +11,7 @@ return {
 		-- enable syntax highlighting
 		highlight = {
 			enable = true,
+			additional_vim_regex_highlighting = { "markdown" },
 		},
 		-- enable indentation
 		indent = { enable = true },
@@ -36,7 +37,7 @@ return {
 			"gitignore",
 			"markdown",
 			"markdown_inline",
-      "nix",
+			"nix",
 		},
 		-- auto install above language parsers
 		auto_install = true,
