@@ -11,7 +11,7 @@ if wezterm.config_builder then
 end
 
 config.default_workspace = "home"
-config.default_prog = { "/usr/bin/fish", "-l" } -- use fish as shell
+-- config.default_prog = { "/usr/bin/fish", "-l" } -- use fish as shell
 
 -- start terminal maximized
 wezterm.on("gui-startup", function(cmd)
