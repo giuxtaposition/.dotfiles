@@ -127,19 +127,18 @@ return {
 			on_attach = on_attach,
 		})
 
-    -- nix
-    lspconfig["nil_ls"].setup({
-      autostart = true,
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = {
-        ["nil"] = {
-          formatting = {
-            command = { "nixpkgs-fmt" },
-          },
-        },
-      },
-    })
-
+		-- nix
+		lspconfig["nil_ls"].setup({
+			autostart = true,
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				["nil"] = {
+					formatting = {
+						command = { "nixpkgs-fmt" },
+					},
+				},
+			},
+		})
 	end,
 }

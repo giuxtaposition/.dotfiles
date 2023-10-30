@@ -30,7 +30,8 @@ return {
 				"svelte",
 				"emmet_ls",
 				"marksman",
-        "nil_ls",
+				"nil_ls",
+				"nil_ls",
 			},
 			automatic_installation = true,
 		})
@@ -41,7 +42,7 @@ return {
 				"prettier", -- ts/js formatter
 				"stylua", -- lua formatter
 				"eslint_d", -- ts/js linter
-        "misspell",
+				"misspell",
 			},
 			automatic_installation = true,
 		})
