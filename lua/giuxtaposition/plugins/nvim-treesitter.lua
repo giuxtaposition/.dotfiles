@@ -36,6 +36,7 @@ return {
 			"gitignore",
 			"markdown",
 			"markdown_inline",
+      "nix",
 		},
 		-- auto install above language parsers
 		auto_install = true,
