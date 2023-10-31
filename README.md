@@ -68,5 +68,6 @@ nixos-install --flake .#kumiko
 
 ```bash
 nix flake update # to update the flake.lock file (packages versions)
-sudo nixos-rebuild switch --flake .#kumiko # update and rebuild config
+sudo nixos-rebuild switch --flake .#kumiko # update and rebuild nixos config
+sudo home-manager switch --flake .#giu@kumiko # update and rebuild home-manager config
 ```

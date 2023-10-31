@@ -7,16 +7,8 @@
   ...
 }: {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
     ./hardware-configuration.nix
   ];
-
-  home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      giu = import ../home-manager/home.nix;
-    };
-  };
 
   nixpkgs = {
     # You can add overlays here
@@ -164,6 +156,7 @@
     };
     systemPackages = with pkgs; [
       # System-Wide Packages
+      home-manager
       firefox
       ark # archiving tool
       libsForQt5.qt5.qtgraphicaleffects
