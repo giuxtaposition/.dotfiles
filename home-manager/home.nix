@@ -97,35 +97,35 @@
   };
 
    home.file."${config.home.homeDirectory}/.config/nvim" = {
-     source = ../.config/nvim;
+     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/nvim";
    };
   
    home.file."${config.home.homeDirectory}/.config/awesome" = {
-     source = ../.config/awesome;
+     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/awesome";
    };
 
    home.file."${config.home.homeDirectory}/.config/wezterm" = {
-     source = ../.config/wezterm;
+     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/wezterm";
    };
 
    home.file."${config.home.homeDirectory}/.config/fish" = {
-     source = ../.config/fish;
+     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/fish";
    };
 
    home.file."${config.home.homeDirectory}/.config/rofi" = {
-     source = ../.config/rofi;
+     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/rofi";
    };
   
    home.file."${config.home.homeDirectory}/.config/neofetch" = {
-     source = ../.config/neofetch;
+     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
    };
   
    home.file."${config.home.homeDirectory}/.config/starship.toml" = {
-     source = ../.config/starship.toml;
+     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
    }; 
   
    home.file."${config.home.homeDirectory}/.config/lazygit/config.yml" = {
-     source = ../.config/lazygit/config.yml;
+     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/lazygit/config.yml";
    };
   
    home.file."${config.home.homeDirectory}/.local/share/icons/candy-icons" = {

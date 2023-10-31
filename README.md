@@ -58,8 +58,8 @@ swapon /dev/sda2
 ```bash
 nixos-generate-config --root /mnt # generate default configuration
 nix-env -iA nixos.git # install git
-git clone https://github.com/giuxtaposition/.dotfiles /mnt/etc/nixos/giu
-cd /mnt/etc/nixos/giu
+git clone https://github.com/giuxtaposition/.dotfiles /home/giu/.dotfiles
+cd /home/giu/.dotfiles
 cp /mnt/etc/nixos/hardware-configuration.nix ./nixos # copy generated hardware-configuration
 nixos-install --flake .#kumiko
 ```
@@ -69,5 +69,5 @@ nixos-install --flake .#kumiko
 ```bash
 nix flake update # to update the flake.lock file (packages versions)
 sudo nixos-rebuild switch --flake .#kumiko # update and rebuild nixos config
-sudo home-manager switch --flake .#giu@kumiko # update and rebuild home-manager config
+home-manager switch --flake .#giu@kumiko # update and rebuild home-manager config
 ```
