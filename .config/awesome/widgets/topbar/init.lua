@@ -35,6 +35,7 @@ local TopBar = function(s)
 		{ -- Right widgets
 			layout = wibox.layout.fixed.horizontal,
 			require("widgets.topbar.clock")[1],
+			require("widgets.topbar.battery")[1],
 		},
 	})
 

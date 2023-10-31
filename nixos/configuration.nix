@@ -199,6 +199,7 @@
       unzip
       gcc
       tree-sitter
+      acpi
 
       # Fish plugins
       fishPlugins.fzf-fish

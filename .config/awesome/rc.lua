@@ -34,6 +34,9 @@ require("configuration.init")
 _G.root.keys(require("configuration.keymaps").keymaps)
 _G.root.buttons(require("configuration.mouse.desktop"))
 
+-- Setup daemons
+require("evil")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
