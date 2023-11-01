@@ -181,6 +181,7 @@
       tree-sitter
       acpi # power management
       brightnessctl # screen brightness
+      pamixer
 
       # Fish plugins
       fishPlugins.fzf-fish

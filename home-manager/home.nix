@@ -17,6 +17,12 @@
   home = {
     username = "giu";
     homeDirectory = "/home/giu";
+
+    sessionVariables = {
+      XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
+      XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
+      XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
+    };
   };
 
   xdg = {
