@@ -1,14 +1,5 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+{ inputs, outputs, lib, config, pkgs, ... }: {
+  imports = [ ./hardware-configuration.nix ];
 
   nixpkgs = {
     # You can add overlays here
@@ -28,19 +19,18 @@
       #   });
       # })
     ];
-    config = {
-      allowUnfree = true;
-    };
+    config = { allowUnfree = true; };
   };
 
   nix = {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
-    registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
 
     # This will additionally add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}")
+      config.nix.registry;
 
     settings = {
       experimental-features = "nix-command flakes";
@@ -78,7 +68,7 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      extraGroups = ["wheel" "video" "audio" "networkmanager" "docker"];
+      extraGroups = [ "wheel" "video" "audio" "networkmanager" "docker" ];
       shell = pkgs.fish;
     };
   };
@@ -105,50 +95,38 @@
       xkbOptions = "ctrl:swapcaps";
       displayManager = {
         sddm.enable = true;
-        sddm.theme = let 
+        sddm.theme = let
           stdenv = pkgs.stdenv;
           src = inputs.sddm-sugar-catppuccin-theme;
-          in 
-        "${import ../pkgs/sddm-sugar-catppuccin-theme.nix { 
+        in "${import ../pkgs/sddm-sugar-catppuccin-theme.nix {
           inherit stdenv src;
         }}";
 
-        defaultSession = "none+awesome"; #need to add none to use window manager without desktop manager
+        defaultSession =
+          "none+awesome"; # need to add none to use window manager without desktop manager
       };
       windowManager.awesome = {
         enable = true;
-        luaModules = with pkgs.luaPackages; [
-          luarocks
-          luadbi-mysql
-          lgi
-        ];
+        luaModules = with pkgs.luaPackages; [ luarocks luadbi-mysql lgi ];
       };
     };
     blueman.enable = true;
     openssh.enable = true;
   };
 
-
   # Sound
-  sound = {
-    enable = true;
-  };
+  sound = { enable = true; };
 
   hardware = {
     pulseaudio = { enable = true; };
     bluetooth = {
       enable = true;
       hsphfpd.enable = true;
-      settings =
-        {
-          General = {
-            Enable = "Source,Sink,Media,Socket";
-          };
-        };
+      settings = { General = { Enable = "Source,Sink,Media,Socket"; }; };
     };
   };
 
- environment = {
+  environment = {
     variables = {
       TERMINAL = "wezterm";
       EDITOR = "nvim";
@@ -201,7 +179,8 @@
       unzip
       gcc
       tree-sitter
-      acpi
+      acpi # power management
+      brightnessctl # screen brightness
 
       # Fish plugins
       fishPlugins.fzf-fish
@@ -209,7 +188,6 @@
       # TODO fishPlugins.nvm 
     ];
   };
-
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

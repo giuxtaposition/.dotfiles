@@ -1,4 +1,5 @@
 local top_bar = require("widgets.topbar.init")
+require("widgets.popup")
 
 -- Create top_bar widget for each screen
 screen.connect_signal("request::desktop_decoration", function(s)
