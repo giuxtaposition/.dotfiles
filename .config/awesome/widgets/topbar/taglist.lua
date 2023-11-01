@@ -3,7 +3,7 @@ local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
 local dpi = require("beautiful.xresources").apply_dpi
-local superKey = require("configuration.keymaps").superKey
+local modKey = require("configuration.keymaps").modKey
 
 local get_taglist = function(s)
 	-- Taglist buttons
@@ -12,13 +12,13 @@ local get_taglist = function(s)
 		awful.button({}, 1, function(t)
 			t:view_only()
 		end),
-		awful.button({ superKey }, 1, function(t)
+		awful.button({ modKey }, 1, function(t)
 			if client.focus then
 				client.focus:move_to_tag(t)
 			end
 		end),
 		awful.button({}, 3, awful.tag.viewtoggle),
-		awful.button({ superKey }, 3, function(t)
+		awful.button({ modKey }, 3, function(t)
 			if client.focus then
 				client.focus:toggle_tag(t)
 			end

@@ -1,16 +1,9 @@
 local menubar = require("menubar")
 
 apps = {
-
-	-- Your default terminal
 	terminal = "wezterm",
-
-	-- Your default text editor
-	editor = os.getenv("EDITOR") or "vim",
-
-	-- editor_cmd = terminal .. " -e " .. editor,
-
-	explorer = "pcmanfm",
+	editor = os.getenv("EDITOR") or "nvim",
+	explorer = "thunar",
 	browser = "firefox",
 }
 

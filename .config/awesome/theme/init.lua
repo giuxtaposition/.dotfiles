@@ -5,7 +5,7 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
-local theme_path = gfs.get_configuration_dir() .. "themes/default/"
+local theme_path = gfs.get_configuration_dir() .. "theme/"
 local theme = {}
 local beautiful = require("beautiful")
 local menubar_utils = require("menubar.utils")
@@ -99,4 +99,4 @@ theme.layout_cornerse = theme_path .. "layouts/cornersew.png"
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 
-return theme
+beautiful.init(theme)

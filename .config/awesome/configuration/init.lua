@@ -1,4 +1,5 @@
-return {
-	keys = require("configuration.keymaps"),
-	apps = require("configuration.apps"),
-}
+require("configuration.keymaps")
+require("configuration.apps")
+require("configuration.tags")
+require("configuration.rules")
+require("configuration.titlebars")

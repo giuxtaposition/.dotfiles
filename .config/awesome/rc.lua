@@ -7,9 +7,6 @@ local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 
--- Theme handling library
-local beautiful = require("beautiful")
-
 -- Notification library
 local naughty = require("naughty")
 
@@ -17,25 +14,20 @@ local naughty = require("naughty")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_configuration_dir() .. "themes/default/theme.lua")
+-- theme 🖌️
+require("theme")
+require("ui")
+
+-- configs ⚙️
+require("configuration")
+
+-- Setup daemons
+require("evil")
+
 -- Init all modules (You can add/remove active modules here)
 require("modules.auto-start")
 require("modules.sloppy-focus")
 require("modules.set-wallpaper")
-
--- Setup UI Elements
-require("ui")
-
--- Setup all configurations
-require("configuration.tags")
-require("configuration.client")
-require("configuration.init")
-_G.root.keys(require("configuration.keymaps").keymaps)
-_G.root.buttons(require("configuration.mouse.desktop"))
-
--- Setup daemons
-require("evil")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
