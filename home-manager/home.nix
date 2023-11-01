@@ -1,13 +1,5 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: 
-{
-  imports = [];
+{ inputs, outputs, lib, config, pkgs, ... }: {
+  imports = [ ];
 
   nixpkgs = {
     overlays = [
@@ -40,24 +32,21 @@
 
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs; [ 
-    steam         
-    aseprite      # Pixel Art Editor
-    calibre       # Library Management
-    deluge        # Torrent Client
-    kazam         # Screenshot and screencast tool
-    slack         # Messaging App
-    discord       # Messaging App
+  home.packages = with pkgs; [
+    steam
+    aseprite # Pixel Art Editor
+    calibre # Library Management
+    deluge # Torrent Client
+    kazam # Screenshot and screencast tool
+    slack # Messaging App
+    discord # Messaging App
     mpv-unwrapped # Media Player
-    
+
     # Fonts
-    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ];})
+    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
-
-
   programs.home-manager.enable = true;
-
 
   # GIT CONFIG
   programs.git = {
@@ -65,9 +54,7 @@
     userName = "giuxtaposition";
     userEmail = "yg97.cs@gmail.com";
     extraConfig = {
-      core = {
-        editor = "nvim";
-      };
+      core = { editor = "nvim"; };
       pull.rebase = true;
       init.defaultBranch = "main";
     };
@@ -91,10 +78,11 @@
       unstable.nil
 
       # Linters and formatters
-      unstable.prettierd        # typescript formatter
-      unstable.eslint_d         # typescript linter
-      unstable.stylua           # lua formatter
-      unstable.codespell        # code spell
+      unstable.prettierd # typescript formatter
+      unstable.eslint_d # typescript linter
+      unstable.stylua # lua formatter
+      unstable.codespell # code spell
+      unstable.nixfmt
     ];
   };
 
@@ -105,9 +93,7 @@
       name = "Sweet-Dark";
       package = pkgs.sweet;
     };
-    font = {
-      name = "JetBrains Mono";
-    };
+    font = { name = "JetBrains Mono"; };
     iconTheme = {
       name = "candy-icons";
       package = pkgs.candy-icons;
@@ -121,41 +107,49 @@
     size = 16;
   };
 
-   home.file."${config.home.homeDirectory}/.config/nvim" = {
-     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/nvim";
-   };
-  
-   home.file."${config.home.homeDirectory}/.config/awesome" = {
-     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/awesome";
-   };
+  home.file."${config.home.homeDirectory}/.config/nvim" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/nvim";
+  };
 
-   home.file."${config.home.homeDirectory}/.config/wezterm" = {
-     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/wezterm";
-   };
+  home.file."${config.home.homeDirectory}/.config/awesome" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/awesome";
+  };
 
-   home.file."${config.home.homeDirectory}/.config/fish" = {
-     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/fish";
-   };
+  home.file."${config.home.homeDirectory}/.config/wezterm" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/wezterm";
+  };
 
-   home.file."${config.home.homeDirectory}/.config/rofi" = {
-     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/rofi";
-   };
-  
-   home.file."${config.home.homeDirectory}/.config/neofetch" = {
-     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
-   };
-  
-   home.file."${config.home.homeDirectory}/.config/starship.toml" = {
-     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
-   }; 
-  
-   home.file."${config.home.homeDirectory}/.config/lazygit/config.yml" = {
-     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/lazygit/config.yml";
-   };
-  
-   home.file."${config.home.homeDirectory}/.local/share/icons/candy-icons" = {
-     source = pkgs.candy-icons;
-   };
+  home.file."${config.home.homeDirectory}/.config/fish" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/fish";
+  };
+
+  home.file."${config.home.homeDirectory}/.config/rofi" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/rofi";
+  };
+
+  home.file."${config.home.homeDirectory}/.config/neofetch" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
+  };
+
+  home.file."${config.home.homeDirectory}/.config/starship.toml" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
+  };
+
+  home.file."${config.home.homeDirectory}/.config/lazygit/config.yml" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/lazygit/config.yml";
+  };
+
+  home.file."${config.home.homeDirectory}/.local/share/icons/candy-icons" = {
+    source = pkgs.candy-icons;
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

@@ -25,6 +25,7 @@ return {
 						return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
 					end,
 				}),
+				formatting.nixfmt,
 				diagnostics.codespell.with({ -- code spell
 					filetypes = {
 						"javascript",
@@ -33,7 +34,7 @@ return {
 						"typescriptreact",
 						"lua",
 						"markdown",
-            "nix"
+						"nix",
 					},
 				}),
 			},
