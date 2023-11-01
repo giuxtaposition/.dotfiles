@@ -16,7 +16,7 @@ return {
 			-- add package.json as identifier for root (for typescript monorepos)
 			root_dir = null_ls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
 			sources = {
-				formatting.prettier.with({
+				formatting.prettierd.with({
 					extra_filetypes = { "svelte" },
 				}), -- js/ts formatter
 				formatting.stylua, -- lua formatter
@@ -33,16 +33,7 @@ return {
 						"typescriptreact",
 						"lua",
 						"markdown",
-					},
-				}),
-				diagnostics.misspell.with({
-					filetypes = {
-						"javascript",
-						"javascriptreact",
-						"typescript",
-						"typescriptreact",
-						"lua",
-						"markdown",
+            "nix"
 					},
 				}),
 			},

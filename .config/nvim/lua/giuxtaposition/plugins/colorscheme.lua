@@ -15,7 +15,6 @@ return {
 				nvimtree = true,
 				cmp = true,
 				indent_blankline = { enabled = true, colored_indent_levels = false },
-				mason = true,
 				treesitter = true,
 				lsp_saga = true,
 				neogit = true,

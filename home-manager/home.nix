@@ -55,7 +55,7 @@
   ];
 
 
-  programs.neovim.enable = true;
+
   programs.home-manager.enable = true;
 
 
@@ -71,6 +71,31 @@
       pull.rebase = true;
       init.defaultBranch = "main";
     };
+  };
+
+  # NEOVIM CONFIG
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    extraPackages = with pkgs; [
+      # Language servers
+      unstable.vscode-langservers-extracted
+      unstable.nodePackages_latest.typescript-language-server
+      unstable.nodePackages_latest.svelte-language-server
+      unstable.emmet-ls
+      unstable.lua-language-server
+      unstable.marksman
+      unstable.nil
+
+      # Linters and formatters
+      unstable.prettierd        # typescript formatter
+      unstable.eslint_d         # typescript linter
+      unstable.stylua           # lua formatter
+      unstable.codespell        # code spell
+    ];
   };
 
   # GTK CONFIG

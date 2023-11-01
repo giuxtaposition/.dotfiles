@@ -181,6 +181,8 @@
       go
       unstable.rustc
       cargo
+      cmake
+      gnumake
 
       # Typescript/Javascript programming
       nodejs_20
