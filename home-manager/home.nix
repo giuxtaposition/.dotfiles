@@ -86,6 +86,19 @@
     ];
   };
 
+  home.file."${config.home.homeDirectory}/.dotfiles/.config/nvim/lua/giuxtaposition/core/nixosExtra.lua" =
+    {
+      text = ''
+        vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'
+      '';
+
+    };
+
+  home.file."${config.home.homeDirectory}/.config/nvim" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/nvim";
+  };
+
   # GTK CONFIG
   gtk = {
     enable = true;
@@ -105,11 +118,6 @@
     name = "Dracula-cursors";
     package = pkgs.dracula-theme;
     size = 16;
-  };
-
-  home.file."${config.home.homeDirectory}/.config/nvim" = {
-    source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.dotfiles/.config/nvim";
   };
 
   home.file."${config.home.homeDirectory}/.config/awesome" = {
