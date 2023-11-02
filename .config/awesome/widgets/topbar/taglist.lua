@@ -34,13 +34,13 @@ local get_taglist = function(s)
 	----------------------------------------------------------------------
 
 	local unfocus_icon = " "
-	local unfocus_color = beautiful.grey
+	local unfocus_color = beautiful.lavender
 
 	local empty_icon = " "
-	local empty_color = beautiful.grey
+	local empty_color = beautiful.overlay0
 
 	local focus_icon = " "
-	local focus_color = beautiful.purple
+	local focus_color = beautiful.lavender
 
 	----------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ local get_taglist = function(s)
 		self.fg = tag_color
 
 		self:connect_signal("mouse::enter", function()
-			local hover_color = beautiful.purple_light
+			local hover_color = beautiful.blue
 			self.fg = hover_color
 		end)
 		self:connect_signal("mouse::leave", function()

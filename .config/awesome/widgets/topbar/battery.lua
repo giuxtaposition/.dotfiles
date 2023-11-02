@@ -34,7 +34,6 @@ local battery_widget_container = {
 				widget = wibox.container.margin,
 			},
 			shape = gears.shape.rounded_bar,
-			fg = beautiful.purple,
 			bg = beautiful.bg_light,
 			widget = wibox.container.background,
 		},

@@ -24,34 +24,45 @@ end)
 theme.font = "JetBrainsMono Nerd Font Mono 11"
 
 -- theme colors
-theme.blue = "#26BBD9"
-theme.blue_light = "#3FC6DE"
-theme.cyan = "#59E3E3"
-theme.cyan_light = "#6BE6E6"
-theme.green = "#29D398"
-theme.green_light = "#3FDAA4"
-theme.pink = "#EE64AE"
-theme.pink_light = "#F075B7"
-theme.red = "#E95678"
-theme.red_light = "#EC6A88"
-theme.yellow = "#FAB795"
-theme.yellow_light = "#FBC3A7"
-theme.purple = "#b4befe"
-theme.purple_light = "#c4cbfd"
-theme.grey = "#7f849c"
+theme.rosewater = "#f5e0dc"
+theme.flamingo = "#f2cdcd"
+theme.pink = "#f5c2e7"
+theme.mauve = "#cba6f7"
+theme.red = "#f38ba8"
+theme.maroon = "#eba0ac"
+theme.peach = "#fab387"
+theme.yellow = "#f9e2af"
+theme.green = "#a6e3a1"
+theme.teal = "#94e2d5"
+theme.sky = "#89dceb"
+theme.sapphire = "#74c7ec"
+theme.blue = "#89b4fa"
+theme.lavender = "#b4befe"
+theme.text = "#cdd6f4"
+theme.subtext1 = "#bac2de"
+theme.subtext0 = "#a6adc8"
+theme.overlay2 = "#9399b2"
+theme.overlay1 = "#7f849c"
+theme.overlay0 = "#6c7086"
+theme.surface2 = "#585b70"
+theme.surface1 = "#45475a"
+theme.surface0 = "#313244"
+theme.base = "#1e1e2e"
+theme.mantle = "#181825"
+theme.crust = "#11111b"
 
-theme.bg_normal = "#1e1e2e"
-theme.bg_light = "#313244"
-theme.bg_dark = "#11111b"
+theme.bg_normal = theme.base
+theme.bg_light = theme.surface0
+theme.bg_dark = theme.crust
 
-theme.fg_normal = "#cdd6f4"
-theme.fg_dark = "#a6adc8"
+theme.fg_normal = theme.text
+theme.fg_dark = theme.subtext0
 
 theme.border_width = dpi(2)
 theme.border_radius = dpi(6)
-theme.border_normal = "#313244"
-theme.border_focus = theme.purple
-theme.border_marked = theme.yellow_light
+theme.border_normal = theme.surface0
+theme.border_focus = theme.lavender
+theme.border_marked = theme.yellow
 
 -- topbar config
 theme.topbar_position = "top"

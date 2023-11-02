@@ -2,34 +2,21 @@ local awful = require("awful")
 local gears = require("gears")
 local beautiful = require("beautiful")
 local wibox = require("wibox")
+local dpi = require("beautiful.xresources").apply_dpi
 
 local get_tasklist = function(s)
 	local cell = {
 		{
 			{
+
 				{
-					{
-						{
-							id = "icon",
-							widget = wibox.widget.imagebox,
-						},
-						left = 0,
-						right = 5,
-						top = 2,
-						bottom = 2,
-						widget = wibox.container.margin,
-					},
-					{
-						id = "text",
-						font = "JetBrainsMono Nerd Font 9",
-						widget = wibox.widget.textbox,
-					},
-					layout = wibox.layout.fixed.horizontal,
+					id = "icon",
+					widget = wibox.widget.imagebox,
 				},
-				left = 5,
-				right = 5,
-				top = 0,
-				bottom = 2,
+				left = dpi(5),
+				right = dpi(5),
+				top = dpi(4),
+				bottom = dpi(4),
 				widget = wibox.container.margin,
 			},
 			fg = beautiful.fg_normal,
@@ -40,8 +27,8 @@ local get_tasklist = function(s)
 		},
 		top = 6,
 		bottom = 6,
-		left = 6,
-		right = 6,
+		left = 4,
+		right = 4,
 		widget = wibox.container.margin,
 	}
 
