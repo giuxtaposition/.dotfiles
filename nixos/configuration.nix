@@ -148,7 +148,7 @@
 
       #Programming
       neovim
-      wezterm
+      unstable.wezterm
       git
       lazygit
       docker

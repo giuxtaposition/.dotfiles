@@ -1,5 +1,4 @@
 -- Enable sloppy focus, so that focus follows mouse.
-
 local beautiful = require("beautiful")
 
 client.connect_signal("mouse::enter", function(c)
@@ -12,4 +11,12 @@ end)
 client.connect_signal("unfocus", function(c)
 	c.border_color = beautiful.border_normal
 end)
--- }}}
+
+client.connect_signal("request::geometry", function(c)
+	if client.focus then
+		if not client.focus.fullscreen then
+			client.focus.border_width = beautiful.border_width
+			client.border_color = beautiful.border_focus
+		end
+	end
+end)

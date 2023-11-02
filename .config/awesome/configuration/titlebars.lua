@@ -1,6 +1,7 @@
 local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
+local beautiful = require("beautiful")
 
 -- Double click titlebar timer, how long it takes for a 2 clicks to be considered a double click
 function double_click_event_handler(double_click_event)
@@ -37,28 +38,46 @@ client.connect_signal("request::titlebars", function(c)
 		end)
 	)
 
-	awful.titlebar(c):setup({
-		{ -- Left
-			awful.titlebar.widget.iconwidget(c),
-			buttons = buttons,
-			layout = wibox.layout.fixed.horizontal,
-		},
-		{ -- Middle
-			{ -- Title
-				align = "center",
-				widget = awful.titlebar.widget.titlewidget(c),
+	awful
+		.titlebar(c, {
+			height = 20,
+			size = 35,
+			position = "left",
+			bg_normal = beautiful.bg_dark,
+			bg_focus = beautiful.bg_dark,
+		})
+		:setup({
+			{ -- Left
+				{
+					awful.titlebar.widget.closebutton(c),
+					awful.titlebar.widget.maximizedbutton(c),
+					awful.titlebar.widget.minimizebutton(c),
+
+					spacing = 0,
+					layout = wibox.layout.fixed.vertical(),
+				},
+				widget = wibox.container.margin,
+				top = 2,
+				bottom = 0,
+				right = 6,
+				left = 3,
 			},
-			buttons = buttons,
-			layout = wibox.layout.flex.horizontal,
-		},
-		{ -- Right
-			awful.titlebar.widget.floatingbutton(c),
-			awful.titlebar.widget.maximizedbutton(c),
-			awful.titlebar.widget.stickybutton(c),
-			awful.titlebar.widget.ontopbutton(c),
-			awful.titlebar.widget.closebutton(c),
-			layout = wibox.layout.fixed.horizontal(),
-		},
-		layout = wibox.layout.align.horizontal,
-	})
+			{
+				-- Middle
+				buttons = buttons,
+				layout = wibox.layout.flex.horizontal,
+			},
+			{ -- Right
+				{
+					awful.titlebar.widget.stickybutton(c),
+					layout = wibox.layout.fixed.vertical(),
+				},
+				widget = wibox.container.margin,
+				top = 0,
+				bottom = 0,
+				right = 6,
+				left = 3,
+			},
+			layout = wibox.layout.align.vertical,
+		})
 end)

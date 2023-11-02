@@ -73,28 +73,38 @@ theme.icon_theme = "candy-icons"
 theme.icons = {
 	left_arrow = theme_path .. "icons/left-arrow.png",
 	right_arrow = theme_path .. "icons/right-arrow.png",
+	music = theme_path .. "icons/music.png",
+	screenshot = theme_path .. "icons/screenshot.png",
+	settings = theme_path .. "icons/settings.png",
 }
 
--- regular
--- theme.titlebar_close_button_normal = theme_path .. "titlebar/close/close_1.png"
--- theme.titlebar_close_button_focus = theme_path .. "titlebar/close/close_2.png"
--- theme.titlebar_maximized_button_normal_inactive = theme_path .. "titlebar/maximize/maximize_1.png"
--- theme.titlebar_maximized_button_focus_inactive = theme_path .. "titlebar/maximize/maximize_2.png"
--- theme.titlebar_maximized_button_normal_active = theme_path .. "titlebar/maximize/maximize_3.png"
--- theme.titlebar_maximized_button_focus_active = theme_path .. "titlebar/maximize/maximize_3.png"
--- theme.titlebar_minimize_button_normal = theme_path .. "titlebar/minimize/minimize_1.png"
--- theme.titlebar_minimize_button_focus = theme_path .. "titlebar/minimize/minimize_2.png"
+-- Close Button
+theme.titlebar_close_button_normal = theme_path .. "titlebar/close-normal.png"
+theme.titlebar_close_button_focus = theme_path .. "titlebar/close-focus.png"
+theme.titlebar_close_button_normal_hover = theme_path .. "titlebar/close-normal-hover.png"
+theme.titlebar_close_button_focus_hover = theme_path .. "titlebar/close-focus-hover.png"
 
--- hover
--- theme.titlebar_close_button_normal_hover = theme_path .. "titlebar/close/close_3.png"
--- theme.titlebar_close_button_focus_hover = theme_path .. "titlebar/close/close_3.png"
--- theme.titlebar_maximized_button_normal_inactive_hover = theme_path .. "titlebar/maximize/maximize_3.png"
--- theme.titlebar_maximized_button_focus_inactive_hover = theme_path .. "titlebar/maximize/maximize_3.png"
--- theme.titlebar_maximized_button_normal_active_hover = theme_path .. "titlebar/maximize/maximize_3.png"
--- theme.titlebar_maximized_button_focus_active_hover = theme_path .. "titlebar/maximize/maximize_3.png"
--- theme.titlebar_minimize_button_normal_hover = theme_path .. "titlebar/minimize/minimize_3.png"
--- theme.titlebar_minimize_button_focus_hover = theme_path .. "titlebar/minimize/minimize_3.png"
--- theme.titlebar_height = dpi(28)
+-- Maximize Button
+theme.titlebar_maximized_button_normal_inactive = theme_path .. "titlebar/maximize-normal-inactive.png"
+theme.titlebar_maximized_button_focus_inactive = theme_path .. "titlebar/maximize-focus-inactive.png"
+theme.titlebar_maximized_button_normal_active = theme_path .. "titlebar/maximize-normal-active.png"
+theme.titlebar_maximized_button_focus_active = theme_path .. "titlebar/maximize-focus-active.png"
+theme.titlebar_maximized_button_normal_inactive_hover = theme_path .. "titlebar/maximize-hover.png"
+theme.titlebar_maximized_button_focus_inactive_hover = theme_path .. "titlebar/maximize-hover.png"
+theme.titlebar_maximized_button_normal_active_hover = theme_path .. "titlebar/maximize-hover.png"
+theme.titlebar_maximized_button_focus_active_hover = theme_path .. "titlebar/maximize-hover.png"
+
+-- Minimize Button
+theme.titlebar_minimize_button_normal = theme_path .. "titlebar/minimize-normal.png"
+theme.titlebar_minimize_button_focus = theme_path .. "titlebar/minimize-focus.png"
+theme.titlebar_minimize_button_normal_hover = theme_path .. "titlebar/minimize-hover.png"
+theme.titlebar_minimize_button_focus_hover = theme_path .. "titlebar/minimize-hover.png"
+
+-- Sticky Button
+theme.titlebar_sticky_button_normal_inactive = theme_path .. "titlebar/sticky-normal-inactive.png"
+theme.titlebar_sticky_button_focus_inactive = theme_path .. "titlebar/sticky-focus-inactive.png"
+theme.titlebar_sticky_button_normal_active = theme_path .. "titlebar/sticky-normal-active.png"
+theme.titlebar_sticky_button_focus_active = theme_path .. "titlebar/sticky-focus-active.png"
 
 theme.wallpaper = theme_path .. "background.jpg"
 
