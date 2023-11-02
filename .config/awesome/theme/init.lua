@@ -68,49 +68,52 @@ theme.border_marked = theme.yellow
 theme.topbar_position = "top"
 theme.topbar_height = dpi(40)
 
+-- Icons
+theme.icon_theme = "candy-icons"
+theme.icons = {
+	left_arrow = theme_path .. "icons/left-arrow.png",
+	right_arrow = theme_path .. "icons/right-arrow.png",
+}
+
 -- regular
-theme.titlebar_close_button_normal = theme_path .. "titlebar/close/close_1.png"
-theme.titlebar_close_button_focus = theme_path .. "titlebar/close/close_2.png"
-theme.titlebar_maximized_button_normal_inactive = theme_path .. "titlebar/maximize/maximize_1.png"
-theme.titlebar_maximized_button_focus_inactive = theme_path .. "titlebar/maximize/maximize_2.png"
-theme.titlebar_maximized_button_normal_active = theme_path .. "titlebar/maximize/maximize_3.png"
-theme.titlebar_maximized_button_focus_active = theme_path .. "titlebar/maximize/maximize_3.png"
-theme.titlebar_minimize_button_normal = theme_path .. "titlebar/minimize/minimize_1.png"
-theme.titlebar_minimize_button_focus = theme_path .. "titlebar/minimize/minimize_2.png"
+-- theme.titlebar_close_button_normal = theme_path .. "titlebar/close/close_1.png"
+-- theme.titlebar_close_button_focus = theme_path .. "titlebar/close/close_2.png"
+-- theme.titlebar_maximized_button_normal_inactive = theme_path .. "titlebar/maximize/maximize_1.png"
+-- theme.titlebar_maximized_button_focus_inactive = theme_path .. "titlebar/maximize/maximize_2.png"
+-- theme.titlebar_maximized_button_normal_active = theme_path .. "titlebar/maximize/maximize_3.png"
+-- theme.titlebar_maximized_button_focus_active = theme_path .. "titlebar/maximize/maximize_3.png"
+-- theme.titlebar_minimize_button_normal = theme_path .. "titlebar/minimize/minimize_1.png"
+-- theme.titlebar_minimize_button_focus = theme_path .. "titlebar/minimize/minimize_2.png"
 
 -- hover
-theme.titlebar_close_button_normal_hover = theme_path .. "titlebar/close/close_3.png"
-theme.titlebar_close_button_focus_hover = theme_path .. "titlebar/close/close_3.png"
-theme.titlebar_maximized_button_normal_inactive_hover = theme_path .. "titlebar/maximize/maximize_3.png"
-theme.titlebar_maximized_button_focus_inactive_hover = theme_path .. "titlebar/maximize/maximize_3.png"
-theme.titlebar_maximized_button_normal_active_hover = theme_path .. "titlebar/maximize/maximize_3.png"
-theme.titlebar_maximized_button_focus_active_hover = theme_path .. "titlebar/maximize/maximize_3.png"
-theme.titlebar_minimize_button_normal_hover = theme_path .. "titlebar/minimize/minimize_3.png"
-theme.titlebar_minimize_button_focus_hover = theme_path .. "titlebar/minimize/minimize_3.png"
-theme.titlebar_height = dpi(28)
+-- theme.titlebar_close_button_normal_hover = theme_path .. "titlebar/close/close_3.png"
+-- theme.titlebar_close_button_focus_hover = theme_path .. "titlebar/close/close_3.png"
+-- theme.titlebar_maximized_button_normal_inactive_hover = theme_path .. "titlebar/maximize/maximize_3.png"
+-- theme.titlebar_maximized_button_focus_inactive_hover = theme_path .. "titlebar/maximize/maximize_3.png"
+-- theme.titlebar_maximized_button_normal_active_hover = theme_path .. "titlebar/maximize/maximize_3.png"
+-- theme.titlebar_maximized_button_focus_active_hover = theme_path .. "titlebar/maximize/maximize_3.png"
+-- theme.titlebar_minimize_button_normal_hover = theme_path .. "titlebar/minimize/minimize_3.png"
+-- theme.titlebar_minimize_button_focus_hover = theme_path .. "titlebar/minimize/minimize_3.png"
+-- theme.titlebar_height = dpi(28)
 
 theme.wallpaper = theme_path .. "background.jpg"
 
 -- You can use your own layout icons like this:
-theme.layout_fairh = theme_path .. "layouts/fairhw.png"
-theme.layout_fairv = theme_path .. "layouts/fairvw.png"
-theme.layout_floating = theme_path .. "layouts/floatingw.png"
-theme.layout_magnifier = theme_path .. "layouts/magnifierw.png"
-theme.layout_max = theme_path .. "layouts/maxw.png"
-theme.layout_fullscreen = theme_path .. "layouts/fullscreenw.png"
-theme.layout_tilebottom = theme_path .. "layouts/tilebottomw.png"
-theme.layout_tileleft = theme_path .. "layouts/tileleftw.png"
-theme.layout_tile = theme_path .. "layouts/tilew.png"
-theme.layout_tiletop = theme_path .. "layouts/tiletopw.png"
-theme.layout_spiral = theme_path .. "layouts/spiralw.png"
-theme.layout_dwindle = theme_path .. "layouts/dwindlew.png"
-theme.layout_cornernw = theme_path .. "layouts/cornernww.png"
-theme.layout_cornerne = theme_path .. "layouts/cornernew.png"
-theme.layout_cornersw = theme_path .. "layouts/cornersww.png"
-theme.layout_cornerse = theme_path .. "layouts/cornersew.png"
-
--- Define the icon theme for application icons. If not set then the icons
--- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = nil
+-- theme.layout_fairh = theme_path .. "layouts/fairhw.png"
+-- theme.layout_fairv = theme_path .. "layouts/fairvw.png"
+-- theme.layout_floating = theme_path .. "layouts/floatingw.png"
+-- theme.layout_magnifier = theme_path .. "layouts/magnifierw.png"
+-- theme.layout_max = theme_path .. "layouts/maxw.png"
+-- theme.layout_fullscreen = theme_path .. "layouts/fullscreenw.png"
+-- theme.layout_tilebottom = theme_path .. "layouts/tilebottomw.png"
+-- theme.layout_tileleft = theme_path .. "layouts/tileleftw.png"
+-- theme.layout_tile = theme_path .. "layouts/tilew.png"
+-- theme.layout_tiletop = theme_path .. "layouts/tiletopw.png"
+-- theme.layout_spiral = theme_path .. "layouts/spiralw.png"
+-- theme.layout_dwindle = theme_path .. "layouts/dwindlew.png"
+-- theme.layout_cornernw = theme_path .. "layouts/cornernww.png"
+-- theme.layout_cornerne = theme_path .. "layouts/cornernew.png"
+-- theme.layout_cornersw = theme_path .. "layouts/cornersww.png"
+-- theme.layout_cornerse = theme_path .. "layouts/cornersew.png"
 
 beautiful.init(theme)

@@ -7,6 +7,7 @@ local beautiful = require("beautiful")
 ------------------------------------------------
 
 local clock = require("widgets.topbar.clock")
+local systray = require("widgets.topbar.systray")
 
 local calendar = require("widgets.topbar.calendar")({
 	placement = "top_center",
@@ -53,6 +54,7 @@ local TopBar = function(s)
 			{
 				-- Right widgets
 				layout = wibox.layout.fixed.horizontal,
+				systray,
 				require("widgets.topbar.battery")[1],
 			},
 		},
