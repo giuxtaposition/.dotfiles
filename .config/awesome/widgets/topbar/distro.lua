@@ -5,17 +5,16 @@ local beautiful = require("beautiful")
 local distro_widget = {
 	{
 		{
-			text = " ",
+			markup = "<span foreground='" .. beautiful.cyan_light .. "'> </span>",
 			font = "JetBrainsMono Nerd Font 15",
 			widget = wibox.widget.textbox,
 		},
 		left = 8,
-		right = 0,
+		right = 8,
 		top = 2,
 		bottom = 3,
 		widget = wibox.container.margin,
 	},
-	fg = beautiful.cyan_light,
 	widget = wibox.container.background,
 }
 return distro_widget

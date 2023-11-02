@@ -116,19 +116,19 @@ awful.keyboard.append_global_keybindings({
 
 -- Focus related keybindings
 awful.keyboard.append_global_keybindings({
-	awful.key({ modKey }, "j", function()
+	awful.key({ modKey }, "k", function()
 		awful.client.focus.byidx(1)
 	end, { description = "focus next by index", group = "client" }),
 
-	awful.key({ modKey }, "k", function()
+	awful.key({ modKey }, "j", function()
 		awful.client.focus.byidx(-1)
 	end, { description = "focus previous by index", group = "client" }),
 
-	awful.key({ modKey, shift }, "j", function()
+	awful.key({ modKey, shift }, "k", function()
 		awful.screen.focus_relative(1)
 	end, { description = "focus the next screen", group = "screen" }),
 
-	awful.key({ modKey, shift }, "k", function()
+	awful.key({ modKey, shift }, "j", function()
 		awful.screen.focus_relative(-1)
 	end, { description = "focus the previous screen", group = "screen" }),
 

@@ -20,5 +20,9 @@ end)
 
 screen.connect_signal("request::desktop_decoration", function(s)
 	-- Each screen has its own tag table.
-	awful.tag({ "", "", "", "", "", "", "", "", "" }, s, awful.layout.layouts[1])
+	awful.tag(
+		{ "Athena", "Artemis", "Aphrodite", "Persephone", "Hades", "Apollo", "Ares", "Zeus", "Poseidon" },
+		s,
+		awful.layout.layouts[1]
+	)
 end)

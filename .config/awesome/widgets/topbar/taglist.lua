@@ -46,17 +46,29 @@ local get_taglist = function(s)
 
 	-- Function to update the tags
 	local update_tags = function(self, c3)
-		local tagicon = self:get_children_by_id("icon_role")[1]
+		local tag_icon = self:get_children_by_id("icon_role")[1]
+		local tag_color
 		if c3.selected then
-			tagicon.text = focus_icon
-			self.fg = focus_color
+			tag_icon.text = focus_icon
+			tag_color = focus_color
 		elseif #c3:clients() == 0 then
-			tagicon.text = empty_icon
-			self.fg = empty_color
+			tag_icon.text = empty_icon
+			tag_color = empty_color
 		else
-			tagicon.text = unfocus_icon
-			self.fg = unfocus_color
+			tag_icon.text = unfocus_icon
+			tag_color = unfocus_color
 		end
+
+		self.prev_color = tag_color
+		self.fg = tag_color
+
+		self:connect_signal("mouse::enter", function()
+			local hover_color = beautiful.purple_light
+			self.fg = hover_color
+		end)
+		self:connect_signal("mouse::leave", function()
+			self.fg = self.prev_color
+		end)
 	end
 
 	----------------------------------------------------------------------
@@ -77,16 +89,17 @@ local get_taglist = function(s)
 			},
 			id = "background_role",
 			widget = wibox.container.background,
-			create_callback = function(self, c3, index, objects)
-				update_tags(self, c3)
+			create_callback = function(self, c, index, objects)
+				update_tags(self, c)
 			end,
 
-			update_callback = function(self, c3, index, objects)
-				update_tags(self, c3)
+			update_callback = function(self, c, index, objects)
+				update_tags(self, c)
 			end,
 		},
 		buttons = taglist_buttons,
 	})
+
 	return icon_taglist
 end
 

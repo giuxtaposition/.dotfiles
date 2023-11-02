@@ -17,7 +17,7 @@ local createPopup = function(color)
 	local progressbar = wibox.widget({
 		value = 1,
 		color = color,
-		background_color = beautiful.misc2,
+		background_color = beautiful.bg_light,
 		forced_width = dpi(100),
 		shape = function(cr, width, height)
 			gears.shape.rounded_rect(cr, width, height, beautiful.border_radius)

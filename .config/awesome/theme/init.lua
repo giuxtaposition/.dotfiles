@@ -46,6 +46,7 @@ theme.fg_normal = "#cdd6f4"
 theme.fg_dark = "#a6adc8"
 
 theme.border_width = dpi(2)
+theme.border_radius = dpi(6)
 theme.border_normal = "#313244"
 theme.border_focus = theme.purple
 theme.border_marked = theme.yellow_light
