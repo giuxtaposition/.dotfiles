@@ -12,11 +12,13 @@ local menubar_utils = require("menubar.utils")
 
 beautiful.icon_theme = "candy-icons"
 
+local icon_theme = require("lib.icon_theme")(beautiful.icon_theme)
+
 client.connect_signal("property::class", function(c)
 	if not c.class then
 		return
 	end
-	c.theme_icon = menubar_utils.lookup_icon(string.lower(c.class)) or c.icon
+	c.theme_icon = icon_theme:get_icon_path(c.class) or menubar_utils.lookup_icon(string.lower(c.class)) or c.icon
 end)
 
 theme.font = "JetBrainsMono Nerd Font Mono 11"
