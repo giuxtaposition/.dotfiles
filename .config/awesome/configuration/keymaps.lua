@@ -167,19 +167,19 @@ awful.keyboard.append_global_keybindings({
 		awful.tag.incmwfact(-0.05)
 	end, { description = "decrease master width factor", group = "layout" }),
 
-	awful.key({ modKey, shift }, "h", function()
+	awful.key({ modKey, shift }, "l", function()
 		awful.tag.incnmaster(1, nil, true)
 	end, { description = "increase the number of master clients", group = "layout" }),
 
-	awful.key({ modKey, shift }, "l", function()
+	awful.key({ modKey, shift }, "h", function()
 		awful.tag.incnmaster(-1, nil, true)
 	end, { description = "decrease the number of master clients", group = "layout" }),
 
-	awful.key({ modKey, shift }, "h", function()
+	awful.key({ modKey, alt }, "l", function()
 		awful.tag.incncol(1, nil, true)
 	end, { description = "increase the number of columns", group = "layout" }),
 
-	awful.key({ modKey, shift }, "l", function()
+	awful.key({ modKey, alt }, "h", function()
 		awful.tag.incncol(-1, nil, true)
 	end, { description = "decrease the number of columns", group = "layout" }),
 
@@ -253,8 +253,8 @@ awful.keyboard.append_global_keybindings({
 	}),
 
 	awful.key({
-		modifiers = { modKey },
-		keygroup = "numpad",
+		modifiers = { modKey, alt },
+		keygroup = "numrow",
 		description = "select layout directly",
 		group = "layout",
 		on_press = function(index)
