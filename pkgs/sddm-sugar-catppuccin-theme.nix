@@ -8,7 +8,7 @@ stdenv.mkDerivation {
   dontBuild = true;
 
   installPhase = ''
-    mkdir -p $out
-    cp -R ./* $out/
+    mkdir -p $out/sddm-sugar-catppuccin-theme
+    cp -R ./* $out/sddm-sugar-catppuccin-theme/
   '';
 }

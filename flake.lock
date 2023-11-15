@@ -56,6 +56,22 @@
         "type": "github"
       }
     },
+    "fish-catppuccin-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1698929621,
+        "narHash": "sha256-Dc/zdxfzAUM5NX8PxzfljRbYvO9f9syuLO8yBr+R3qg=",
+        "owner": "catppuccin",
+        "repo": "fish",
+        "rev": "0ce27b518e8ead555dec34dd8be3df5bd75cff8e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "fish",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -252,6 +268,22 @@
         "type": "github"
       }
     },
+    "nvm-fish": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1682839819,
+        "narHash": "sha256-LV5NiHfg4JOrcjW7hAasUSukT43UBNXGPi1oZWPbnCA=",
+        "owner": "jorgebucaran",
+        "repo": "nvm.fish",
+        "rev": "c69e5d1017b21bcfca8f42c93c7e89fff6141a8a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jorgebucaran",
+        "repo": "nvm.fish",
+        "type": "github"
+      }
+    },
     "parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -273,10 +305,12 @@
     "root": {
       "inputs": {
         "candy-icons": "candy-icons",
+        "fish-catppuccin-theme": "fish-catppuccin-theme",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "nixpkgs-f2k": "nixpkgs-f2k",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nvm-fish": "nvm-fish",
         "sddm-sugar-catppuccin-theme": "sddm-sugar-catppuccin-theme"
       }
     },

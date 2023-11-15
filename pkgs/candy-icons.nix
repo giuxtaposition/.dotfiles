@@ -7,11 +7,11 @@ stdenv.mkDerivation {
   dontConfigure = true;
 
   installPhase = ''
-    mkdir -p $out
-    cp -R ./* $out/
+    mkdir -p $out/candy-icons
+    cp -R ./* $out/candy-icons/
   '';
 
   postInstall = ''
-    gtk-update-icon-cache "$out"
+    gtk-update-icon-cache "$out/candy-icons"
   '';
 }

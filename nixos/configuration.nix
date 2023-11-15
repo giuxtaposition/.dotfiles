@@ -72,8 +72,8 @@
       shell = pkgs.fish;
     };
   };
-  programs.fish.enable = true;
   programs.dconf.enable = true;
+  programs.fish.enable = true;
 
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
@@ -135,6 +135,7 @@
     systemPackages = with pkgs; [
       # System-Wide Packages
       home-manager
+      nurl
       firefox
       ark # archiving tool
       libsForQt5.qt5.qtgraphicaleffects
@@ -145,6 +146,7 @@
       starship
       neofetch
       rofi
+      papirus-icon-theme
 
       #Programming
       neovim
@@ -169,7 +171,6 @@
       # Command line tools
       xclip # clipboard tool
       exa # replacement for ls
-      fzf # fuzzy finder
       feh # image viewer
       fd # replacement for find
       ripgrep
@@ -182,11 +183,8 @@
       acpi # power management
       brightnessctl # screen brightness
       pamixer
+      bat # cat alternative
 
-      # Fish plugins
-      fishPlugins.fzf-fish
-      fishPlugins.z
-      # TODO fishPlugins.nvm 
     ];
   };
 
