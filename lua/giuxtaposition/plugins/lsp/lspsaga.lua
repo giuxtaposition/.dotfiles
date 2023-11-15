@@ -25,7 +25,7 @@ return {
 			},
 			rename = {
 				keys = {
-					quit = "q",
+					quit = "<C-q>",
 				},
 				in_select = false,
 			},

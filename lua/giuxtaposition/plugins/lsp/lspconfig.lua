@@ -76,6 +76,11 @@ return {
 			},
 		})
 
+		lspconfig["svelte"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
 		-- neodev
 		neodev.setup({
 			library = { plugins = { "neotest" }, types = true },

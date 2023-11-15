@@ -34,7 +34,7 @@ Map("n", "<leader>wx", ":close<CR>", { desc = "Close current split window" })
 
 -- Tabs
 Map("n", "<leader><tab><tab>", ":tabnew<CR>", { desc = "Open new tab" })
-Map("n", "<leader><tab>d", ":tabclose<CR>", { desc = "Close current tab" })
+Map("n", "<leader><tab>x", ":tabclose<CR>", { desc = "Close current tab" })
 Map("n", "<leader><tab>]", ":tabn<CR>", { desc = "Go to next tab" })
 Map("n", "<leader><tab>[", ":tabp<CR>", { desc = "Go to previous tab" })
 

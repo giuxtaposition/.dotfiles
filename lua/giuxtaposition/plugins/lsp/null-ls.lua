@@ -17,7 +17,21 @@ return {
 			root_dir = null_ls_utils.root_pattern(".null-ls-root", "Makefile", ".git", "package.json"),
 			sources = {
 				formatting.prettierd.with({
-					extra_filetypes = { "svelte" },
+					filetypes = {
+						"javascript",
+						"typescript",
+						"javascriptreact",
+						"typescriptreact",
+						"css",
+						"scss",
+						"html",
+						"json",
+						"yaml",
+						"markdown",
+						"graphql",
+						"md",
+						"svelte",
+					},
 				}), -- js/ts formatter
 				formatting.stylua, -- lua formatter
 				diagnostics.eslint_d.with({ -- js/ts linter
