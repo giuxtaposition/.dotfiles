@@ -34,6 +34,7 @@
       pictures = "${config.home.homeDirectory}/Pictures";
       videos = "${config.home.homeDirectory}/Videos";
     };
+
   };
 
   fonts.fontconfig.enable = true;
@@ -47,6 +48,7 @@
     slack # Messaging App
     discord # Messaging App
     mpv-unwrapped # Media Player
+    spotify
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })

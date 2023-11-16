@@ -13,6 +13,9 @@ local process_icons = {
 	["git"] = {
 		{ Text = wezterm.nerdfonts.dev_git },
 	},
+	["bash"] = {
+		{ Text = wezterm.nerdfonts.md_bash },
+	},
 }
 
 local RIGHT_TAB_EDGE = wezterm.nerdfonts.ple_lower_left_triangle

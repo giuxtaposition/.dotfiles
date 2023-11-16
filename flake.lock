@@ -311,7 +311,8 @@
         "nixpkgs-f2k": "nixpkgs-f2k",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvm-fish": "nvm-fish",
-        "sddm-sugar-catppuccin-theme": "sddm-sugar-catppuccin-theme"
+        "sddm-sugar-catppuccin-theme": "sddm-sugar-catppuccin-theme",
+        "spotify-adblock": "spotify-adblock"
       }
     },
     "rust-analyzer-src": {
@@ -344,6 +345,22 @@
       "original": {
         "owner": "TiagoDamascena",
         "repo": "sddm-sugar-catppuccin",
+        "type": "github"
+      }
+    },
+    "spotify-adblock": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1689983571,
+        "narHash": "sha256-UzpHAHpQx2MlmBNKm2turjeVmgp5zXKWm3nZbEo0mYE=",
+        "owner": "abba23",
+        "repo": "spotify-adblock",
+        "rev": "5a3281dee9f889afdeea7263558e7a715dcf5aab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "abba23",
+        "repo": "spotify-adblock",
         "type": "github"
       }
     },

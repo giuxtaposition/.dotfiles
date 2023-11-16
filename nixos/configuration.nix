@@ -19,7 +19,10 @@
       #   });
       # })
     ];
-    config = { allowUnfree = true; };
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [ "electron-24.8.6" ];
+    };
   };
 
   nix = {
@@ -140,7 +143,7 @@
       ark # archiving tool
       libsForQt5.qt5.qtgraphicaleffects
       xfce.thunar
-      #obsidian
+      obsidian
 
       #Theme
       starship

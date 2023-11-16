@@ -33,6 +33,11 @@
       flake = false;
     };
 
+    spotify-adblock = {
+      url = "github:abba23/spotify-adblock";
+      flake = false;
+    };
+
     # Default branch
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
