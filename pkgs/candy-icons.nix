@@ -7,8 +7,8 @@ stdenv.mkDerivation {
   dontConfigure = true;
 
   installPhase = ''
-    mkdir -p $out/candy-icons
-    cp -R ./* $out/candy-icons/
+    mkdir -p $out
+    cp -R ./* $out/
   '';
 
   postInstall = ''

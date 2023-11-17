@@ -187,7 +187,7 @@
       brightnessctl # screen brightness
       pamixer
       bat # cat alternative
-
+      libnotify # send notifications from terminal
     ];
   };
 
