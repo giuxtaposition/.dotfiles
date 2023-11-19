@@ -10,9 +10,8 @@ local theme = {}
 local beautiful = require("beautiful")
 local menubar_utils = require("menubar.utils")
 
-beautiful.icon_theme = "candy-icons"
-
-local icon_theme = require("lib.icon_theme")(beautiful.icon_theme)
+local icon_theme = require("lib.icon_theme")("candy-icons")
+local systray_icon_theme = require("lib.icon_theme")("Papirus-Dark", 16)
 
 client.connect_signal("property::class", function(c)
 	if not c.class then
@@ -51,10 +50,13 @@ theme.base = "#1e1e2e"
 theme.mantle = "#181825"
 theme.crust = "#11111b"
 
+theme.transparent = "#00000000"
+theme.bg_transparent = "#000000" .. "66"
 theme.bg_normal = theme.base
 theme.bg_light = theme.surface0
 theme.bg_dark = theme.crust
 
+theme.fg_transparent = "#ffffff" .. "15"
 theme.fg_normal = theme.text
 theme.fg_dark = theme.subtext0
 
@@ -69,7 +71,8 @@ theme.topbar_position = "top"
 theme.topbar_height = dpi(40)
 
 -- Icons
-theme.icon_theme = "candy-icons"
+theme.icon_theme = icon_theme
+theme.systray_icon_theme = systray_icon_theme
 theme.icons = {
 	left_arrow = theme_path .. "icons/left-arrow.png",
 	right_arrow = theme_path .. "icons/right-arrow.png",

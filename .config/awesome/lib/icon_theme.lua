@@ -6,9 +6,13 @@ local setmetatable = setmetatable
 
 local icon_theme = { mt = {} }
 
+local name_lookup = {
+	[".blueman-manager-wrapped"] = "bluetooth",
+}
+
 function icon_theme:get_icon_path(icon_name)
-	local icon_info = self.gtk_theme:lookup_icon(icon_name, self.icon_size, 0)
-	print("icon_info", icon_info)
+	local parsed_icon_name = name_lookup[icon_name] or icon_name:lower()
+	local icon_info = self.gtk_theme:lookup_icon(parsed_icon_name, self.icon_size, 0)
 	if icon_info then
 		local icon_path = icon_info:get_filename()
 		if icon_path then
