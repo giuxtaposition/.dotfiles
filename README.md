@@ -13,6 +13,8 @@ Here are some details about my setup:
 - **WM**: [Awesome](https://github.com/awesomeWM/awesome)
 - **Launcher**: [Rofi](https://github.com/davatorium/rofi)
 
+![](/.github/images/screenshot.png)
+
 ## NixOS Installation Guide
 
 ### Partitioning (UEFI)
