@@ -16,6 +16,13 @@ local process_icons = {
 	["bash"] = {
 		{ Text = wezterm.nerdfonts.md_bash },
 	},
+	["nix"] = {
+		{ Text = wezterm.nerdfonts.linux_nixos },
+	},
+	-- for some weird reason nixos has no process name...
+	[""] = {
+		{ Text = wezterm.nerdfonts.linux_nixos },
+	},
 }
 
 local RIGHT_TAB_EDGE = wezterm.nerdfonts.ple_lower_left_triangle

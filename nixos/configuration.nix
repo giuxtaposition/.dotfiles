@@ -39,7 +39,6 @@
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
     };
-
     gc = {
       # Automatic garbage collection
       automatic = true;
@@ -173,7 +172,6 @@
 
       # Command line tools
       xclip # clipboard tool
-      exa # replacement for ls
       feh # image viewer
       fd # replacement for find
       ripgrep
