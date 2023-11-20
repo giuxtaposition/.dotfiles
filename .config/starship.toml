@@ -1,20 +1,8 @@
 # theme
 palette = "catppuccin_mocha"
 
-[aws]
-symbol = "  "
-
-[buf]
-symbol = " "
-
 [c]
 symbol = " "
-
-[conda]
-symbol = " "
-
-[dart]
-symbol = " "
 
 [docker_context]
 symbol = " "
@@ -34,14 +22,8 @@ symbol = " "
 [golang]
 symbol = " "
 
-[guix_shell]
-symbol = " "
-
 [haskell]
 symbol = " "
-
-[haxe]
-symbol = "⌘ "
 
 [hg_branch]
 symbol = " "
@@ -49,20 +31,8 @@ symbol = " "
 [java]
 symbol = " "
 
-[julia]
-symbol = " "
-
 [lua]
 symbol = " "
-
-[memory_usage]
-symbol = " "
-
-[meson]
-symbol = "喝 "
-
-[nim]
-symbol = " "
 
 [nix_shell]
 symbol = " "
@@ -70,23 +40,11 @@ symbol = " "
 [nodejs]
 symbol = " "
 
-[os.symbols]
-Alpine = " "
-Amazon = " "
-Android = " "
-Arch = " "
-
 [package]
 symbol = " "
 
-[pijul_channel]
-symbol = "🪺 "
-
 [python]
 symbol = " "
-
-[rlang]
-symbol = "ﳒ "
 
 [ruby]
 symbol = " "
@@ -94,11 +52,6 @@ symbol = " "
 [rust]
 symbol = " "
 
-[scala]
-symbol = " "
-
-[spack]
-symbol = "🅢 "
 
 [character]
 success_symbol = "[[󰷠](peach) ❯](sky)"

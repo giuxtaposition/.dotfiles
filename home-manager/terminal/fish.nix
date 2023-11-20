@@ -4,8 +4,15 @@
     starship
   ];
 
+  # fish theme
   home.file."${config.home.homeDirectory}/.config/fish/themes" = {
     source = "${pkgs.fish-catppuccin-theme.out}/fish-catppuccin-theme";
+  };
+
+  # Starship config
+  home.file."${config.home.homeDirectory}/.config/starship.toml" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
   };
 
   programs.fish = {
@@ -76,8 +83,13 @@
     };
     shellAbbrs = {
       grep = "grep --color";
-      hm-update = "z dot && home-manager switch --flake .#giu@kumiko";
+      home-update = "z dot && home-manager switch --flake .#giu@kumiko";
       nixos-update = "z dot && sudo nixos-rebuild switch --flake .#kumiko";
+
+      #GIT
+      gp = "git pull --rebase --autostash";
+      gpf = "git push --force-with-lease";
+      gs = "git status --short";
     };
   };
 }

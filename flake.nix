@@ -33,6 +33,11 @@
       flake = false;
     };
 
+    bat-catppuccin-theme = {
+      url = "github:catppuccin/bat";
+      flake = false;
+    };
+
     spotify-adblock = {
       url = "github:abba23/spotify-adblock";
       flake = false;

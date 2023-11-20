@@ -1,5 +1,5 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
-  imports = [ ./fish.nix ];
+  imports = [ ./terminal ];
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
@@ -29,6 +29,7 @@
 
     userDirs = {
       enable = true;
+      createDirectories = true;
       documents = "${config.home.homeDirectory}/Documents";
       pictures = "${config.home.homeDirectory}/Pictures";
       videos = "${config.home.homeDirectory}/Videos";
@@ -53,19 +54,6 @@
   ];
 
   programs.home-manager.enable = true;
-
-  # GIT CONFIG
-  programs.git = {
-    enable = true;
-    userName = "giuxtaposition";
-    userEmail = "yg97.cs@gmail.com";
-    extraConfig = {
-      core = { editor = "nvim"; };
-      pull.rebase = true;
-      push.autoSetupRemote = true;
-      init.defaultBranch = "main";
-    };
-  };
 
   # NEOVIM CONFIG
   programs.neovim = {
@@ -145,16 +133,6 @@
   home.file."${config.home.homeDirectory}/.config/neofetch" = {
     source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
-  };
-
-  home.file."${config.home.homeDirectory}/.config/starship.toml" = {
-    source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
-  };
-
-  home.file."${config.home.homeDirectory}/.config/lazygit/config.yml" = {
-    source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.dotfiles/.config/lazygit/config.yml";
   };
 
   home.file."${config.home.homeDirectory}/.local/share/icons/candy-icons" = {

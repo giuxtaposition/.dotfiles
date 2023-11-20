@@ -19,3 +19,7 @@ gui:
       - "#89b4fa" # Blue
     unstagedChangesColor:
       - red # Red
+git:
+  paging:
+    colorArg: always
+    pager: delta
