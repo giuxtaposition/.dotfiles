@@ -6,9 +6,12 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-f2k.url = "github:moni-dz/nixpkgs-f2k";
+    nekowinston-nur.url = "github:nekowinston/nur";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-23.05";
+
+    rust-overlay.url = "github:oxalica/rust-overlay";
 
     # Candy Icons
     candy-icons = {
@@ -47,7 +50,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, rust-overlay, ... }@inputs:
     let
       inherit (self) outputs;
       # Supported systems for your flake packages, shell, etc.
@@ -80,7 +83,16 @@
       nixosConfigurations = {
         kumiko = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
-          modules = [ ./nixos/configuration.nix ];
+          modules = [
+            ./nixos/configuration.nix
+
+            ({ pkgs, ... }: {
+              nixpkgs.overlays = [ rust-overlay.overlays.default ];
+              environment.systemPackages =
+                [ pkgs.rust-bin.beta.latest.default ];
+            })
+
+          ];
         };
       };
 

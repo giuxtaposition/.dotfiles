@@ -11,6 +11,7 @@
     # ...
     # });
     awesome = inputs.nixpkgs-f2k.packages.${prev.system}.awesome-git;
+    wezterm = inputs.nekowinston-nur.packages.${prev.system}.wezterm-nightly;
 
     spotify = prev.spotify.overrideAttrs (oldAttrs: {
       postInstall = (oldAttrs.postInstall or "") + ''

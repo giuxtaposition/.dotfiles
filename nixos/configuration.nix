@@ -152,7 +152,7 @@
 
       #Programming
       neovim
-      unstable.wezterm
+      wezterm
       docker
       docker-compose
       insomnia

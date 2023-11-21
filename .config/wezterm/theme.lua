@@ -41,10 +41,9 @@ function module.apply_to_config(config)
 	end
 
 	wezterm.on("update-right-status", function(window, pane)
-		-- Workspace name
+		local cells = {}
+
 		local stat = window:active_workspace()
-		-- It's a little silly to have workspace name all the time
-		-- Utilize this to display LDR or current key table name
 		if window:active_key_table() then
 			stat = window:active_key_table()
 		end
@@ -52,37 +51,49 @@ function module.apply_to_config(config)
 			stat = "LDR"
 		end
 
-		-- Current working directory
-		local cwd = basename(pane:get_current_working_dir())
-		-- Current command
-		local cmd = basename(pane:get_foreground_process_name())
-		-- Time
-		local time = wezterm.strftime("%H:%M")
+		table.insert(cells, wezterm.nerdfonts.oct_table .. "  " .. stat)
 
-		-- Let's add color to one of the components
-		window:set_right_status(wezterm.format({
-			{ Text = wezterm.nerdfonts.oct_table .. "  " .. stat },
-			{ Text = " | " },
-			{ Text = wezterm.nerdfonts.md_folder .. "  " .. cwd },
-			{ Text = " | " },
-			{ Foreground = { Color = "#b4befe" } },
-			{ Text = wezterm.nerdfonts.fa_code .. "  " .. cmd },
-			"ResetAttributes",
-			{ Text = " | " },
-			{ Text = wezterm.nerdfonts.md_clock .. "  " .. time },
-			{ Text = " |" },
-		}))
+		local cwd_uri = pane:get_current_working_dir()
+		local cwd = basename(cwd_uri.file_path)
+		table.insert(cells, wezterm.nerdfonts.md_folder .. " " .. cwd)
+
+		local cmd = basename(pane:get_foreground_process_name())
+		table.insert(cells, wezterm.nerdfonts.fa_code .. "  " .. cmd)
+
+		local time = wezterm.strftime("%H:%M")
+		table.insert(cells, wezterm.nerdfonts.md_clock .. " " .. time)
+
+		local DIVIDER = "|"
+		local text_fg = "#b4befe"
+		local elements = {}
+		local num_cells = 0
+
+		local function push(text, is_last)
+			table.insert(elements, { Foreground = { Color = text_fg } })
+			table.insert(elements, { Text = " " .. text .. " " })
+
+			if not is_last then
+				table.insert(elements, { Text = DIVIDER })
+			end
+			num_cells = num_cells + 1
+		end
+
+		while #cells > 0 do
+			local cell = table.remove(cells, 1)
+			push(cell, #cells == 0)
+		end
+
+		window:set_right_status(wezterm.format(elements))
 	end)
 
-	local function get_process(tab)
-		local process_name = basename(tab.active_pane.foreground_process_name)
-		return wezterm.format(icons.process_icons[process_name] or { { Text = string.format("[%s]", process_name) } })
-	end
+	local function tab_title(tab_info)
+		local process_name = basename(tab_info.active_pane.foreground_process_name)
+		local process =
+			wezterm.format(icons.process_icons[process_name] or { { Text = string.format("[%s]", process_name) } })
 
-	local function tab_title(tab)
-		local current_dir = basename(tab.active_pane.current_working_dir)
-
-		return string.format(" %s %s  ", get_process(tab), current_dir)
+		local cwd_uri = tab_info.active_pane.current_working_dir
+		local cwd = basename(cwd_uri.file_path)
+		return process .. " " .. cwd
 	end
 
 	wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_width)
@@ -102,11 +113,7 @@ function module.apply_to_config(config)
 
 		local title = tab_title(tab)
 
-		-- ensure that the titles fit in the available space,
-		-- and that we have room for the edges.
-		title = wezterm.truncate_right(title, max_width - 2)
-
-		return {
+		return wezterm.format({
 			{ Background = { Color = edge_background } },
 			{ Foreground = { Color = edge_foreground } },
 			{ Text = icons.LEFT_TAB_EDGE },
@@ -116,7 +123,7 @@ function module.apply_to_config(config)
 			{ Background = { Color = edge_background } },
 			{ Foreground = { Color = edge_foreground } },
 			{ Text = icons.RIGHT_TAB_EDGE },
-		}
+		})
 	end)
 end
 
