@@ -1,5 +1,5 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
-  imports = [ ./terminal ];
+  imports = [ ./terminal ./wm ];
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
@@ -126,11 +126,6 @@
   home.file."${config.home.homeDirectory}/.config/wezterm" = {
     source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/.dotfiles/.config/wezterm";
-  };
-
-  home.file."${config.home.homeDirectory}/.config/rofi" = {
-    source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.dotfiles/.config/rofi";
   };
 
   home.file."${config.home.homeDirectory}/.config/neofetch" = {

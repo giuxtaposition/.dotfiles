@@ -76,6 +76,7 @@
   };
   programs.dconf.enable = true;
   programs.fish.enable = true;
+  programs.hyprland.enable = true;
 
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
@@ -105,27 +106,41 @@
         }}";
 
         defaultSession =
-          "none+awesome"; # need to add none to use window manager without desktop manager
+          "hyprland"; # need to add none to use window manager without desktop manager
       };
-      windowManager.awesome = {
-        enable = true;
-        luaModules = with pkgs.luaPackages; [ luarocks luadbi-mysql lgi ];
-      };
+      windowManager.hypr = { enable = true; };
     };
     blueman.enable = true;
     openssh.enable = true;
+
+    # battery info & management
+    upower.enable = true;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+    };
   };
 
   # Sound
-  sound = { enable = true; };
+  sound.enable = true;
+  security.rtkit.enable = true;
 
   hardware = {
-    pulseaudio = { enable = true; };
     bluetooth = {
       enable = true;
-      hsphfpd.enable = true;
       settings = { General = { Enable = "Source,Sink,Media,Socket"; }; };
     };
+
+    opengl.enable = true;
+    nvidia.modesetting.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
 
   environment = {
@@ -145,9 +160,7 @@
       obsidian
 
       #Theme
-      starship
       neofetch
-      rofi
       papirus-icon-theme
 
       #Programming
