@@ -67,6 +67,7 @@
       unstable.vscode-langservers-extracted
       unstable.nodePackages_latest.typescript-language-server
       unstable.nodePackages_latest.svelte-language-server
+      unstable.nodePackages_latest.bash-language-server
       unstable.emmet-ls
       unstable.lua-language-server
       unstable.marksman
@@ -78,6 +79,8 @@
       unstable.stylua # lua formatter
       unstable.codespell # code spell
       unstable.nixfmt
+      unstable.shellcheck # sh linter
+      unstable.shfmt # sh formatter
     ];
   };
 

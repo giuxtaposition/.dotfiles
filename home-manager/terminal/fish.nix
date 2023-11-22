@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     exa # replacement for ls
     starship
+    fzf
   ];
 
   # fish theme
@@ -13,6 +14,13 @@
   home.file."${config.home.homeDirectory}/.config/starship.toml" = {
     source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
+  };
+
+  programs.command-not-found.enable = false;
+
+  programs.nix-index = {
+    enable = true;
+    enableFishIntegration = true;
   };
 
   programs.fish = {
@@ -68,7 +76,6 @@
 
       # vim mode
       set fish_key_bindings fish_user_key_bindings
-
     '';
     functions = {
       fish_user_key_bindings = ''

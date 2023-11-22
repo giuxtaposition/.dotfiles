@@ -46,11 +46,17 @@
       flake = false;
     };
 
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Default branch
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, rust-overlay, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, rust-overlay, nix-index-database, ...
+    }@inputs:
     let
       inherit (self) outputs;
       # Supported systems for your flake packages, shell, etc.
@@ -60,7 +66,7 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
     in {
       # Your custom packages
-      # Acessible through 'nix build', 'nix shell', etc
+      # Accessible through 'nix build', 'nix shell', etc
       packages = forAllSystems (system:
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./pkgs { inherit pkgs inputs; });
@@ -71,12 +77,6 @@
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
-      # Reusable nixos modules you might want to export
-      # These are usually stuff you would upstream into nixpkgs
-      nixosModules = import ./modules/nixos;
-      # Reusable home-manager modules you might want to export
-      # These are usually stuff you would upstream into home-manager
-      homeManagerModules = import ./modules/home-manager;
 
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
@@ -105,6 +105,7 @@
           modules = [
             # > Our main home-manager configuration file <
             ./home-manager/home.nix
+            nix-index-database.hmModules.nix-index
           ];
         };
       };
