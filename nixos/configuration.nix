@@ -101,9 +101,9 @@
         sddm.theme = let
           stdenv = pkgs.stdenv;
           src = inputs.sddm-sugar-catppuccin-theme;
-        in "${import ../pkgs/sddm-sugar-catppuccin-theme.nix {
-          inherit stdenv src;
-        }}";
+        in "${
+          import ../pkgs/sddm-sugar-catppuccin-theme.nix { inherit stdenv src; }
+        }/sddm-sugar-catppuccin-theme";
 
         defaultSession =
           "hyprland"; # need to add none to use window manager without desktop manager
