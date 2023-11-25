@@ -1,0 +1,13 @@
+;; Battery Widgets ;;
+(defwidget bat []
+	(box
+    (label
+      :class "bat-icon icon"		
+      :halign "end"		
+      :text battery	
+      :tooltip "Battery: ${battery-capacity}%"
+    )
+  )
+)
+(defpoll battery			:interval "1s"	"scripts/battery icon")
+(defpoll battery-capacity	:interval "1s"	"scripts/battery percent")

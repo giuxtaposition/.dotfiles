@@ -1,0 +1,9 @@
+(defwidget bright []
+  (box
+    (label
+      :class "bright-icon icon"
+      :text brightness
+      :tooltip "brightness ${brightness-percent}%")))
+
+(defpoll brightness			:interval "1s"	"scripts/brightness icon")
+(defpoll brightness-percent :interval "1s"	"scripts/brightness percent")

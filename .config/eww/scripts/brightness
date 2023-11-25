@@ -1,0 +1,24 @@
+#!/bin/sh
+
+percent="$(brightnessctl | grep -Po "(?<=\().*?(?=\%)")"
+
+icon() {
+	lvl=$(awk -v n="$percent" 'BEGIN{print int(n/34)}')
+	if [ "$lvl" -eq 0 ]; then
+		icon="󰃜"
+	elif [ "$lvl" -eq 1 ]; then
+		icon="󰃝"
+	else
+		icon="󰃠"
+	fi
+
+	echo "$icon"
+}
+
+percent() {
+	echo "$percent"
+}
+
+[ "$1" = "icon" ] && icon && exit
+[ "$1" = "percent" ] && percent && exit
+exit

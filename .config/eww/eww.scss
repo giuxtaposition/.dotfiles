@@ -1,0 +1,117 @@
+$rosewater: #f5e0dc;
+$flamingo: #f2cdcd;
+$pink: #f5c2e7;
+$mauve: #cba6f7;
+$red: #f38ba8;
+$maroon: #eba0ac;
+$peach: #fab387;
+$yellow: #f9e2af;
+$green: #a6e3a1;
+$teal: #94e2d5;
+$sky: #89dceb;
+$sapphire: #74c7ec;
+$blue: #89b4fa;
+$lavender: #b4befe;
+
+$text: #cdd6f4;
+$subtext1: #bac2de;
+$subtext0: #a6adc8;
+$overlay2: #9399b2;
+$overlay1: #7f849c;
+$overlay0: #6c7086;
+
+$surface2: #585b70;
+$surface1: #45475a;
+$surface0: #313244;
+
+$base: #1e1e2e;
+$mantle: #181825;
+$crust: #11111b;
+
+$fg: $text;
+$bg: rgba(30, 30, 46, 0.6);
+$bg1: rgba(49, 50, 68, 0.6);
+$border: #28283d;
+$shadow: $crust;
+
+@mixin window {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin: 5px 5px 10px;
+  @include rounding;
+}
+
+@mixin rounding {
+  border-radius: 16px;
+}
+
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+}
+
+//Global Styles
+.bar {
+  background-color: $crust;
+  color: $text;
+  padding: 10px;
+}
+
+tooltip {
+  background: $mantle;
+  border: 1px solid $border;
+  border-radius: 8px;
+  color: $text;
+
+  label {
+    font-size: 1rem;
+  }
+}
+
+//Workspace Component
+.ws {
+  margin-left: 0.5rem;
+}
+
+.ws-unfocused {
+  color: $overlay0;
+}
+
+.ws-focused {
+  color: $lavender;
+}
+
+//Distro Component
+.distro {
+  margin-left: 0.5rem;
+  color: $sky;
+}
+
+.icon {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.bright-icon {
+  color: $yellow;
+}
+
+.vol-icon {
+  color: $mauve;
+}
+
+.wifi-icon {
+  color: $green;
+}
+
+.bat-icon {
+  color: $teal;
+}
+
+// Control Panel
+.control {
+  padding: 0.5rem;
+  font-family: Material Icons;
+  font-size: 1.2em;
+  background-color: $base;
+  border-radius: 10px;
+  margin: 0.3rem 0.5rem;
+}

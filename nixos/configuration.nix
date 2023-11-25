@@ -113,8 +113,6 @@
     blueman.enable = true;
     openssh.enable = true;
 
-    # battery info & management
-    upower.enable = true;
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -153,7 +151,7 @@
       # System-Wide Packages
       home-manager
       nurl
-      firefox
+      unstable.firefox
       ark # archiving tool
       libsForQt5.qt5.qtgraphicaleffects
       xfce.thunar

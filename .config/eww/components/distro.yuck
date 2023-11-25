@@ -1,0 +1,7 @@
+(defwidget distro []
+  (box
+    :class "distro"
+    (label 
+    :text " ")
+  )
+)

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+volume="$(pamixer --get-volume-human)"
+
+icon() {
+	if [ "$volume" = "muted" ]; then
+		icon="󰖁"
+	else
+		lvl=$(awk -v n="$volume" 'BEGIN{print int(n/34)}')
+		if [ "$lvl" -eq 0 ]; then
+			icon="󰕿"
+		elif [ "$lvl" -eq 1 ]; then
+			icon="󰖀"
+		else
+			icon="󰕾"
+		fi
+	fi
+
+	echo "$icon"
+}
+
+percent() {
+	echo "$volume"
+}
+
+[ "$1" = "icon" ] && icon && exit
+[ "$1" = "percent" ] && percent && exit
+exit

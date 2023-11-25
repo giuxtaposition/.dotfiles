@@ -1,0 +1,21 @@
+(defvar icons `[" ", " ", " "]`)
+
+(defwidget workspaces []
+  (eventbox
+		:onscroll "echo {} | sed -e \"s/up/-1/g\" -e \"s/down/+1/g\" | xargs hyprctl dispatch workspace"
+		(box
+      :class "ws"
+		  (for ws in {hyprland.workspaces}
+		    (button
+					:onclick "hyprctl dispatch workspace ${ws.number}"
+					:class "ws-button"
+            (label
+              :text `${icons[ws.status]}`
+              :class `${ws.focused ? "ws-focused" : "ws-unfocused"}`
+
+          )
+        )
+      )
+    )
+  )
+)
