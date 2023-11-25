@@ -37,11 +37,29 @@
     xwayland.enable = true;
     extraConfig = ''
       exec-once=bash ${startScript}
-      env = QT_WAYLAND_DISABLE_WINDOWDECORATION,1
-      monitor = ,preferred, auto, auto
+      env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
+      env = WLR_DRM_NO_ATOMIC, 1
+
+      # Firefox
+      env = MOZ_DISABLE_RDD_SANDBOX, 1
+      env = EGL_PLATFORM, wayland
+      env = MOZ_ENABLE_WAYLAND, 1
+
+      monitor = ,highrr, auto, 1.25
 
       # scale apps
       exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
+
+      input {
+        kb_options = ctrl:swapcaps
+
+        # focus change on cursor move
+        follow_mouse = 1
+        accel_profile = flat
+        touchpad {
+          scroll_factor = 0.3
+        }
+      }
 
       # touchpad gestures
       gestures {
@@ -49,48 +67,70 @@
         workspace_swipe_forever = true
       }
 
+      #---------------------------------------------------
+      # GAPS, BORDERS, COLORS
+      #---------------------------------------------------
+
       general {
         gaps_in = 5
         gaps_out = 5
-        border_size = 1
-        col.active_border = rgba(88888888)
-        col.inactive_border = rgba(00000088)
+        border_size = 2
+        col.active_border = rgb(${colors.mauve})
+        col.inactive_border = rgb(000000)
 
         allow_tearing = true
+        layout = dwindle
+        resize_on_border = true
       }
+
+      #---------------------------------------------------
+      # ROUNDNESS, BLUR, SHADOW
+      #---------------------------------------------------
 
       decoration {
         rounding = 16
         blur {
           enabled = true
-          size = 10
-          passes = 3
+          xray = true
+          size = 12
+          passes = 4
           new_optimizations = true
-          brightness = 1.0
-          contrast = 1.0
-          noise = 0.02
         }
 
         drop_shadow = true
-        shadow_ignore_window = true
-        shadow_offset = 0 5
-        shadow_range = 50
-        shadow_render_power = 3
+        shadow_range = 30
+        shadow_render_power = 4
         col.shadow = rgba(00000099)
       }
 
+      #---------------------------------------------------
+      # ANIMATIONS
+      #---------------------------------------------------
+
       animations {
         enabled = true
-        animation = border, 1, 2, default
-        animation = fade, 1, 4, default
-        animation = windows, 1, 3, default, popin 80%
-        animation = workspaces, 1, 2, default, slide
+
+        bezier = quart, 0.25, 1, 0.5, 1
+
+        animation = windows, 1, 6, quart, slide
+        animation = border, 1, 6, quart
+        animation = borderangle, 1, 6, quart
+        animation = fade, 1, 6, quart
+        animation = workspaces, 1, 6, quart
       }
+
+      #---------------------------------------------------
+      # WINDOWS BEHAVIOUR
+      #---------------------------------------------------
 
       dwindle {
         # keep floating dimetions while tiling
         pseudotile = true
         preserve_split = true
+      }
+
+      master {
+        new_is_master = true
       }
 
       # only allow shadows for floating windows
@@ -99,6 +139,10 @@
       # start spotify tiled in ws9
       windowrulev2 = tile, title:^(Spotify)$
       windowrulev2 = workspace 9 silent, title:^(Spotify)$
+
+      #---------------------------------------------------
+      # KEYBINDINGS
+      #---------------------------------------------------
 
       $mod = SUPER
       bind = $mod, Q, exec, wezterm
@@ -159,16 +203,6 @@
       bindm = $mod, mouse:273, resizewindow
       bindm = $mod ALT, mouse:272, resizewindow
 
-      input {
-        kb_options = ctrl:swapcaps
-
-        # focus change on cursor move
-        follow_mouse = 1
-        accel_profile = flat
-        touchpad {
-          scroll_factor = 0.3
-        }
-      }
     '';
   };
 
