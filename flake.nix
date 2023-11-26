@@ -5,7 +5,6 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-f2k.url = "github:moni-dz/nixpkgs-f2k";
     nekowinston-nur.url = "github:nekowinston/nur";
 
     # Home manager

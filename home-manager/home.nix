@@ -43,7 +43,6 @@
     aseprite # Pixel Art Editor
     calibre # Library Management
     deluge # Torrent Client
-    kazam # Screenshot and screencast tool
     slack # Messaging App
     discord # Messaging App
     mpv-unwrapped # Media Player
@@ -116,11 +115,6 @@
     name = "Dracula-cursors";
     package = pkgs.dracula-theme;
     size = 16;
-  };
-
-  home.file."${config.home.homeDirectory}/.config/awesome" = {
-    source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.dotfiles/.config/awesome";
   };
 
   home.file."${config.home.homeDirectory}/.config/wezterm" = {

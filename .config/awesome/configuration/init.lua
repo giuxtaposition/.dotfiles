@@ -1,5 +1,0 @@
-require("configuration.keymaps")
-require("configuration.apps")
-require("configuration.tags")
-require("configuration.rules")
-require("configuration.titlebars")

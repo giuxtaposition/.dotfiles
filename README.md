@@ -10,8 +10,10 @@ Here are some details about my setup:
 - **Shell**: [Fish](https://github.com/fish-shell/fish-shell)
 - **Terminal**: [Wezterm](https://github.com/wez/wezterm)
 - **Editor**: [Neovim](https://github.com/neovim/neovim/)
-- **WM**: [Awesome](https://github.com/awesomeWM/awesome)
+- **WM**: [Hyprland](https://github.com/hyprwm/Hyprland)
 - **Launcher**: [Rofi](https://github.com/davatorium/rofi)
+- **Widgets**: [Eww](https://github.com/elkowar/eww)
+- **Notify Daemon**: [Dunst](https://github.com/dunst-project/dunst)
 
 ![](/.github/images/screenshot.png)
 
