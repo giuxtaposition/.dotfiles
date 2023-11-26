@@ -153,10 +153,25 @@
       bind = $mod, V, togglefloating
       bind = $mod, P, pseudo
       bind = $mod, J, togglesplit
-      bind = $mod ALT, ,resizeactive,
+      bind = $mod, F, fullscreen, 1 
       bind = $mod, D, exec, $HOME/.config/rofi/bin/launcher
       bind = $mod, R, exec, $HOME/.config/rofi/bin/runner
       bind = $mod SHIFT, P, exec, $HOME/.config/rofi/bin/powermenu
+
+      # Resize active window
+      bind = $mod ALT, H, resizeactive, -10 0
+      bind = $mod ALT, L, resizeactive, 10 0
+      bind = $mod ALT, K, resizeactive, 0 -10
+      bind = $mod ALT, J, resizeactive, 0 10
+
+      # Move active window
+      bind = $mod SHIFT, H, movewindow, l
+      bind = $mod SHIFT, L, movewindow, r
+      bind = $mod SHIFT, K, movewindow, u
+      bind = $mod SHIFT, J, movewindow, d 
+
+      # Move to other screen
+      bind = $mod, CTRL, movewindow,mon:l
 
       # Move Focus
       bind = $mod, H, movefocus, l
