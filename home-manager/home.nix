@@ -128,11 +128,6 @@
       "${config.home.homeDirectory}/.dotfiles/.config/wezterm";
   };
 
-  home.file."${config.home.homeDirectory}/.config/neofetch" = {
-    source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
-  };
-
   home.file."${config.home.homeDirectory}/.local/share/icons/candy-icons" = {
     source = pkgs.candy-icons;
   };

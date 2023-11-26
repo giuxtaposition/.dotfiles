@@ -158,7 +158,6 @@
       obsidian
 
       #Theme
-      neofetch
       papirus-icon-theme
 
       #Programming

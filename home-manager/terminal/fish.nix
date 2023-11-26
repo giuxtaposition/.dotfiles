@@ -3,6 +3,8 @@
     exa # replacement for ls
     starship
     fzf
+    neofetch
+    imagemagick
   ];
 
   # fish theme
@@ -10,10 +12,16 @@
     source = "${pkgs.fish-catppuccin-theme.out}/fish-catppuccin-theme";
   };
 
-  # Starship config
+  # starship config
   home.file."${config.home.homeDirectory}/.config/starship.toml" = {
     source = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
+  };
+
+  # neofetch config
+  home.file."${config.home.homeDirectory}/.config/neofetch" = {
+    source = config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
   };
 
   programs.command-not-found.enable = false;
