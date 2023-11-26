@@ -15,7 +15,8 @@ Here are some details about my setup:
 - **Widgets**: [Eww](https://github.com/elkowar/eww)
 - **Notify Daemon**: [Dunst](https://github.com/dunst-project/dunst)
 
-![](/.github/images/screenshot.png)
+![](/.github/images/screenshot1.png)
+![](/.github/images/screenshot2.png)
 
 ## NixOS Installation Guide
 
