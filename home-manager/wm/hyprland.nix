@@ -1,9 +1,11 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }: {
 
   home.packages = with pkgs; [
     unstable.swww # wallpaper manager
     rofi-wayland # rofi for wayland
     wl-clipboard # command-line copy/paste utilities for wayland
+    slurp # select a region in a wayland compositor
+    grim # grab images from a wayland compositor
   ];
 
   # Wallpapers folder
@@ -23,7 +25,7 @@
       # initializing wallpaper daemon
       swww init &
       # setting wallpaper
-      swww img ~/Wallpapers/arcane.jpg &
+      swww img ~/Wallpapers/WRztVWQ.jpg &
       # start eww
       eww open bar
 
@@ -197,6 +199,9 @@
       bindl = , XF86AudioMute, exec, pamixer -t
       bindl = , XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
+      # screenshot 
+      bind =, Print, exec, grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/Screenshot-$(date +%F_%T).png | dunstify "Screenshot of the region taken" -t 1000 # screenshot of a region 
+      bind = SHIFT, Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/Screenshot-$(date +%F_%T).png | dunstify "Screenshot of whole screen taken" -t 1000 # screenshot of the whole screen
 
       # mouse movements
       bindm = $mod, mouse:272, movewindow
