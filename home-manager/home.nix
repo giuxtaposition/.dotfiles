@@ -46,6 +46,7 @@
     slack # Messaging App
     discord # Messaging App
     mpv-unwrapped # Media Player
+    zathura
     spotify
 
     # Fonts

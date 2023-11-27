@@ -87,11 +87,43 @@ tooltip {
 
 .spotify-icon {
   font-family: Material Icons;
-  font-size: 1.2em;
+  font-size: 1.5rem;
 }
 
 .spotify-title {
   font-weight: 600;
+}
+
+.spotify-artist {
+  margin-right: 1rem;
+}
+
+.spotify-controls {
+  margin: 0.5rem 0.85rem 0.5rem 0;
+  padding: 0 0.5rem;
+  border-radius: 10px;
+}
+
+.spotify-previous-icon,
+.spotify-next-icon {
+  color: $mauve;
+}
+.spotify-play-icon {
+  color: $sapphire;
+}
+
+.cavabar {
+  color: $sky;
+  font-family: "Hack Nerd Font";
+  padding: 8px 16px;
+}
+
+.cavabar-left {
+  border-radius: 24px 10px 24px 10px;
+}
+
+.cavabar-right {
+  border-radius: 10px 24px 10px 24px;
 }
 
 .icon {

@@ -54,8 +54,8 @@
         force_zero_scaling = true
       }
       # toolkit-specific scale
-      env = GDK_SCALE,2
-      env = XCURSOR_SIZE,32
+      env = GDK_SCALE, 1
+      env = XCURSOR_SIZE, 32
 
       input {
         kb_options = ctrl:swapcaps, grp:alt_caps_toggle

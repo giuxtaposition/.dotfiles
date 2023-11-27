@@ -1,25 +1,24 @@
 #!/bin/sh
 
-status="$(playerctl -p spotify status)"
-artist="$(playerctl -p spotify metadata artist)"
-title="$(playerctl -p spotify metadata title)"
-
 status() {
+	status="$(playerctl -p spotify status)"
 	text=""
 	if [ "$status" = "No players found" ]; then
 		echo "" && exit
 	elif [ "$status" = "Paused" ]; then
-		text="󰏤"
+		text="󰐌"
 	elif [ "$status" = "Playing" ]; then
-		text=""
+		text="󰏥"
 	fi
 
 	echo "$text"
 }
 
 [ "$1" = "status" ] && status && exit
-[ "$1" = "title" ] && echo "$title" && exit
-[ "$1" = "artist" ] && echo "$artist" && exit
+[ "$1" = "title" ] && (playerctl -p spotify metadata title) && exit
+[ "$1" = "artist" ] && (playerctl -p spotify metadata artist) && exit
 [ "$1" = "toggle" ] && (playerctl -p spotify play-pause) && exit
+[ "$1" = "next" ] && (playerctl -p spotify next) && exit
+[ "$1" = "previous" ] && (playerctl -p spotify previous) && exit
 
 exit
