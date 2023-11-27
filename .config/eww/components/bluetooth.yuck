@@ -1,0 +1,13 @@
+(defwidget bluetooth []
+	(button
+    :onclick "scripts/bluetooth blueman-manager"
+    (label
+      :class "bluetooth-icon icon"		
+      :halign "end"		
+      :text icon	
+      :tooltip "${connected-device}"
+    )
+  )
+)
+(defpoll icon			:interval "1s"	"scripts/bluetooth icon")
+(defpoll connected-device	:interval "1s"	"scripts/bluetooth connected_device")

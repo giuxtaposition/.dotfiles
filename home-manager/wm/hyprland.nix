@@ -142,6 +142,8 @@
       windowrulev2 = tile, title:^(Spotify)$
       windowrulev2 = workspace 9 silent, title:^(Spotify)$
 
+      windowrulev2 = float,class:(.blueman-manager-wrapped)
+
       #---------------------------------------------------
       # KEYBINDINGS
       #---------------------------------------------------

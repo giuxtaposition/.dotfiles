@@ -4,6 +4,7 @@
 (include "./components/volume.yuck")
 (include "./components/wifi.yuck")
 (include "./components/battery.yuck")
+(include "./components/bluetooth.yuck")
 
 (defvar bright_reveal false)
 (defvar bt_rev false)
@@ -40,6 +41,7 @@
     (volume-module)
     (wifi)
     (bat)
+    (bluetooth)
   )
 )
 
