@@ -3,24 +3,41 @@
     :class "keyboard"
     (button
       :onclick "scripts/keyboard switch_layout"
+      :onrightclick "scripts/keyboard toggle_keyboard"
       (box
         :space-evenly "false"
         :orientation "h"
         :halign "center"
         (revealer
-          :reveal {layout == "en"}
+          :reveal {keyboard-status == "true"}
           :transition "slideleft"
           :duration "200ms"
           (label
-            :text "󰌌  en"
+            :text "󰌌 "
           )
         )
         (revealer
-          :reveal {layout == "it"}
+          :reveal {keyboard-status == "false"}
           :transition "slideleft"
           :duration "200ms"
           (label
-            :text "󰌌  it"
+            :text "󰌐 "
+          )
+        )
+        (revealer
+          :reveal {layout == "en" && keyboard-status == "true"}
+          :transition "slideleft"
+          :duration "200ms"
+          (label
+            :text "en"
+          )
+        )
+        (revealer
+          :reveal {layout == "it" && keyboard-status == "true"}
+          :transition "slideleft"
+          :duration "200ms"
+          (label
+            :text "it"
           )
         )
       )
@@ -29,3 +46,4 @@
 )
 
 (defpoll layout :interval "1s"	"scripts/keyboard layout")
+(defpoll keyboard-status :interval "1s"	"scripts/keyboard status")
