@@ -49,8 +49,13 @@
 
       monitor = ,highrr, auto, 1.25
 
-      # scale apps
-      exec-once = xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2
+      # unscale XWayland
+      xwayland {
+        force_zero_scaling = true
+      }
+      # toolkit-specific scale
+      env = GDK_SCALE,2
+      env = XCURSOR_SIZE,32
 
       input {
         kb_options = ctrl:swapcaps
