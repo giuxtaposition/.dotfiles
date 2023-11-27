@@ -58,7 +58,8 @@
       env = XCURSOR_SIZE,32
 
       input {
-        kb_options = ctrl:swapcaps
+        kb_options = ctrl:swapcaps, grp:alt_caps_toggle
+        kb_layout = us,it
 
         # focus change on cursor move
         follow_mouse = 1

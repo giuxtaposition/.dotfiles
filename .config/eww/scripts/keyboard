@@ -1,0 +1,20 @@
+#!/bin/sh
+
+keyboard_name="at-translated-set-2-keyboard"
+layout="$(hyprctl devices | grep "$keyboard_name" -A 3 | grep "active keymap" | cut -f3 -d " ")"
+
+get_layout() {
+	text=""
+	if [ "$layout" = "English" ]; then
+		text="en"
+	elif [ "$layout" = "Italian" ]; then
+		text="it"
+	fi
+
+	echo "$text"
+}
+
+[ "$1" = "layout" ] && get_layout && exit
+[ "$1" = "switch_layout" ] && (hyprctl switchxkblayout "$keyboard_name" next) && exit
+
+exit

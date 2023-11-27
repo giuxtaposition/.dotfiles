@@ -6,6 +6,7 @@
 (include "./components/battery.yuck")
 (include "./components/bluetooth.yuck")
 (include "./components/spotify.yuck")
+(include "./components/keyboard.yuck")
 
 (deflisten hyprland "scripts/hyprland")
 
@@ -30,12 +31,16 @@
   (box
     :space-evenly false
     :halign "end"
-    :class "control"
-    (bright)
-    (volume-module)
-    (wifi)
-    (bat)
-    (bluetooth)
+    (box
+      :space-evenly false
+      :class "control"
+      (bright)
+      (volume-module)
+      (wifi)
+      (bat)
+      (bluetooth)
+    )
+    (keyboard)
   )
 )
 

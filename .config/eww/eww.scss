@@ -126,5 +126,12 @@ tooltip {
   font-size: 1.2em;
   background-color: $base;
   border-radius: 10px;
+  margin: 0.3rem 0rem;
+}
+
+.keyboard {
+  padding: 0.5rem;
+  background-color: $base;
+  border-radius: 10px;
   margin: 0.3rem 0.5rem;
 }

@@ -1,0 +1,31 @@
+(defwidget keyboard []
+  (box
+    :class "keyboard"
+    (button
+      :onclick "scripts/keyboard switch_layout"
+      (box
+        :space-evenly "false"
+        :orientation "h"
+        :halign "center"
+        (revealer
+          :reveal {layout == "en"}
+          :transition "slideleft"
+          :duration "200ms"
+          (label
+            :text "󰌌  en"
+          )
+        )
+        (revealer
+          :reveal {layout == "it"}
+          :transition "slideleft"
+          :duration "200ms"
+          (label
+            :text "󰌌  it"
+          )
+        )
+      )
+    )
+  )
+)
+
+(defpoll layout :interval "1s"	"scripts/keyboard layout")
