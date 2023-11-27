@@ -4,10 +4,10 @@
     (label
       :class "bluetooth-icon icon"		
       :halign "end"		
-      :text icon	
+      :text bluetooth-icon	
       :tooltip "${connected-device}"
     )
   )
 )
-(defpoll icon			:interval "1s"	"scripts/bluetooth icon")
+(defpoll bluetooth-icon			:interval "1s"	"scripts/bluetooth icon")
 (defpoll connected-device	:interval "1s"	"scripts/bluetooth connected_device")

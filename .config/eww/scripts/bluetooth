@@ -3,7 +3,6 @@
 powered="$(bluetoothctl show | rg Powered | cut -f 2- -d ' ')"
 status="$(bluetoothctl info)"
 name="$(echo "$status" | rg Name | cut -f 2- -d ' ')"
-mac="$(echo "$status" | head -1 | awk '{print $2}' | tr ':' '_')"
 battery="$(echo "$status" | rg Percentage)"
 
 icon() {

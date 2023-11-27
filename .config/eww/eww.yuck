@@ -5,20 +5,14 @@
 (include "./components/wifi.yuck")
 (include "./components/battery.yuck")
 (include "./components/bluetooth.yuck")
+(include "./components/spotify.yuck")
 
-(defvar bright_reveal false)
-(defvar bt_rev false)
-(defvar vol_reveal false)
-(defvar net_rev false)
-
-(defvar osd-brightness false)
-(defvar osd-volume false)
 (deflisten hyprland "scripts/hyprland")
 
 (defwidget bar []
   (centerbox
     (left)
-    (empty)
+    (middle)
     (right)
   )
 )
@@ -45,10 +39,10 @@
   )
 )
 
-(defwidget empty []
+(defwidget middle []
   (box
-    (label 
-    :text "")
+    :space-evenly false
+    (spotify)
   )
 )
 

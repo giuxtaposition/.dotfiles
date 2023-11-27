@@ -1,0 +1,24 @@
+(defwidget spotify []
+  (box
+    :visible {title != "" && artist != ""}
+    :space-evenly false
+    (button
+      :onclick "scripts/spotify toggle"
+      (label
+        :class "spotify-icon icon"		
+        :text status	
+      )
+    )
+    (label
+      :class "spotify-title"
+      :text "${title} "
+    )
+    (label
+      :class "spotify-label"
+      :text "- ${artist}"
+    )
+  )
+)
+(defpoll status :interval "1s"	"scripts/spotify status")
+(defpoll title :interval "1s"	"scripts/spotify title")
+(defpoll artist :interval "1s"	"scripts/spotify artist")

@@ -3,6 +3,7 @@
   home.packages = with pkgs; [
     socat # Utility for bidirectional data transfer between two independent data channels
     jaq # JSON data processing tool
+    playerctl # command line player control
   ];
 
   programs.eww = {
