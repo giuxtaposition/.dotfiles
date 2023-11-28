@@ -1,6 +1,6 @@
 (defwidget spotify []
   (revealer
-    :reveal {title != "" && artist != ""}
+    :reveal {status != ""}
     :transition "slideup"
     :duration "200ms"
     (box
