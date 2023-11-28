@@ -6,6 +6,7 @@
     wl-clipboard # command-line copy/paste utilities for wayland
     slurp # select a region in a wayland compositor
     grim # grab images from a wayland compositor
+    swayidle
   ];
 
   # Wallpapers folder
@@ -20,6 +21,42 @@
       "${config.home.homeDirectory}/.dotfiles/.config/rofi";
   };
 
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      color = "1e1e2e";
+      bs-hl-color = "f5e0dc";
+      caps-lock-bs-hl-color = "f5e0dc";
+      caps-lock-key-hl-color = "a6e3a1";
+      inside-color = "00000000";
+      inside-clear-color = "00000000";
+      inside-caps-lock-color = "00000000";
+      inside-ver-color = "00000000";
+      inside-wrong-color = "00000000";
+      key-hl-color = "a6e3a1";
+      layout-bg-color = "00000000";
+      layout-border-color = "00000000";
+      layout-text-color = "cdd6f4";
+      line-color = "00000000";
+      line-clear-color = "00000000";
+      line-caps-lock-color = "00000000";
+      line-ver-color = "00000000";
+      line-wrong-color = "00000000";
+      ring-color = "b4befe";
+      ring-clear-color = "f5e0dc";
+      ring-caps-lock-color = "fab387";
+      ring-ver-color = "89b4fa";
+      ring-wrong-color = "eba0ac";
+      separator-color = "00000000";
+      text-color = "cdd6f4";
+      text-clear-color = "f5e0dc";
+      text-caps-lock-color = "fab387";
+      text-ver-color = "89b4fa";
+      text-wrong-color = "eba0ac";
+      image = "~/Wallpapers/WRztVWQ.jpg";
+    };
+  };
+
   wayland.windowManager.hyprland = let
     startScript = pkgs.writeShellScript "start" ''
       # initializing wallpaper daemon
@@ -27,9 +64,9 @@
       # setting wallpaper
       swww img ~/Wallpapers/WRztVWQ.jpg &
       # start eww
-      eww open bar
+      eww open bar &
 
-      dunst
+      dunst &
     '';
 
     colors = import ../../colors.nix;
@@ -39,6 +76,10 @@
     xwayland.enable = true;
     extraConfig = ''
       exec-once=bash ${startScript}
+      exec-once=swayidle -w timeout 300 'swaylock -f -c 000000' \
+      timeout 600 'systemctl suspend' \
+      before-sleep 'swaylock -f -c 000000' &      
+
       env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
       env = WLR_DRM_NO_ATOMIC, 1
 
@@ -156,12 +197,12 @@
 
       $mod = SUPER
       bind = $mod, Q, exec, wezterm
-      bind = $mod, M, exit
       bind = $mod, C, killactive
       bind = $mod, V, togglefloating
       bind = $mod, P, pseudo
       bind = $mod, J, togglesplit
       bind = $mod, F, fullscreen, 1 
+      bind = $mod, M, exec, swaylock -f -c 000000
       bind = $mod, D, exec, $HOME/.config/rofi/bin/launcher
       bind = $mod, R, exec, $HOME/.config/rofi/bin/runner
       bind = $mod SHIFT, P, exec, $HOME/.config/rofi/bin/powermenu

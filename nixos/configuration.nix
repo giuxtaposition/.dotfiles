@@ -126,6 +126,9 @@
   sound.enable = true;
   security.rtkit.enable = true;
 
+  # Use swaylock as screen lock
+  security.pam.services.swaylock = { };
+
   hardware = {
     bluetooth = {
       enable = true;
