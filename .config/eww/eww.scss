@@ -81,8 +81,11 @@ tooltip {
 
 //Distro Component
 .distro {
-  margin-left: 0.5rem;
-  color: $sky;
+  color: $blue;
+  border-radius: 0px 0px 40px 0px;
+  padding: 0px 20px 0px 15px;
+  background-color: $base;
+  font-size: 20px;
 }
 
 .spotify-icon {

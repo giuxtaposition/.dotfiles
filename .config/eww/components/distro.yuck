@@ -1,7 +1,10 @@
 (defwidget distro []
   (box
     :class "distro"
-    (label 
-    :text " ")
+    (button
+      :onclick "~/.config/rofi/bin/launcher"
+      (label 
+      :text " ")
+    )
   )
 )
