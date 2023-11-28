@@ -7,6 +7,7 @@
 (include "./components/bluetooth.yuck")
 (include "./components/spotify.yuck")
 (include "./components/keyboard.yuck")
+(include "./components/clock.yuck")
 
 (deflisten hyprland "scripts/hyprland")
 
@@ -41,6 +42,7 @@
       (bluetooth)
     )
     (keyboard)
+    (time)
   )
 )
 
