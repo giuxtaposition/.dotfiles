@@ -1,7 +1,7 @@
 (include "./components/distro.yuck")
 (include "./components/workspaces.yuck")
 (include "./components/bright.yuck")
-(include "./components/volume.yuck")
+(include "./components/speaker.yuck")
 (include "./components/wifi.yuck")
 (include "./components/battery.yuck")
 (include "./components/bluetooth.yuck")
@@ -36,7 +36,7 @@
       :space-evenly false
       :class "control"
       (bright)
-      (volume-module)
+      (speaker)
       (wifi)
       (bat)
       (bluetooth)

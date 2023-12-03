@@ -1,0 +1,12 @@
+(defwidget speaker []
+  (box
+    (label
+      :class "speaker-icon icon"
+      :text speaker-icon
+      :tooltip "volume ${speaker-volume-percent}"
+    )
+  )
+)
+
+(defpoll speaker-icon			:interval "1s"	"scripts/speaker icon")
+(defpoll speaker-volume-percent :interval "1s"	"scripts/speaker percent")
