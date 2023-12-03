@@ -1,0 +1,22 @@
+#!/bin/sh
+
+volume="$(pamixer --default-source --get-volume-human)"
+
+icon() {
+	if [ "$volume" = "muted" ]; then
+		icon="󰍭"
+	else
+		icon="󰍬"
+	fi
+
+	echo "$icon"
+}
+
+percent() {
+	echo "$volume"
+}
+
+[ "$1" = "icon" ] && icon && exit
+[ "$1" = "percent" ] && percent && exit
+[ "$1" = "toggle" ] && (pamixer --default-source -t) && exit
+exit

@@ -2,6 +2,7 @@
 (include "./components/workspaces.yuck")
 (include "./components/bright.yuck")
 (include "./components/speaker.yuck")
+(include "./components/mic.yuck")
 (include "./components/wifi.yuck")
 (include "./components/battery.yuck")
 (include "./components/bluetooth.yuck")
@@ -37,6 +38,7 @@
       :class "control"
       (bright)
       (speaker)
+      (mic)
       (wifi)
       (bat)
       (bluetooth)

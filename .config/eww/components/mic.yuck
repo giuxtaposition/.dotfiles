@@ -1,0 +1,15 @@
+(defwidget mic []
+  (box
+    (button
+      :onclick "scripts/mic toggle"
+      (label
+        :class "mic-icon icon"
+        :text mic-icon
+        :tooltip "volume ${mic-volume-percent}"
+      )
+    )
+  )
+)
+
+(defpoll mic-icon			:interval "1s"	"scripts/mic icon")
+(defpoll mic-volume-percent :interval "1s"	"scripts/mic percent")
