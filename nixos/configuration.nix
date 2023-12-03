@@ -70,7 +70,7 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      extraGroups = [ "wheel" "video" "audio" "networkmanager" "docker" ];
+      extraGroups = [ "wheel" "video" "audio" "networkmanager" "rtkit" ];
       shell = pkgs.fish;
     };
   };
@@ -105,8 +105,7 @@
           import ../pkgs/sddm-sugar-catppuccin-theme.nix { inherit stdenv src; }
         }/sddm-sugar-catppuccin-theme";
 
-        defaultSession =
-          "hyprland"; # need to add none to use window manager without desktop manager
+        defaultSession = "hyprland";
       };
       windowManager.hypr = { enable = true; };
     };

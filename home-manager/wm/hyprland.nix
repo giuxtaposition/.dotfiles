@@ -7,6 +7,10 @@
     slurp # select a region in a wayland compositor
     grim # grab images from a wayland compositor
     swayidle
+    qt6.qtwayland
+    libsForQt5.qt5.qtwayland
+    libsForQt5.qt5ct
+    obs-studio
   ];
 
   # Wallpapers folder
@@ -67,6 +71,9 @@
       eww open bar &
 
       dunst &
+
+      #idle
+      swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &      
     '';
 
     colors = import ../../colors.nix;
@@ -76,17 +83,30 @@
     xwayland.enable = true;
     extraConfig = ''
       exec-once=bash ${startScript}
-      exec-once=swayidle -w timeout 300 'swaylock -f -c 000000' \
-      timeout 600 'systemctl suspend' \
-      before-sleep 'swaylock -f -c 000000' &      
 
-      env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
+      # XDG Specifications
+      env = XDG_SESSION, wayland
+      env = XDG_SESSION_DESKTOP, Hyprland
+      env = XDG_CURRENT_DESKTOP, Hyprland
+
+      # QT, GDK, SL2, Clutter: use wayland if available, fallback to x11 if not
+      env = QT_QPA_PLATFORM, wayland
+      env = GDK_BACKEND, wayland
+      env = SDL_VIDEODRIVER, wayland
+      env = CLUTTER_BACKEND, wayland
+      env = EGL_PLATFORM, wayland
+
+      # Hint electron apps to use wayland
+      env = NIXOS_OZONE_WL, 1
+
+      # use legacy DRM instead of atomic mode setting
       env = WLR_DRM_NO_ATOMIC, 1
 
       # Firefox
-      env = MOZ_DISABLE_RDD_SANDBOX, 1
-      env = EGL_PLATFORM, wayland
       env = MOZ_ENABLE_WAYLAND, 1
+
+      # QT envs
+      env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
 
       monitor = ,highrr, auto, 1.25
 
