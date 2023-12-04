@@ -24,6 +24,13 @@
       "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
   };
 
+  # asdf config
+  home.file."${config.home.homeDirectory}/.asdfrc" = {
+    text = ''
+      legacy_version_file = yes
+    '';
+  };
+
   programs.command-not-found.enable = false;
 
   programs.nix-index = {
@@ -69,17 +76,11 @@
       # starship
       starship init fish | source
 
-      # Autocall nvm use if supported
-      function __check_rvm --on-variable PWD --description 'Autocall nvm use'
-        status --is-command-substitution; and return
-        if test -f .nvmrc; and test -r .nvmrc;
-          nvm use
-        else
-        end
-      end
-
       # vim mode
       set fish_key_bindings fish_user_key_bindings
+
+      # load asdf definitions
+      source "$HOME/.nix-profile/share/asdf-vm/asdf.fish"
     '';
     functions = {
       fish_user_key_bindings = ''
@@ -103,10 +104,4 @@
     };
   };
 
-  # fnm
-  home.file."${config.home.homeDirectory}/.config/fish/conf.d/fnm.fish" = {
-    text = ''
-      fnm env --use-on-cd | source
-    '';
-  };
 }

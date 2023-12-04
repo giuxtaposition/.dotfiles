@@ -77,6 +77,17 @@
   programs.dconf.enable = true;
   programs.fish.enable = true;
   programs.hyprland.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+
+      # nodejs asdf plugin dependencies
+      gpgme
+      gawk
+
+      stdenv.cc.cc
+    ];
+  };
 
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
