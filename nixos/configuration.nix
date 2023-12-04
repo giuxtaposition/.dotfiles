@@ -97,13 +97,18 @@
       enable = true;
       xkbOptions = "ctrl:swapcaps";
       displayManager = {
-        sddm.enable = true;
-        sddm.theme = let
-          stdenv = pkgs.stdenv;
-          src = inputs.sddm-sugar-catppuccin-theme;
-        in "${
-          import ../pkgs/sddm-sugar-catppuccin-theme.nix { inherit stdenv src; }
-        }/sddm-sugar-catppuccin-theme";
+        sddm = {
+          enable = true;
+          theme = let
+            stdenv = pkgs.stdenv;
+            src = inputs.sddm-sugar-catppuccin-theme;
+          in "${
+            import ../pkgs/sddm-sugar-catppuccin-theme.nix {
+              inherit stdenv src;
+            }
+          }/sddm-sugar-catppuccin-theme";
+          wayland.enable = true;
+        };
 
         defaultSession = "hyprland";
       };

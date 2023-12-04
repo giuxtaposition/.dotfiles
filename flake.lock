@@ -269,22 +269,6 @@
         "type": "github"
       }
     },
-    "nvm-fish": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1682839819,
-        "narHash": "sha256-LV5NiHfg4JOrcjW7hAasUSukT43UBNXGPi1oZWPbnCA=",
-        "owner": "jorgebucaran",
-        "repo": "nvm.fish",
-        "rev": "c69e5d1017b21bcfca8f42c93c7e89fff6141a8a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jorgebucaran",
-        "repo": "nvm.fish",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "bat-catppuccin-theme": "bat-catppuccin-theme",
@@ -296,7 +280,6 @@
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nvm-fish": "nvm-fish",
         "rust-overlay": "rust-overlay_2",
         "sddm-sugar-catppuccin-theme": "sddm-sugar-catppuccin-theme",
         "spotify-adblock": "spotify-adblock"
