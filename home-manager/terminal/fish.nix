@@ -1,6 +1,6 @@
 { config, pkgs, lib, ... }: {
   home.packages = with pkgs; [
-    exa # replacement for ls
+    eza # replacement for ls
     starship
     fzf
     neofetch
@@ -92,12 +92,11 @@
     };
     shellAliases = {
       vim = "nvim";
-      ll = "exa -l -g --icons";
-      lla = "exa -la -g --icons";
+      ll = "eza -l -g --icons";
+      lla = "eza -la -g --icons";
       ":q" = "exit";
     };
     shellAbbrs = {
-      grep = "grep --color";
       home-update = "z dot && home-manager switch --flake .#giu@kumiko";
       nixos-update = "z dot && sudo nixos-rebuild switch --flake .#kumiko";
 
