@@ -43,10 +43,6 @@
         name = "z";
         src = pkgs.fishPlugins.z.src;
       }
-      {
-        name = "nvm";
-        src = pkgs.nvm-fish.src;
-      }
     ];
 
     interactiveShellInit = ''
@@ -105,5 +101,12 @@
       gpf = "git push --force-with-lease";
       gs = "git status --short";
     };
+  };
+
+  # fnm
+  home.file."${config.home.homeDirectory}/.config/fish/conf.d/fnm.fish" = {
+    text = ''
+      fnm env --use-on-cd | source
+    '';
   };
 }

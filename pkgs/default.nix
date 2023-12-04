@@ -6,11 +6,6 @@
     version = "master";
   };
 
-  nvm-fish = pkgs.callPackage ./nvm-fish.nix {
-    src = inputs.nvm-fish;
-    version = "2.2.13";
-  };
-
   fish-catppuccin-theme = pkgs.callPackage ./fish-catppuccin-theme.nix {
     src = inputs.fish-catppuccin-theme;
     version = "main";

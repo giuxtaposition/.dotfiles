@@ -25,11 +25,6 @@
       flake = false;
     };
 
-    nvm-fish = {
-      url = "github:jorgebucaran/nvm.fish";
-      flake = false;
-    };
-
     fish-catppuccin-theme = {
       url = "github:catppuccin/fish";
       flake = false;

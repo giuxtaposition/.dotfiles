@@ -48,6 +48,7 @@
     mpv-unwrapped # Media Player
     zathura
     spotify
+    fnm # node version manager
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
