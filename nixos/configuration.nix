@@ -21,7 +21,10 @@
     ];
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [ "electron-24.8.6" ];
+      permittedInsecurePackages = [
+        "electron-24.8.6" # needed for Obsidian
+        "openssl-1.1.1w" # needed for mongodb-memory-server
+      ];
     };
   };
 
@@ -84,8 +87,15 @@
       # nodejs asdf plugin dependencies
       gpgme
       gawk
-
       stdenv.cc.cc
+
+      # mongodb-memory-server
+      curlFull
+      openssl
+      openssl_1_1
+      xz
+      libGL
+      libuuid
     ];
   };
 
