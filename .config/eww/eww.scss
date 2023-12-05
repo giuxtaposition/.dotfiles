@@ -159,6 +159,11 @@ tooltip {
   margin-left: 0.5rem;
 }
 
+.speaker-bar trough highlight {
+  background-color: $mauve;
+  border-radius: 10px;
+}
+
 .mic-icon {
   color: $maroon;
 }

@@ -1,9 +1,9 @@
 #!/bin/sh
 
-volume="$(pamixer --get-volume-human)"
+get_data() {
+	volume="$(pamixer --get-volume-human | grep -Po '\d+(?=%)')"
 
-icon() {
-	if [ "$volume" = "muted" ]; then
+	if [ "$volume" = "" ]; then
 		icon="󰖁"
 	else
 		lvl=$(awk -v n="$volume" 'BEGIN{print int(n/34)}')
@@ -16,13 +16,9 @@ icon() {
 		fi
 	fi
 
-	echo "$icon"
+	echo "{\"content\": \"$volume\", \"icon\": \"$icon\"}"
 }
 
-percent() {
-	echo "$volume"
-}
-
-[ "$1" = "icon" ] && icon && exit
-[ "$1" = "percent" ] && percent && exit
+[ "$1" = "" ] && get_data && exit
+[ "$1" = "toggle" ] && (pamixer -t) && exit
 exit

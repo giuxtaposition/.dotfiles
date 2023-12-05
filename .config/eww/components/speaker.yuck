@@ -1,12 +1,41 @@
+(defvar show-speaker-bar false)
+
 (defwidget speaker []
   (box
-    (label
-      :class "speaker-icon icon"
-      :text speaker-icon
-      :tooltip "volume ${speaker-volume-percent}"
+    :hexpand true
+    (eventbox 
+      :onhover "${eww} update show-speaker-bar=true"
+      :onhoverlost "${eww} update show-speaker-bar=false"
+      (box
+        :space-evenly false
+        (revealer 
+          :transition "slideleft" 
+          :reveal show-speaker-bar 
+          :duration "350ms"
+          (box
+            :width 100
+            :class "speaker-bar scale" 
+            (scale 
+              :value { speaker-poll.content }
+              :tooltip "${speaker-poll.content}%" 
+              :onchange "pamixer --set-volume {}" 
+              :orientation "h" 
+              :max 100
+              :min 0
+            )
+          )
+        )
+        (button
+          :onclick "scripts/speaker toggle"
+          (label
+            :class "speaker-icon icon"
+            :text { speaker-poll.icon }
+          )
+        )
+      )
     )
   )
 )
 
-(defpoll speaker-icon			:interval "1s"	"scripts/speaker icon")
-(defpoll speaker-volume-percent :interval "1s"	"scripts/speaker percent")
+
+(defpoll speaker-poll :interval "1s"	"scripts/speaker")
