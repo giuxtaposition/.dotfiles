@@ -48,6 +48,15 @@ $shadow: $crust;
   all: unset; //Unsets everything so you can style everything from scratch
 }
 
+scale trough {
+  all: unset;
+  background-color: $surface0;
+  border-radius: 5px;
+  min-height: 10px;
+  min-width: 10px;
+  margin: 0px;
+}
+
 //Global Styles
 .bar {
   background-color: $crust;
@@ -138,8 +147,17 @@ tooltip {
   color: $yellow;
 }
 
+.bright-bar trough highlight {
+  background-color: $yellow;
+  border-radius: 10px;
+}
+
 .speaker-icon {
   color: $mauve;
+}
+
+.scale {
+  margin-left: 0.5rem;
 }
 
 .mic-icon {

@@ -1,9 +1,37 @@
+(defvar show-bright-bar false)
+
 (defwidget bright []
   (box
-    (label
-      :class "bright-icon icon"
-      :text brightness
-      :tooltip "brightness ${brightness-percent}%")))
+    :hexpand true
+    (eventbox 
+      :onhover "${eww} update show-bright-bar=true"
+      :onhoverlost "${eww} update show-bright-bar=false"
+      (box
+        :space-evenly false
+        (revealer 
+          :transition "slideleft" 
+          :reveal show-bright-bar 
+          :duration "350ms"
+          (box
+            :width 100
+            :class "bright-bar scale" 
+            (scale 
+              :value { brightness.content }
+              :tooltip "${brightness.content}%" 
+              :onchange "brightnessctl set {}%" 
+              :orientation "h" 
+              :max 100
+              :min 0
+            )
+          )
+        )
+        (label
+          :class "bright-icon icon"
+          :text { brightness.icon }
+        )
+      )
+    )
+  )
+)
 
-(defpoll brightness			:interval "1s"	"scripts/brightness icon")
-(defpoll brightness-percent :interval "1s"	"scripts/brightness percent")
+(defpoll brightness			:interval "1s"	"scripts/brightness")
