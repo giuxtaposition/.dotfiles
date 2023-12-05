@@ -1,22 +1,18 @@
 #!/bin/sh
 
-volume="$(pamixer --default-source --get-volume-human)"
+get_data() {
+	volume="$(pamixer --default-source --get-volume-human | grep -Po '\d+(?=%)')"
 
-icon() {
-	if [ "$volume" = "muted" ]; then
+	if [ "$volume" = "" ]; then
 		icon="󰍭"
+		volume="0"
 	else
 		icon="󰍬"
 	fi
 
-	echo "$icon"
+	echo "{\"content\": \"$volume\", \"icon\": \"$icon\"}"
 }
 
-percent() {
-	echo "$volume"
-}
-
-[ "$1" = "icon" ] && icon && exit
-[ "$1" = "percent" ] && percent && exit
+[ "$1" = "" ] && get_data && exit
 [ "$1" = "toggle" ] && (pamixer --default-source -t) && exit
 exit

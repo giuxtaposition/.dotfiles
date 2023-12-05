@@ -49,7 +49,6 @@ $shadow: $crust;
 }
 
 scale trough {
-  all: unset;
   background-color: $surface0;
   border-radius: 5px;
   min-height: 10px;
@@ -162,6 +161,11 @@ tooltip {
 
 .mic-icon {
   color: $maroon;
+}
+
+.mic-bar trough highlight {
+  background-color: $maroon;
+  border-radius: 10px;
 }
 
 .wifi-icon {

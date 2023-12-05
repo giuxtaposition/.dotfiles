@@ -1,15 +1,40 @@
+(defvar show-mic-bar false)
+
 (defwidget mic []
   (box
-    (button
-      :onclick "scripts/mic toggle"
-      (label
-        :class "mic-icon icon"
-        :text mic-icon
-        :tooltip "volume ${mic-volume-percent}"
+    :hexpand true
+    (eventbox 
+      :onhover "${eww} update show-mic-bar=true"
+      :onhoverlost "${eww} update show-mic-bar=false"
+      (box
+        :space-evenly false
+        (revealer 
+          :transition "slideleft" 
+          :reveal show-mic-bar 
+          :duration "350ms"
+          (box
+            :width 100
+            :class "mic-bar scale" 
+            (scale 
+              :value { mic-poll.content }
+              :tooltip "${mic-poll.content}%" 
+              :onchange "pamixer --default-source --set-volume {}" 
+              :orientation "h" 
+              :max 100
+              :min 0
+            )
+          )
+        )
+        (button
+          :onclick "scripts/mic toggle"
+          (label
+            :class "mic-icon icon"
+            :text { mic-poll.icon }
+          )
+        )
       )
     )
   )
 )
 
-(defpoll mic-icon			:interval "1s"	"scripts/mic icon")
-(defpoll mic-volume-percent :interval "1s"	"scripts/mic percent")
+(defpoll mic-poll			:interval "1s"	"scripts/mic")
