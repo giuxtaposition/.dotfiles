@@ -1,6 +1,6 @@
 (defwidget spotify []
   (revealer
-    :reveal {status != ""}
+    :reveal {spotify-poll.status != ""}
     :transition "slideup"
     :duration "200ms"
     (box
@@ -26,7 +26,7 @@
             :onclick "scripts/spotify toggle"
             (label
               :class "spotify-icon icon spotify-play-icon"		
-              :text status	
+              :text { spotify-poll.icon }	
             )
           )
           (button
@@ -39,11 +39,11 @@
         )
         (label
           :class "spotify-title"
-          :text "${title} "
+          :text "${spotify-poll.title} "
         )
         (label
           :class "spotify-artist"
-          :text "- ${artist}"
+          :text "- ${spotify-poll.artist}"
         )
       )
       (box
@@ -55,7 +55,5 @@
     )
   )
 )
-(defpoll status :interval "1s"	"scripts/spotify status")
-(defpoll title :interval "1s"	"scripts/spotify title")
-(defpoll artist :interval "1s"	"scripts/spotify artist")
+(defpoll spotify-poll :interval "1s"	"scripts/spotify")
 (deflisten cava :interval "2s"	"scripts/cava")
