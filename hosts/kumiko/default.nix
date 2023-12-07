@@ -124,7 +124,7 @@
             stdenv = pkgs.stdenv;
             src = inputs.sddm-sugar-catppuccin-theme;
           in "${
-            import ../pkgs/sddm-sugar-catppuccin-theme.nix {
+            import ../../pkgs/sddm-sugar-catppuccin-theme.nix {
               inherit stdenv src;
             }
           }/sddm-sugar-catppuccin-theme";
@@ -170,11 +170,6 @@
   };
 
   environment = {
-    variables = {
-      TERMINAL = "wezterm";
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
     systemPackages = with pkgs; [
       # System-Wide Packages
       home-manager

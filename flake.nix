@@ -10,8 +10,6 @@
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-23.11";
 
-    rust-overlay.url = "github:oxalica/rust-overlay";
-
     # Candy Icons
     candy-icons = {
       url =
@@ -51,8 +49,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, rust-overlay, nix-index-database
-    , hyprland, ... }@inputs:
+  outputs =
+    { self, nixpkgs, home-manager, nix-index-database, hyprland, ... }@inputs:
     let
       inherit (self) outputs;
       # Supported systems for your flake packages, shell, etc.
@@ -74,38 +72,23 @@
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
 
-      # NixOS configuration entrypoint
-      # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
+        # Personal Laptop
         kumiko = nixpkgs.lib.nixosSystem {
+          modules = [ ./hosts/kumiko ];
           specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./nixos/configuration.nix
-
-            ({ pkgs, ... }: {
-              nixpkgs.overlays = [ rust-overlay.overlays.default ];
-              environment.systemPackages =
-                [ pkgs.rust-bin.beta.latest.default ];
-            })
-
-          ];
         };
       };
 
-      # Available through 'home-manager --flake .#your-username@your-hostname'
       homeConfigurations = {
         "giu@kumiko" = home-manager.lib.homeManagerConfiguration {
-          pkgs =
-            nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
             hyprland.homeManagerModules.default
-            {
-              wayland.windowManager.hyprland.enable = true;
-            }
+            { wayland.windowManager.hyprland.enable = true; }
 
-            # > Our main home-manager configuration file <
-            ./home-manager/home.nix
+            ./home-manager/kumiko.nix
             nix-index-database.hmModules.nix-index
           ];
         };
