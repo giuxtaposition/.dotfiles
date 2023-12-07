@@ -79,7 +79,6 @@
     colors = import ../../colors.nix;
   in {
     enable = true;
-    enableNvidiaPatches = true;
     xwayland.enable = true;
     extraConfig = ''
       exec-once=bash ${startScript}
