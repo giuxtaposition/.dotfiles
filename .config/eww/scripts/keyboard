@@ -1,7 +1,6 @@
 #!/bin/sh
 
-KEYBOARD_NAME="at-translated-set-2-keyboard"
-layout="$(hyprctl devices | grep "$KEYBOARD_NAME" -A 3 | grep "active keymap" | cut -f3 -d " ")"
+layout="$(hyprctl devices | grep -E "\b$KEYBOARD_NAME(\s|$)" -A 3 | grep "active keymap" | cut -f3 -d " ")"
 export STATUS_FILE="$XDG_RUNTIME_DIR/keyboard.status"
 
 if [ -z "$XDG_RUNTIME_DIR" ]; then

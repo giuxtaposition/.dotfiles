@@ -13,10 +13,18 @@
 (deflisten hyprland "scripts/hyprland")
 (defvar eww "eww -c $HOME/.config/eww")
 
-(defwidget bar []
+(defwidget bar0 []
   (centerbox
     (left)
     (middle)
+    (right)
+  )
+)
+
+(defwidget bar1 []
+  (centerbox
+    (left)
+    (box)
     (right)
   )
 )
@@ -57,7 +65,7 @@
 )
 
 
-(defwindow bar
+(defwindow bar0
   :monitor 0
   :geometry (geometry :x "0%"
                       :y "0%"
@@ -66,5 +74,16 @@
                       :anchor "top center")
   :stacking "fg"
   :exclusive true
-  (bar))
+  (bar0))
+
+(defwindow bar1
+  :monitor 1
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "100%"
+                      :height "32px"
+                      :anchor "top center")
+  :stacking "fg"
+  :exclusive true
+  (bar1))
 

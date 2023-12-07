@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, inputs, lib, ... }: {
 
   home.packages = with pkgs; [
     unstable.swww # wallpaper manager
@@ -7,10 +7,10 @@
     slurp # select a region in a wayland compositor
     grim # grab images from a wayland compositor
     swayidle
-    qt6.qtwayland
-    libsForQt5.qt5.qtwayland
-    libsForQt5.qt5ct
     obs-studio
+    qt5.qtwayland
+    qt6.qmake
+    qt6.qtwayland
   ];
 
   # Wallpapers folder
@@ -62,13 +62,15 @@
   };
 
   wayland.windowManager.hyprland = let
+    eww-bars = lib.concatMapStrings (x: x + "&")
+      (map (m: "eww open ${m.topbar}") (config.monitors));
     startScript = pkgs.writeShellScript "start" ''
       # initializing wallpaper daemon
       swww init &
       # setting wallpaper
       swww img ~/Wallpapers/WRztVWQ.jpg &
       # start eww
-      eww open bar &
+      ${eww-bars}
 
       dunst &
 
@@ -80,16 +82,31 @@
   in {
     enable = true;
     xwayland.enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    settings = {
+      monitor = map (m:
+        let
+          resolution = "${toString m.width}x${toString m.height}@${
+              toString m.refreshRate
+            }";
+          position = "${toString m.x}x${toString m.y}";
+        in "${m.name},${
+          if m.enabled then "${resolution},${position},1.25" else "disable"
+        }") (config.monitors);
+
+      workspace = map (m: "${m.name},${m.workspace}") (config.monitors);
+    };
     extraConfig = ''
       exec-once=bash ${startScript}
 
       # XDG Specifications
       env = XDG_SESSION, wayland
+      env = XDG_SESSION_TYPE, wayland
       env = XDG_SESSION_DESKTOP, Hyprland
       env = XDG_CURRENT_DESKTOP, Hyprland
 
       # QT, GDK, SL2, Clutter: use wayland if available, fallback to x11 if not
-      env = QT_QPA_PLATFORM, wayland
+      env = QT_QPA_PLATFORM, wayland;xcb
       env = GDK_BACKEND, wayland
       env = SDL_VIDEODRIVER, wayland
       env = CLUTTER_BACKEND, wayland
@@ -106,24 +123,22 @@
 
       # QT envs
       env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
+      env = QT_AUTO_SCREEN_SCALE_FACTOR, 1
 
-      monitor = ,highrr, auto, 1.25
+      # Fix disappearing cursor
+      env = WLR_NO_HARDWARE_CURSORS, 1
 
       # unscale XWayland
       xwayland {
         force_zero_scaling = true
       }
-      # toolkit-specific scale
-      env = GDK_SCALE, 1
-      env = XCURSOR_SIZE, 32
 
       input {
         kb_options = ctrl:swapcaps, grp:alt_caps_toggle
         kb_layout = us,it
 
-        # focus change on cursor move
-        follow_mouse = 1
-        accel_profile = flat
+        follow_mouse = 0
+        accel_profile = adaptive
         touchpad {
           scroll_factor = 0.3
         }
@@ -148,7 +163,7 @@
 
         allow_tearing = true
         layout = dwindle
-        resize_on_border = true
+        resize_on_border = false
       }
 
       #---------------------------------------------------
@@ -238,9 +253,6 @@
       bind = $mod SHIFT, K, movewindow, u
       bind = $mod SHIFT, J, movewindow, d 
 
-      # Move to other screen
-      bind = $mod, CTRL, movewindow,mon:l
-
       # Move Focus
       bind = $mod, H, movefocus, l
       bind = $mod, L, movefocus, r
@@ -285,12 +297,6 @@
       # screenshot 
       bind =, Print, exec, grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/Screenshot-$(date +%F_%T).png | dunstify "Screenshot of the region taken" -t 1000 # screenshot of a region 
       bind = SHIFT, Print, exec, grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/Screenshot-$(date +%F_%T).png | dunstify "Screenshot of whole screen taken" -t 1000 # screenshot of the whole screen
-
-      # mouse movements
-      bindm = $mod, mouse:272, movewindow
-      bindm = $mod, mouse:273, resizewindow
-      bindm = $mod ALT, mouse:272, resizewindow
-
     '';
   };
 

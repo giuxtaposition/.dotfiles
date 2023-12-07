@@ -71,11 +71,18 @@
 
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
+      homeManagerModules = import ./modules/home-manager;
 
       nixosConfigurations = {
         # Personal Laptop
         kumiko = nixpkgs.lib.nixosSystem {
           modules = [ ./hosts/kumiko ];
+          specialArgs = { inherit inputs outputs; };
+        };
+
+        # Personal Desktop
+        reina = nixpkgs.lib.nixosSystem {
+          modules = [ ./hosts/reina ];
           specialArgs = { inherit inputs outputs; };
         };
       };
@@ -85,12 +92,15 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [
-            hyprland.homeManagerModules.default
-            { wayland.windowManager.hyprland.enable = true; }
-
             ./home-manager/kumiko.nix
             nix-index-database.hmModules.nix-index
           ];
+        };
+        "giu@reina" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules =
+            [ ./home-manager/reina.nix nix-index-database.hmModules.nix-index ];
         };
       };
 

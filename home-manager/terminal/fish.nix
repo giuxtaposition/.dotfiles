@@ -94,8 +94,6 @@
       ":q" = "exit";
     };
     shellAbbrs = {
-      home-update = "z dot && home-manager switch --flake .#giu@kumiko";
-      nixos-update = "z dot && sudo nixos-rebuild switch --flake .#kumiko";
 
       #GIT
       gp = "git pull --rebase --autostash";
