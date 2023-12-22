@@ -54,7 +54,7 @@ symbol = " "
 
 
 [character]
-success_symbol = "[[󰷠](peach) ❯](sky)"
+success_symbol = "[[ᓚᘏᗢ](subtext1) ❯](sky)"
 error_symbol = "[❯](red)"
 vimcmd_symbol = "[❮](green)"
 

@@ -1,1 +1,1 @@
-{ imports = [ ./bat.nix ./fish.nix ./git.nix ]; }
+{ imports = [ ./bat.nix ./fish.nix ./git.nix ./foot.nix ]; }

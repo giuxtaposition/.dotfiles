@@ -54,12 +54,7 @@
 
     interactiveShellInit = ''
       function fish_greeting
-        echo (set_color b4befe)'Hello Giu,
-
-          ／l、               
-        （ﾟ､ ｡ ７         
-          l  ~ヽ       
-          じしf_,)ノ'
+        echo (set_color b4befe)'Hello Giu, ^•ﻌ•^ฅ♡'
       end
 
       set -gx TERM xterm-256color
