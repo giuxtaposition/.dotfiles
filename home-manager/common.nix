@@ -54,6 +54,7 @@
     asdf-vm # runtime version management
     chromium
     glxinfo # info about GPU
+    steam-run
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
