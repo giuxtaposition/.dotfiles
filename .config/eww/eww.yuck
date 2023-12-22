@@ -10,7 +10,6 @@
 (include "./components/keyboard.yuck")
 (include "./components/clock.yuck")
 
-(deflisten hyprland "scripts/hyprland")
 (defvar eww "eww -c $HOME/.config/eww")
 
 (defwidget bar0 []

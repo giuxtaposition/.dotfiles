@@ -3,7 +3,7 @@
 
   networking.hostName = "Reina";
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nouveau" ];
 
   hardware = {
     opengl = {
@@ -20,7 +20,7 @@
     };
 
     nvidia = {
-      open = false;
+      open = true;
       modesetting.enable = true;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.beta;

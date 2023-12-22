@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }: {
+{ config, pkgs, ... }: {
 
   home.packages = with pkgs; [
     socat # Utility for bidirectional data transfer between two independent data channels

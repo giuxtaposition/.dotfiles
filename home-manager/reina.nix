@@ -29,7 +29,7 @@
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     WLR_BACKEND = "vulkan";
     WLR_RENDERER = "vulkan";
-    KEYBOARD_NAME = "sonix-usb-device";
+    KEYBOARD_NAME = "3141:32800:SONiX_USB_DEVICE";
   };
 
   programs.fish.shellAbbrs = {

@@ -10,7 +10,7 @@ Here are some details about my setup:
 - **Shell**: [Fish](https://github.com/fish-shell/fish-shell)
 - **Terminal**: [Wezterm](https://github.com/wez/wezterm)
 - **Editor**: [Neovim](https://github.com/neovim/neovim/)
-- **WM**: [Hyprland](https://github.com/hyprwm/Hyprland)
+- **WM**: [SwayFX](https://github.com/WillPower3309/swayfx)
 - **Launcher**: [Rofi](https://github.com/davatorium/rofi)
 - **Widgets**: [Eww](https://github.com/elkowar/eww)
 - **Notify Daemon**: [Dunst](https://github.com/dunst-project/dunst)

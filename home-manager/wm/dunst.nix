@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, ... }: {
 
   # notification daemon
   services.dunst = let

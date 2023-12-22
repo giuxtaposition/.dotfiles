@@ -52,6 +52,7 @@
     zathura
     spotify
     asdf-vm # runtime version management
+    unstable.firefox
     chromium
     glxinfo # info about GPU
     steam-run

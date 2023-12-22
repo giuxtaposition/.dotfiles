@@ -20,7 +20,7 @@
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
-        "electron-24.8.6" # needed for Obsidian
+        "electron-25.9.0" # needed for Obsidian
         "openssl-1.1.1w" # needed for mongodb-memory-server
       ];
     };
@@ -39,10 +39,6 @@
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      ];
     };
     gc = {
       # Automatic garbage collection
@@ -84,10 +80,6 @@
   };
   programs.dconf.enable = true;
   programs.fish.enable = true;
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-  };
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
@@ -106,6 +98,10 @@
       libuuid
     ];
   };
+  programs.sway = {
+    enable = true;
+    package = pkgs.unstable.swayfx;
+  };
 
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
@@ -122,7 +118,11 @@
 
   # Services
   services = {
-    dbus.enable = true;
+    dbus = {
+      enable = true;
+      packages = [ pkgs.dconf ];
+    };
+
     xserver = {
       enable = true;
       libinput.enable = true;
@@ -140,9 +140,9 @@
           }/sddm-sugar-catppuccin-theme";
           wayland.enable = true;
         };
-        defaultSession = "hyprland";
+        defaultSession = "sway";
+        sessionPackages = [ pkgs.sway ];
       };
-      windowManager.hypr = { enable = true; };
     };
     blueman.enable = true;
     openssh.enable = true;
@@ -180,7 +180,8 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 
   environment = {
@@ -188,7 +189,6 @@
       # System-Wide Packages
       home-manager
       nurl
-      unstable.firefox
       ark # archiving tool
       libsForQt5.qt5.qtgraphicaleffects
       xfce.thunar

@@ -1,63 +1,35 @@
 #!/bin/sh
 
-layout="$(hyprctl devices | grep -E "\b$KEYBOARD_NAME(\s|$)" -A 3 | grep "active keymap" | cut -f3 -d " ")"
-export STATUS_FILE="$XDG_RUNTIME_DIR/keyboard.status"
-
-if [ -z "$XDG_RUNTIME_DIR" ]; then
-	export "XDG_RUNTIME_DIR=/run/user/$(id -u)"
-fi
-
-enable_keyboard() {
-	printf "true" >"$STATUS_FILE"
-
-	notify-send -u normal "Enabling Keyboard"
-
-	hyprctl keyword "device:$KEYBOARD_NAME:enabled" true
-}
-
-disable_keyboard() {
-	printf "false" >"$STATUS_FILE"
-
-	notify-send -u normal "Disabling Keyboard"
-
-	hyprctl keyword "device:$KEYBOARD_NAME:enabled" false
-}
+layout="$(swaymsg -t get_inputs | grep -E "\"$KEYBOARD_NAME\"" -A 12 | grep -oP '(?<=xkb_active_layout_name": ").*?(?=",)')"
+status="$(swaymsg -t get_inputs | grep -E "\"$KEYBOARD_NAME\"" -A 15 | grep -oP '(?<=send_events": ").*?(?=")')"
 
 toggle_keyboard() {
-	if ! [ -f "$STATUS_FILE" ]; then
-		enable_keyboard
-	else
-		if [ "$(cat "$STATUS_FILE")" = "true" ]; then
-			disable_keyboard
-		elif [ "$(cat "$STATUS_FILE")" = "false" ]; then
-			enable_keyboard
-		fi
-	fi
+	swaymsg input "$KEYBOARD_NAME" events toggle enabled disabled
+}
+
+switch_layout() {
+	swaymsg input "$KEYBOARD_NAME" xkb_switch_layout next
 }
 
 get_layout() {
-	text=""
-	if [ "$layout" = "English" ]; then
-		text="en"
+	if [ "$layout" = "English (US)" ]; then
+		echo "en"
 	elif [ "$layout" = "Italian" ]; then
-		text="it"
+		echo "it"
 	fi
-
-	echo "$text"
 }
 
 get_status() {
-	if ! [ -f "$STATUS_FILE" ]; then
-		status="true"
+	if [ "$status" = "enabled" ]; then
+		echo "true"
 	else
-		status="$(cat "$STATUS_FILE")"
+		echo "false"
 	fi
-	echo "$status"
 }
 
 [ "$1" = "layout" ] && get_layout && exit
 [ "$1" = "status" ] && get_status && exit
-[ "$1" = "switch_layout" ] && (hyprctl switchxkblayout "$KEYBOARD_NAME" next) && exit
+[ "$1" = "switch_layout" ] && switch_layout && exit
 [ "$1" = "toggle_keyboard" ] && toggle_keyboard && exit
 
 exit
