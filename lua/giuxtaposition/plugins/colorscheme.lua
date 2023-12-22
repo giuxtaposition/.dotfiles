@@ -46,5 +46,11 @@ return {
 		})
 		-- setup must be called before loading
 		vim.cmd.colorscheme("catppuccin")
+
+		-- set transparent background
+		vim.cmd([[ highlight Normal guibg=none]])
+		vim.cmd([[ highlight NonText guibg=none]])
+		vim.cmd([[ highlight Normal ctermbg=none]])
+		vim.cmd([[ highlight Normal ctermbg=none]])
 	end,
 }
