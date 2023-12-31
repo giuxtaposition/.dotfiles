@@ -1,4 +1,4 @@
-(defvar icons `[" ", " ", " "]`)
+(defvar workspacesName `["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]`)
 
 (defwidget workspaces []
   (eventbox
@@ -9,8 +9,8 @@
 					:onclick "swaymsg workspace ${ws.name}"
 					:class "ws-button"
             (label
-              :text `${icons[ws.status]}`
-              :class `${ws.focused ? "ws-focused" : "ws-unfocused"}`
+              :text `${workspacesName[ws.name - 1]}`
+              :class `ws-text ${ws.status == 0 ? "ws-empty" : ""} ${ws.status == 1 ? "ws-filled": ""} ${ws.status == 2 ? "ws-focused" : ""} `
           )
         )
       )

@@ -32,7 +32,7 @@
   (box
     :space-evenly false
     :halign "start"
-    (distro)
+    ;(distro)
     (workspaces)
   )
 )

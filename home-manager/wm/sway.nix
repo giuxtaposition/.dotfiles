@@ -57,7 +57,7 @@ in {
       gaps = {
         outer = 0;
         inner = 15;
-        smartBorders = "on";
+        smartBorders = "off";
         smartGaps = false;
       };
       window = {

@@ -80,12 +80,20 @@ tooltip {
   margin-left: 0.5rem;
 }
 
-.ws-unfocused {
-  color: $overlay0;
+.ws-filled {
+  background-color: $base;
 }
 
 .ws-focused {
-  color: $lavender;
+  color: $base;
+  background-color: $lavender;
+}
+
+.ws-text {
+  margin: 0.8rem 0.3rem;
+  padding: 0.9rem;
+  border-radius: 1rem;
+  font-weight: 900;
 }
 
 //Distro Component
