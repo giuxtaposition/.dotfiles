@@ -103,6 +103,12 @@
     package = pkgs.unstable.swayfx;
   };
 
+  # Thunar
+  programs.thunar.enable = true;
+  programs.xfconf.enable = true; # Save preferences
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -158,6 +164,7 @@
 
   # Sound
   sound.enable = true;
+
   security.rtkit.enable = true;
 
   # Use swaylock as screen lock
@@ -191,7 +198,6 @@
       nurl
       ark # archiving tool
       libsForQt5.qt5.qtgraphicaleffects
-      xfce.thunar
       obsidian
 
       #Theme
