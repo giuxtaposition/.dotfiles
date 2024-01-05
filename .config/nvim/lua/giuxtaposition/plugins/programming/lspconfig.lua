@@ -5,15 +5,19 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} }, -- lua development
-		"jose-elias-alvarez/typescript.nvim", -- typescript development
+		{
+			"pmizio/typescript-tools.nvim",
+			dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+			opts = {},
+		},
 		"nvimdev/lspsaga.nvim", -- enhanced ui for lsp
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-		local typescript = require("typescript")
 		local lspsaga_diagnostic = require("lspsaga.diagnostic")
 		local neodev = require("neodev")
+		local typescript_tools = require("typescript-tools")
 
 		-- enable keybinds only for when lsp server available
 		local on_attach = function(client, buffer)
@@ -45,10 +49,22 @@ return {
 			end, { desc = "Next Error", buffer = buffer })
 			Map("n", "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "Hover Documentation", buffer = buffer })
 
-			if client.name == "tsserver" then
-				Map("n", "<leader>co", ":TypescriptOrganizeImports<cr>", { desc = "Organize Imports", buffer = buffer })
-				Map("n", "<leader>cc", ":TypescriptRemoveUnused<cr>", { desc = "Remove Unused", buffer = buffer })
-				Map("n", "<leader>cF", ":TypescriptRenameFile<cr>", { desc = "Rename File", buffer = buffer })
+			if client.name == "typescript-tools" then
+				Map(
+					"n",
+					"<leader>co",
+					"<cmd>TSToolsOrganizeImports<cr>",
+					{ desc = "Organize Imports", buffer = buffer }
+				)
+				Map("n", "<leader>cc", "<cmd>TSToolsRemoveUnused<cr>", { desc = "Remove Unused", buffer = buffer })
+				Map("n", "<leader>cC", "<cmd>TSC<cr>", { desc = "Check Compile Errors", buffer = buffer })
+				Map(
+					"n",
+					"<leader>cA",
+					"<cmd>TSToolsAddMissingImports<cr>",
+					{ desc = "Add Missing Imports", buffer = buffer }
+				)
+				Map("n", "<leader>cF", "<cmd>TSToolsRenameFile<cr>", { desc = "Rename File", buffer = buffer })
 			end
 		end
 
@@ -63,15 +79,24 @@ return {
 		end
 
 		-- configure typescript server
-		typescript.setup({
-			server = {
-				capabilities = capabilities,
-				on_attach = on_attach,
-				init_options = {
-					preferences = {
-						importModuleSpecifierPreference = "relative",
-						importModuleSpecifierEnding = "minimal",
-					},
+		typescript_tools.setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				expose_as_code_action = {},
+				complete_function_calls = true,
+				tsserver_file_preferences = {
+					includeInlayParameterNameHints = "all",
+					includeCompletionsForModuleExports = true,
+					quotePreference = "auto",
+					importModuleSpecifierPreference = "relative",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+					includeInlayFunctionParameterTypeHints = true,
+					includeInlayVariableTypeHints = true,
+					includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+					includeInlayPropertyDeclarationTypeHints = true,
+					includeInlayFunctionLikeReturnTypeHints = true,
+					includeInlayEnumMemberValueHints = true,
 				},
 			},
 		})
