@@ -8,7 +8,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
 	{ import = "giuxtaposition.plugins" },
-	{ import = "giuxtaposition.plugins.lsp" },
+	{ import = "giuxtaposition.plugins.programming" },
 }, {
 	install = {
 		colorscheme = { "catppuccin" },

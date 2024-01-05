@@ -7,6 +7,10 @@ return {
 		hide_numbers = false,
 		autochdir = true, -- auto change dir following neovim
 		insert_mapping = true, -- open terminal mapping works also in insert mode
+		float_opts = {
+			width = 1000,
+			height = 1000,
+		},
 	},
 	config = function(_, opts)
 		require("toggleterm").setup(opts)
