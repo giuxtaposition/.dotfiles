@@ -59,6 +59,7 @@
     glxinfo # info about GPU
     steam-run
     cypress
+    qalculate-gtk
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })

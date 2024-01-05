@@ -4,6 +4,9 @@ let
     (map (m: "eww open ${m.topbar}") (config.monitors));
 
   startScript = pkgs.writeShellScript "start" ''
+    # sway lock
+    swaylock
+
     # initializing wallpaper daemon
     swww init &
     # setting wallpaper
@@ -261,6 +264,11 @@ in {
       for_window [title="Picture in picture"] floating enable, sticky enable
       for_window [title="nmtui"] floating enable,  resize set width 50 ppt height 70 ppt
       for_window [title="Save File"] floating enable
+      for_window [app_id="qalculate-gtk"] floating enable
+
+      # keep sharing popup in workspace 5
+      assign [title="is sharing your screen"] -> number 5
+
 
       # Inhibit idle
       for_window [class=".*"] inhibit_idle fullscreen
