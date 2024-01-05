@@ -24,6 +24,8 @@
       XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
       MONGOMS_DISTRO =
         "ubuntu-22.04"; # MONGO MEMORY SERVER not supporting nixos
+      CYPRESS_INSTALL_BINARY = "0";
+      CYPRESS_RUN_BINARY = "${pkgs.cypress}/bin/Cypress";
     };
   };
 
@@ -56,6 +58,7 @@
     chromium
     glxinfo # info about GPU
     steam-run
+    cypress
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
