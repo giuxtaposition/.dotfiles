@@ -19,9 +19,19 @@ return {
 		local neodev = require("neodev")
 		local typescript_tools = require("typescript-tools")
 
+		vim.diagnostic.config({
+			underline = true,
+			virtual_text = {
+				spacing = 4,
+				source = "if_many",
+				prefix = "●",
+			},
+			severity_sort = true,
+		})
+
 		-- enable keybinds only for when lsp server available
 		local on_attach = function(client, buffer)
-			local Map = require("giuxtaposition.core.util").Map
+			local Map = require("giuxtaposition.config.util").Map
 
 			Map("n", "gf", "<cmd>Lspsaga finder<CR>", { desc = "References", buffer = buffer })
 			Map("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { desc = "Goto Definition", buffer = buffer })
@@ -48,6 +58,24 @@ return {
 				lspsaga_diagnostic:goto_next({ severity = vim.diagnostic.severity.ERROR })
 			end, { desc = "Next Error", buffer = buffer })
 			Map("n", "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "Hover Documentation", buffer = buffer })
+
+			-- Map("n", "<leader>ce", vim.diagnostic.open_float)
+			-- Map("n", "[d", vim.diagnostic.goto_prev)
+			-- Map("n", "]d", vim.diagnostic.goto_next)
+			-- Map("n", "<leader>cq", vim.diagnostic.setloclist)
+			--
+			-- Map("n", "gD", vim.lsp.buf.declaration)
+			-- Map("n", "gd", vim.lsp.buf.definition)
+			-- Map("n", "K", vim.lsp.buf.hover)
+			-- Map("n", "gi", vim.lsp.buf.implementation)
+			-- Map("n", "<C-k>", vim.lsp.buf.signature_help)
+			-- Map("n", "<space>D", vim.lsp.buf.type_definition)
+			-- Map("n", "<space>rn", vim.lsp.buf.rename)
+			-- Map({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action)
+			-- Map("n", "gr", vim.lsp.buf.references)
+			-- Map("n", "<space>f", function()
+			-- 	vim.lsp.buf.format({ async = true })
+			-- end)
 
 			if client.name == "typescript-tools" then
 				Map(
@@ -80,20 +108,31 @@ return {
 
 		-- configure typescript server
 		typescript_tools.setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+			on_attach = function(client, bufnr)
+				client.server_capabilities.documentFormattingProvider = false
+				client.server_capabilities.documentRangeFormattingProvider = false
+
+				if vim.lsp.inlay_hint then
+					vim.lsp.inlay_hint.enable(bufnr, true)
+				end
+
+				on_attach(client, bufnr)
+			end,
 			settings = {
+				separate_diagnostic_server = true,
+				composite_mode = "separate_diagnostic",
 				expose_as_code_action = {},
 				complete_function_calls = true,
 				tsserver_file_preferences = {
-					includeInlayParameterNameHints = "all",
 					includeCompletionsForModuleExports = true,
 					quotePreference = "auto",
 					importModuleSpecifierPreference = "relative",
-					includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+
+					-- inlay hints
+					includeInlayParameterNameHints = "all",
+					includeInlayParameterNameHintsWhenArgumentMatchesName = false,
 					includeInlayFunctionParameterTypeHints = true,
-					includeInlayVariableTypeHints = true,
-					includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+					includeInlayVariableTypeHints = false,
 					includeInlayPropertyDeclarationTypeHints = true,
 					includeInlayFunctionLikeReturnTypeHints = true,
 					includeInlayEnumMemberValueHints = true,

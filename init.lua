@@ -1,2 +1,2 @@
-require("giuxtaposition.core")
+require("giuxtaposition.config")
 require("giuxtaposition.lazy")

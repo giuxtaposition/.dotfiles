@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ";"
 
-local Map = require("giuxtaposition.core.util").Map
+local Map = require("giuxtaposition.config.util").Map
 
 -- General keymaps
 Map({ "i", "v" }, "jk", "<Esc>", { desc = "Map jk to Esc" })
