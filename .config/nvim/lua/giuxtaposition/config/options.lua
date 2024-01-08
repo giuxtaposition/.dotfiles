@@ -1,4 +1,5 @@
 local opt = vim.opt
+local cmd = vim.cmd
 
 opt.termguicolors = true
 
@@ -34,6 +35,10 @@ opt.cursorline = true
 opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
+
+-- Undercurl
+cmd([[let &t_Cs = "\e[4:3m"]])
+cmd([[let &t_Ce = "\e[4:0m"]])
 
 -- backspace
 opt.backspace = "indent,eol,start"

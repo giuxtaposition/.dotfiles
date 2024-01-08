@@ -10,7 +10,7 @@ return {
 		defaults = {
 			mode = { "n", "v" },
 			["g"] = { name = "+goto" },
-			--["gz"] = { name = "+surround" },
+			["gz"] = { name = "+surround" },
 			["]"] = { name = "+next" },
 			["["] = { name = "+prev" },
 			["<leader><tab>"] = { name = "+tabs" },

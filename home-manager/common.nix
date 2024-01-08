@@ -6,6 +6,7 @@
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
+      inputs.neovim-nightly-overlay.overlay
     ];
     config = {
       allowUnfree = true;
@@ -74,6 +75,7 @@
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    package = pkgs.neovim-nightly;
     extraPackages = with pkgs; [
       # Language servers
       unstable.vscode-langservers-extracted
@@ -89,6 +91,7 @@
       unstable.prettierd # typescript formatter
       unstable.eslint_d # typescript linter
       unstable.stylua # lua formatter
+      luajitPackages.luacheck # lua linter
       unstable.codespell # code spell
       unstable.nixfmt
       unstable.shellcheck # sh linter
@@ -96,7 +99,7 @@
     ];
   };
 
-  home.file."${config.home.homeDirectory}/.dotfiles/.config/nvim/lua/giuxtaposition/core/nixosExtra.lua" =
+  home.file."${config.home.homeDirectory}/.dotfiles/.config/nvim/lua/giuxtaposition/config/nixosExtra.lua" =
     {
       text = ''
         vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'
