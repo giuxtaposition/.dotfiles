@@ -1,3 +1,4 @@
+require("config.nixosExtra")
 local opt = vim.opt
 local cmd = vim.cmd
 

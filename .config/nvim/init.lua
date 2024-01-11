@@ -1,2 +1,1 @@
-require("giuxtaposition.config")
-require("giuxtaposition.lazy")
+require("config.lazy")
