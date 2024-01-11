@@ -3,6 +3,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
+
         "nix",
         "svelte",
       })
@@ -383,5 +384,29 @@ return {
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
     opts = {},
     keys = { { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "DiffView" } },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        ["javascript"] = { "prettierd" },
+        ["javascriptreact"] = { "prettierd" },
+        ["typescript"] = { "prettierd" },
+        ["typescriptreact"] = { "prettierd" },
+        ["css"] = { "prettierd" },
+        ["scss"] = { "prettierd" },
+        ["less"] = { "prettierd" },
+        ["html"] = { "prettierd" },
+        ["json"] = { "prettierd" },
+        ["jsonc"] = { "prettierd" },
+        ["yaml"] = { "prettierd" },
+        ["markdown"] = { "prettierd" },
+        ["markdown.mdx"] = { "prettierd" },
+        ["svelte"] = { "prettierd" },
+        ["sh"] = { "shfmt" },
+        ["nix"] = { "nixfmt" },
+      },
+    },
   },
 }
