@@ -378,4 +378,10 @@ return {
       table.insert(opts.adapters, require("neotest-vitest"))
     end,
   },
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
+    opts = {},
+    keys = { { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "DiffView" } },
+  },
 }
