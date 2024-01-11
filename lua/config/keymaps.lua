@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ";"
 
-local Map = require("giuxtaposition.config.util").Map
+local Map = require("config.util").Map
 
 -- General keymaps
 Map({ "i", "v" }, "jk", "<Esc>", { desc = "Map jk to Esc" })
@@ -58,16 +58,7 @@ Map("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to lower window" })
 Map("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to upper window" })
 Map("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to right window" })
 
--- Obsidian
-Map("n", "gf", function()
-	if require("obsidian").util.cursor_on_markdown_link() then
-		return "<cmd>ObsidianFollowLink<CR>"
-	else
-		return "gf"
-	end
-end, { noremap = false, expr = true, desc = "Open file under cursor or follow obsidian link" })
-
 ---- Auto indent on empty line.
 Map("n", "i", function()
-	return string.match(vim.api.nvim_get_current_line(), "%g") == nil and "cc" or "i"
+  return string.match(vim.api.nvim_get_current_line(), "%g") == nil and "cc" or "i"
 end, { expr = true, noremap = true })
