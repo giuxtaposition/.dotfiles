@@ -37,4 +37,4 @@
   )
 )
 
-(defpoll mic-poll			:interval "1s"	"scripts/mic")
+(defpoll mic-poll			:interval "1s" :initial `{"content": "0", "icon": "󰍭"}` "scripts/mic")

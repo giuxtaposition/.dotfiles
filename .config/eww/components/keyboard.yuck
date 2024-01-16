@@ -45,5 +45,5 @@
   )
 )
 
-(defpoll layout :interval "1s"	"scripts/keyboard layout")
-(defpoll keyboard-status :interval "1s"	"scripts/keyboard status")
+(defpoll layout :interval "1s" :initial "en"	"scripts/keyboard layout")
+(defpoll keyboard-status :interval "1s" :initial "true"	"scripts/keyboard status")

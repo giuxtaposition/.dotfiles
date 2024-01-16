@@ -34,4 +34,4 @@
   )
 )
 
-(defpoll brightness			:interval "1s"	"scripts/brightness")
+(defpoll brightness			:interval "1s" :initial `{"content": "0", "icon": "󰃜"}`	"scripts/brightness")

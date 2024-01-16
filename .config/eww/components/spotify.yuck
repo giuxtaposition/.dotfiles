@@ -55,5 +55,5 @@
     )
   )
 )
-(defpoll spotify-poll :interval "1s"	"scripts/spotify")
+(defpoll spotify-poll :interval "1s" :initial ""	"scripts/spotify")
 (deflisten cava :interval "2s"	"scripts/cava")

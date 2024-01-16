@@ -38,4 +38,4 @@
 )
 
 
-(defpoll speaker-poll :interval "1s"	"scripts/speaker")
+(defpoll speaker-poll :interval "1s" :initial `{"content": "0", "icon": "󰖁"}` "scripts/speaker")

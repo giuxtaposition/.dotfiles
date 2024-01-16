@@ -9,5 +9,5 @@
     )
   )
 )
-(defpoll bluetooth-icon			:interval "1s"	"scripts/bluetooth icon")
-(defpoll connected-device	:interval "1s"	"scripts/bluetooth connected_device")
+(defpoll bluetooth-icon			:interval "1s" :initial "" "scripts/bluetooth icon")
+(defpoll connected-device	:interval "1s" :initial "" "scripts/bluetooth connected_device")

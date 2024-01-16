@@ -18,4 +18,4 @@
   )
 )
 
-(deflisten workspacesResult "scripts/workspaces")
+(deflisten workspacesResult :initial `{"workspaces": [ {"name": 1, "focused": false, "status": 0}, {"name": 2, "focused": false, "status": 0}, {"name": 3, "focused": false, "status": 0}, {"name": 4, "focused": false, "status": 0}, {"name": 5, "focused": false, "status": 0}, {"name": 6, "focused": false, "status": 0}, {"name": 7, "focused": false, "status": 0}, {"name": 8, "focused": false, "status": 0}, {"name": 9, "focused": false, "status": 0}, {"name": 10, "focused": false, "status": 0}]}` "scripts/workspaces")
