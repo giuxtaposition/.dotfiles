@@ -13,6 +13,7 @@
       unstable.nodePackages_latest.typescript-language-server
       unstable.nodePackages_latest.svelte-language-server
       unstable.nodePackages_latest.bash-language-server
+      unstable.nodePackages_latest.volar # vue language server
       unstable.emmet-ls
       unstable.lua-language-server
       unstable.marksman

@@ -3,9 +3,9 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
-
         "nix",
         "svelte",
+        "vue",
       })
     end,
   },
@@ -296,6 +296,10 @@ return {
         },
         bashls = {},
         svelte = {},
+        volar = {
+          filetypes = { "vue", "typescript" },
+          root_dir = require("lspconfig.util").root_pattern("src/App.vue"),
+        },
         cssls = {},
       },
       -- you can do any additional lsp server setup here
@@ -394,6 +398,7 @@ return {
         ["javascriptreact"] = { "prettierd" },
         ["typescript"] = { "prettierd" },
         ["typescriptreact"] = { "prettierd" },
+        ["vue"] = { "prettierd" },
         ["css"] = { "prettierd" },
         ["scss"] = { "prettierd" },
         ["less"] = { "prettierd" },
