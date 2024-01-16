@@ -118,6 +118,7 @@ return {
         "<cmd>Telescope resume<cr>",
         desc = "Resume last telescope window",
       },
+      { "<leader><space>", false },
     },
   },
   {
