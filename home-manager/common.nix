@@ -63,7 +63,7 @@
     qalculate-gtk
 
     # Fonts
-    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (pkgs.unstable.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
   programs.home-manager.enable = true;

@@ -29,9 +29,9 @@ function module.apply_to_config(config)
 	}
 
 	config.font = wezterm.font_with_fallback({
-		"JetBrains Mono Nerd Font",
+		"JetBrainsMono Nerd Font",
 		"Symbols Nerd Font Mono",
-		"Noto Serif CJK",
+		"Noto Color Emoji",
 	})
 
 	config.window_frame = {
