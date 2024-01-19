@@ -52,6 +52,8 @@
   networking.extraHosts = ''
     127.0.0.1   calc-local.vitesicure.it
     127.0.0.1   calc-local.bridgebroker.it
+    127.0.0.1   api-v2-local.vitesicure.it
+    127.0.0.1   api-v2-local.bridgebroker.it
   '';
 
   boot = {
@@ -230,6 +232,7 @@
       tree-sitter
       acpi # power management
       brightnessctl # screen brightness
+      pulseaudio
       pamixer
       libnotify # send notifications from terminal
     ];

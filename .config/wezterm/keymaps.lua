@@ -4,7 +4,7 @@ local module = {}
 
 local function is_vim(pane)
 	-- this is set by the plugin, and unset on ExitPre in Neovim
-	return pane:get_user_vars().IS_NVIM == "true"
+	return pane:get_user_vars().IS_NVIM == "true" or pane:get_foreground_process_name():find("n?vim")
 end
 
 local direction_keys = {

@@ -11,13 +11,14 @@ let
     swww init &
     # setting wallpaper
     swww img ~/Wallpapers/WRztVWQ.jpg &
-    # start eww
-    ${eww-bars}
 
     dunst &
 
     #idle
     swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &      
+
+    # start eww
+    ${eww-bars}
   '';
 
   monitors = lib.concatMapStrings (x: x + "\n") (map (m:
@@ -129,12 +130,14 @@ in {
 
       keybindings = let
         mod = "Mod4"; # Super
-        term = "foot";
+        term = "wezterm";
         app-menu = "$HOME/.config/rofi/bin/launcher";
+        runner = "$HOME/.config/rofi/bin/runner";
         power-menu = "$HOME/.config/rofi/bin/powermenu";
       in {
         "${mod}+q" = "exec ${term}";
         "${mod}+d" = "exec ${app-menu}";
+        "${mod}+Shift+d" = "exec ${runner}";
         "${mod}+Shift+p" = "exec ${power-menu}";
         "${mod}+c" = "kill";
         "${mod}+f1" = "reload";
@@ -179,6 +182,8 @@ in {
         "${mod}+8" = "workspace number 8";
         "${mod}+9" = "workspace number 9";
         "${mod}+0" = "workspace number 10";
+        "${mod}+Tab" = "workspace back_and_forth";
+
         # Move focused container to workspace
         "${mod}+Shift+1" = "move container to workspace number 1";
         "${mod}+Shift+2" = "move container to workspace number 2";
