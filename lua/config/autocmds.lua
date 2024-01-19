@@ -1,9 +1,12 @@
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
 local lsp_conficts, _ = pcall(vim.api.nvim_get_autocmds, { group = "LspAttach_conflicts" })
 
 if not lsp_conficts then
-  vim.api.nvim_create_augroup("LspAttach_conflicts", {})
+  augroup("LspAttach_conflicts", {})
 end
-vim.api.nvim_create_autocmd("LspAttach", {
+autocmd("LspAttach", {
   group = "LspAttach_conflicts",
   desc = "prevent tsserver and volar competing",
   callback = function(args)
@@ -28,6 +31,32 @@ vim.api.nvim_create_autocmd("LspAttach", {
           client.stop()
         end
       end
+    end
+  end,
+})
+
+augroup("Typescript", {})
+autocmd("BufWritePre", {
+  group = "Typescript",
+  desc = "remove unused imports on save for typescript files",
+  callback = function()
+    local filetype = vim.bo.filetype
+    if filetype == "typescript" or filetype == "typescriptreact" then
+      vim.cmd("TSToolsRemoveUnusedImports")
+    end
+  end,
+})
+
+autocmd("BufEnter", {
+  group = "Typescript",
+  desc = "Change tab width following prettier config",
+  pattern = { "*.ts, *.tsx" },
+  callback = function()
+    local file_exists = vim.fn.filereadable(".prettierrc")
+
+    if file_exists == 1 then
+      local tabWidth = vim.fn.json_decode(vim.fn.readfile(".prettierrc"))["tabWidth"]
+      vim.bo.shiftwidth = tabWidth
     end
   end,
 })
