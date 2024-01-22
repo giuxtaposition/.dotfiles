@@ -4,7 +4,7 @@ local icons = require("icons")
 local module = {}
 
 function module.apply_to_config(config)
-	config.color_scheme = "Catppuccin Mocha"
+	config.color_scheme = "Tokyo Night Moon"
 
 	config.tab_bar_at_bottom = true
 	config.use_fancy_tab_bar = false
@@ -27,6 +27,9 @@ function module.apply_to_config(config)
 			},
 		},
 	}
+
+	config.underline_thickness = 2
+	config.underline_position = -2
 
 	config.font = wezterm.font_with_fallback({
 		"JetBrainsMono Nerd Font",

@@ -32,7 +32,7 @@
     ];
   };
 
-  home.file."${config.home.homeDirectory}/.dotfiles/.config/nvim/lua/config/nixosExtra.lua" =
+  home.file."${config.home.homeDirectory}/.dotfiles/.config/nvim/lua/giuxtaposition/config/nixosExtra.lua" =
     {
       text = ''
         vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'
