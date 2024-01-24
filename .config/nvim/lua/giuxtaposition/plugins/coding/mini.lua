@@ -1,23 +1,5 @@
 return {
-  {
-    "echasnovski/mini.pairs",
-    event = "VeryLazy",
-    opts = {},
-    keys = {
-      {
-        "<leader>up",
-        function()
-          vim.g.minipairs_disable = not vim.g.minipairs_disable
-          if vim.g.minipairs_disable then
-            vim.notify("Disabled auto pairs")
-          else
-            vim.notify("Enabled auto pairs")
-          end
-        end,
-        desc = "Toggle auto pairs",
-      },
-    },
-  },
+
   {
     "echasnovski/mini.surround",
     opts = {
