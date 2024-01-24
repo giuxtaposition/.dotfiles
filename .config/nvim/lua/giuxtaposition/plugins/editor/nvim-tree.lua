@@ -9,17 +9,25 @@ return {
       local icons = require("giuxtaposition.config.icons")
 
       nvimtree.setup({
-        disable_netrw = true,
-        hijack_netrw = true,
-        hijack_cursor = true,
-        diagnostics = {
+        filters = {
+          dotfiles = false,
+        },
+        hijack_unnamed_buffer_when_opening = false,
+        sync_root_with_cwd = true,
+        update_focused_file = {
           enable = true,
-          icons = {
-            hint = icons.diagnostics.hint,
-            info = icons.diagnostics.info,
-            warning = icons.diagnostics.warn,
-            error = icons.diagnostics.error,
-          },
+          update_root = false,
+          update_cwd = false,
+        },
+        view = {
+          adaptive_size = false,
+          side = "left",
+          width = 30,
+          preserve_window_proportions = true,
+        },
+        git = {
+          enable = true,
+          ignore = true,
         },
         filesystem_watchers = {
           enable = true,
@@ -32,8 +40,10 @@ return {
         },
         renderer = {
           root_folder_label = false,
+          highlight_git = false,
+          highlight_opened_files = "none",
           indent_markers = {
-            enable = true,
+            enable = false,
           },
           icons = {
             show = {
@@ -45,13 +55,18 @@ return {
             glyphs = vim.list_extend(icons.file_system, icons.git),
           },
         },
-        update_cwd = true,
-        update_focused_file = {
+
+        disable_netrw = true,
+        hijack_netrw = true,
+        hijack_cursor = true,
+        diagnostics = {
           enable = true,
-          update_cwd = false,
-        },
-        git = {
-          ignore = true,
+          icons = {
+            hint = icons.diagnostics.hint,
+            info = icons.diagnostics.info,
+            warning = icons.diagnostics.warn,
+            error = icons.diagnostics.error,
+          },
         },
       })
     end,

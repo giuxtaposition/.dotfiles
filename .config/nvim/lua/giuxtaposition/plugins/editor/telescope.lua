@@ -14,9 +14,11 @@ return {
 
       telescope.setup({
         defaults = {
-          prompt_prefix = "   ",
-          selection_caret = "  ",
-          entry_prefix = "  ",
+          prompt_prefix = "   ",
+          selection_caret = "  ",
+          entry_prefix = "   ",
+          dynamic_preview_title = true,
+          hl_result_eol = true,
           layout_strategy = "horizontal",
           layout_config = {
             horizontal = {
@@ -32,7 +34,7 @@ return {
             preview_cutoff = 120,
           },
           file_ignore_patterns = { "node_modules" },
-          winblend = 0,
+          winblend = 2,
           border = {},
           borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
           color_devicons = true,
@@ -47,19 +49,20 @@ return {
               ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
+              ["q"] = actions.close,
             },
           },
         },
         pickers = {
           find_files = {
             hidden = true,
-            file_ignore_patterns = { "node_modules", ".git" },
+            file_ignore_patterns = { "node_modules/*", ".git/" },
           },
           live_grep = {
             additional_args = function(_)
               return { "--hidden" }
             end,
-            file_ignore_patterns = { "node_modules", ".git" },
+            file_ignore_patterns = { "node_modules/*", ".git/" },
           },
         },
       })

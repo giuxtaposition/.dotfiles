@@ -7,6 +7,7 @@ return {
   end,
   opts = {
     plugins = { spelling = true },
+
     defaults = {
       mode = { "n", "v" },
       ["g"] = { name = "+goto" },
@@ -24,6 +25,17 @@ return {
       ["<leader>w"] = { name = "+windows" },
       ["<leader>x"] = { name = "+diagnostics/quickfix" },
       ["<leader>sn"] = { name = "+noice" },
+    },
+    window = {
+      margin = { 1, 0, 2, 0 },
+      padding = { 1, 0, 1, 2 },
+      winblend = 5, -- opaque
+    },
+    layout = {
+      height = { min = 3, max = 25 },
+      width = { min = 20, max = 100 },
+      spacing = 5, -- spacing between columns
+      align = "center",
     },
   },
   config = function(_, opts)

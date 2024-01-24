@@ -6,6 +6,7 @@ return {
     size = 15,
     hide_numbers = true,
     autochdir = true, -- auto change dir following neovim
+    insert_mappings = false, -- whether or not the open mapping applies in insert mode
     float_opts = {
       width = 1000,
       height = 1000,

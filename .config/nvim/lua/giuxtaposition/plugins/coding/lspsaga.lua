@@ -35,7 +35,7 @@ return {
           devicon = true,
           expand = "󰁌",
           collapse = "󰡍",
-          code_action = require("giuxtaposition.config.icons").hint,
+          code_action = "",
         },
       })
     end,
