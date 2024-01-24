@@ -17,6 +17,22 @@
     bg = "#1e1e2e";
   in {
     text = ''
+      [core]
+      pager = delta
+
+      [interactive]
+      diffFilter = delta --color-only
+
+      [delta]
+      navigate = true    # use n and N to move between diff sections
+      light = false
+
+      [merge]
+      conflictstyle = diff3
+
+      [diff]
+      colorMoved = default
+
       [delta "giuxtaposition"]
       dark = true
       side-by-side = true
