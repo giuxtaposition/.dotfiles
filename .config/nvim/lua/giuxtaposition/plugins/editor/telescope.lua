@@ -46,10 +46,9 @@ return {
             i = {
               ["<C-k>"] = actions.move_selection_previous, -- move to prev result
               ["<C-j>"] = actions.move_selection_next, -- move to next result
-              ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
-              ["q"] = actions.close,
+              ["<C-q>"] = actions.close,
             },
           },
         },

@@ -54,7 +54,7 @@ return {
             actions.conflict_choose_all("all"),
             { desc = "Choose all the versions of a conflict for the whole file" },
           },
-          { "n", "<leader>gDD", actions.toggle_files, { desc = "Toggle the file panel." } },
+          { "n", "<leader>gDd", actions.toggle_files, { desc = "Toggle the file panel." } },
 
           -- Disable these default keymaps
           ["<leader>co"] = false,
