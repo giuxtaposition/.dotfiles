@@ -22,15 +22,6 @@ autocmd("TextYankPost", {
   end,
 })
 
--- Fix comment when inserting new line
--- autocmd({ "BufEnter", "BufWinEnter" }, {
---   group = augroup("comment_newline"),
---   pattern = { "*" },
---   callback = function()
---     vim.cmd([[set formatoptions-=cro]])
---   end,
--- })
-
 -- Typescript: Remove unused imports on save
 autocmd("BufWritePre", {
   group = augroup("unused_imports_on_save_typescript"),

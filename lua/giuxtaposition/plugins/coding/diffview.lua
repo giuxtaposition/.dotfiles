@@ -76,6 +76,7 @@ return {
       function()
         if next(require("diffview.lib").views) == nil then
           vim.cmd("DiffviewOpen")
+          vim.cmd("DiffviewToggleFiles")
         else
           vim.cmd("DiffviewClose")
         end
