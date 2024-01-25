@@ -50,7 +50,7 @@ return {
     priority = 1000,
     opts = { style = "moon" },
     config = function(_, opts)
-      vim.cmd.colorscheme("tokyonight")
+      require("tokyonight").setup(opts)
 
       -- set transparent background
       vim.cmd([[ highlight Normal guibg=none]])
@@ -58,7 +58,7 @@ return {
       vim.cmd([[ highlight Normal ctermbg=none]])
       vim.cmd([[ highlight NonText ctermbg=none]])
 
-      require("tokyonight").setup(opts)
+      vim.cmd.colorscheme("tokyonight")
     end,
   },
 }
