@@ -23,20 +23,18 @@ return {
       },
       opts = {},
       config = function(_, opts)
-        local dap, dapui = require("dap"), require("dapui")
+        local dap = require("dap")
+        local dapui = require("dapui")
         dapui.setup(opts)
 
-        dap.listeners.before.attach.dapui_config = function()
-          dapui.open()
+        dap.listeners.after.event_initialized["dapui_config"] = function()
+          dapui.open({})
         end
-        dap.listeners.before.launch.dapui_config = function()
-          dapui.open()
+        dap.listeners.before.event_terminated["dapui_config"] = function()
+          dapui.close({})
         end
-        dap.listeners.before.event_terminated.dapui_config = function()
-          dapui.close()
-        end
-        dap.listeners.before.event_exited.dapui_config = function()
-          dapui.close()
+        dap.listeners.before.event_exited["dapui_config"] = function()
+          dapui.close({})
         end
       end,
     },
@@ -53,22 +51,35 @@ return {
       opts = {
         defaults = {
           ["<leader>d"] = { name = "+debug" },
-          ["<leader>da"] = { name = "+adapters" },
         },
       },
     },
+
+    -- debugger for javascript based languages
     {
       "microsoft/vscode-js-debug",
       lazy = true,
-      build = "asdf local nodejs 21.5.0 && npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+      build = "asdf local nodejs 21.5.0 && npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && rm -rf out &&  mv dist out",
     },
+
+    -- adapter for nvim-dap for javascript based languages
     {
       "mxsdev/nvim-dap-vscode-js",
       opts = {
         debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
-        adapters = { "pwa-node", "pwa-chrome" },
+        node_path = "node",
+        adapters = {
+          "chrome",
+          "pwa-node",
+          "pwa-chrome",
+          "pwa-msedge",
+          "pwa-extensionHost",
+          "node-terminal",
+        },
       },
     },
+
+    --
   },
   keys = {
     {
@@ -202,11 +213,9 @@ return {
         { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
       )
     end
-  end,
-  opts = function()
     local dap = require("dap")
 
-    local exts = {
+    local js_based_languages = {
       "javascript",
       "typescript",
       "javascriptreact",
@@ -214,22 +223,52 @@ return {
       "svelte",
     }
 
-    for _, language in ipairs(exts) do
+    for _, language in ipairs(js_based_languages) do
       dap.configurations[language] = {
+        -- Debug single nodejs files
         {
           type = "pwa-node",
           request = "launch",
-          name = "Launch file",
-          program = "${file}",
-          cwd = "${workspaceFolder}",
+          name = "Launch Current File (pwa-node)",
+          cwd = vim.fn.getcwd(),
+          args = { "${file}" },
+          protocol = "inspector",
         },
+        -- Debug single nodejs file with ts-node
+        {
+          type = "pwa-node",
+          request = "launch",
+          name = "Launch Current File (pwa-node with ts-node)",
+          cwd = vim.fn.getcwd(),
+          runtimeExecutable = "ts-node",
+          args = { "${file}" },
+          protocol = "inspector",
+          skipFiles = { "<node_internals>/**", "node_modules/**" },
+          resolveSourceMapLocations = {
+            "${workspaceFolder}/**",
+            "!**/node_modules/**",
+          },
+        },
+
+        -- Debug nodejs processes (make sure to add --inspect when you run the process)
         {
           type = "pwa-node",
           request = "attach",
           name = "Attach",
           processId = require("dap.utils").pick_process,
-          cwd = "${workspaceFolder}",
+          cwd = vim.fn.getcwd(),
         },
+        -- Debug web applications (client side)
+        {
+          type = "pwa-chrome",
+          request = "launch",
+          name = "Launch & Debug Chrome",
+          webRoot = vim.fn.getcwd(),
+          url = "http://localhost:3000",
+          protocol = "inspector",
+          userDataDir = false,
+        },
+        -- Debug jest test
         {
           type = "pwa-node",
           request = "launch",
@@ -241,7 +280,7 @@ return {
             "--runInBand",
           },
           rootPath = "${workspaceFolder}",
-          cwd = "${workspaceFolder}",
+          cwd = vim.fn.getcwd(),
           console = "integratedTerminal",
           internalConsoleOptions = "neverOpen",
         },

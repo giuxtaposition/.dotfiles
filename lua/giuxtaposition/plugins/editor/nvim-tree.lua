@@ -24,6 +24,7 @@ return {
           side = "left",
           width = 30,
           preserve_window_proportions = true,
+          signcolumn = "yes",
         },
         git = {
           enable = true,
@@ -40,8 +41,9 @@ return {
         },
         renderer = {
           root_folder_label = false,
-          highlight_git = false,
+          highlight_git = true,
           highlight_opened_files = "none",
+          indent_width = 2,
           indent_markers = {
             enable = false,
           },
@@ -53,6 +55,8 @@ return {
               git = true,
             },
             glyphs = vim.list_extend(icons.file_system, icons.git),
+            git_placement = "before",
+            padding = " ",
           },
         },
 
