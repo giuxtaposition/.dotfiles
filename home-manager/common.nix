@@ -89,11 +89,6 @@
     size = 16;
   };
 
-  home.file."${config.home.homeDirectory}/.config/wezterm" = {
-    source = config.lib.file.mkOutOfStoreSymlink
-      "${config.home.homeDirectory}/.dotfiles/.config/wezterm";
-  };
-
   home.file."${config.home.homeDirectory}/.local/share/icons/candy-icons" = {
     source = pkgs.candy-icons;
   };

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }: {
   home.packages = with pkgs; [ lazygit ];
 
   home.file."${config.home.homeDirectory}/.config/lazygit/config.yml" = {

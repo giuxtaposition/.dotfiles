@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }: {
   home.packages = with pkgs; [
     eza # replacement for ls
     starship
@@ -84,14 +84,15 @@
     };
     shellAliases = {
       vim = "nvim";
+      nvim = "env TERM=wezterm nvim";
       ll = "eza -l -g --icons";
       lla = "eza -la -g --icons";
       ":q" = "exit";
     };
     shellAbbrs = {
-
       #GIT
       gp = "git pull --rebase --autostash";
+      gP = "git push";
       gpf = "git push --force-with-lease";
       gs = "git status --short";
     };

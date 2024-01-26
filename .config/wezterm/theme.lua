@@ -37,8 +37,16 @@ function module.apply_to_config(config)
 		"Noto Color Emoji",
 	})
 
+	config.font_size = 12.5
+
 	config.window_frame = {
 		font = wezterm.font("JetBrains Mono Nerd Font"),
+	}
+	config.window_padding = {
+		left = 2,
+		right = 2,
+		top = 2,
+		bottom = "0.5cell",
 	}
 	local basename = function(s)
 		return string.gsub(s, "(.*[/\\])(.*)", "%2")

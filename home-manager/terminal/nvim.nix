@@ -1,10 +1,8 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }: {
   # NEOVIM CONFIG
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
     vimdiffAlias = true;
     package = pkgs.neovim-nightly;
     extraPackages = with pkgs; [

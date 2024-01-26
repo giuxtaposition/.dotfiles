@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }: {
   home.packages = with pkgs; [ bat ];
 
   home.file."${config.home.homeDirectory}/.config/bat/themes" = {

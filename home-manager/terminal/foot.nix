@@ -1,8 +1,7 @@
-{ config, pkgs, lib, ... }: {
+{ ... }: {
   programs.foot = let themeColors = import ../../colors.nix;
   in {
-    enable = true;
-    # TODO: server.enable
+    enable = false;
 
     settings = {
       main = {
