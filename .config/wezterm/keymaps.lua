@@ -48,12 +48,12 @@ function module.apply_to_config(config)
 
 		-- Window pane
 		{
-			key = "K",
+			key = "v",
 			mods = "LEADER",
 			action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 		},
 		{
-			key = "L",
+			key = "b",
 			mods = "LEADER",
 			action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
 		},
@@ -103,7 +103,25 @@ function module.apply_to_config(config)
 			}),
 		},
 		{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
-		{ key = "V", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
+
+		-- Scroll
+		{ key = "k", mods = "CTRL|SHIFT", action = act.ScrollByLine(-1) },
+		{ key = "j", mods = "CTRL|SHIFT", action = act.ScrollByLine(1) },
+		{ key = "k", mods = "CTRL", action = act.ScrollByPage(-0.5) },
+		{ key = "j", mods = "CTRL", action = act.ScrollByPage(0.5) },
+		{ key = "g", mods = "LEADER", action = act.ScrollToBottom },
+		{ key = "G", mods = "LEADER", action = act.ScrollToTop },
+
+		{ key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
+		{ key = "c", mods = "CTRL|SHIFT", action = act.CopyTo("Clipboard") },
+		{ key = "f", mods = "CTRL|SHIFT", action = act.Search({ CaseInSensitiveString = "" }) },
+		{ key = "F", mods = "CTRL|SHIFT", action = act.Search({ CaseSensitiveString = "" }) },
+		{ key = "X", mods = "CTRL|SHIFT", action = act.ActivateCopyMode },
+		{
+			key = "p",
+			mods = "LEADER",
+			action = act.ActivateCommandPalette,
+		},
 	}
 
 	-- <leader> + index to quickly navigate to tab with index
