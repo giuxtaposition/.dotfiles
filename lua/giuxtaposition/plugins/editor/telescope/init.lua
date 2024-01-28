@@ -8,11 +8,10 @@ return {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
       "nvim-tree/nvim-web-devicons",
     },
-    config = function()
-      local telescope = require("telescope")
+    opts = function()
       local actions = require("telescope.actions")
 
-      telescope.setup({
+      return {
         defaults = {
           prompt_prefix = "   ",
           selection_caret = "  ",
@@ -38,7 +37,6 @@ return {
           border = {},
           borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
           color_devicons = true,
-          path_display = { "truncate " },
           mappings = {
             n = {
               ["q"] = actions.close,
@@ -64,43 +62,60 @@ return {
             file_ignore_patterns = { "node_modules/*", ".git/" },
           },
         },
-      })
+      }
+    end,
+    config = function(_, opts)
+      local telescope = require("telescope")
+
+      telescope.setup(opts)
 
       telescope.load_extension("fzf")
     end,
-    keys = {
-      {
-        "<leader>,",
-        "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
-        desc = "Switch Buffer",
-      },
-      -- find
-      { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
-      {
-        "<leader>fc",
-        function()
-          require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
-        end,
-        desc = "Find Config File",
-      },
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Fuzzy find files in cwd" },
-      {
-        "<leader>fo",
-        "<cmd>Telescope oldfiles<cr>",
-        desc = "Fuzzy find recent files",
-      },
-      { "<leader>fx", "<cmd>Telescope resume<cr>", desc = "Resume last telescope window" },
+    keys = function()
+      local filesPicker = require("giuxtaposition.plugins.editor.telescope.picker").filesPicker
 
-      -- git
-      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
-      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
+      return {
+        -- find
+        { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
+        {
+          "<leader>fc",
+          function()
+            filesPicker({ picker = "find_files", options = { cwd = vim.fn.stdpath("config") } })
+          end,
+          desc = "Find Config File",
+        },
+        {
+          "<leader>fn",
+          function()
+            filesPicker({ picker = "find_files", options = { cwd = "~/notes" } })
+          end,
+          desc = "Find Notes File",
+        },
+        {
+          "<leader>ff",
+          function()
+            filesPicker({ picker = "find_files" })
+          end,
+          desc = "Fuzzy find files in cwd",
+        },
+        {
+          "<leader>fo",
+          "<cmd>Telescope oldfiles<cr>",
+          desc = "Fuzzy find recent files",
+        },
+        { "<leader>fx", "<cmd>Telescope resume<cr>", desc = "Resume last telescope window" },
 
-      -- search
-      { "<leader>sr", "<cmd>Telescope registers<cr>", desc = "List registers" },
-      { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "Find string in cwd" },
-      { "<leader>sw", "<cmd>Telescope grep_string<cr>", desc = "Find string under cursor in cwd" },
-      { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-      { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
-    },
+        -- git
+        { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
+        { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
+
+        -- search
+        { "<leader>sr", "<cmd>Telescope registers<cr>", desc = "List registers" },
+        { "<leader>sg", "<cmd>Telescope live_grep<cr>", desc = "Find string in cwd" },
+        { "<leader>sw", "<cmd>Telescope grep_string<cr>", desc = "Find string under cursor in cwd" },
+        { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+        { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+      }
+    end,
   },
 }
