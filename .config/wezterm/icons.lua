@@ -24,7 +24,6 @@ local process_icons = {
     { Text = wezterm.nerdfonts.linux_nixos },
   },
 }
-
 local RIGHT_TAB_EDGE = wezterm.nerdfonts.ple_lower_left_triangle
 local LEFT_TAB_EDGE = wezterm.nerdfonts.ple_lower_right_triangle
 

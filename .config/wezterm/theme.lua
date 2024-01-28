@@ -1,9 +1,9 @@
-local wezterm = require("wezterm")
+local w = require("wezterm")
 local icons = require("icons")
 
-local module = {}
+local M = {}
 
-function module.apply_to_config(config)
+function M.apply_to_config(config)
   config.color_scheme = "Tokyo Night Moon"
 
   config.tab_bar_at_bottom = true
@@ -28,10 +28,10 @@ function module.apply_to_config(config)
     },
   }
 
-  config.underline_thickness = 2
-  config.underline_position = -2
+  config.underline_thickness = 3
+  config.underline_position = -6
 
-  config.font = wezterm.font_with_fallback({
+  config.font = w.font_with_fallback({
     "JetBrainsMono Nerd Font",
     "Symbols Nerd Font Mono",
     "Noto Color Emoji",
@@ -40,19 +40,16 @@ function module.apply_to_config(config)
   config.font_size = 12.5
 
   config.window_frame = {
-    font = wezterm.font("JetBrains Mono Nerd Font"),
+    font = w.font("JetBrains Mono Nerd Font"),
   }
-  config.window_padding = {
-    left = 2,
-    right = 2,
-    top = 2,
-    bottom = "0.5cell",
-  }
+  config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+  config.window_background_opacity = 0.9
+
   local basename = function(s)
     return string.gsub(s, "(.*[/\\])(.*)", "%2")
   end
 
-  wezterm.on("update-right-status", function(window, pane)
+  w.on("update-right-status", function(window, pane)
     local cells = {}
 
     local stat = window:active_workspace()
@@ -63,17 +60,17 @@ function module.apply_to_config(config)
       stat = "LDR"
     end
 
-    table.insert(cells, wezterm.nerdfonts.oct_table .. "  " .. stat)
+    table.insert(cells, w.nerdfonts.oct_table .. "  " .. stat)
 
     local cwd_uri = pane:get_current_working_dir()
     local cwd = basename(cwd_uri.file_path)
-    table.insert(cells, wezterm.nerdfonts.md_folder .. " " .. cwd)
+    table.insert(cells, w.nerdfonts.md_folder .. " " .. cwd)
 
     local cmd = basename(pane:get_foreground_process_name())
-    table.insert(cells, wezterm.nerdfonts.fa_code .. "  " .. cmd)
+    table.insert(cells, w.nerdfonts.fa_code .. "  " .. cmd)
 
-    local time = wezterm.strftime("%H:%M")
-    table.insert(cells, wezterm.nerdfonts.md_clock .. " " .. time)
+    local time = w.strftime("%H:%M")
+    table.insert(cells, w.nerdfonts.md_clock .. " " .. time)
 
     local DIVIDER = "|"
     local text_fg = "#b4befe"
@@ -95,20 +92,19 @@ function module.apply_to_config(config)
       push(cell, #cells == 0)
     end
 
-    window:set_right_status(wezterm.format(elements))
+    window:set_right_status(w.format(elements))
   end)
 
   local function tab_title(tab_info)
     local process_name = basename(tab_info.active_pane.foreground_process_name)
-    local process =
-      wezterm.format(icons.process_icons[process_name] or { { Text = string.format("[%s]", process_name) } })
+    local process = w.format(icons.process_icons[process_name] or { { Text = string.format("[%s]", process_name) } })
 
     local cwd_uri = tab_info.active_pane.current_working_dir
     local cwd = basename(cwd_uri.file_path)
     return process .. " " .. cwd
   end
 
-  wezterm.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_width)
+  w.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_width)
     local edge_background = "#181825"
     local background = "#1e1e2e"
     local foreground = "#cdd6f4"
@@ -125,7 +121,7 @@ function module.apply_to_config(config)
 
     local title = tab_title(tab)
 
-    return wezterm.format({
+    return w.format({
       { Background = { Color = edge_background } },
       { Foreground = { Color = edge_foreground } },
       { Text = icons.LEFT_TAB_EDGE },
@@ -139,4 +135,4 @@ function module.apply_to_config(config)
   end)
 end
 
-return module
+return M

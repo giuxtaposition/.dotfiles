@@ -25,9 +25,11 @@ return {
 ⠀⠀⠀⠈⠑⠢⠤⠤⠬⠭⠥⠖⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠒⠢⠤⠤⠤⠒⠊⠁⠀⠀⠀⠀⠀⠀
     ]]
     logo = string.rep("\n", 8) .. logo .. "\n\n"
+    local filesPicker = require("giuxtaposition.plugins.editor.telescope.picker").filesPicker
     local telescope_config = function()
-      require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
+      filesPicker({ picker = "find_files", options = { cwd = vim.fn.stdpath("config") } })
     end
+
     local opts = {
       theme = "doom",
       hide = {
