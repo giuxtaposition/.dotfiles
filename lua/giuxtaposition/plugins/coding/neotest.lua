@@ -5,7 +5,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
-      "haydenmeade/neotest-jest",
+      "giuxtaposition/neotest-jest",
       "marilari88/neotest-vitest",
     },
     keys = {
@@ -83,11 +83,11 @@ return {
         adapters = {
           require("neotest-jest")({
             jestCommand = "npm test --",
-            jestConfigFile = "custom.jest.config.ts",
             env = { CI = true },
             cwd = function()
               return vim.fn.getcwd()
             end,
+            testFileNames = { "spec", "component%-spec", "test" },
           }),
           require("neotest-vitest"),
         },
