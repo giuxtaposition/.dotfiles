@@ -29,7 +29,10 @@ function M.apply_to_config(config)
   }
 
   config.underline_thickness = 3
-  config.underline_position = -6
+  config.underline_position = -2
+  config.cursor_thickness = 1
+  config.default_cursor_style = "BlinkingBar"
+  config.cursor_blink_rate = 800
 
   config.font = w.font_with_fallback({
     "JetBrainsMono Nerd Font",
@@ -45,10 +48,6 @@ function M.apply_to_config(config)
   config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
   config.window_background_opacity = 0.9
 
-  local basename = function(s)
-    return string.gsub(s, "(.*[/\\])(.*)", "%2")
-  end
-
   w.on("update-right-status", function(window, pane)
     local cells = {}
 
@@ -63,10 +62,10 @@ function M.apply_to_config(config)
     table.insert(cells, w.nerdfonts.oct_table .. "  " .. stat)
 
     local cwd_uri = pane:get_current_working_dir()
-    local cwd = basename(cwd_uri.file_path)
+    local cwd = M.basename(cwd_uri.file_path)
     table.insert(cells, w.nerdfonts.md_folder .. " " .. cwd)
 
-    local cmd = basename(pane:get_foreground_process_name())
+    local cmd = M.basename(pane:get_foreground_process_name())
     table.insert(cells, w.nerdfonts.fa_code .. "  " .. cmd)
 
     local time = w.strftime("%H:%M")
@@ -95,15 +94,6 @@ function M.apply_to_config(config)
     window:set_right_status(w.format(elements))
   end)
 
-  local function tab_title(tab_info)
-    local process_name = basename(tab_info.active_pane.foreground_process_name)
-    local process = w.format(icons.process_icons[process_name] or { { Text = string.format("[%s]", process_name) } })
-
-    local cwd_uri = tab_info.active_pane.current_working_dir
-    local cwd = basename(cwd_uri.file_path)
-    return process .. " " .. cwd
-  end
-
   w.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_width)
     local edge_background = "#181825"
     local background = "#1e1e2e"
@@ -119,7 +109,7 @@ function M.apply_to_config(config)
 
     local edge_foreground = background
 
-    local title = tab_title(tab)
+    local title = M.tab_title(tab)
 
     return w.format({
       { Background = { Color = edge_background } },
@@ -133,6 +123,19 @@ function M.apply_to_config(config)
       { Text = icons.RIGHT_TAB_EDGE },
     })
   end)
+end
+
+function M.basename(s)
+  return string.gsub(s, "(.*[/\\])(.*)", "%2")
+end
+
+function M.tab_title(tab_info)
+  local process_name = M.basename(tab_info.active_pane.foreground_process_name)
+  local process = w.format(icons.process_icons[process_name] or { { Text = string.format("[%s]", process_name) } })
+
+  local cwd_uri = tab_info.active_pane.current_working_dir
+  local cwd = M.basename(cwd_uri.file_path)
+  return process .. " " .. cwd
 end
 
 return M

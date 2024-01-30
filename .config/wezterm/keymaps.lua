@@ -1,9 +1,9 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 
-local module = {}
+local M = {}
 
-function module.apply_to_config(config)
+function M.apply_to_config(config)
   config.disable_default_key_bindings = true
   config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
   config.keys = {
@@ -85,4 +85,4 @@ function module.apply_to_config(config)
   end
 end
 
-return module
+return M

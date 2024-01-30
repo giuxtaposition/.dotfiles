@@ -1,6 +1,8 @@
 local wezterm = require("wezterm")
 
-local process_icons = {
+local M = {}
+
+M.process_icons = {
   ["nvim"] = {
     { Text = wezterm.nerdfonts.custom_vim },
   },
@@ -24,11 +26,7 @@ local process_icons = {
     { Text = wezterm.nerdfonts.linux_nixos },
   },
 }
-local RIGHT_TAB_EDGE = wezterm.nerdfonts.ple_lower_left_triangle
-local LEFT_TAB_EDGE = wezterm.nerdfonts.ple_lower_right_triangle
+M.RIGHT_TAB_EDGE = wezterm.nerdfonts.ple_lower_left_triangle
+M.LEFT_TAB_EDGE = wezterm.nerdfonts.ple_lower_right_triangle
 
-return {
-  process_icons = process_icons,
-  LEFT_TAB_EDGE = LEFT_TAB_EDGE,
-  RIGHT_TAB_EDGE = RIGHT_TAB_EDGE,
-}
+return M
