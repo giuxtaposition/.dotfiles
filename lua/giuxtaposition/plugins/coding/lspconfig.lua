@@ -107,6 +107,14 @@ return {
       },
     })
 
+    lspconfig["eslint"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = {
+        workingDirectories = { mode = "auto" },
+      },
+    })
+
     lspconfig["svelte"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
