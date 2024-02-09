@@ -29,7 +29,7 @@ function M.apply_to_config(config)
     { key = "[", mods = "LEADER", action = act.ActivateTabRelative(-1) },
     { key = "]", mods = "LEADER", action = act.ActivateTabRelative(1) },
     { key = "n", mods = "LEADER", action = act.ShowTabNavigator },
-    { key = "T", mods = "LEADER", action = act.CloseCurrentTab({ confirm = true }) },
+    { key = "d", mods = "LEADER", action = act.CloseCurrentTab({ confirm = true }) },
 
     -- Workspaces
     {

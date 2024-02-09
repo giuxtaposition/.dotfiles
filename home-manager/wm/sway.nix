@@ -114,7 +114,7 @@ in {
 
       input = {
         "type:keyboard" = {
-          xkb_options = "ctrl:swapcaps,grp:alt_caps_toggle";
+          xkb_options = "grp:alt_caps_toggle";
           xkb_layout = "us,it";
           pointer_accel = "0";
         };

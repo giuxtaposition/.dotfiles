@@ -1,4 +1,5 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
+  imports = [ ./ddcutil.nix ];
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -180,6 +181,7 @@
 
     opengl.enable = true;
     nvidia.modesetting.enable = true;
+    keyboard.qmk.enable = true;
   };
 
   xdg.portal = {
@@ -202,8 +204,6 @@
       papirus-icon-theme
 
       #Programming
-      neovim
-      wezterm
       docker
       docker-compose
       insomnia

@@ -61,9 +61,13 @@
     steam-run
     cypress
     qalculate-gtk
+    qmk
+    qmk-udev-rules
 
     # Fonts
-    (pkgs.unstable.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    (pkgs.unstable.nerdfonts.override {
+      fonts = [ "JetBrainsMono" "Monaspace" ];
+    })
   ];
 
   programs.home-manager.enable = true;
