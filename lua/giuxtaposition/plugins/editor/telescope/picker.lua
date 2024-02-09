@@ -54,7 +54,6 @@ function M.filesPicker(pickerAndOptions)
 
   -- Finally, check which file picker was requested and open it with its associated options
   if pickerAndOptions.picker == "find_files" then
-    print(options.cwd)
     require("telescope.builtin").find_files(options)
   elseif pickerAndOptions.picker == "git_files" then
     require("telescope.builtin").git_files(options)

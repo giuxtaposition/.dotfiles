@@ -14,6 +14,7 @@ return {
   },
   config = function()
     local lspconfig = require("lspconfig")
+    local util = require("lspconfig.util")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local lspsaga_diagnostic = require("lspsaga.diagnostic")
     local neodev = require("neodev")
@@ -118,6 +119,13 @@ return {
     lspconfig["svelte"].setup({
       capabilities = capabilities,
       on_attach = on_attach,
+    })
+
+    lspconfig["volar"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+      root_dir = util.root_pattern("src/App.vue"),
     })
 
     -- neodev
