@@ -4,7 +4,7 @@ vim.g.maplocalleader = ";"
 local map = require("giuxtaposition.config.util").Map
 
 -- General keymaps
-map({ "i", "v" }, "jk", "<Esc>", { desc = "Map jk to Esc" })
+map({ "i", "v", "s" }, "jk", "<Esc>", { desc = "Map jk to Esc" })
 map("t", "jk", "<C-\\><C-n>", { desc = "Enter normal mode in terminal" })
 map("n", "x", '"_x', { desc = "Do not copy after deleting char" })
 map("v", "y", "ygv<Esc>", { desc = "Yank and remain at cursor position" })

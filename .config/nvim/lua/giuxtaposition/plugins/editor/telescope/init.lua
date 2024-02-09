@@ -6,6 +6,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-telescope/telescope-project.nvim",
       "nvim-tree/nvim-web-devicons",
     },
     opts = function()
@@ -70,6 +71,7 @@ return {
       telescope.setup(opts)
 
       telescope.load_extension("fzf")
+      telescope.load_extension("project")
     end,
     keys = function()
       local filesPicker = require("giuxtaposition.plugins.editor.telescope.picker").filesPicker
@@ -104,6 +106,20 @@ return {
           desc = "Fuzzy find recent files",
         },
         { "<leader>fx", "<cmd>Telescope resume<cr>", desc = "Resume last telescope window" },
+        {
+          "<leader>fp",
+          function()
+            require("telescope").extensions.project.project()
+          end,
+          desc = "Project",
+        },
+
+        -- lsp
+        {
+          "<leader>cs",
+          "<cmd>Telescope lsp_document_symbols<CR>",
+          desc = "List LSP document symbols in the current workspace",
+        },
 
         -- git
         { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },

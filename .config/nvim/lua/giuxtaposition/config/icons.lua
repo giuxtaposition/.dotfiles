@@ -34,12 +34,12 @@ return {
     github = "",
   },
   gitsigns = {
-    add = "▎",
-    change = "▎",
-    delete = "",
-    topdelete = "",
-    changedelete = "▎",
-    untracked = "▎",
+    add = "┃",
+    change = "┃",
+    delete = "▁",
+    topdelete = "▔",
+    changedelete = "┃",
+    untracked = "┃",
   },
   kinds = {
     Array = "",
