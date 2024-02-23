@@ -63,6 +63,9 @@
     qalculate-gtk
     qmk
     qmk-udev-rules
+    vial
+    opera
+    wvkbd
 
     # Fonts
     (pkgs.unstable.nerdfonts.override {
