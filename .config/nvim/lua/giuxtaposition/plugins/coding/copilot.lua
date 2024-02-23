@@ -13,6 +13,7 @@ return {
         typescriptreact = true, -- allow specific filetype
         ["*"] = false, -- disable for all other filetypes and ignore default `filetypes`
       },
+      copilot_node_command = "/home/giu/.asdf/installs/nodejs/21.5.0/bin/node",
     },
   },
   {
