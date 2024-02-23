@@ -78,22 +78,22 @@ in {
           border = "${themeColors.lavender}";
           background = "${themeColors.base}";
           text = "${themeColors.text}";
-          indicator = "${themeColors.rosewater}";
+          indicator = "${themeColors.lavender}";
           childBorder = "${themeColors.lavender}";
         };
         focusedInactive = {
           border = "${themeColors.overlay0}";
           background = "${themeColors.base}";
           text = "${themeColors.text}";
-          indicator = "${themeColors.rosewater}";
-          childBorder = "${themeColors.overlay0}";
+          indicator = "${themeColors.lavender}";
+          childBorder = "${themeColors.lavender}";
         };
         unfocused = {
           border = "${themeColors.overlay0}";
           background = "${themeColors.base}";
           text = "${themeColors.text}";
-          indicator = "${themeColors.rosewater}";
-          childBorder = "${themeColors.overlay0}";
+          indicator = "${themeColors.lavender}";
+          childBorder = "${themeColors.lavender}";
         };
         urgent = {
           border = "${themeColors.peach}";
@@ -114,7 +114,7 @@ in {
 
       input = {
         "type:keyboard" = {
-          xkb_options = "grp:alt_caps_toggle";
+          xkb_options = "grp:alt_shift_toggle";
           xkb_layout = "us,it";
           pointer_accel = "0";
         };
@@ -246,7 +246,7 @@ in {
       for_window [app_id="foot"] blur enable
 
       # dim inactive
-      default_dim_inactive 0.2
+      default_dim_inactive 0.0
 
       ${monitors}
 
