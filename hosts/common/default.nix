@@ -1,5 +1,5 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
-  imports = [ ./ddcutil.nix ];
+  imports = [ ./ddcutil.nix ./thunar.nix ./steam.nix ];
   nixpkgs = {
     # You can add overlays here
     overlays = [
@@ -105,12 +105,6 @@
     enable = true;
     package = pkgs.unstable.swayfx;
   };
-
-  # Thunar
-  programs.thunar.enable = true;
-  programs.xfconf.enable = true; # Save preferences
-  services.gvfs.enable = true; # Mount, trash, and other functionalities
-  services.tumbler.enable = true; # Thumbnail support for images
 
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
