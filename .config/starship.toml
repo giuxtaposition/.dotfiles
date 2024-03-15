@@ -31,6 +31,12 @@ symbol = " "
 [java]
 symbol = " "
 
+[kotlin]
+symbol = "󱈙 "
+
+[gradle]
+symbol = " "
+
 [lua]
 symbol = " "
 
@@ -56,7 +62,7 @@ symbol = " "
 [character]
 success_symbol = "[[ᓚᘏᗢ](subtext1) ❯](sky)"
 error_symbol = "[❯](red)"
-vimcmd_symbol = "[❮](green)"
+vimcmd_symbol = "[❮](reen)"
 
 [directory]
 truncation_length = 4

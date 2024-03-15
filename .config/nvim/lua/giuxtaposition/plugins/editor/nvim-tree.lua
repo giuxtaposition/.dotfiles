@@ -29,7 +29,7 @@ return {
         },
         git = {
           enable = true,
-          ignore = true,
+          ignore = false,
         },
         filesystem_watchers = {
           enable = true,
@@ -41,6 +41,7 @@ return {
           },
         },
         renderer = {
+          group_empty = true,
           root_folder_label = false,
           highlight_git = true,
           highlight_opened_files = "none",

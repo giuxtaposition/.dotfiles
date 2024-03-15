@@ -88,6 +88,7 @@
       ll = "eza -l -g --icons";
       lla = "eza -la -g --icons";
       ":q" = "exit";
+      keyboard = "wvkbd-mobintl";
     };
     shellAbbrs = {
       #GIT

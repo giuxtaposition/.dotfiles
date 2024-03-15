@@ -198,5 +198,21 @@ return {
       capabilities = capabilities,
       on_attach = on_attach,
     })
+
+    -- clangd
+    lspconfig["clangd"].setup({
+      capabilities = capabilities,
+      on_attach = function(client, bufnr)
+        require("clangd_extension").setup()
+
+        on_attach(client, bufnr)
+      end,
+    })
+
+    -- kotlin
+    lspconfig.kotlin_language_server.setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+    })
   end,
 }

@@ -16,9 +16,6 @@ let
 
     #idle
     swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &      
-
-    # start eww
-    ${eww-bars}
   '';
 
   monitors = lib.concatMapStrings (x: x + "\n") (map (m:

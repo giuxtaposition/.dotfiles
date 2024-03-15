@@ -16,6 +16,8 @@
       unstable.lua-language-server
       unstable.marksman
       unstable.nil
+      unstable.libclang
+      unstable.kotlin-language-server
 
       # Linters and formatters
       unstable.prettierd # typescript formatter
@@ -27,6 +29,7 @@
       unstable.shellcheck # sh linter
       unstable.shfmt # sh formatter
       unstable.markdownlint-cli # markdown linter
+      unstable.ktlint
     ];
   };
 

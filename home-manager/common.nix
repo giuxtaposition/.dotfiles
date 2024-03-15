@@ -61,11 +61,18 @@
     steam-run
     cypress
     qalculate-gtk
-    qmk
-    qmk-udev-rules
+    unstable.qmk
+    unstable.qmk-udev-rules
     vial
     opera
     wvkbd
+    vlc
+    sherlock
+    libreoffice-qt
+
+    jdk
+    kotlin
+    gradle
 
     # Fonts
     (pkgs.unstable.nerdfonts.override {

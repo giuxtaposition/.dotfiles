@@ -46,6 +46,9 @@ return {
           "nix",
           "svelte",
           "vue",
+          "c",
+          "java",
+          "kotlin",
         },
         incremental_selection = {
           enable = true,

@@ -175,7 +175,6 @@
 
     opengl.enable = true;
     nvidia.modesetting.enable = true;
-    keyboard.qmk.enable = true;
   };
 
   xdg.portal = {
