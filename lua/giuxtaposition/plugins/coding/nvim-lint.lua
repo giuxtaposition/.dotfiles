@@ -23,6 +23,7 @@ return {
       },
       svelte = { "eslint_d" },
       css = { "stylelint" },
+      kotlin = { "ktlint" },
     }
 
     -- use for codespell for all except css

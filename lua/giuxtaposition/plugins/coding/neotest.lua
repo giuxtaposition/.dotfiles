@@ -7,6 +7,7 @@ return {
       "antoinemadec/FixCursorHold.nvim",
       "giuxtaposition/neotest-jest",
       "marilari88/neotest-vitest",
+      "weilbith/neotest-gradle",
     },
     keys = {
       {
@@ -90,6 +91,7 @@ return {
             testFileNames = { "spec", "component%-spec", "test" },
           }),
           require("neotest-vitest"),
+          require("neotest-gradle"),
         },
       }
     end,
