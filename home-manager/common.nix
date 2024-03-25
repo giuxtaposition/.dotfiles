@@ -30,6 +30,8 @@
     };
   };
 
+  programs.home-manager.enable = true;
+
   xdg = {
     enable = true;
 
@@ -79,8 +81,6 @@
       fonts = [ "JetBrainsMono" "Monaspace" ];
     })
   ];
-
-  programs.home-manager.enable = true;
 
   # GTK CONFIG
   gtk = {

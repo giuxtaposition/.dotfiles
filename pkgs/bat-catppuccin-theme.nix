@@ -8,6 +8,6 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/bat-catppuccin-theme
-    cp -R ./*.tmTheme $out/bat-catppuccin-theme
+    cp -R ./themes/*.tmTheme $out/bat-catppuccin-theme
   '';
 }

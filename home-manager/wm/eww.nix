@@ -96,7 +96,7 @@
 
   programs.eww = {
     enable = true;
-    package = pkgs.unstable.eww-wayland;
+    package = pkgs.unstable.eww;
     configDir = config.lib.file.mkOutOfStoreSymlink
       "${config.home.homeDirectory}/.dotfiles/.config/eww";
   };

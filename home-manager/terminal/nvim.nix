@@ -5,6 +5,7 @@
     defaultEditor = true;
     vimdiffAlias = true;
     package = pkgs.neovim-nightly;
+    withNodeJs = true;
     extraPackages = with pkgs; [
       # Language servers
       unstable.vscode-langservers-extracted

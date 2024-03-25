@@ -90,7 +90,7 @@ in {
           background = "${themeColors.base}";
           text = "${themeColors.text}";
           indicator = "${themeColors.lavender}";
-          childBorder = "${themeColors.lavender}";
+          childBorder = "${themeColors.mauve}";
         };
         urgent = {
           border = "${themeColors.peach}";
@@ -264,7 +264,6 @@ in {
       for_window [window_role="About"] floating enable
       for_window [title="File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
       for_window [title="Picture in picture"] floating enable, sticky enable
-      for_window [title="nmtui"] floating enable,  resize set width 50 ppt height 70 ppt
       for_window [title="Save File"] floating enable
       for_window [app_id="qalculate-gtk"] floating enable
 
