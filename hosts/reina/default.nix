@@ -1,5 +1,12 @@
 { config, pkgs, ... }: {
-  imports = [ ./hardware-configuration.nix ../common ];
+  imports = [
+    ./hardware-configuration.nix
+    ../common.nix
+    ../../modules/nixos/thunar.nix
+    ../../modules/nixos/steam.nix
+    ../../modules/nixos/ddcutil.nix
+    ../../modules/nixos/docker.nix
+  ];
 
   networking.hostName = "Reina";
 

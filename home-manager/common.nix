@@ -57,7 +57,10 @@
     zathura
     spotify
     asdf-vm # runtime version management
-    unstable.firefox
+
+    (pkgs.wrapFirefox
+      (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
+
     chromium
     glxinfo # info about GPU
     steam-run
@@ -75,6 +78,11 @@
     jdk
     kotlin
     gradle
+
+    miller # csv
+    ventoy
+
+    libsForQt5.gwenview
 
     # Fonts
     (pkgs.unstable.nerdfonts.override {

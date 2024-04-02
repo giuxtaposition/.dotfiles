@@ -248,7 +248,6 @@ in {
       ${monitors}
 
       # set floating (nontiling)for apps needing it:
-      for_window [app_id="thunar"] floating enable
       for_window [app_id="blueman-manager"] floating enable, resize set width 40 ppt height 30 ppt
 
       # set floating (nontiling) for special apps:

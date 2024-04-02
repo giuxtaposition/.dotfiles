@@ -1,5 +1,4 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
-  imports = [ ./ddcutil.nix ./thunar.nix ./steam.nix ];
   nixpkgs = {
     # You can add overlays here
     overlays = [
