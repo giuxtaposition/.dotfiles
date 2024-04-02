@@ -86,6 +86,7 @@ return {
 
         on_attach(client, bufnr)
       end,
+      capabilities = capabilities,
       settings = {
         separate_diagnostic_server = true,
         composite_mode = "separate_diagnostic",
