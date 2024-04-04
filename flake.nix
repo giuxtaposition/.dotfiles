@@ -73,6 +73,12 @@
           specialArgs = { inherit inputs outputs; };
         };
 
+        # Personal Laptop
+        asuka = nixpkgs.lib.nixosSystem {
+          modules = [ ./hosts/asuka ];
+          specialArgs = { inherit inputs outputs; };
+        };
+
         # Personal Desktop
         reina = nixpkgs.lib.nixosSystem {
           modules = [ ./hosts/reina ];
@@ -88,6 +94,12 @@
             ./home-manager/kumiko.nix
             nix-index-database.hmModules.nix-index
           ];
+        };
+        "giu@asuka" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules =
+            [ ./home-manager/asuka.nix nix-index-database.hmModules.nix-index ];
         };
         "giu@reina" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
