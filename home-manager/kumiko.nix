@@ -11,9 +11,7 @@
     topbar = "bar0";
   }];
 
-  home.sessionVariables = {
-    KEYBOARD_NAME = "1:1:AT_Translated_Set_2_keyboard";
-  };
+  laptop.enable = true;
 
   programs.fish.shellAbbrs = {
     home-update = "z dot && home-manager switch --flake .#giu@kumiko";

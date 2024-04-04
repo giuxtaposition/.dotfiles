@@ -1,1 +1,5 @@
-{ monitors = import ./monitors.nix; }
+{
+  monitors = import ./monitors.nix;
+
+  laptop = import ./laptop.nix;
+}
