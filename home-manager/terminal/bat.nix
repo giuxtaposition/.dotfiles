@@ -10,7 +10,7 @@
 
   programs.bat = {
     enable = true;
-    config = { theme = "Catppuccin-mocha"; };
+    config = { theme = "Catppuccin Mocha"; };
   };
 
 }
