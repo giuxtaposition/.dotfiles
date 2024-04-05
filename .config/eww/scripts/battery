@@ -1,10 +1,9 @@
 #!/bin/sh
 
-bat=/sys/class/power_supply/BAT0/
-per="$(bat "$bat/capacity")"
+per="$(bat "$BATTERY_INFO_LOCATION/capacity")"
 
 icon() {
-	[ "$(bat "$bat/status")" = Charging ] && echo "" && exit
+	[ "$(bat "$BATTERY_INFO_LOCATION/status")" = Charging ] && echo "" && exit
 
 	if [ "$per" -eq "100" ]; then
 		icon="󰁹"

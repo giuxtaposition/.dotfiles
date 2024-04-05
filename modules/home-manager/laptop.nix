@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ lib, config, ... }: {
 
   options = { laptop.enable = lib.mkEnableOption "enables laptop module"; };
 

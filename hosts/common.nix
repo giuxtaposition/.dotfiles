@@ -1,4 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
+
+  imports = (builtins.attrValues outputs.nixosModules);
+
   nixpkgs = {
     # You can add overlays here
     overlays = [

@@ -1,10 +1,8 @@
 { ... }: {
-  imports = [
-    ./hardware-configuration.nix
-    ../common.nix
-    ../../modules/nixos/thunar.nix
-    ../../modules/nixos/docker.nix
-  ];
+  imports = [ ./hardware-configuration.nix ../common.nix ];
 
   networking.hostName = "Kumiko";
+
+  docker.enable = true;
+  thunar.enable = true;
 }

@@ -65,6 +65,7 @@
       # Your custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
       homeManagerModules = import ./modules/home-manager;
+      nixosModules = import ./modules/nixos;
 
       nixosConfigurations = {
         # Personal Laptop

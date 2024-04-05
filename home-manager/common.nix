@@ -47,7 +47,6 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    steam
     aseprite # Pixel Art Editor
     calibre # Library Management
     deluge # Torrent Client

@@ -11,6 +11,10 @@
     topbar = "bar0";
   }];
 
+  home.sessionVariables = {
+    BATTERY_INFO_LOCATION = "/sys/class/power_supply/BAT0/";
+  };
+
   laptop.enable = true;
 
   programs.fish.shellAbbrs = {

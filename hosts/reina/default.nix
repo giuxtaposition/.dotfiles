@@ -1,12 +1,5 @@
 { config, pkgs, ... }: {
-  imports = [
-    ./hardware-configuration.nix
-    ../common.nix
-    ../../modules/nixos/thunar.nix
-    ../../modules/nixos/steam.nix
-    ../../modules/nixos/ddcutil.nix
-    ../../modules/nixos/docker.nix
-  ];
+  imports = [ ./hardware-configuration.nix ../common.nix ];
 
   networking.hostName = "Reina";
 
@@ -35,4 +28,9 @@
       powerManagement.enable = true;
     };
   };
+
+  ddcutil.enable = true;
+  docker.enable = true;
+  steam.enable = true;
+  thunar.enable = true;
 }
