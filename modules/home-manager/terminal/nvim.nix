@@ -29,7 +29,7 @@
         unstable.stylua # lua formatter
         luajitPackages.luacheck # lua linter
         unstable.codespell # code spell
-        unstable.nixfmt
+        unstable.nixfmt-classic
         unstable.shellcheck # sh linter
         unstable.shfmt # sh formatter
         unstable.markdownlint-cli # markdown linter
