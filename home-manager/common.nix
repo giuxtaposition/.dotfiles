@@ -1,6 +1,5 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
-  imports = [ ./terminal ./wm ]
-    ++ (builtins.attrValues outputs.homeManagerModules);
+  imports = (builtins.attrValues outputs.homeManagerModules);
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
@@ -44,6 +43,17 @@
     };
   };
 
+  bat.enable = true;
+  fish.enable = true;
+  git.enable = true;
+  nvim.enable = true;
+  wezterm.enable = true;
+
+  wayland.enable = true;
+  sway.enable = true;
+  dunst.enable = true;
+  eww.enable = true;
+
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
@@ -67,11 +77,9 @@
     qalculate-gtk
     unstable.qmk
     unstable.qmk-udev-rules
-    vial
     opera
     wvkbd
     vlc
-    sherlock
     libreoffice-qt
 
     jdk
