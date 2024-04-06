@@ -13,9 +13,7 @@
 
   laptop.enable = true;
 
-  home.sessionVariables = {
-    BATTERY_INFO_LOCATION = "/sys/class/power_supply/BAT1/";
-  };
+  home.sessionVariables = { BAT_NAME = "BAT1"; };
 
   programs.fish.shellAbbrs = {
     home-update = "z dot && home-manager switch --flake .#giu@asuka";

@@ -12,10 +12,11 @@ switch_layout() {
 }
 
 get_layout() {
-	if [ "$layout" = "English (US)" ]; then
-		echo "en"
-	elif [ "$layout" = "Italian" ]; then
+
+	if [ "$layout" = "Italian" ]; then
 		echo "it"
+	elif [ "$layout" = "English (US)" ]; then
+		echo "en"
 	fi
 }
 

@@ -1,0 +1,1 @@
+(defvar BAT_NAME `${get_env('BAT_NAME')}`)

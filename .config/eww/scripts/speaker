@@ -1,6 +1,8 @@
 #!/bin/sh
 
 get_data() {
+	default="0"
+
 	volume="$(pamixer --get-volume-human | grep -Po '\d+(?=%)')"
 
 	if [ "$volume" = "" ]; then
@@ -15,8 +17,7 @@ get_data() {
 			icon="󰕾"
 		fi
 	fi
-
-	echo "{\"content\": \"$volume\", \"icon\": \"$icon\"}"
+	echo "{\"content\": \"${volume:-${default}}\", \"icon\": \"$icon\"}"
 }
 
 [ "$1" = "" ] && get_data && exit

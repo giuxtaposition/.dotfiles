@@ -10,6 +10,8 @@
 (include "./components/keyboard.yuck")
 (include "./components/clock.yuck")
 
+(include "variables.yuck")
+
 (defvar eww "eww -c $HOME/.config/eww")
 
 (defwidget bar0 []

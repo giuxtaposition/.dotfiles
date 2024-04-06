@@ -7,6 +7,8 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nekowinston-nur.url = "github:nekowinston/nur";
 
+    nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
+
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     # Home manager

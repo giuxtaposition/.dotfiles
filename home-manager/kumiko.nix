@@ -11,9 +11,7 @@
     topbar = "bar0";
   }];
 
-  home.sessionVariables = {
-    BATTERY_INFO_LOCATION = "/sys/class/power_supply/BAT0/";
-  };
+  home.sessionVariables = { BAT_NAME = "BAT0"; };
 
   laptop.enable = true;
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 get_data() {
-	status="$(playerctl -p spotify status)"
+	status=$(playerctl -p spotify status 2>&1)
 
 	icon=""
 	if [ "$status" = "No players found" ]; then

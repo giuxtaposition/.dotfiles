@@ -8,6 +8,7 @@
       jaq # JSON data processing tool
       playerctl # command line player control
       unstable.cava
+      eww
     ];
 
     # cava
@@ -99,7 +100,6 @@
 
     programs.eww = {
       enable = true;
-      package = pkgs.unstable.eww;
       configDir = config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.dotfiles/.config/eww";
     };
