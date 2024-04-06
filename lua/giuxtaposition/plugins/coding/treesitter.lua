@@ -49,6 +49,7 @@ return {
           "c",
           "java",
           "kotlin",
+          "yuck",
         },
         incremental_selection = {
           enable = true,
