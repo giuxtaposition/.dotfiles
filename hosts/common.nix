@@ -80,11 +80,9 @@
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       extraGroups = [ "wheel" "video" "audio" "networkmanager" "rtkit" ];
-      shell = pkgs.fish;
     };
   };
   programs.dconf.enable = true;
-  programs.fish.enable = true;
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [

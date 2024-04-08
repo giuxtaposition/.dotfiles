@@ -5,4 +5,5 @@
 
   docker.enable = true;
   thunar.enable = true;
+  fish.enable = true;
 }

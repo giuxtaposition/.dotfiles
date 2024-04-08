@@ -7,4 +7,6 @@
 
   thunar = import ./thunar.nix;
 
+  fish = import ./fish.nix;
+
 }

@@ -33,4 +33,5 @@
   docker.enable = true;
   steam.enable = true;
   thunar.enable = true;
+  fish.enable = true;
 }
