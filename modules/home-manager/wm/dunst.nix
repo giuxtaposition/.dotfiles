@@ -1,4 +1,4 @@
-{ config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
 
   options = { dunst.enable = lib.mkEnableOption "enables dunst module"; };
 
@@ -20,28 +20,28 @@
       };
     in {
       enable = true;
-      inherit (config.gtk) iconTheme;
       settings = {
         global = {
-          alignment = "center";
-          corner_radius = 16;
-          follow = "mouse";
-          font = "Inter 9";
-          format = "<b>%s</b>\\n%b";
+          browser = "${config.programs.firefox.package}/bin/firefox -new-tab";
+          corner_radius = 8;
+          follow = "mouse"; # follow monitor with mouse
+          font = "JetBrainsMono Nerd Font 11";
+          format = "<b>%a</b>\\n%s\\n%b";
+          alignment = "left";
           frame_width = 1;
           offset = "5x5";
-          horizontal_padding = 8;
           icon_position = "left";
+          enable_recursive_icon_lookup = true;
           indicate_hidden = "yes";
-          markup = "yes";
+          markup = "full";
           max_icon_size = 64;
           mouse_left_click = "do_action";
           mouse_middle_click = "close_all";
           mouse_right_click = "close_current";
-          padding = 8;
-          plain_text = "no";
-          separator_color = "auto";
-          separator_height = 1;
+          horizontal_padding = 16;
+          padding = 16;
+          separator_color = "#272f57";
+          separator_height = 6;
           show_indicators = false;
           shrink = "no";
           word_wrap = "yes";
@@ -64,6 +64,10 @@
           foreground = c.primary_foreground;
           frame_color = c.primary_frame;
         };
+      };
+      iconTheme = {
+        name = "candy-icons";
+        package = pkgs.candy-icons;
       };
     };
   };
