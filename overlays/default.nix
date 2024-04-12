@@ -20,8 +20,20 @@
         wrapProgram $out/bin/spotify \
         --set LD_PRELOAD "${final.spotify-adblock}/lib/libspotifyadblock.so"
       '';
-
     });
+
+    slack = prev.slack.overrideAttrs (oldAttrs: {
+      fixupPhase = ''
+        sed -i -e 's/,"WebRTCPipeWireCapturer"/,"LebRTCPipeWireCapturer"/' $out/lib/slack/resources/app.asar
+
+        rm $out/bin/slack
+        makeWrapper $out/lib/slack/slack $out/bin/slack \
+          --prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
+          --suffix PATH : ${prev.lib.makeBinPath [ prev.pkgs.xdg-utils ]} \
+          --add-flags "--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations,WebRTCPipeWireCapturer"
+      '';
+    });
+
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will
