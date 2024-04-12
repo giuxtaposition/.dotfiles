@@ -4,7 +4,7 @@ get_workspace_info() {
 	focused=$(swaymsg -t get_workspaces | jaq -r '.[] | select(.focused==true).name')
 	not_empty=$(swaymsg -t get_workspaces | jaq -r '.[] | {name}')
 
-	echo -n '{"workspaces": ['
+	echo -n '['
 
 	for i in {1..10}; do
 		if [[ $focused = "$i" ]]; then
@@ -18,7 +18,7 @@ get_workspace_info() {
 		echo -n ''"$([ "$i" -eq 1 ] || echo ,)" '{"name": '"$i"', "focused": '"$([ "$focused" = "$i" ] && echo "true" || echo "false")"', "status": '"$status"'}'
 	done
 
-	echo ']}'
+	echo ' ]'
 }
 
 get_workspace_info

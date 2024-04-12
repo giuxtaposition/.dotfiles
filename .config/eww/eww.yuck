@@ -1,90 +1,18 @@
-(include "./components/distro.yuck")
-(include "./components/workspaces.yuck")
-(include "./components/bright.yuck")
-(include "./components/speaker.yuck")
-(include "./components/mic.yuck")
-(include "./components/wifi.yuck")
-(include "./components/battery.yuck")
-(include "./components/bluetooth.yuck")
-(include "./components/spotify.yuck")
-(include "./components/keyboard.yuck")
-(include "./components/clock.yuck")
-
 (include "variables.yuck")
+(include "windows.yuck")
 
-(defvar eww "eww -c $HOME/.config/eww")
+(include "modules/bar.yuck")
+(include "modules/tray.yuck")
+(include "modules/control-center.yuck")
+(include "modules/powermenu.yuck")
+(include "modules/launcher.yuck")
 
-(defwidget bar0 []
-  (centerbox
-    (left)
-    (middle)
-    (right)
-  )
-)
-
-(defwidget bar1 []
-  (centerbox
-    (left)
-    (box)
-    (right)
-  )
-)
-
-(defwidget left []
-  (box
-    :space-evenly false
-    :halign "start"
-    ;(distro)
-    (workspaces)
-  )
-)
-
-(defwidget right []
-  (box
-    :space-evenly false
-    :halign "end"
-    (box
-      :space-evenly false
-      :class "control"
-      (bright)
-      (speaker)
-      (mic)
-      (wifi)
-      (bat)
-      (bluetooth)
-    )
-    (keyboard)
-    (time)
-  )
-)
-
-(defwidget middle []
-  (box
-    :space-evenly false
-    (spotify)
-  )
-)
-
-
-(defwindow bar0
-  :monitor 0
-  :geometry (geometry :x "0%"
-                      :y "0%"
-                      :width "100%"
-                      :height "20px"
-                      :anchor "top center")
-  :stacking "fg"
-  :exclusive true
-  (bar0))
-
-(defwindow bar1
-  :monitor 1
-  :geometry (geometry :x "0%"
-                      :y "0%"
-                      :width "100%"
-                      :height "32px"
-                      :anchor "top center")
-  :stacking "fg"
-  :exclusive true
-  (bar1))
-
+(include "modules/indicator.yuck")
+(include "modules/keyboard.yuck")
+(include "modules/music.yuck")
+(include "modules/notifications.yuck")
+(include "modules/user.yuck")
+(include "modules/quick-settings.yuck")
+(include "modules/volume.yuck")
+(include "modules/logo.yuck")
+(include "modules/workspaces.yuck")

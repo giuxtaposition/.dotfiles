@@ -1,220 +1,24 @@
-$rosewater: #f5e0dc;
-$flamingo: #f2cdcd;
-$pink: #f5c2e7;
-$mauve: #cba6f7;
-$red: #f38ba8;
-$maroon: #eba0ac;
-$peach: #fab387;
-$yellow: #f9e2af;
-$green: #a6e3a1;
-$teal: #94e2d5;
-$sky: #89dceb;
-$sapphire: #74c7ec;
-$blue: #89b4fa;
-$lavender: #b4befe;
-
-$text: #cdd6f4;
-$subtext1: #bac2de;
-$subtext0: #a6adc8;
-$overlay2: #9399b2;
-$overlay1: #7f849c;
-$overlay0: #6c7086;
-
-$surface2: #585b70;
-$surface1: #45475a;
-$surface0: #313244;
-
-$base: #1e1e2e;
-$mantle: #181825;
-$crust: #11111b;
-
-$fg: $text;
-$bg: rgba(30, 30, 46, 0.6);
-$bg1: rgba(49, 50, 68, 0.6);
-$border: #28283d;
-$shadow: $crust;
-
-@mixin window {
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  margin: 5px 5px 10px;
-  @include rounding;
-}
-
-@mixin rounding {
-  border-radius: 16px;
-}
-
 * {
-  all: unset; //Unsets everything so you can style everything from scratch
-}
-
-scale trough {
-  background-color: $surface0;
-  border-radius: 5px;
-  min-height: 10px;
-  min-width: 10px;
-  margin: 0px;
-}
-
-//Global Styles
-.bar0,
-.bar1 {
-  background-color: $crust;
-  color: $text;
-  padding: 10px;
-}
-
-tooltip {
-  background: $mantle;
-  border: 1px solid $border;
-  border-radius: 8px;
-  color: $text;
-
-  label {
-    font-size: 1rem;
-  }
-}
-
-//Workspace Component
-.ws {
-  margin-left: 0.5rem;
-}
-
-.ws-filled {
-  background-color: $base;
-}
-
-.ws-focused {
-  color: $base;
-  background-color: $lavender;
-}
-
-.ws-text {
-  margin: 0.8rem 0.3rem;
-  padding: 0.9rem;
-  border-radius: 1rem;
-  font-weight: 900;
-}
-
-//Distro Component
-.distro {
-  color: $blue;
-  border-radius: 0px 0px 40px 0px;
-  padding: 0px 20px 0px 15px;
-  background-color: $base;
-  font-size: 20px;
-}
-
-.spotify-icon {
-  font-family: Material Icons;
-  font-size: 1.5rem;
-}
-
-.spotify-title {
-  font-weight: 600;
-}
-
-.spotify-artist {
-  margin-right: 1rem;
-}
-
-.spotify-controls {
-  margin: 0.5rem 0.85rem 0.5rem 0;
-  padding: 0 0.5rem;
-  border-radius: 10px;
-}
-
-.spotify-previous-icon,
-.spotify-next-icon {
-  color: $mauve;
-}
-.spotify-play-icon {
-  color: $sapphire;
-}
-
-.cavabar {
-  color: $sky;
-  font-family: "Hack Nerd Font";
-  padding: 8px 16px;
-}
-
-.cavabar-left {
-  border-radius: 24px 10px 24px 10px;
-}
-
-.cavabar-right {
-  border-radius: 10px 24px 10px 24px;
-}
-
-.icon {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
-.bright-icon {
-  color: $yellow;
-}
-
-.bright-bar trough highlight {
-  background-color: $yellow;
-  border-radius: 10px;
-}
-
-.speaker-icon {
-  color: $mauve;
-}
-
-.scale {
-  margin-left: 0.5rem;
-}
-
-.speaker-bar trough highlight {
-  background-color: $mauve;
-  border-radius: 10px;
-}
-
-.mic-icon {
-  color: $maroon;
-}
-
-.mic-bar trough highlight {
-  background-color: $maroon;
-  border-radius: 10px;
-}
-
-.wifi-icon {
-  color: $green;
-}
-
-.bat-icon {
-  color: $teal;
-}
-
-.bluetooth-icon {
-  color: $blue;
-}
-
-// Control Panel
-.control {
-  padding: 0.5rem;
-  font-family: Material Icons;
-  font-size: 1.2em;
-  background-color: $base;
-  border-radius: 10px;
-  margin: 0.3rem 0rem;
-}
-
-.keyboard {
-  padding: 0.5rem;
-  background-color: $base;
-  border-radius: 10px;
-  margin: 0.3rem 0.5rem;
-}
-
-.time {
-  background-color: $base;
-  border-radius: 0px 0px 0px 40px;
-  padding: 10px 10px 15px 25px;
+  all: unset;
+  font-family: JetBrainsMono;
   font-weight: bold;
-  font-size: 12px;
 }
+
+@import "scss/colors.scss";
+@import "scss/lib.scss";
+
+@import "scss/bar.scss";
+@import "scss/tray.scss";
+@import "scss/control-center.scss";
+@import "scss/powermenu.scss";
+@import "scss/launcher.scss";
+
+@import "scss/indicator.scss";
+@import "scss/keyboard.scss";
+@import "scss/music.scss";
+@import "scss/notifications.scss";
+@import "scss/quick-settings.scss";
+@import "scss/user.scss";
+@import "scss/volume.scss";
+@import "scss/logo.scss";
+@import "scss/workspaces.scss";

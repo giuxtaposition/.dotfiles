@@ -3,12 +3,12 @@
 
   monitors = [{
     name = "eDP-1";
+    index = "0";
     width = 1920;
     height = 1080;
     x = 0;
     workspace = "1";
     primary = true;
-    topbar = "bar0";
   }];
 
   home.sessionVariables = { BAT_NAME = "BAT0"; };

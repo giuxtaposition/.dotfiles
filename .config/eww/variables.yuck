@@ -1,1 +1,26 @@
 (defvar BAT_NAME `${get_env('BAT_NAME')}`)
+(defvar ANIM_DURATION "500ms")
+
+(defvar open_tray false)
+(defvar open_control_center false)
+(defvar open_osd false)
+(defvar open_launcher false)
+
+(deflisten do-not-disturb :initial false "scripts/notifications.sh getdnd")
+
+(defpoll mic :interval "1s" :initial `{"content": "0", "icon": "󰍭"}` "scripts/mic.sh")
+
+(deflisten volume :initial "0" "scripts/volume.sh")
+(deflisten network :initial '{"essid": "lo", "signal": ""}' "scripts/network.sh")
+(defpoll kb_layout :interval "1s" :initial "en"	"scripts/keyboard.sh layout")
+(defpoll kb_status :interval "1s" :initial "true" "scripts/keyboard.sh status")
+
+(deflisten mpris :initial "" "scripts/mpris.sh")
+(deflisten mpris_positions :initial "{}" "scripts/positions.sh")
+
+(deflisten notifications :initial '{"count": 0, "notifications": [], "popups": []}' "scripts/notifications.sh current")
+(deflisten apps :initial "{}" "scripts/apps.sh")
+
+(deflisten all_workspaces :initial `[{"name": 1, "focused": false, "status": 0}, {"name": 2, "focused": false, "status": 0}, {"name": 3, "focused": false, "status": 0}, {"name": 4, "focused": false, "status": 0}, {"name": 5, "focused": false, "status": 0}, {"name": 6, "focused": false, "status": 0}, {"name": 7, "focused": false, "status": 0}, {"name": 8, "focused": false, "status": 0}, {"name": 9, "focused": false, "status": 0}, {"name": 10, "focused": false, "status": 0}]` "scripts/workspaces.sh")
+
+(deflisten current_workspace :initial 10 "scripts/get_active_workspace.sh")

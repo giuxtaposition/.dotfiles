@@ -3,12 +3,12 @@
 
   monitors = [{
     name = "eDP-1";
+    index = "0";
     width = 2256;
     height = 1504;
     x = 0;
     workspace = "1";
     primary = true;
-    topbar = "bar0";
   }];
 
   laptop.enable = true;

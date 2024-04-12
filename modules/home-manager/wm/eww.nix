@@ -8,7 +8,12 @@
       jaq # JSON data processing tool
       playerctl # command line player control
       unstable.cava
-      eww
+      gnome.gnome-control-center
+      bc
+      python3
+      python3Packages.pygobject3
+      gobject-introspection
+      gtk3
     ];
 
     # cava

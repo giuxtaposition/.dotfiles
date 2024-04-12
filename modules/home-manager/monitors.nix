@@ -11,6 +11,10 @@ in {
           type = types.str;
           example = "DP-1";
         };
+        index = mkOption {
+          type = types.str;
+          example = 0;
+        };
         primary = mkOption {
           type = types.bool;
           default = false;
@@ -42,10 +46,6 @@ in {
         workspace = mkOption {
           type = types.nullOr types.str;
           default = null;
-        };
-        topbar = mkOption {
-          type = types.str;
-          example = "bar";
         };
       };
     });

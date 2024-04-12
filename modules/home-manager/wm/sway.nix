@@ -1,9 +1,11 @@
 { config, pkgs, inputs, lib, ... }:
 let
   eww-bars = lib.concatMapStrings (x: x + "&")
-    (map (m: "eww open ${m.topbar}") (config.monitors));
+    (map (m: "eww open bar --screen ${m.index} --id ${m.name}")
+      (config.monitors));
 
   startScript = pkgs.writeShellScript "start" ''
+    eww daemon &
     # sway lock
     swaylock
 
@@ -15,7 +17,7 @@ let
     dunst &
 
     #idle
-    swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' 
+    swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &
 
     ${eww-bars}
   '';

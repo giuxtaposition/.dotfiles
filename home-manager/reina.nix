@@ -4,22 +4,22 @@
   monitors = [
     {
       name = "DP-1";
+      index = "0";
       width = 1920;
       height = 1080;
       refreshRate = 144;
       x = 0;
       workspace = "1";
       primary = true;
-      topbar = "bar1";
     }
     {
       name = "HDMI-A-1";
+      index = "1";
       width = 1920;
       height = 1080;
       refreshRate = 60;
       x = 1920;
       workspace = "2";
-      topbar = "bar0";
     }
   ];
 

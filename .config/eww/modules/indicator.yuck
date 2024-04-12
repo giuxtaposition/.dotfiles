@@ -1,0 +1,53 @@
+(defwidget indicator []
+    (button :onclick "scripts/toggle_control_center.sh" :class "indicator"
+        (box :orientation "h" :space-evenly false
+            ;(recorder_icon)
+            (network_icon)
+            ;(do-not-disturb_icon)
+            (volume_icon)
+            (mic_icon)
+            (battery_icon)
+            (clock)
+        )
+    )
+)
+
+(defwidget state_icon [condition text tooltip]
+    (label :class "indicator-icon" :visible {condition} :valign "center" :text {text} :tooltip {tooltip})
+)
+
+
+(defwidget network_icon []
+    (state_icon :condition true
+                :text {network.essid == "lo" ? "󰤭" : network.signal == "" ? "󰤩" : network.signal < 25 ? "󰤟" : network.signal < 50 ? "󰤢" : network.signal < 75 ? "󰤥" : "󰤨"}
+              :tooltip ""
+    )
+)
+
+
+(defwidget volume_icon []
+    (state_icon :condition true
+                :text {volume == "muted" ? "󰖁" : volume < 33 ? "" : volume < 67 ? "" : ""}
+                :tooltip "Volume: ${volume}%"
+    )
+)
+
+(defwidget battery_icon []
+    (state_icon :condition {EWW_BATTERY != ""}
+          :text {EWW_BATTERY[BAT_NAME].capacity == 100 ? "󰁹" : EWW_BATTERY[BAT_NAME].capacity > 90 ? "󰂂" : EWW_BATTERY[BAT_NAME].capacity > 80  ? "󰂁" : EWW_BATTERY[BAT_NAME].capacity > 70 ? "󰂀" : EWW_BATTERY[BAT_NAME].capacity > 60 ? "󰁿" : EWW_BATTERY[BAT_NAME].capacity > 50 ? "󰁾" : EWW_BATTERY[BAT_NAME].capacity > 40 ? "󰁽" : EWW_BATTERY[BAT_NAME].capacity > 30 ? "󰁼": EWW_BATTERY[BAT_NAME].capacity > 20 ? "󰁻": "󰁺"}
+          :tooltip "Battery: ${EWW_BATTERY[BAT_NAME].capacity}%"
+
+    )
+)
+
+(defwidget mic_icon []
+  (state_icon :condition true
+    :text {mic.icon}
+    :tooltip "Volume: ${mic.content}%"
+  )
+)
+
+(defwidget clock []
+    (label :class "clock" :text {formattime(EWW_TIME, "%H:%M")})
+)
+
