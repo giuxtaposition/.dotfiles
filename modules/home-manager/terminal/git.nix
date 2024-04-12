@@ -41,7 +41,7 @@
           [delta "giuxtaposition"]
           dark = true
           side-by-side = true
-          syntax-theme = Catppuccin-mocha
+          syntax-theme = Catppuccin Mocha
 
           # File
           file-style = "${text}" bold
