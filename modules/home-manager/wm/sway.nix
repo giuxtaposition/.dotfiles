@@ -6,8 +6,6 @@ let
 
   startScript = pkgs.writeShellScript "start" ''
     eww daemon &
-    # sway lock
-    swaylock
 
     # initializing wallpaper daemon
     swww init &
