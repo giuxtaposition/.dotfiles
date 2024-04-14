@@ -37,11 +37,7 @@
 
     # This will additionally add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
-    nix.nixPath = [ "/etc/nix/path" ];
-    environment.etc = lib.mapAttrs' (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    }) config.nix.registry;
+    nixPath = [ "/etc/nix/path" ];
 
     settings = {
       experimental-features = "nix-command flakes";
@@ -235,6 +231,11 @@
       pamixer
       libnotify # send notifications from terminal
     ];
+
+    etc = lib.mapAttrs' (name: value: {
+      name = "nix/path/${name}";
+      value.source = value.flake;
+    }) config.nix.registry;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
