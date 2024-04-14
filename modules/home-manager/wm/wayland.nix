@@ -5,7 +5,6 @@
   config = lib.mkIf config.wayland.enable {
     home.packages = with pkgs; [
       unstable.swww # wallpaper manager
-      rofi-wayland # rofi for wayland
       wl-clipboard # command-line copy/paste utilities for wayland
       slurp # select a region in a wayland compositor
       grim # grab images from a wayland compositor
@@ -18,12 +17,6 @@
     home.file."${config.home.homeDirectory}/Wallpapers" = {
       source = config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.dotfiles/Wallpapers";
-    };
-
-    # Rofi config
-    home.file."${config.home.homeDirectory}/.config/rofi" = {
-      source = config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/.dotfiles/.config/rofi";
     };
 
     home.sessionVariables = {

@@ -11,7 +11,6 @@ Here are some details about my setup:
 - **Terminal**: [Wezterm](https://github.com/wez/wezterm)
 - **Editor**: [Neovim](https://github.com/neovim/neovim/)
 - **WM**: [SwayFX](https://github.com/WillPower3309/swayfx)
-- **Launcher**: [Rofi](https://github.com/davatorium/rofi)
 - **Widgets**: [Eww](https://github.com/elkowar/eww)
 - **Notify Daemon**: [Dunst](https://github.com/dunst-project/dunst)
 

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
   eww-bars = lib.concatMapStrings (x: x + "&")
     (map (m: "eww open bar --screen ${m.index} --id ${m.name}")
@@ -138,13 +138,11 @@ in {
         keybindings = let
           mod = "Mod4"; # Super
           term = "wezterm";
-          app-menu = "$HOME/.config/rofi/bin/launcher";
-          runner = "$HOME/.config/rofi/bin/runner";
-          power-menu = "$HOME/.config/rofi/bin/powermenu";
+          app-menu = "$HOME/.config/eww/scripts/toggle_launcher.sh open";
+          power-menu = "$HOME/.config/eww/scripts/toggle_powermenu.sh open";
         in {
           "${mod}+q" = "exec ${term}";
           "${mod}+d" = "exec ${app-menu}";
-          "${mod}+Shift+d" = "exec ${runner}";
           "${mod}+Shift+p" = "exec ${power-menu}";
           "${mod}+c" = "kill";
           "${mod}+f1" = "reload";
@@ -237,7 +235,6 @@ in {
       extraConfig = ''
         # SwayFX settings
         layer_effects "gtk-layer-shell" blur enable; shadows enable; corner_radius 13
-        layer_effects "rofi" blur enable; shadows enable; corner_radius 13
 
         smart_corner_radius enable
         corner_radius 15
