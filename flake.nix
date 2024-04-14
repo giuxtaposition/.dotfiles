@@ -11,6 +11,8 @@
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-23.11";
 
@@ -51,7 +53,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-index-database, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-index-database, nixos-hardware
+    , ... }@inputs:
     let
       inherit (self) outputs;
       # Supported systems for your flake packages, shell, etc.
@@ -84,8 +87,10 @@
 
         # Personal Laptop
         asuka = nixpkgs.lib.nixosSystem {
-          modules = [ ./hosts/asuka ];
+          modules =
+            [ ./hosts/asuka nixos-hardware.nixosModules.framework-13-7040-amd ];
           specialArgs = { inherit inputs outputs; };
+
         };
 
         # Personal Desktop
