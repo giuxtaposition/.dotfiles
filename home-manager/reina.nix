@@ -4,7 +4,7 @@
   monitors = [
     {
       name = "DP-1";
-      index = "0";
+      index = 0;
       width = 1920;
       height = 1080;
       refreshRate = 144;
@@ -14,7 +14,7 @@
     }
     {
       name = "HDMI-A-1";
-      index = "1";
+      index = 1;
       width = 1920;
       height = 1080;
       refreshRate = 60;

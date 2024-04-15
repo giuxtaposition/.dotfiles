@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   eww-bars = lib.concatMapStrings (x: x + "&")
-    (map (m: "eww open bar --screen ${m.index} --id ${m.name}")
+    (map (m: "eww open bar --screen ${toString m.index} --id ${m.name}")
       (config.monitors));
 
   startScript = pkgs.writeShellScript "start" ''
@@ -26,7 +26,10 @@ let
         "${toString m.width}x${toString m.height}@${toString m.refreshRate}Hz";
       position = "pos ${toString m.x} ${toString m.y}";
     in "output ${m.name} mode ${
-      if m.enabled then "${resolution} ${position} scale 1" else "disable"
+      if m.enabled then
+        "${resolution} ${position} scale ${toString m.scale}"
+      else
+        "disable"
     }") (config.monitors));
 
   keyboardOptions = if config.laptop.enable then

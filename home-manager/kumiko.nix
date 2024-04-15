@@ -3,7 +3,7 @@
 
   monitors = [{
     name = "eDP-1";
-    index = "0";
+    index = 0;
     width = 1920;
     height = 1080;
     x = 0;

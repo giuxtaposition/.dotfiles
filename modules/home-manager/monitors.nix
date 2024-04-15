@@ -12,7 +12,7 @@ in {
           example = "DP-1";
         };
         index = mkOption {
-          type = types.str;
+          type = types.int;
           example = 0;
         };
         primary = mkOption {
@@ -38,6 +38,10 @@ in {
         y = mkOption {
           type = types.int;
           default = 0;
+        };
+        scale = mkOption {
+          type = types.float;
+          default = 1;
         };
         enabled = mkOption {
           type = types.bool;

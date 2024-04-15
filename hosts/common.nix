@@ -102,10 +102,6 @@
       libuuid
     ];
   };
-  programs.sway = {
-    enable = true;
-    package = pkgs.unstable.swayfx;
-  };
 
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
