@@ -14,5 +14,6 @@
 (include "modules/user.yuck")
 (include "modules/quick-settings.yuck")
 (include "modules/volume.yuck")
+(include "modules/bluetooth.yuck")
 (include "modules/logo.yuck")
 (include "modules/workspaces.yuck")

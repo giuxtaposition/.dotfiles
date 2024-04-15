@@ -14,6 +14,8 @@
 (deflisten network :initial '{"essid": "lo", "signal": ""}' "scripts/network.sh")
 (defpoll kb_layout :interval "1s" :initial "en"	"scripts/keyboard.sh layout")
 (defpoll kb_status :interval "1s" :initial "true" "scripts/keyboard.sh status")
+(defpoll bluetooth-icon :interval "1s" :initial "" "scripts/bluetooth.sh icon")
+(defpoll connected-device :interval "1s" :initial "" "scripts/bluetooth.sh connected_device")
 
 (deflisten mpris :initial "" "scripts/mpris.sh")
 (deflisten mpris_positions :initial "{}" "scripts/positions.sh")

@@ -1,0 +1,24 @@
+.bluetooth-control-center {
+  margin-top: 1rem;
+  background-color: $surfaceVariant;
+  color: $onSurface;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
+  min-width: 2.25rem;
+  border-radius: 2rem;
+  transition: 0.3s;
+  padding: 0 0.3rem 0 0.2rem;
+
+  &.active {
+    background-color: $primary;
+    color: $surface;
+  }
+
+  &.active:hover {
+    background-color: mix($primary, $onSurface, 70%);
+  }
+}
+
+.bluetooth-control-center:hover {
+  background-color: mix($surfaceVariant, $onSurfaceVariant, 70%);
+}

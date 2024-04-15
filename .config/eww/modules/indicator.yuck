@@ -6,7 +6,7 @@
             ;(do-not-disturb_icon)
             (volume_icon)
             (mic_icon)
-            (battery_icon)
+            (box :visible {EWW_BATTERY != ""} (battery_icon))
             (clock)
         )
     )
@@ -34,8 +34,8 @@
 
 (defwidget battery_icon []
     (state_icon :condition {EWW_BATTERY != ""}
-          :text {EWW_BATTERY[BAT_NAME].capacity == 100 ? "󰁹" : EWW_BATTERY[BAT_NAME].capacity > 90 ? "󰂂" : EWW_BATTERY[BAT_NAME].capacity > 80  ? "󰂁" : EWW_BATTERY[BAT_NAME].capacity > 70 ? "󰂀" : EWW_BATTERY[BAT_NAME].capacity > 60 ? "󰁿" : EWW_BATTERY[BAT_NAME].capacity > 50 ? "󰁾" : EWW_BATTERY[BAT_NAME].capacity > 40 ? "󰁽" : EWW_BATTERY[BAT_NAME].capacity > 30 ? "󰁼": EWW_BATTERY[BAT_NAME].capacity > 20 ? "󰁻": "󰁺"}
-          :tooltip "Battery: ${EWW_BATTERY[BAT_NAME].capacity}%"
+          :text {EWW_BATTERY == "" ? "" : EWW_BATTERY[BAT_NAME].capacity == 100 ? "󰁹" : EWW_BATTERY[BAT_NAME].capacity > 90 ? "󰂂" : EWW_BATTERY[BAT_NAME].capacity > 80  ? "󰂁" : EWW_BATTERY[BAT_NAME].capacity > 70 ? "󰂀" : EWW_BATTERY[BAT_NAME].capacity > 60 ? "󰁿" : EWW_BATTERY[BAT_NAME].capacity > 50 ? "󰁾" : EWW_BATTERY[BAT_NAME].capacity > 40 ? "󰁽" : EWW_BATTERY[BAT_NAME].capacity > 30 ? "󰁼": EWW_BATTERY[BAT_NAME].capacity > 20 ? "󰁻": "󰁺"}
+          :tooltip {EWW_BATTERY == "" ? "" : "Battery: ${EWW_BATTERY[BAT_NAME].capacity}%"}
 
     )
 )
