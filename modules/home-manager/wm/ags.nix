@@ -5,6 +5,7 @@
   options = { ags.enable = lib.mkEnableOption "enables ags module"; };
 
   config = lib.mkIf config.ags.enable {
+
     programs.ags = {
       enable = true;
 
@@ -14,5 +15,7 @@
       # additional packages to add to gjs's runtime
       extraPackages = with pkgs; [ gtksourceview webkitgtk accountsservice ];
     };
+
+    home.packages = with pkgs; [ sassc ];
   };
 }

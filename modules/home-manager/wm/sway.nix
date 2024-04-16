@@ -18,8 +18,6 @@ let
     swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &
 
     ${eww-bars}
-
-    ags
   '';
 
   monitors = lib.concatMapStrings (x: x + "\n") (map (m:
@@ -144,7 +142,7 @@ in {
         keybindings = let
           mod = "Mod4"; # Super
           term = "wezterm";
-          app-menu = ''exec ags --toggle-window "applauncher"'';
+          app-menu = ''exec ags --toggle-window "launcher-0"'';
           power-menu = "$HOME/.config/eww/scripts/toggle_powermenu.sh open";
         in {
           "${mod}+q" = "exec ${term}";

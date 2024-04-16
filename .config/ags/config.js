@@ -1,24 +1,21 @@
-import { applauncher } from "./components/applauncher.js";
+import { Launcher } from "./components/launcher/launcher.js";
+
+// main scss file
+const scss = `${App.configDir}/scss/style.scss`;
+
+// target css file
+const css = `/tmp/style.css`;
+
+Utils.exec(`sassc ${scss} ${css}`);
 
 App.config({
-  windows: [applauncher],
+  style: css,
+  windows: [Launcher(0)],
 });
 
-Utils.monitorFile(
-  // directory that contains the scss files
-  `${App.configDir}/style`,
-
-  // reload function
-  function () {
-    // main scss file
-    const scss = `${App.configDir}/style.scss`;
-
-    // target css file
-    const css = `/tmp/my-style.css`;
-
-    // compile, reset, apply
-    Utils.exec(`sassc ${scss} ${css}`);
-    App.resetCss();
-    App.applyCss(css);
-  },
-);
+Utils.monitorFile(`${App.configDir}/scss`, function () {
+  // compile, reset, apply
+  Utils.exec(`sassc ${scss} ${css}`);
+  App.resetCss();
+  App.applyCss(css);
+});
