@@ -53,6 +53,7 @@
   sway.enable = true;
   dunst.enable = true;
   eww.enable = true;
+  ags.enable = true;
 
   fonts.fontconfig.enable = true;
 

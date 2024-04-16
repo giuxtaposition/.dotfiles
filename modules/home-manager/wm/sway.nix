@@ -18,6 +18,8 @@ let
     swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &
 
     ${eww-bars}
+
+    ags
   '';
 
   monitors = lib.concatMapStrings (x: x + "\n") (map (m:
@@ -62,7 +64,8 @@ in {
       config = {
         modifier = "Mod4";
         terminal = "foot";
-        startup = [{ command = "${startScript}"; }];
+        startup =
+          [ { command = "${startScript}"; } { command = "${eww-bars}"; } ];
         bars = [ ];
         fonts = {
           names = [ "JetBrains Mono Nerd Font" ];
@@ -141,7 +144,7 @@ in {
         keybindings = let
           mod = "Mod4"; # Super
           term = "wezterm";
-          app-menu = "$HOME/.config/eww/scripts/toggle_launcher.sh open";
+          app-menu = ''exec ags --toggle-window "applauncher"'';
           power-menu = "$HOME/.config/eww/scripts/toggle_powermenu.sh open";
         in {
           "${mod}+q" = "exec ${term}";

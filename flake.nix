@@ -29,6 +29,8 @@
       flake = false;
     };
 
+    ags.url = "github:Aylur/ags";
+
     fish-catppuccin-theme = {
       url = "github:catppuccin/fish";
       flake = false;
