@@ -143,7 +143,7 @@ in {
           mod = "Mod4"; # Super
           term = "wezterm";
           app-menu = ''exec ags --toggle-window "launcher-0"'';
-          power-menu = "$HOME/.config/eww/scripts/toggle_powermenu.sh open";
+          power-menu = ''exec ags --toggle-window "powermenu-0"'';
         in {
           "${mod}+q" = "exec ${term}";
           "${mod}+d" = "exec ${app-menu}";

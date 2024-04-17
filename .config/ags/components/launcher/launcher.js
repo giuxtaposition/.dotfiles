@@ -1,37 +1,36 @@
 const { query } = await Service.import("applications");
 
-/** @param {import('resource:///com/github/Aylur/ags/service/applications.js').Application} app */
-const LauncherItem = (app, name) =>
-  Widget.Button({
-    on_clicked: () => {
-      App.closeWindow(name);
-      app.launch();
-    },
-    className: "item",
-    attribute: { app },
-    child: Widget.Box({
-      children: [
-        Widget.Icon({
-          icon: app.icon_name || "",
-          size: 42,
-        }),
-        Widget.Label({
-          className: "title",
-          label: app.name,
-          xalign: 0,
-          vpack: "center",
-          truncate: "end",
-        }),
-      ],
-    }),
-  });
-
 export function Launcher(monitor = 0) {
-  const name = `launcher-${monitor}`;
+  const windowName = `launcher-${monitor}`;
   const width = 400;
   const height = 400;
   const spacing = 12;
 
+  /** @param {import('resource:///com/github/Aylur/ags/service/applications.js').Application} app */
+  const LauncherItem = (app) =>
+    Widget.Button({
+      on_clicked: () => {
+        App.closeWindow(windowName);
+        app.launch();
+      },
+      className: "item",
+      attribute: { app },
+      child: Widget.Box({
+        children: [
+          Widget.Icon({
+            icon: app.icon_name || "",
+            size: 42,
+          }),
+          Widget.Label({
+            className: "title",
+            label: app.name,
+            xalign: 0,
+            vpack: "center",
+            truncate: "end",
+          }),
+        ],
+      }),
+    });
   let applications = query("").map(LauncherItem);
 
   const list = Widget.Box({
@@ -54,9 +53,8 @@ export function Launcher(monitor = 0) {
       const results = applications.filter((item) => item.visible);
 
       if (results[0]) {
-        App.toggleWindow(name);
-
         results[0].attribute.app.launch();
+        App.toggleWindow(windowName);
       }
     },
 
@@ -94,7 +92,7 @@ export function Launcher(monitor = 0) {
     ],
     setup: (self) =>
       self.hook(App, (_, windowName, visible) => {
-        if (windowName !== name) return;
+        if (windowName !== windowName) return;
 
         // when the applauncher shows up
         if (visible) {
@@ -107,11 +105,11 @@ export function Launcher(monitor = 0) {
 
   return Widget.Window({
     monitor,
-    name,
+    name: windowName,
     anchor: ["top", "left"],
     setup: (self) =>
       self.keybind("Escape", () => {
-        App.closeWindow(name);
+        App.closeWindow(windowName);
       }),
     visible: false,
     keymode: "exclusive",

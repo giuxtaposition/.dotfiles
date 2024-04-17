@@ -1,0 +1,29 @@
+.powermenu {
+  @include window;
+
+  min-width: 800px;
+  min-height: 200px;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+
+  .powermenu-entry {
+    margin: 0 0.5rem;
+    button {
+      background-color: $surfaceVariant;
+      border-radius: 1rem;
+      transition: 0.3s;
+      padding: 3.25rem 4rem;
+      font-size: 4rem;
+
+      &:hover {
+        background-color: mix($surfaceVariant, $onSurfaceVariant, 70%);
+      }
+    }
+    .label {
+      margin-top: 0.5rem;
+      font-size: 1.3rem;
+    }
+  }
+}
