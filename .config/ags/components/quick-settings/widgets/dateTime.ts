@@ -1,4 +1,4 @@
-import dateTimeService from "../../../services/date-time-service.js";
+import dateTimeService from "../../../services/date-time-service";
 
 const time = Widget.Label({
   className: "time",

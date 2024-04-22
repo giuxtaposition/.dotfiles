@@ -1,11 +1,12 @@
-import Network from "./widgets/network.js";
-import Bluetooth from "./widgets/bluetooth.js";
-import Avatar from "./widgets/avatar.js";
-import DateTime from "./widgets/dateTime.js";
-import SignOut from "./widgets/signOut.js";
-import { Volume } from "./widgets/volume.js";
+import Network from "./widgets/network";
+import Bluetooth from "./widgets/bluetooth";
+import Avatar from "./widgets/avatar";
+import DateTime from "./widgets/dateTime";
+import SignOut from "./widgets/signOut";
+import { Volume } from "./widgets/volume";
+import Gtk from "../../types/@girs/gtk-3.0/gtk-3.0";
 
-export function QuickSettings(monitor = 0) {
+export const QuickSettings = (monitor: number = 0) => {
   const name = `quick-settings-${monitor}`;
 
   const quickSettings = Widget.Box({
@@ -27,7 +28,7 @@ export function QuickSettings(monitor = 0) {
     keymode: "exclusive",
     child: quickSettings,
   });
-}
+};
 
 const Header = () => {
   return Widget.Box({
@@ -39,7 +40,7 @@ const Header = () => {
   });
 };
 
-const Row = (children) => {
+const Row = (children: Array<Gtk.Widget> = []) => {
   return Widget.Box({
     homogeneous: true,
     spacing: 8,

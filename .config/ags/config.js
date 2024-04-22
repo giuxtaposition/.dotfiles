@@ -1,22 +1,23 @@
-import { Launcher } from "./components/launcher/launcher.js";
-import { QuickSettings } from "./components/quick-settings/quick-settings.js";
-import { PowerMenu } from "./components/powermenu/powermenu.js";
+const entry = `${App.configDir}/main.ts`;
+const main = "/tmp/ags/main.js";
 
-// main scss file
-const scss = `${App.configDir}/scss/style.scss`;
+try {
+  await Utils.execAsync([
+    "bun",
+    "build",
+    entry,
+    "--outfile",
+    main,
+    "--external",
+    "resource://*",
+    "--external",
+    "gi://*",
+    "--external",
+    "file://*",
+  ]);
+  await import(`file://${main}`);
+} catch (error) {
+  console.error(error);
+}
 
-// target css file
-const css = `/tmp/style.css`;
-
-Utils.exec(`sassc ${scss} ${css}`);
-
-App.config({
-  style: css,
-  windows: [Launcher(0), QuickSettings(0), PowerMenu(0)],
-});
-
-Utils.monitorFile(`${App.configDir}/scss`, function () {
-  Utils.exec(`sassc ${scss} ${css}`);
-  App.resetCss();
-  App.applyCss(css);
-});
+export {};

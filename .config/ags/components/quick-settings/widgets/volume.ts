@@ -1,6 +1,7 @@
 const audio = await Service.import("audio");
+type Type = "microphone" | "speaker";
 
-const VolumeIndicator = (type) => {
+const VolumeIndicator = (type: Type) => {
   let isMuted = false;
   const icon = Utils.watch("󰸈", audio[type], () => {
     if (audio[type].is_muted) {
@@ -26,7 +27,7 @@ const VolumeIndicator = (type) => {
   });
 };
 
-const VolumeSlider = (type) =>
+const VolumeSlider = (type: Type) =>
   Widget.Overlay({
     hexpand: true,
     passThrough: true,
@@ -45,7 +46,7 @@ const VolumeSlider = (type) =>
     overlays: [VolumeIndicator(type)],
   });
 
-const VolumeMute = (type) => {
+const VolumeMute = (type: Type) => {
   const isMuted = Utils.watch(false, audio[type], () => {
     if (audio[type].is_muted) {
       return true;
@@ -67,17 +68,5 @@ const VolumeMute = (type) => {
 export const Volume = () =>
   Widget.Box({
     class_name: "volume",
-    children: [
-      VolumeSlider("speaker"),
-      VolumeMute("speaker"),
-      // Widget.Box({
-      //   vpack: "center",
-      //   child: Arrow("sink-selector"),
-      // }),
-      // Widget.Box({
-      //   vpack: "center",
-      //   child: Arrow("app-mixer"),
-      //   visible: audio.bind("apps").as((a) => a.length > 0),
-      // }),
-    ],
+    children: [VolumeSlider("speaker"), VolumeMute("speaker")],
   });

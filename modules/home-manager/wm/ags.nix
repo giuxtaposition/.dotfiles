@@ -16,6 +16,6 @@
       extraPackages = with pkgs; [ gtksourceview webkitgtk accountsservice ];
     };
 
-    home.packages = with pkgs; [ sassc inotify-tools ];
+    home.packages = with pkgs; [ sassc inotify-tools bun ];
   };
 }

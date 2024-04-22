@@ -1,37 +1,14 @@
+import { LauncherItem } from "./widgets/launcher-item";
+
 const { query } = await Service.import("applications");
 
-export function Launcher(monitor = 0) {
+export const Launcher = (monitor: number = 0) => {
   const windowName = `launcher-${monitor}`;
   const width = 400;
   const height = 400;
   const spacing = 12;
 
-  /** @param {import('resource:///com/github/Aylur/ags/service/applications.js').Application} app */
-  const LauncherItem = (app) =>
-    Widget.Button({
-      on_clicked: () => {
-        App.closeWindow(windowName);
-        app.launch();
-      },
-      className: "item",
-      attribute: { app },
-      child: Widget.Box({
-        children: [
-          Widget.Icon({
-            icon: app.icon_name || "",
-            size: 42,
-          }),
-          Widget.Label({
-            className: "title",
-            label: app.name,
-            xalign: 0,
-            vpack: "center",
-            truncate: "end",
-          }),
-        ],
-      }),
-    });
-  let applications = query("").map(LauncherItem);
+  let applications = query("").map((app) => LauncherItem(app, monitor));
 
   const list = Widget.Box({
     vertical: true,
@@ -115,4 +92,4 @@ export function Launcher(monitor = 0) {
     keymode: "exclusive",
     child: launcher,
   });
-}
+};
