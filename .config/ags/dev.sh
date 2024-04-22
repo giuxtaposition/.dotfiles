@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 WORKDIR="$HOME/.config/ags"
 
 _ags() {
 	pkill ags
-	ags --inspector &
+	ags &
 }
 
 _ags

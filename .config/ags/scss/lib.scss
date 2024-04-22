@@ -5,3 +5,13 @@
   color: $text;
   box-shadow: 0 0 4px 2px $shadow;
 }
+
+@mixin unset($rec: false) {
+  all: unset;
+
+  @if $rec {
+    * {
+      all: unset;
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import { Launcher } from "./components/launcher/launcher.js";
+import { QuickSettings } from "./components/quick-settings/quick-settings.js";
 import { PowerMenu } from "./components/powermenu/powermenu.js";
 
 // main scss file
@@ -11,7 +12,7 @@ Utils.exec(`sassc ${scss} ${css}`);
 
 App.config({
   style: css,
-  windows: [Launcher(0), PowerMenu(0)],
+  windows: [Launcher(0), QuickSettings(0), PowerMenu(0)],
 });
 
 Utils.monitorFile(`${App.configDir}/scss`, function () {
