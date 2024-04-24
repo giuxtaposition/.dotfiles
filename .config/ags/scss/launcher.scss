@@ -1,5 +1,7 @@
 .launcher {
   @include window;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
 
   .search {
     background-color: $surfaceVariant;

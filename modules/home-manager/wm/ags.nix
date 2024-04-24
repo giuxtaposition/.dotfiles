@@ -2,7 +2,15 @@
   # add the home manager module
   imports = [ inputs.ags.homeManagerModules.default ];
 
-  options = { ags.enable = lib.mkEnableOption "enables ags module"; };
+  options = {
+    ags = {
+      enable = lib.mkEnableOption "enables ags module";
+      keyboard_name = lib.mkOption {
+        type = lib.types.str;
+        example = "1:1:AT_Translated_Set_2_keyboard";
+      };
+    };
+  };
 
   config = lib.mkIf config.ags.enable {
 
@@ -17,5 +25,15 @@
     };
 
     home.packages = with pkgs; [ sassc inotify-tools bun ];
+
+    home.file."${config.home.homeDirectory}/.dotfiles/.config/ags/env.ts" = {
+      text = ''
+        const env = {
+          KEYBOARD_NAME: "${config.ags.keyboard_name}"
+        }
+        export default env
+      '';
+
+    };
   };
 }

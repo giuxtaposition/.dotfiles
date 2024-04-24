@@ -17,7 +17,7 @@ let
     #idle
     swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &
 
-    ${eww-bars}
+    ags
   '';
 
   monitors = lib.concatMapStrings (x: x + "\n") (map (m:
@@ -62,8 +62,7 @@ in {
       config = {
         modifier = "Mod4";
         terminal = "foot";
-        startup =
-          [ { command = "${startScript}"; } { command = "${eww-bars}"; } ];
+        startup = [{ command = "${startScript}"; }];
         bars = [ ];
         fonts = {
           names = [ "JetBrains Mono Nerd Font" ];

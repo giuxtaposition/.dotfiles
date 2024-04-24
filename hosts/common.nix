@@ -155,6 +155,7 @@
       pulse.enable = true;
       jack.enable = true;
     };
+    upower.enable = true;
   };
 
   # Sound

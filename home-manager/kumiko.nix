@@ -11,8 +11,6 @@
     primary = true;
   }];
 
-  home.sessionVariables = { BAT_NAME = "BAT0"; };
-
   laptop.enable = true;
 
   programs.fish.shellAbbrs = {

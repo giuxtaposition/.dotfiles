@@ -57,7 +57,6 @@ export const Launcher = (monitor: number = 0) => {
   const launcher = Widget.Box({
     vertical: true,
     className: "launcher",
-    css: `margin: ${spacing * 2}px;`,
     children: [
       searchBar,
 

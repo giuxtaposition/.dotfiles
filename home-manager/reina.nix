@@ -29,8 +29,9 @@
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     WLR_BACKEND = "vulkan";
     WLR_RENDERER = "vulkan";
-    KEYBOARD_NAME = "36125:13370:splitkb.com_Aurora_Corne_rev1";
   };
+
+  ags.keyboard_name = "36125:13370:splitkb.com_Aurora_Corne_rev1";
 
   programs.fish.shellAbbrs = {
     home-update = "z dot && home-manager switch --flake .#giu@reina";
