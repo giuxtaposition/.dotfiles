@@ -11,7 +11,6 @@
     # ...
     # });
     wezterm = inputs.nekowinston-nur.packages.${prev.system}.wezterm-nightly;
-    eww = inputs.nixpkgs-wayland.packages.${prev.system}.eww;
 
     spotify = prev.spotify.overrideAttrs (oldAttrs: {
       postInstall = (oldAttrs.postInstall or "") + ''

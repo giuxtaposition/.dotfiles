@@ -14,6 +14,5 @@
   wayland = import ./wm/wayland.nix;
   sway = import ./wm/sway.nix;
   dunst = import ./wm/dunst.nix;
-  eww = import ./wm/eww.nix;
   ags = import ./wm/ags.nix;
 }

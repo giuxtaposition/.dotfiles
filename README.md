@@ -11,7 +11,7 @@ Here are some details about my setup:
 - **Terminal**: [Wezterm](https://github.com/wez/wezterm)
 - **Editor**: [Neovim](https://github.com/neovim/neovim/)
 - **WM**: [SwayFX](https://github.com/WillPower3309/swayfx)
-- **Widgets**: [Eww](https://github.com/elkowar/eww)
+- **Widgets**: [AGS](https://github.com/Aylur/ags)
 - **Notify Daemon**: [Dunst](https://github.com/dunst-project/dunst)
 
 ![](/.github/images/screenshot1.png)

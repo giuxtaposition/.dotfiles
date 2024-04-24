@@ -1,12 +1,7 @@
 { config, pkgs, lib, ... }:
 let
-  eww-bars = lib.concatMapStrings (x: x + "&")
-    (map (m: "eww open bar --screen ${toString m.index} --id ${m.name}")
-      (config.monitors));
 
   startScript = pkgs.writeShellScript "start" ''
-    eww daemon &
-
     # initializing wallpaper daemon
     swww init &
     # setting wallpaper
