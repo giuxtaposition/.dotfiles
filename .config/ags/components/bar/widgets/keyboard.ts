@@ -1,13 +1,13 @@
-import keyboardService from "../../../services/keyboard-service";
-import { Binding } from "../../../types/service";
+import env from "../../../env";
+import swayService, { Layout } from "../../../services/sway-service";
 import { LabelProps } from "../../../types/widgets/label";
 
 const Revealer = (
   label: LabelProps["label"],
-  condition: Binding<any, string, boolean> | boolean,
+  setup: (revealer: any) => void,
 ) => {
   return Widget.Revealer({
-    revealChild: condition,
+    setup,
     transitionDuration: 200,
     transition: "slide_left",
     child: Widget.Label({ label: label }),
@@ -15,34 +15,41 @@ const Revealer = (
 };
 
 const Keyboard = () => {
-  const isEnLayout = Utils.watch(true, keyboardService, () => {
-    return keyboardService.layout === "en" && keyboardService.enabled;
-  });
-  const isItLayout = Utils.watch(false, keyboardService, () => {
-    return keyboardService.layout === "it" && keyboardService.enabled;
-  });
-
   return Widget.Button({
     className: "keyboard",
-    onClicked: () => {
-      keyboardService.switchLayout();
-    },
-    onSecondaryClick: () => {
-      keyboardService.toggleEnabled();
-    },
+    onClicked: () =>
+      swayService.msg(`input "${env.KEYBOARD_NAME}" xkb_switch_layout next`),
+    onSecondaryClick: () =>
+      swayService.msg(
+        `input "${env.KEYBOARD_NAME}" events toggle enabled disabled`,
+      ),
     child: Widget.Box({
       vpack: "center",
       children: [
-        Revealer(
-          "󰌌 ",
-          keyboardService.bind("enabled").as((v) => v),
-        ),
-        Revealer(
-          "󰌐 ",
-          keyboardService.bind("enabled").as((v) => !v),
-        ),
-        Revealer("en", isEnLayout),
-        Revealer("it", isItLayout),
+        Revealer("󰌌 ", (revealer) => {
+          revealer.hook(swayService, (revealer) => {
+            revealer.reveal_child = swayService.keyboard.enabled;
+          });
+        }),
+        Revealer("󰌐 ", (revealer) => {
+          revealer.hook(swayService, (revealer) => {
+            revealer.reveal_child = !swayService.keyboard.enabled;
+          });
+        }),
+        Revealer("it", (revealer) => {
+          revealer.hook(swayService, (revealer) => {
+            revealer.reveal_child =
+              swayService.keyboard.enabled &&
+              swayService.keyboard.layout === Layout.IT;
+          });
+        }),
+        Revealer("en", (revealer) => {
+          revealer.hook(swayService, (revealer) => {
+            revealer.reveal_child =
+              swayService.keyboard.enabled &&
+              swayService.keyboard.layout === Layout.EN;
+          });
+        }),
       ],
     }),
   });

@@ -1,7 +1,8 @@
+import { WindowName } from "../../main";
 import { SysButton } from "./widgets/sys-button";
 
 export const PowerMenu = (monitor: number = 0) => {
-  const name = `powermenu-${monitor}`;
+  const name = `${WindowName.PowerMenu}-${monitor}`;
 
   const launcher = Widget.Box({
     className: "powermenu",

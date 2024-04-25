@@ -1,9 +1,10 @@
+import { WindowName } from "../../main";
 import { LauncherItem } from "./widgets/launcher-item";
 
 const { query } = await Service.import("applications");
 
 export const Launcher = (monitor: number = 0) => {
-  const windowName = `launcher-${monitor}`;
+  const windowName = `${WindowName.Launcher}-${monitor}`;
   const width = 400;
   const height = 400;
   const spacing = 12;

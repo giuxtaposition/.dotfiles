@@ -12,6 +12,14 @@ const css = `/tmp/style.css`;
 
 Utils.exec(`sassc ${scss} ${css}`);
 
+export enum WindowName {
+  Launcher = "launcher",
+  QuickSettings = "quick-settings",
+  PowerMenu = "powermenu",
+  Bar = "bar",
+  Systray = "systray",
+}
+
 App.config({
   style: css,
   windows: [Launcher(0), QuickSettings(0), PowerMenu(0), Bar(0), Systray(0)],

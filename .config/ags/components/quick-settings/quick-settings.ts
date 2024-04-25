@@ -5,9 +5,10 @@ import DateTime from "./widgets/dateTime";
 import SignOut from "./widgets/signOut";
 import { Volume } from "./widgets/volume";
 import Gtk from "../../types/@girs/gtk-3.0/gtk-3.0";
+import { WindowName } from "../../main";
 
 export const QuickSettings = (monitor: number = 0) => {
-  const name = `quick-settings-${monitor}`;
+  const name = `${WindowName.QuickSettings}-${monitor}`;
 
   const quickSettings = Widget.Box({
     className: "quick-settings",

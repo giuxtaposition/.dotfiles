@@ -1,11 +1,12 @@
-import Keyboard from "./widgets/keyboard.js";
-import Logo from "./widgets/logo.js";
-import { TrayButton } from "./widgets/systray.js";
-import Indicator from "./widgets/indicator.js";
-import Workspaces from "./widgets/workspaces.js";
+import Keyboard from "./widgets/keyboard";
+import Logo from "./widgets/logo";
+import { TrayButton } from "./widgets/systray";
+import Indicator from "./widgets/indicator";
+import Workspaces from "./widgets/workspaces";
+import { WindowName } from "../../main";
 
 export function Bar(monitor: number = 0) {
-  const name = `bar-${monitor}`;
+  const name = `${WindowName.Bar}-${monitor}`;
 
   const bar = Widget.Box({
     className: "bar",

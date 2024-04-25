@@ -1,9 +1,10 @@
+import { WindowName } from "../../../main";
 import { type Application } from "../../../types/service/applications";
 
 export const LauncherItem = (app: Application, monitor: number = 0) =>
   Widget.Button({
     on_clicked: () => {
-      App.closeWindow(`launcher-${monitor}`);
+      App.closeWindow(`${WindowName.Launcher}-${monitor}`);
       app.launch();
     },
     className: "item",

@@ -1,3 +1,5 @@
+import { WindowName } from "../../main";
+
 const systemtray = await Service.import("systemtray");
 
 const SysTrayItem = (item) =>
@@ -16,7 +18,7 @@ const SysTrayComponent = (monitor: number = 0) => {
 };
 
 export function Systray(monitor = 0) {
-  const name = `systray-${monitor}`;
+  const name = `${WindowName.Systray}-${monitor}`;
 
   const systray = Widget.Box({
     className: "systray",

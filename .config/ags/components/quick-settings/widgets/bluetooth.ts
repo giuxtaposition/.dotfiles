@@ -1,5 +1,5 @@
 const bluetooth = await Service.import("bluetooth");
-import ToggleButton from "../toggle-button.js";
+import ToggleButton from "../toggle-button";
 
 const Bluetooth = () => {
   const icon = Utils.watch("󰂲", bluetooth, () => {

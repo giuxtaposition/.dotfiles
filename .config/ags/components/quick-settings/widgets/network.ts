@@ -1,5 +1,5 @@
 const { wifi } = await Service.import("network");
-import ToggleButton from "../toggle-button.js";
+import ToggleButton from "../toggle-button";
 
 const Network = () => {
   const icon = wifi.bind("icon_name").as((iconName) => {

@@ -1,5 +1,6 @@
 import GLib from "gi://GLib";
 import Gio from "gi://Gio";
+import env from "../env";
 
 const SIS = GLib.getenv("SWAYSOCK");
 
@@ -27,7 +28,25 @@ export const enum PAYLOAD_TYPE {
   EVENT_SHUTDOWN = 0x80000006,
   EVENT_TICK = 0x80000007,
   EVENT_BAR_STATE_UPDATE = 0x80000014,
-  EVENT_INPUT = 0x80000015,
+  EVENT_INPUT = 2147483669,
+}
+
+interface Input_Event {
+  change: "xkb_layout" | "libinput_config" | "added" | "removed" | "xkb_keymap";
+  input: Input;
+}
+
+function instanceOfInputEvent(object: any): object is Input_Event {
+  return "input" in object;
+}
+
+interface Input {
+  identifier: string;
+  type: string;
+  xkb_active_layout_name: "Italian" | "English (US)";
+  libinput: {
+    send_events: "enabled" | "disabled";
+  };
 }
 
 interface Client_Event {
@@ -91,6 +110,11 @@ export interface Node {
     window_type: string;
     transient_for: string;
   };
+}
+
+export enum Layout {
+  IT = "it",
+  EN = "en",
 }
 
 export class SwayActiveClient extends Service {
@@ -204,6 +228,7 @@ export class SwayService extends Service {
         monitors: ["jsobject"],
         workspaces: ["jsobject"],
         clients: ["jsobject"],
+        keyboard: ["jsobject"],
       },
     );
   }
@@ -216,6 +241,10 @@ export class SwayService extends Service {
   private _monitors: Map<number, object>;
   private _workspaces: Map<string, Node>;
   private _clients: Map<number, Node>;
+  private _keyboard: {
+    layout: Layout;
+    enabled: boolean;
+  };
 
   get active() {
     return this._active;
@@ -228,6 +257,9 @@ export class SwayService extends Service {
   }
   get clients() {
     return Array.from(this._clients.values());
+  }
+  get keyboard() {
+    return this._keyboard;
   }
 
   getMonitor(id: number) {
@@ -253,6 +285,11 @@ export class SwayService extends Service {
     this._workspaces = new Map();
     this._clients = new Map();
 
+    this._keyboard = {
+      layout: Layout.EN,
+      enabled: true,
+    };
+
     this._socket = new Gio.SocketClient().connect(
       new Gio.UnixSocketAddress({
         path: `${SIS}`,
@@ -264,13 +301,15 @@ export class SwayService extends Service {
     this._send(PAYLOAD_TYPE.MESSAGE_GET_TREE, "");
     this._send(
       PAYLOAD_TYPE.MESSAGE_SUBSCRIBE,
-      JSON.stringify(["window", "workspace"]),
+      JSON.stringify(["window", "workspace", "input"]),
     );
 
     this._active.connect("changed", () => this.emit("changed"));
     ["monitor", "workspace", "client"].forEach((active) =>
       this._active.connect(`notify::${active}`, () => this.notify("active")),
     );
+
+    this._send(PAYLOAD_TYPE.MESSAGE_GET_INPUTS, "");
   }
 
   private _send(payloadType: PAYLOAD_TYPE, payload: string) {
@@ -304,6 +343,7 @@ export class SwayService extends Service {
           (_, resultPayload) => {
             const data = stream.read_bytes_finish(resultPayload).get_data();
             if (!data) return;
+
             this._onEvent(payloadType, JSON.parse(this._decoder.decode(data)));
             this._watchSocket(stream);
           },
@@ -314,6 +354,8 @@ export class SwayService extends Service {
 
   private async _onEvent(event_type: PAYLOAD_TYPE, event: object) {
     if (!event) return;
+    console.log(event_type);
+    console.log(event);
     try {
       switch (event_type) {
         case PAYLOAD_TYPE.EVENT_WORKSPACE:
@@ -325,6 +367,11 @@ export class SwayService extends Service {
         case PAYLOAD_TYPE.MESSAGE_GET_TREE:
           this._handleTreeMessage(event as Node);
           break;
+        case PAYLOAD_TYPE.EVENT_INPUT:
+          this._handleInputEvent(event as Input_Event);
+        case PAYLOAD_TYPE.MESSAGE_GET_INPUTS:
+          this._handleInputEvent(event as Input[]);
+
         default:
           break;
       }
@@ -449,6 +496,52 @@ export class SwayService extends Service {
         node.nodes.map((n) => this._handleTreeMessage(n));
         this.notify("clients");
         break;
+    }
+  }
+
+  private _handleInputEvent(event: Input_Event | Input[]) {
+    let keyboardEvent: Input_Event | Input | undefined;
+
+    if (Array.isArray(event)) {
+      keyboardEvent = event.find((e) => e.identifier === env.KEYBOARD_NAME);
+    } else {
+      keyboardEvent = event;
+    }
+
+    if (!keyboardEvent) {
+      return;
+    }
+
+    if (instanceOfInputEvent(keyboardEvent)) {
+      if (keyboardEvent.input.identifier !== env.KEYBOARD_NAME) {
+        return;
+      }
+
+      switch (keyboardEvent.change) {
+        case "xkb_layout":
+          const layout =
+            keyboardEvent.input.xkb_active_layout_name === "Italian"
+              ? Layout.IT
+              : Layout.EN;
+          this._keyboard.layout = layout;
+          this.notify("keyboard");
+
+          break;
+        case "libinput_config":
+          this._keyboard.enabled =
+            keyboardEvent.input.libinput.send_events === "enabled"
+              ? true
+              : false;
+
+          break;
+      }
+    } else {
+      this._keyboard.layout =
+        keyboardEvent.xkb_active_layout_name === "Italian"
+          ? Layout.IT
+          : Layout.EN;
+      this._keyboard.enabled =
+        keyboardEvent.libinput.send_events === "enabled" ? true : false;
     }
   }
 }
