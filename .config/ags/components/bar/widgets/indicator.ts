@@ -1,3 +1,4 @@
+import { WindowName } from "../../../main";
 import { Binding } from "../../../types/service";
 import Clock from "./clock";
 const audio = await Service.import("audio");
@@ -144,12 +145,12 @@ const BatteryIcon = () => {
   );
 };
 
-const Indicator = (monitor: number = 0) => {
+const Indicator = () => {
   return Widget.Button({
     className: "indicator",
     hexpand: true,
     onClicked: () => {
-      App.toggleWindow(`quick-settings-${monitor}`);
+      App.toggleWindow(WindowName.QuickSettings);
     },
     child: Widget.Box({
       hexpand: true,

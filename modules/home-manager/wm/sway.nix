@@ -136,8 +136,8 @@ in {
         keybindings = let
           mod = "Mod4"; # Super
           term = "wezterm";
-          app-menu = ''exec ags --toggle-window "launcher-0"'';
-          power-menu = ''exec ags --toggle-window "powermenu-0"'';
+          app-menu = ''exec ags --toggle-window "launcher"'';
+          power-menu = ''exec ags --toggle-window "powermenu"'';
         in {
           "${mod}+q" = "exec ${term}";
           "${mod}+d" = "exec ${app-menu}";

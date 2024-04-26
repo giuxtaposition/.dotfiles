@@ -1,22 +1,21 @@
 import { WindowName } from "../../main";
 import { SysButton } from "./widgets/sys-button";
 
-export const PowerMenu = (monitor: number = 0) => {
-  const name = `${WindowName.PowerMenu}-${monitor}`;
+export const PowerMenu = () => {
+  const name = WindowName.PowerMenu;
 
   const launcher = Widget.Box({
     className: "powermenu",
     children: [
-      SysButton("poweroff", "Power off", "", monitor),
-      SysButton("reboot", "Reboot", "󰜉", monitor),
-      SysButton("lock", "Lock", "", monitor),
-      SysButton("suspend", "Suspend", "󰤄", monitor),
-      SysButton("signout", "Sign out", "󰗼", monitor),
+      SysButton("poweroff", "Power off", ""),
+      SysButton("reboot", "Reboot", "󰜉"),
+      SysButton("lock", "Lock", ""),
+      SysButton("suspend", "Suspend", "󰤄"),
+      SysButton("signout", "Sign out", "󰗼"),
     ],
   });
 
   return Widget.Window({
-    monitor,
     name,
     setup: (self) =>
       self.keybind("Escape", () => {

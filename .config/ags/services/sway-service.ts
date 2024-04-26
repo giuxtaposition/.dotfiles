@@ -354,8 +354,6 @@ export class SwayService extends Service {
 
   private async _onEvent(event_type: PAYLOAD_TYPE, event: object) {
     if (!event) return;
-    console.log(event_type);
-    console.log(event);
     try {
       switch (event_type) {
         case PAYLOAD_TYPE.EVENT_WORKSPACE:

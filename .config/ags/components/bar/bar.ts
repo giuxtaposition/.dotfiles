@@ -16,7 +16,7 @@ export function Bar(monitor: number = 0) {
       startWidget: Widget.Box({
         spacing: 12,
         hexpand: true,
-        children: [Logo(monitor), Workspaces()],
+        children: [Logo(), Workspaces()],
       }),
       centerWidget: Widget.Box({
         hexpand: true,
@@ -24,7 +24,7 @@ export function Bar(monitor: number = 0) {
       endWidget: Widget.Box({
         hexpand: true,
         hpack: "end",
-        children: [TrayButton(monitor), Keyboard(), Indicator(monitor)],
+        children: [TrayButton(), Keyboard(), Indicator()],
       }),
     }),
   });

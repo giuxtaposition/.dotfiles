@@ -3,13 +3,13 @@ import { LauncherItem } from "./widgets/launcher-item";
 
 const { query } = await Service.import("applications");
 
-export const Launcher = (monitor: number = 0) => {
-  const windowName = `${WindowName.Launcher}-${monitor}`;
+export const Launcher = () => {
+  const windowName = WindowName.Launcher;
   const width = 400;
   const height = 400;
   const spacing = 12;
 
-  let applications = query("").map((app) => LauncherItem(app, monitor));
+  let applications = query("").map(LauncherItem);
 
   const list = Widget.Box({
     vertical: true,
@@ -81,7 +81,6 @@ export const Launcher = (monitor: number = 0) => {
   });
 
   return Widget.Window({
-    monitor,
     name: windowName,
     anchor: ["top", "left"],
     setup: (self) =>

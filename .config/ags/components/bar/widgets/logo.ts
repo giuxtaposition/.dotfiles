@@ -1,10 +1,10 @@
 import { WindowName } from "../../../main";
 
-const Logo = (monitor: number = 0) => {
+const Logo = () => {
   return Widget.Button({
     className: "logo",
     onClicked: () => {
-      App.openWindow(`${WindowName.Launcher}-${monitor}`);
+      App.toggleWindow(WindowName.Launcher);
     },
     child: Widget.Label({
       label: "",

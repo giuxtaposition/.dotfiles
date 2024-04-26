@@ -7,8 +7,8 @@ import { Volume } from "./widgets/volume";
 import Gtk from "../../types/@girs/gtk-3.0/gtk-3.0";
 import { WindowName } from "../../main";
 
-export const QuickSettings = (monitor: number = 0) => {
-  const name = `${WindowName.QuickSettings}-${monitor}`;
+export const QuickSettings = () => {
+  const name = WindowName.QuickSettings;
 
   const quickSettings = Widget.Box({
     className: "quick-settings",
@@ -18,7 +18,6 @@ export const QuickSettings = (monitor: number = 0) => {
   });
 
   return Widget.Window({
-    monitor,
     name,
     anchor: ["top", "right"],
     setup: (self) =>

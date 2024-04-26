@@ -1,8 +1,10 @@
-export const TrayButton = (monitor: number = 0) =>
+import { WindowName } from "../../../main";
+
+export const TrayButton = () =>
   Widget.Button({
     className: "tray-button",
     onClicked: () => {
-      App.toggleWindow(`systray-${monitor}`);
+      App.toggleWindow(WindowName.Systray);
     },
     child: Widget.Label({
       label: "",

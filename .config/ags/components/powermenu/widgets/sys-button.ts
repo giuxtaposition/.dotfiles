@@ -1,9 +1,6 @@
-export const SysButton = (
-  action: string,
-  label: string,
-  icon: string,
-  monitor: number = 0,
-) =>
+import { WindowName } from "../../../main";
+
+export const SysButton = (action: string, label: string, icon: string) =>
   Widget.Box({
     hexpand: true,
     vexpand: true,
@@ -21,7 +18,7 @@ export const SysButton = (
             signout: ["swaymsg exit"],
           }[action];
 
-          App.closeWindow(`powermenu-${monitor}`);
+          App.closeWindow(WindowName.PowerMenu);
           Utils.exec(`bash -c "${cmd}"`);
         },
         child: Widget.Box({

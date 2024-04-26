@@ -11,24 +11,23 @@ const SysTrayItem = (item) =>
     onSecondaryClick: (_, event) => item.openMenu(event),
   });
 
-const SysTrayComponent = (monitor: number = 0) => {
+const SysTrayComponent = () => {
   return Widget.Box({
     children: systemtray.bind("items").as((i) => i.map(SysTrayItem)),
   });
 };
 
-export function Systray(monitor = 0) {
-  const name = `${WindowName.Systray}-${monitor}`;
+export function Systray() {
+  const name = WindowName.Systray;
 
   const systray = Widget.Box({
     className: "systray",
     hexpand: true,
     spacing: 16,
-    child: SysTrayComponent(monitor),
+    child: SysTrayComponent(),
   });
 
   return Widget.Window({
-    monitor,
     name,
     anchor: ["top", "right"],
     setup: (self) =>
