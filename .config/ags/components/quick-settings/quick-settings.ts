@@ -6,6 +6,7 @@ import SignOut from "./widgets/signOut";
 import { Mic, Speaker } from "./widgets/volume";
 import Gtk from "../../types/@girs/gtk-3.0/gtk-3.0";
 import { WindowName } from "../../main";
+import { Media } from "./widgets/media";
 
 export const QuickSettings = () => {
   const name = WindowName.QuickSettings;
@@ -14,7 +15,13 @@ export const QuickSettings = () => {
     className: "quick-settings",
     vertical: true,
     spacing: 16,
-    children: [Header(), Row([Network(), Bluetooth()]), Speaker(), Mic()],
+    children: [
+      Header(),
+      Row([Network(), Bluetooth()]),
+      Speaker(),
+      Mic(),
+      Media(),
+    ],
   });
 
   return Widget.Window({
