@@ -87,11 +87,31 @@
     }
   }
 
+  .volume-icon {
+    margin-left: 0.75rem;
+    font-size: 1.5rem;
+
+    &.less {
+      color: $onSurface;
+    }
+
+    &.more {
+      color: $surface;
+    }
+  }
+
   .volume-slider {
     slider {
       box-shadow: none;
       background-color: transparent;
       border: none;
+    }
+
+    &.muted {
+      highlight,
+      progress {
+        background-color: $surfaceVariant;
+      }
     }
 
     trough {
@@ -130,18 +150,5 @@
     &.active:hover {
       background-color: mix($primary, $onSurface, 70%);
     }
-  }
-}
-
-.volume-icon {
-  margin-left: 0.75rem;
-  font-size: 1.5rem;
-
-  &.less {
-    color: $onSurface;
-  }
-
-  &.more {
-    color: $surface;
   }
 }

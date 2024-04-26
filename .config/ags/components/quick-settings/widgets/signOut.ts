@@ -1,7 +1,9 @@
-const SignOut = (monitor: number = 0) => {
+import { WindowName } from "../../../main";
+
+const SignOut = () => {
   return Widget.Button({
     onClicked: () => {
-      App.openWindow();
+      App.openWindow(WindowName.PowerMenu);
     },
     className: "sign-out",
     child: Widget.Label({

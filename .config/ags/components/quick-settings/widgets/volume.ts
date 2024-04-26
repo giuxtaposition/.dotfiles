@@ -1,29 +1,23 @@
+import { Type, fromVolume, volumeIcons } from "../../../lib/icons";
+
 const audio = await Service.import("audio");
-type Type = "microphone" | "speaker";
 
 const VolumeIndicator = (type: Type) => {
-  let isMuted = false;
-  const icon = Utils.watch("󰸈", audio[type], () => {
+  const icon = Utils.watch(volumeIcons[type].muted, audio[type], () => {
     if (audio[type].is_muted) {
-      isMuted = true;
-      return "󰸈";
+      return volumeIcons[type].muted;
     }
-    isMuted = false;
     const volume = Math.floor(audio[type].volume * 100);
 
-    if (volume < 33) {
-      return "";
-    } else if (volume < 67) {
-      return "";
-    } else {
-      return "";
-    }
+    return fromVolume(volume, type);
   });
 
   return Widget.Label({
     hpack: "start",
     label: icon,
-    className: "volume-icon " + (isMuted ? "less" : "more"),
+    className: audio[type]
+      .bind("is_muted")
+      .as((isMuted) => `${isMuted ? "volume-icon less" : "volume-icon more"}`),
   });
 };
 
@@ -40,33 +34,38 @@ const VolumeSlider = (type: Type) =>
         }
       },
       value: audio[type].bind("volume"),
-      className: "volume-slider",
+      className: audio[type]
+        .bind("is_muted")
+        .as(
+          (isMuted) => `${isMuted ? "volume-slider muted" : "volume-slider"}`,
+        ),
     }),
 
     overlays: [VolumeIndicator(type)],
   });
 
 const VolumeMute = (type: Type) => {
-  const isMuted = Utils.watch(false, audio[type], () => {
-    if (audio[type].is_muted) {
-      return true;
-    }
-    return false;
-  });
-
   return Widget.Button({
     onClicked: () => {
       audio[type].is_muted = !audio[type].is_muted;
     },
-    className: "volume-mute " + (isMuted ? "active" : ""),
+    className: audio[type]
+      .bind("is_muted")
+      .as((isMuted) => `${isMuted ? "volume-mute active" : "volume-mute"}`),
     child: Widget.Label({
-      label: "󰝟",
+      label: volumeIcons[type].muted,
     }),
   });
 };
 
-export const Volume = () =>
+export const Speaker = () =>
   Widget.Box({
     class_name: "volume",
-    children: [VolumeSlider("speaker"), VolumeMute("speaker")],
+    children: [VolumeSlider(Type.speaker), VolumeMute(Type.speaker)],
+  });
+
+export const Mic = () =>
+  Widget.Box({
+    class_name: "volume",
+    children: [VolumeSlider(Type.microphone), VolumeMute(Type.microphone)],
   });
