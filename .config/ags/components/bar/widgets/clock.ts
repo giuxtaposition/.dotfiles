@@ -1,10 +1,12 @@
-import dateTimeService from "../../../services/date-time-service";
+import { clock } from "../../../lib/variables";
+
+const time = Utils.derive([clock], (c) => c.format("%H:%M") || "");
 
 const Clock = () => {
   return Widget.Label({
     className: "clock",
     hexpand: true,
-    label: dateTimeService.bind("time").as((v) => `${v}`),
+    label: time.bind(),
   });
 };
 

@@ -1,24 +1,27 @@
-import dateTimeService from "../../../services/date-time-service";
-
-const time = Widget.Label({
-  className: "time",
-  label: dateTimeService.bind("time").as((v) => `${v}`),
-});
-
-const date = Widget.Label({
-  className: "date",
-  label: dateTimeService.bind("date").as((v) => `${v}`),
-});
-
-const separator = Widget.Label({
-  className: "separator",
-  label: " | ",
-});
+import { clock } from "../../../lib/variables";
 
 const DateTime = () => {
+  const time = Utils.derive([clock], (c) => c.format("%H:%M") || "");
+  const date = Utils.derive([clock], (c) => c.format("%a, %b %d") || "");
+
+  const separator = Widget.Label({
+    className: "separator",
+    label: " | ",
+  });
+
   return Widget.Box({
     className: "time-and-date",
-    children: [time, separator, date],
+    children: [
+      Widget.Label({
+        className: "time",
+        label: time.bind(),
+      }),
+      separator,
+      Widget.Label({
+        className: "date",
+        label: date.bind(),
+      }),
+    ],
   });
 };
 
