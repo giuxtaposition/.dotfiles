@@ -101,9 +101,20 @@
         init.defaultBranch = "main";
       };
 
-      includes = [{
-        path = "${config.home.homeDirectory}/.config/delta/themes.gitconfig";
-      }];
+      includes = [
+        {
+          path = "${config.home.homeDirectory}/.config/delta/themes.gitconfig";
+        }
+        {
+          condition = "gitdir:~/Programming/vitesicure/";
+          contents = {
+            user = {
+              email = "gye@vitesicure.it";
+              name = "Giulia Ye";
+            };
+          };
+        }
+      ];
 
       delta = {
         enable = true;
