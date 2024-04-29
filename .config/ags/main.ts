@@ -4,6 +4,7 @@ import { PowerMenu } from "./components/powermenu/powermenu";
 import { Bar } from "./components/bar/bar";
 import { Systray } from "./components/systray/systray";
 import { forMonitors } from "./lib/utils";
+import { Notifications } from "./components/notifications/notifications";
 
 // main scss file
 const scss = `${App.configDir}/scss/style.scss`;
@@ -19,6 +20,7 @@ export enum WindowName {
   PowerMenu = "powermenu",
   Bar = "bar",
   Systray = "systray",
+  Notifications = "notifications",
 }
 
 App.config({
@@ -28,6 +30,7 @@ App.config({
     QuickSettings(),
     PowerMenu(),
     Systray(),
+    Notifications(),
     ...forMonitors(Bar),
   ],
 });
