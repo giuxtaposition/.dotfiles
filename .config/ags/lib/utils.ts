@@ -6,8 +6,8 @@ export function forMonitors(widget: (monitor: number) => Gtk.Window) {
   return range(n, 0).map(widget).flat(1);
 }
 
-export function truncate(string: string) {
-  return string.length > 18 ? string.slice(0, 18) + "…" : string;
+export function truncate(string: string, length: number = 18) {
+  return string.length > length ? string.slice(0, length) + "…" : string;
 }
 
 function range(length: number, start = 1) {

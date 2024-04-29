@@ -38,18 +38,18 @@ const NetworkIcon = () => {
 };
 
 const VolumeIcon = (type: Type) => {
-  const icon = Utils.watch(volumeIcons[type].muted, audio[type], () => {
-    if (audio[type].is_muted) {
-      return volumeIcons[type].muted;
-    }
-    const volume = Math.floor(audio[type].volume * 100);
-
-    return fromVolume(volume, type);
-  });
-
   return StateIcon(
     true,
-    icon,
+    Utils.merge(
+      [audio[type].bind("is_muted"), audio[type].bind("volume")],
+      (isMuted, volume) => {
+        if (isMuted) {
+          return volumeIcons[type].muted;
+        }
+
+        return fromVolume(volume * 100, type);
+      },
+    ),
     audio[type].bind("volume").as((v) => `${Math.floor(v * 100)}%`),
   );
 };
@@ -62,7 +62,7 @@ const BatteryIcon = () => {
   return StateIcon(
     battery.bind("available"),
     icon,
-    battery.bind("percent").as((p) => (p > 0 ? `${p / 100}` : "0")),
+    battery.bind("percent").as((p) => (p > 0 ? `${p}%` : "0")),
   );
 };
 

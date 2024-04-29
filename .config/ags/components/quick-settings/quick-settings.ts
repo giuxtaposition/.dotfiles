@@ -7,6 +7,8 @@ import { Mic, Speaker } from "./widgets/volume";
 import Gtk from "../../types/@girs/gtk-3.0/gtk-3.0";
 import { WindowName } from "../../main";
 import { Media } from "./widgets/media";
+import { DND } from "./widgets/do-not-disturb";
+import { EyeShield } from "./widgets/eye-shield";
 
 export const QuickSettings = () => {
   const name = WindowName.QuickSettings;
@@ -18,6 +20,7 @@ export const QuickSettings = () => {
     children: [
       Header(),
       Row([Network(), Bluetooth()]),
+      Row([DND(), EyeShield()]),
       Speaker(),
       Mic(),
       Media(),

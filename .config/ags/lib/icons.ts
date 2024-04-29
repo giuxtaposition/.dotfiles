@@ -29,7 +29,7 @@ export const fromVolume = (volume: number, type: Type) => {
 export const fromNetworkIconName = (iconName: string) => {
   switch (iconName) {
     case "network-wireless-acquiring-symbolic":
-      return "wifi";
+      return "󰤯";
     case "network-wireless-disabled-symbolic":
       return "󰤭";
     case "network-wireless-offline-symbolic":

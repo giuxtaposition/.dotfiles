@@ -11,6 +11,8 @@
     # ...
     # });
     wezterm = inputs.nekowinston-nur.packages.${prev.system}.wezterm-nightly;
+    wl-gammarelay-rs =
+      inputs.nixpkgs-wayland.packages.${prev.system}.wl-gammarelay-rs;
 
     spotify = prev.spotify.overrideAttrs (oldAttrs: {
       postInstall = (oldAttrs.postInstall or "") + ''

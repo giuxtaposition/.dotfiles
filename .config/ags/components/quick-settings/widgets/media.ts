@@ -1,5 +1,6 @@
 const mpris = await Service.import("mpris");
 const players = mpris.bind("players");
+import { truncate } from "../../../lib/utils";
 
 const FALLBACK_ICON = "audio-x-generic-symbolic";
 const PLAY_ICON = "media-playback-start-symbolic";
@@ -31,7 +32,7 @@ function Player(player) {
     class_name: "title",
     wrap: true,
     hpack: "start",
-    label: player.bind("track_title"),
+    label: player.bind("track_title").as((t) => truncate(t, 18)),
   });
 
   const artist = Widget.Label({
@@ -143,6 +144,7 @@ function Player(player) {
 export function Media() {
   return Widget.Box({
     vertical: true,
+    spacing: 8,
     css: "min-height: 2px; min-width: 2px;", // small hack to make it visible
     visible: players.as((p) => p.length > 0),
     children: players.as((p) => p.map(Player)),

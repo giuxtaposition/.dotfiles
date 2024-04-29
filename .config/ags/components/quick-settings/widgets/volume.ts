@@ -3,18 +3,18 @@ import { Type, fromVolume, volumeIcons } from "../../../lib/icons";
 const audio = await Service.import("audio");
 
 const VolumeIndicator = (type: Type) => {
-  const icon = Utils.watch(volumeIcons[type].muted, audio[type], () => {
-    if (audio[type].is_muted) {
-      return volumeIcons[type].muted;
-    }
-    const volume = Math.floor(audio[type].volume * 100);
-
-    return fromVolume(volume, type);
-  });
-
   return Widget.Label({
     hpack: "start",
-    label: icon,
+    label: Utils.merge(
+      [audio[type].bind("is_muted"), audio[type].bind("volume")],
+      (isMuted, volume) => {
+        if (isMuted) {
+          return volumeIcons[type].muted;
+        }
+
+        return fromVolume(volume * 100, type);
+      },
+    ),
     className: audio[type]
       .bind("is_muted")
       .as((isMuted) => `${isMuted ? "volume-icon less" : "volume-icon more"}`),

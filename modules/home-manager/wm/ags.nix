@@ -24,7 +24,13 @@
       extraPackages = with pkgs; [ gtksourceview webkitgtk accountsservice ];
     };
 
-    home.packages = with pkgs; [ sassc inotify-tools bun ];
+    home.packages = with pkgs; [
+      sassc
+      inotify-tools
+      bun
+      wl-gammarelay-rs
+      libdbusmenu-gtk3
+    ];
 
     home.file."${config.home.homeDirectory}/.dotfiles/.config/ags/env.ts" = {
       text = ''

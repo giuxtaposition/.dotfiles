@@ -1,18 +1,17 @@
 { config, pkgs, lib, ... }:
 let
-
   startScript = pkgs.writeShellScript "start" ''
     # initializing wallpaper daemon
     swww init &
     # setting wallpaper
     swww img ~/Wallpapers/WRztVWQ.jpg &
 
-    dunst &
-
     #idle
     swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &
 
-    ags
+    ags &
+
+    wl-gammarelay-rs
   '';
 
   monitors = lib.concatMapStrings (x: x + "\n") (map (m:
