@@ -1,4 +1,19 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{ inputs, outputs, lib, config, pkgs, ... }:
+let
+  firefoxWorkScript = pkgs.writeScriptBin "firefoxWork" ''
+    #! ${pkgs.bash}/bin/sh
+    firefox -P "work"
+  '';
+
+  firefoxWork = pkgs.makeDesktopItem {
+    name = "firefox-work-profile";
+    desktopName = "Firefox Work Profile";
+    exec = ''firefox -P "work"'';
+    terminal = false;
+    icon = "firefox";
+  };
+
+in {
   imports = (builtins.attrValues outputs.homeManagerModules);
   nixpkgs = {
     overlays = [
@@ -69,6 +84,8 @@
 
     (pkgs.wrapFirefox
       (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
+    (firefoxWork)
+    (firefoxWorkScript)
 
     chromium
     glxinfo # info about GPU
