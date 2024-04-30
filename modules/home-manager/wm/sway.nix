@@ -146,10 +146,10 @@ in {
 
           # Screenshot
           "Print" = ''
-            exec grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/Screenshot-$(date +%F_%T).png | dunstify "Screenshot of the region taken" -t 1000'';
+            exec grim -g "$(slurp)" - | wl-copy && wl-paste > ~/Pictures/Screenshots/Screenshot-$(date +%F_%T).png | notify-send -i accessories-screenshot -t 1500 "Screenshot" "Screenshot of the region taken"'';
           # Screenshot of a region
           "Shift+Print" = ''
-            exec grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/Screenshot-$(date +%F_%T).png | dunstify "Screenshot of whole screen taken" -t 1000'';
+            exec grim - | wl-copy && wl-paste > ~/Pictures/Screenshots/Screenshot-$(date +%F_%T).png | notify-send -i accessories-screenshot -t 1500 "Screenshot" "Screenshot of whole screen taken"'';
 
           # Move your focus around
           "${mod}+h" = "focus left";

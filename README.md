@@ -12,7 +12,6 @@ Here are some details about my setup:
 - **Editor**: [Neovim](https://github.com/neovim/neovim/)
 - **WM**: [SwayFX](https://github.com/WillPower3309/swayfx)
 - **Widgets**: [AGS](https://github.com/Aylur/ags)
-- **Notify Daemon**: [Dunst](https://github.com/dunst-project/dunst)
 
 ![](/.github/images/screenshot1.png)
 ![](/.github/images/screenshot2.png)
