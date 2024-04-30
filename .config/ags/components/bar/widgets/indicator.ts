@@ -69,12 +69,10 @@ const BatteryIcon = () => {
 const Indicator = () => {
   return Widget.Button({
     className: "indicator",
-    hexpand: true,
     onClicked: () => {
       App.toggleWindow(WindowName.QuickSettings);
     },
     child: Widget.Box({
-      hexpand: true,
       children: [
         NetworkIcon(),
         VolumeIcon(Type.speaker),

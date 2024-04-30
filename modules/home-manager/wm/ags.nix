@@ -30,6 +30,7 @@
       bun
       wl-gammarelay-rs
       libdbusmenu-gtk3
+      lsof
     ];
 
     home.file."${config.home.homeDirectory}/.dotfiles/.config/ags/env.ts" = {

@@ -109,4 +109,24 @@
       font-size: 1.5rem;
     }
   }
+
+  .sharing {
+    font-size: 1.3rem;
+    margin-right: 0.5rem;
+    color: $onPrimary;
+
+    animation: blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    25% {
+      opacity: 0.5;
+    }
+    50% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 0.5;
+    }
+  }
 }

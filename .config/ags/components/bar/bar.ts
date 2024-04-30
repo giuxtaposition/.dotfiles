@@ -4,6 +4,11 @@ import { TrayButton } from "./widgets/systray";
 import Indicator from "./widgets/indicator";
 import Workspaces from "./widgets/workspaces";
 import { WindowName } from "../../main";
+import {
+  MicRecordingIndicator,
+  ScreenSharingIndicator,
+  WebcamRecordingIndicator,
+} from "./widgets/sharing";
 
 export function Bar(monitor: number = 0) {
   const name = `${WindowName.Bar}-${monitor}`;
@@ -24,7 +29,14 @@ export function Bar(monitor: number = 0) {
       endWidget: Widget.Box({
         hexpand: true,
         hpack: "end",
-        children: [TrayButton(), Keyboard(), Indicator()],
+        children: [
+          WebcamRecordingIndicator(),
+          MicRecordingIndicator(),
+          ScreenSharingIndicator(),
+          TrayButton(),
+          Keyboard(),
+          Indicator(),
+        ],
       }),
     }),
   });

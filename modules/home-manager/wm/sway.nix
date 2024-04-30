@@ -244,8 +244,6 @@ in {
         blur_radius 7
         blur_passes 4
 
-        for_window [app_id="foot"] blur enable
-
         # dim inactive
         default_dim_inactive 0.0
 
@@ -269,10 +267,6 @@ in {
         for_window [title="Picture in picture"] floating enable, sticky enable
         for_window [title="Save File"] floating enable
         for_window [app_id="qalculate-gtk"] floating enable
-
-        # keep sharing popup in workspace 5
-        assign [title="is sharing your screen"] -> number 5
-
 
         # Inhibit idle
         for_window [class=".*"] inhibit_idle fullscreen
