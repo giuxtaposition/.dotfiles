@@ -60,7 +60,7 @@ in {
         bars = [ ];
         fonts = {
           names = [ "JetBrains Mono Nerd Font" ];
-          size = 0.0;
+          size = 0.1;
         };
         gaps = {
           outer = 0;
