@@ -26,11 +26,6 @@ let
         "disable"
     }") (config.monitors));
 
-  keyboardOptions = if config.laptop.enable then
-    "ctrl:swapcaps,grp:alt_shift_toggle"
-  else
-    "grp:alt_shift_toggle";
-
   themeColors = import ../../../colors.nix;
 in {
   options = { sway.enable = lib.mkEnableOption "enables sway module"; };
@@ -118,9 +113,12 @@ in {
 
         input = {
           "type:keyboard" = {
-            xkb_options = "${keyboardOptions}";
-            xkb_layout = "us,it";
+            xkb_layout = "us";
+            xkb_variant = "intl";
             pointer_accel = "0";
+          };
+          "1:1:AT_Translated_Set_2_keyboard" = {
+            xkb_options = "ctrl:swapcaps";
           };
           "type:pointer" = { natural_scroll = "enabled"; };
           "type:touchpad" = {
