@@ -24,6 +24,9 @@ M.process_icons = {
   ["lazygit"] = {
     { Text = wezterm.nerdfonts.cod_github },
   },
+  ["bun"] = {
+    { Text = wezterm.nerdfonts.md_food_croissant },
+  },
   -- for some weird reason nixos has no process name...
   [""] = {
     { Text = wezterm.nerdfonts.linux_nixos },
