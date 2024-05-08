@@ -23,11 +23,6 @@
       flake = false;
     };
 
-    # SDDM Sugar Catppuccin Theme
-    sddm-sugar-catppuccin-theme = {
-      url = "github:TiagoDamascena/sddm-sugar-catppuccin";
-      flake = false;
-    };
 
     ags.url = "github:Aylur/ags";
 

@@ -127,21 +127,15 @@
       enable = true;
       libinput.enable = true;
       xkbOptions = "ctrl:swapcaps";
-      displayManager = {
-        sddm = {
-          enable = true;
-          theme = let
-            stdenv = pkgs.stdenv;
-            src = inputs.sddm-sugar-catppuccin-theme;
-          in "${
-            import ../pkgs/sddm-sugar-catppuccin-theme.nix {
-              inherit stdenv src;
-            }
-          }/sddm-sugar-catppuccin-theme";
-          wayland.enable = true;
+    };
+
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+          user = "giu";
         };
-        defaultSession = "sway";
-        sessionPackages = [ pkgs.sway ];
       };
     };
 
