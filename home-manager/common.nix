@@ -80,6 +80,7 @@ in {
     zathura
     spotify
     asdf-vm # runtime version management
+    pavucontrol
 
     (pkgs.wrapFirefox
       (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
