@@ -41,7 +41,7 @@ in {
         };
         scale = mkOption {
           type = types.float;
-          default = 1;
+          default = 1.0;
         };
         enabled = mkOption {
           type = types.bool;
