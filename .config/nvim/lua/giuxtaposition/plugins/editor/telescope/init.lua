@@ -72,6 +72,7 @@ return {
 
       telescope.load_extension("fzf")
       telescope.load_extension("project")
+      require("telescope").load_extension("aerial")
     end,
     keys = function()
       local filesPicker = require("giuxtaposition.plugins.editor.telescope.picker").filesPicker
