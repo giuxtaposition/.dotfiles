@@ -5,7 +5,7 @@
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nekowinston-nur.url = "github:nekowinston/nur";
+    wezterm = { url = "github:wez/wezterm?dir=nix"; };
 
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
 
@@ -22,7 +22,6 @@
         "https://github.com/EliverLara/candy-icons/archive/refs/heads/master.zip";
       flake = false;
     };
-
 
     ags.url = "github:Aylur/ags";
 
