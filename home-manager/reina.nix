@@ -3,7 +3,7 @@
 
   monitors = [
     {
-      name = "DP-1";
+      name = "DP-2";
       index = 0;
       width = 1920;
       height = 1080;
@@ -24,9 +24,6 @@
   ];
 
   home.sessionVariables = {
-    LIBVA_DRIVER_NAME = "nvidia";
-    GBM_BACKEND = "nvidia-drm";
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     WLR_BACKEND = "vulkan";
     WLR_RENDERER = "vulkan";
   };
