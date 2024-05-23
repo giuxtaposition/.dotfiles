@@ -159,9 +159,9 @@ in {
           ExecStart = let
             script = pkgs.writeShellScript "sync-notes" ''
               echo "Syncing notes"
+              git pull --rebase --autostash
               filesChanged=$(git status --porcelain | awk '{print $2}')
               if [ -n "$filesChanged" ]; then
-              git pull
               git add .
               git commit -m "updating notes 📘"
               git push
