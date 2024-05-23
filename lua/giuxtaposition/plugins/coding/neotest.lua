@@ -2,9 +2,10 @@ return {
   {
     "nvim-neotest/neotest",
     dependencies = {
+      "nvim-neotest/nvim-nio",
       "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
       "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
       "giuxtaposition/neotest-jest",
       "marilari88/neotest-vitest",
       "weilbith/neotest-gradle",
