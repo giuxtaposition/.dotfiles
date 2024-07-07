@@ -44,6 +44,7 @@ in {
       systemd = {
         enable = true; # beta
       };
+      checkConfig = false;
       wrapperFeatures = {
         base = true;
         gtk = true;

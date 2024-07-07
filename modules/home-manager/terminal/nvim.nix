@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, inputs, ... }: {
   options = { nvim.enable = lib.mkEnableOption "enables neovim module"; };
 
   config = lib.mkIf config.nvim.enable {
@@ -7,7 +7,7 @@
       enable = true;
       defaultEditor = true;
       vimdiffAlias = true;
-      package = pkgs.neovim-nightly;
+      package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
       withNodeJs = true;
       extraPackages = with pkgs; [
         # Language servers
@@ -15,7 +15,7 @@
         unstable.nodePackages_latest.typescript-language-server
         unstable.nodePackages_latest.svelte-language-server
         unstable.nodePackages_latest.bash-language-server
-        unstable.nodePackages_latest.volar # vue language server
+        nodePackages_latest.volar # vue language server
         unstable.emmet-ls
         unstable.lua-language-server
         unstable.marksman
