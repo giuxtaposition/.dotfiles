@@ -1,6 +1,7 @@
 return {
   "mfussenegger/nvim-dap",
   dependencies = {
+    { "nvim-neotest/nvim-nio" },
     -- fancy UI for the debugger
     {
       "rcarriga/nvim-dap-ui",
@@ -195,11 +196,11 @@ return {
       desc = "Widgets",
     },
   },
-
   config = function()
+    local dap = require("dap")
     local icons = {
       Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
-      Breakpoint = " ",
+      Breakpoint = "🐞",
       BreakpointCondition = " ",
       BreakpointRejected = { " ", "DiagnosticError" },
       LogPoint = ".>",
@@ -213,7 +214,6 @@ return {
         { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
       )
     end
-    local dap = require("dap")
 
     local js_based_languages = {
       "javascript",
