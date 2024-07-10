@@ -22,6 +22,7 @@
         unstable.nil
         unstable.libclang
         unstable.kotlin-language-server
+        unstable.gopls
 
         # Linters and formatters
         unstable.prettierd # typescript formatter
@@ -34,6 +35,7 @@
         unstable.shfmt # sh formatter
         unstable.markdownlint-cli # markdown linter
         unstable.ktlint
+        unstable.gotools
       ];
     };
 

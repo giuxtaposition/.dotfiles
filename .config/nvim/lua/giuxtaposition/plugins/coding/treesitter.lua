@@ -46,6 +46,10 @@ return {
           "java",
           "kotlin",
           "yuck",
+          "go",
+          "gomod",
+          "gowork",
+          "gosum",
         },
         incremental_selection = {
           enable = true,
