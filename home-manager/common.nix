@@ -112,6 +112,8 @@ in {
     (pkgs.unstable.nerdfonts.override {
       fonts = [ "JetBrainsMono" "Monaspace" ];
     })
+
+    nodePackages.node2nix
   ];
 
   # GTK CONFIG

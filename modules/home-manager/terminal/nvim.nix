@@ -39,6 +39,8 @@
       ];
     };
 
+    home.packages = with pkgs; [ myNodePackages."@vtsls/language-server" ];
+
     home.file."${config.home.homeDirectory}/.dotfiles/.config/nvim/lua/giuxtaposition/config/nixosExtra.lua" =
       {
         text = ''

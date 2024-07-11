@@ -20,4 +20,6 @@
     src = inputs.spotify-adblock;
     version = "v1.0.3";
   };
+
+  myNodePackages = pkgs.callPackage ./node { };
 }
