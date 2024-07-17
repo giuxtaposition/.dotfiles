@@ -80,6 +80,7 @@ in {
     spotify
     asdf-vm # runtime version management
     pavucontrol
+    obsidian
 
     (pkgs.wrapFirefox
       (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
@@ -113,6 +114,7 @@ in {
     })
 
     nodePackages.node2nix
+    bruno
   ];
 
   # GTK CONFIG

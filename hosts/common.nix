@@ -23,7 +23,6 @@
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [
-        "electron-25.9.0" # needed for Obsidian
         "openssl-1.1.1w" # needed for mongodb-memory-server
       ];
     };
@@ -125,10 +124,11 @@
       packages = [ pkgs.dconf ];
     };
 
+    libinput.enable = true;
+
     xserver = {
       enable = true;
-      libinput.enable = true;
-      xkbOptions = "ctrl:swapcaps";
+      xkb.options = "ctrl:swapcaps";
     };
 
     greetd = {
@@ -169,7 +169,13 @@
   hardware = {
     bluetooth = {
       enable = true;
-      settings = { General = { Enable = "Source,Sink,Media,Socket"; }; };
+      powerOnBoot = true;
+      settings = {
+        General = {
+          Enable = "Source,Sink,Media,Socket";
+          Experimental = true;
+        };
+      };
     };
 
     opengl.enable = true;
@@ -191,7 +197,6 @@
       nurl
       ark # archiving tool
       libsForQt5.qt5.qtgraphicaleffects
-      obsidian
 
       #Theme
       papirus-icon-theme
@@ -199,7 +204,6 @@
       #Programming
       docker
       docker-compose
-      insomnia
       mongodb-compass
       sqlite
       go
