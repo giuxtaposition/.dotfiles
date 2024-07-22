@@ -3,8 +3,7 @@ local theme = require("theme")
 local keymaps = require("keymaps")
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
-local config = {}
-config = wezterm.config_builder()
+local config = wezterm.config_builder()
 
 config.default_workspace = "home"
 
