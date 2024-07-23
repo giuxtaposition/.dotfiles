@@ -1,0 +1,3 @@
+[submodule "nvim"]
+	path = .config/nvim
+	url = git@github.com:giuxtaposition/nvim.git
