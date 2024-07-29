@@ -14,7 +14,6 @@ end
 ---@class LspCommand: lsp.ExecuteCommandParams
 ---@field open? boolean
 ---@field handler? lsp.Handler
-
 ---@param opts LspCommand
 function M.execute(opts)
   local params = {
@@ -44,13 +43,5 @@ M.action = setmetatable({}, {
     end
   end,
 })
-
-function M.map(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = opts.silent ~= false
-  opts.noremap = opts.noremap ~= false
-
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
 
 return M

@@ -11,56 +11,49 @@ return {
         opts = {},
       },
     },
-    config = function()
-      -- import nvim-treesitter plugin
-      local treesitter = require("nvim-treesitter.configs")
-
-      -- configure treesitter
-      treesitter.setup({ -- enable syntax highlighting
-        highlight = {
-          enable = true,
+    opts = {
+      ensure_installed = {
+        "json",
+        "javascript",
+        "typescript",
+        "tsx",
+        "yaml",
+        "html",
+        "css",
+        "markdown",
+        "markdown_inline",
+        "svelte",
+        "graphql",
+        "bash",
+        "lua",
+        "dockerfile",
+        "gitignore",
+        "nix",
+        "svelte",
+        "vue",
+        "c",
+        "java",
+        "kotlin",
+        "diff",
+      },
+      auto_install = true,
+      highlight = {
+        enable = true,
+      },
+      indent = { enable = true },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = "<C-space>",
+          node_incremental = "<C-space>",
+          scope_incremental = false,
+          node_decremental = "<bs>",
         },
-        -- enable indentation
-        indent = { enable = true },
-        -- ensure these language parsers are installed
-        ensure_installed = {
-          "json",
-          "javascript",
-          "typescript",
-          "tsx",
-          "yaml",
-          "html",
-          "css",
-          "markdown",
-          "markdown_inline",
-          "svelte",
-          "graphql",
-          "bash",
-          "lua",
-          "dockerfile",
-          "gitignore",
-          "nix",
-          "svelte",
-          "vue",
-          "c",
-          "java",
-          "kotlin",
-          "yuck",
-          "go",
-          "gomod",
-          "gowork",
-          "gosum",
-        },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-          },
-        },
-      })
+      },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.install").prefer_git = true
+      require("nvim-treesitter.configs").setup(opts)
     end,
   },
   {
@@ -164,10 +157,10 @@ return {
       vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
 
       -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-      vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-      vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-      vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-      vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+      vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr())
+      vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr())
+      vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr())
+      vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr())
     end,
   },
   {

@@ -4,11 +4,223 @@ return {
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
   },
-  config = function()
+  opts = {
+    servers = {
+      lua_ls = {
+        settings = {
+          Lua = {
+            workspace = {
+              checkThirdParty = false,
+            },
+            codeLens = {
+              enable = true,
+            },
+            completion = {
+              callSnippet = "Replace",
+            },
+            doc = {
+              privateName = { "^_" },
+            },
+            hint = {
+              enable = true,
+              setType = false,
+              paramType = true,
+              paramName = "Disable",
+              semicolon = "Disable",
+              arrayIndex = "Disable",
+            },
+          },
+        },
+      },
+      vtsls = {
+        keys = {
+          {
+            "gD",
+            function()
+              local params = vim.lsp.util.make_position_params()
+              require("config.util").lsp.execute({
+                command = "typescript.goToSourceDefinition",
+                arguments = { params.textDocument.uri, params.position },
+                open = true,
+              })
+            end,
+            "Goto Source Definition",
+          },
+          {
+            "gR",
+            function()
+              require("config.util").lsp.execute({
+                command = "typescript.findAllFileReferences",
+                arguments = { vim.uri_from_bufnr(0) },
+                open = true,
+              })
+            end,
+            "File References",
+          },
+          {
+            "<leader>co",
+            require("config.util").lsp.action["source.organizeImports"],
+            "Organize Imports",
+          },
+          {
+            "<leader>cM",
+            require("config.util").lsp.action["source.addMissingImports.ts"],
+            "Add missing imports",
+          },
+          {
+            "<leader>cu",
+            require("config.util").lsp.action["source.removeUnused.ts"],
+            "Remove unused imports",
+          },
+          {
+            "<leader>cD",
+            require("config.util").lsp.action["source.fixAll.ts"],
+            "Fix all diagnostics",
+          },
+          {
+            "<leader>cV",
+            function()
+              require("config.util").lsp.execute({ command = "typescript.selectTypeScriptVersion" })
+            end,
+            "Select TS workspace version",
+          },
+        },
+        settings = {
+          complete_function_calls = true,
+          enableMoveToFileCodeAction = true,
+          autoUseWorkspaceTsdk = true,
+          experimental = {
+            completion = {
+              enableServerSideFuzzyMatch = true,
+            },
+          },
+          javascript = {
+            preferences = {
+              importModuleSpecifier = "relative",
+            },
+          },
+          typescript = {
+            preferences = {
+              importModuleSpecifier = "relative",
+            },
+            tsserver = {
+              experimental = {
+                enableProjectDiagnostics = false, -- when true it always open all json in the project?
+              },
+            },
+            updateImportsOnFileMove = { enabled = "always" },
+            suggest = {
+              completeFunctionCalls = true,
+            },
+            inlayHints = {
+              enumMemberValues = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              parameterNames = { enabled = "literals" },
+              parameterTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              variableTypes = { enabled = false },
+            },
+          },
+        },
+      },
+      eslint = {
+        settings = {
+          workingDirectories = { mode = "auto" },
+        },
+      },
+      svelte = {},
+      html = {},
+      cssls = {},
+      emmet_ls = {},
+      -- marksmans = {},
+      nil_ls = {
+        settings = {
+          ["nil"] = {
+            formatting = {
+              command = { "nixpkgs-fmt" },
+            },
+          },
+        },
+      },
+      bashls = {},
+      -- kotlin = {},
+    },
+  },
+  config = function(_, opts)
     local lspconfig = require("lspconfig")
-    local util = require("lspconfig.util")
-    -- used to enable autocompletion (assign to every lsp server config)
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = vim.api.nvim_create_augroup("giuxtaposition-lsp-attach", { clear = true }),
+      callback = function(event)
+        local map = function(keys, func, desc)
+          vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+        end
+        local diagnostic_goto = function(count, severity)
+          severity = severity and vim.diagnostic.severity[severity] or nil
+          return function()
+            vim.diagnostic.jump({ count = count, severity = severity })
+          end
+        end
+
+        map("gd", require("telescope.builtin").lsp_definitions, "Goto Definition") --  To jump back, press <C-t>.
+        map("gD", vim.lsp.buf.declaration, "Goto Declaration")
+        map("gr", require("telescope.builtin").lsp_references, "Goto References")
+        map("gI", require("telescope.builtin").lsp_implementations, "Goto Implementation")
+        map("gt", require("telescope.builtin").lsp_type_definitions, "Type Definition")
+        map("<leader>cs", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+        map("<leader>cS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+        map("<leader>cr", vim.lsp.buf.rename, "Rename")
+        map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+
+        map("<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics")
+        map("<leader>cd", vim.diagnostic.open_float, "Show line diagnostics")
+        map("]d", diagnostic_goto(1), "Next Diagnostic")
+        map("[d", diagnostic_goto(-1), "Prev Diagnostic")
+        map("]e", diagnostic_goto(1, "ERROR"), "Next Error")
+        map("[e", diagnostic_goto(-1, "ERROR"), "Prev Error")
+        map("]w", diagnostic_goto(1, "WARN"), "Next Warning")
+        map("[w", diagnostic_goto(-1, "WARN"), "Prev Warning")
+        map("K", vim.lsp.buf.hover, "Show documentation for what is under cursor")
+        map("<leader>rs", ":LspRestart<CR>", "Restart LSP")
+
+        -- The following two autocommands are used to highlight references of the
+        -- word under your cursor when your cursor rests there for a little while.
+        --    See `:help CursorHold` for information about when this is executed
+        --
+        -- When you move your cursor, the highlights will be cleared (the second autocommand).
+        local client = vim.lsp.get_client_by_id(event.data.client_id)
+        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+          vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            buffer = event.buf,
+            group = highlight_augroup,
+            callback = vim.lsp.buf.document_highlight,
+          })
+
+          vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+            buffer = event.buf,
+            group = highlight_augroup,
+            callback = vim.lsp.buf.clear_references,
+          })
+
+          vim.api.nvim_create_autocmd("LspDetach", {
+            group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+            callback = function(event2)
+              vim.lsp.buf.clear_references()
+              vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+            end,
+          })
+        end
+
+        -- The following code creates a keymap to toggle inlay hints in your
+        -- code, if the language server you are using supports them
+        if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+          map("<leader>uh", function()
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+          end, "Toggle Inlay Hints")
+        end
+      end,
+    })
 
     vim.diagnostic.config({
       underline = true,
@@ -28,276 +240,35 @@ return {
       },
     })
 
-    -- enable keybinds only for when lsp server available
-    local on_attach = function(client, buffer)
-      local Map = require("config.util").map
-      local diagnostic_goto = function(count, severity)
-        severity = severity and vim.diagnostic.severity[severity] or nil
-        return function()
-          vim.diagnostic.jump({ count = count, severity = severity })
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- used to enable autocompletion (assign to every lsp server config)
+    capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+
+    local function setup(server)
+      local server_opts = vim.tbl_deep_extend("force", {
+        capabilities = vim.deepcopy(capabilities),
+      }, opts.servers[server] or {})
+      if server_opts.enabled == false then
+        return
+      end
+
+      if server_opts.keys then
+        server_opts.on_attach = function(client, bufnr)
+          local map = function(keys, func, desc)
+            vim.keymap.set("n", keys, func, { buffer = bufnr, desc = "LSP: " .. desc })
+          end
+
+          for _, value in pairs(server_opts.keys) do
+            map(value[1], value[2], value[3])
+          end
         end
       end
 
-      Map("n", "gR", "<cmd>Telescope lsp_references<CR>", { desc = "References", buffer = buffer })
-      Map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-      Map("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition", buffer = buffer })
-      Map("n", "gi", "<cmd>Telescope lsp_implementations<CR>", { desc = "Show LSP implementations", buffer = buffer })
-      Map("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", { desc = "Show LSP type definitions", buffer = buffer })
-      Map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "See available code actions", buffer = buffer })
-      Map("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Smart rename", buffer = buffer })
-      Map(
-        "n",
-        "<leader>D",
-        "<cmd>Telescope diagnostics bufnr=0<CR>",
-        { desc = "Show buffer diagnostics", buffer = buffer }
-      )
-      Map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Show line diagnostics", buffer = buffer }) -- show diagnostics for line
-      Map("n", "]d", diagnostic_goto(1), { desc = "Next Diagnostic", buffer = buffer })
-      Map("n", "[d", diagnostic_goto(-1), { desc = "Prev Diagnostic", buffer = buffer })
-      Map("n", "]e", diagnostic_goto(1, "ERROR"), { desc = "Next Error", buffer = buffer })
-      Map("n", "[e", diagnostic_goto(-1, "ERROR"), { desc = "Prev Error", buffer = buffer })
-      Map("n", "]w", diagnostic_goto(1, "WARN"), { desc = "Next Warning" })
-      Map("n", "[w", diagnostic_goto(-1, "WARN"), { desc = "Prev Warning", buffer = buffer })
-      Map("n", "K", vim.lsp.buf.hover, { desc = "Show documentation for what is under cursor", buffer = buffer })
-      Map("n", "<leader>rs", ":LspRestart<CR>", { desc = "Restart LSP", buffer = buffer })
-
-      if client.name == "vtsls" then
-        local execute = require("config.util").execute
-        Map("n", "gD", function()
-          local params = vim.lsp.util.make_position_params()
-          execute({
-            command = "typescript.goToSourceDefinition",
-            arguments = { params.textDocument.uri, params.position },
-            open = true,
-          })
-        end, { desc = "Goto Source Definition" })
-
-        Map("n", "gR", function()
-          execute({
-            command = "typescript.findAllFileReferences",
-            arguments = { vim.uri_from_bufnr(0) },
-            open = true,
-          })
-        end, { desc = "File References" })
-
-        Map("n", "<leader>co", require("config.util").action["source.organizeImports"], { desc = "Organize Imports" })
-
-        Map(
-          "n",
-          "<leader>cM",
-          require("config.util").action["source.addMissingImports.ts"],
-          { desc = "Add missing imports" }
-        )
-
-        Map(
-          "n",
-          "<leader>cu",
-          require("config.util").action["source.removeUnused.ts"],
-          { desc = "Remove unused imports" }
-        )
-
-        Map("n", "<leader>cD", require("config.util").action["source.fixAll.ts"], { desc = "Fix all diagnostics" })
-
-        Map("n", "<leader>cV", function()
-          execute({ command = "typescript.selectTypeScriptVersion" })
-        end, { desc = "Select TS workspace version" })
-      end
+      lspconfig[server].setup(server_opts)
     end
 
-    lspconfig.lua_ls.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = {
-        Lua = {
-          workspace = {
-            checkThirdParty = false,
-          },
-          codeLens = {
-            enable = true,
-          },
-          completion = {
-            callSnippet = "Replace",
-          },
-          doc = {
-            privateName = { "^_" },
-          },
-          hint = {
-            enable = true,
-            setType = false,
-            paramType = true,
-            paramName = "Disable",
-            semicolon = "Disable",
-            arrayIndex = "Disable",
-          },
-        },
-      },
-    })
-
-    lspconfig.vtsls.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = {
-        complete_function_calls = true,
-        enableMoveToFileCodeAction = true,
-        autoUseWorkspaceTsdk = true,
-        experimental = {
-          completion = {
-            enableServerSideFuzzyMatch = true,
-          },
-        },
-        javascript = {
-          preferences = {
-            importModuleSpecifier = "relative",
-          },
-        },
-        typescript = {
-          preferences = {
-            importModuleSpecifier = "relative",
-          },
-          tsserver = {
-            experimental = {
-              enableProjectDiagnostics = false, -- when true it always open all json in the project?
-            },
-          },
-          updateImportsOnFileMove = { enabled = "always" },
-          suggest = {
-            completeFunctionCalls = true,
-          },
-          inlayHints = {
-            enumMemberValues = { enabled = true },
-            functionLikeReturnTypes = { enabled = true },
-            parameterNames = { enabled = "literals" },
-            parameterTypes = { enabled = true },
-            propertyDeclarationTypes = { enabled = true },
-            variableTypes = { enabled = false },
-          },
-        },
-      },
-    })
-
-    lspconfig.eslint.setup({
-      on_attach = function(client, bufnr)
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = bufnr,
-          command = "EslintFixAll",
-        })
-      end,
-      settings = {
-        workingDirectories = { mode = "auto" },
-      },
-    })
-
-    lspconfig["svelte"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    lspconfig["volar"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
-      root_dir = util.root_pattern("src/App.vue"),
-    })
-
-    -- configure html server
-    lspconfig["html"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- configure css server
-    lspconfig["cssls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- configure emmet language server
-    lspconfig["emmet_ls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-    })
-
-    -- markdown
-    lspconfig["marksman"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- nix
-    lspconfig["nil_ls"].setup({
-      autostart = true,
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = {
-        ["nil"] = {
-          formatting = {
-            command = { "nixpkgs-fmt" },
-          },
-        },
-      },
-    })
-
-    -- bash
-    lspconfig["bashls"].setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- clangd
-    lspconfig["clangd"].setup({
-      capabilities = capabilities,
-      on_attach = function(client, bufnr)
-        require("clangd_extension").setup()
-
-        on_attach(client, bufnr)
-      end,
-    })
-
-    -- kotlin
-    lspconfig.kotlin_language_server.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-    })
-
-    -- gopls
-    lspconfig.gopls.setup({
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = {
-        gofumpt = true,
-        codelenses = {
-          gc_details = false,
-          generate = true,
-          regenerate_cgo = true,
-          run_govulncheck = true,
-          test = true,
-          tidy = true,
-          upgrade_dependency = true,
-          vendor = true,
-        },
-        hints = {
-          assignVariableTypes = true,
-          compositeLiteralFields = true,
-          compositeLiteralTypes = true,
-          constantValues = true,
-          functionTypeParameters = true,
-          parameterNames = true,
-          rangeVariableTypes = true,
-        },
-        analyses = {
-          fieldalignment = true,
-          nilness = true,
-          unusedparams = true,
-          unusedwrite = true,
-          useany = true,
-        },
-        usePlaceholders = true,
-        completeUnimported = true,
-        staticcheck = true,
-        directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-        semanticTokens = true,
-      },
-    })
+    for server in pairs(opts.servers) do
+      setup(server)
+    end
   end,
 }

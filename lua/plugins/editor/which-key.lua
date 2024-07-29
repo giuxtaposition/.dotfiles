@@ -1,20 +1,7 @@
 return {
   "folke/which-key.nvim",
   event = "VeryLazy",
-  opts = {
-    win = {
-      padding = { 1, 0, 1, 2 },
-      wo = {
-        winblend = 5, -- opaque
-      },
-    },
-    layout = {
-      height = { min = 3, max = 25 },
-      width = { min = 20, max = 100 },
-      spacing = 5, -- spacing between columns
-      align = "center",
-    },
-  },
+  opts = {},
   config = function(_, opts)
     require("which-key").setup(opts)
     require("which-key").add({
