@@ -22,7 +22,7 @@
     fsType = "vfat";
   };
 
-  fileSystems."/home/giu/Videos" = {
+  fileSystems."/home/media" = {
     device = "/dev/disk/by-uuid/0be1b2ce-8879-4303-a0bf-92a09c127fb4";
     fsType = "ext4";
   };
