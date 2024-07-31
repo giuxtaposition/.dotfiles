@@ -1,19 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
-let
-  firefoxWorkScript = pkgs.writeScriptBin "firefoxWork" ''
-    #! ${pkgs.bash}/bin/sh
-    firefox -P "work"
-  '';
-
-  firefoxWork = pkgs.makeDesktopItem {
-    name = "firefox-work-profile";
-    desktopName = "Firefox Work Profile";
-    exec = ''firefox -P "work"'';
-    terminal = false;
-    icon = "firefox";
-  };
-
-in {
+{ outputs, lib, config, pkgs, ... }: {
   imports = (builtins.attrValues outputs.homeManagerModules);
   nixpkgs = {
     overlays = [
@@ -36,10 +21,6 @@ in {
       XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
       XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
       XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
-      MONGOMS_DISTRO =
-        "ubuntu-22.04"; # MONGO MEMORY SERVER not supporting nixos
-      CYPRESS_INSTALL_BINARY = "0";
-      CYPRESS_RUN_BINARY = "${pkgs.cypress}/bin/Cypress";
     };
   };
 
@@ -53,7 +34,6 @@ in {
       createDirectories = true;
       documents = "${config.home.homeDirectory}/Documents";
       pictures = "${config.home.homeDirectory}/Pictures";
-      videos = "${config.home.homeDirectory}/Videos";
     };
   };
 
@@ -70,51 +50,25 @@ in {
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    aseprite # Pixel Art Editor
-    calibre # Library Management
-    deluge # Torrent Client
     slack # Messaging App
-    discord # Messaging App
-    mpv-unwrapped # Media Player
     zathura
     spotify
     asdf-vm # runtime version management
-    pavucontrol
     obsidian
 
     (pkgs.wrapFirefox
       (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
-    (firefoxWork)
-    (firefoxWorkScript)
 
-    chromium
-    glxinfo # info about GPU
     steam-run
-    cypress
     qalculate-gtk
-    unstable.qmk
-    unstable.qmk-udev-rules
-    opera
-    wvkbd
-    vlc
     libreoffice-qt
-
-    jdk
-    kotlin
-    gradle
-
-    miller # csv
-    ventoy
-
+    pavucontrol
     libsForQt5.gwenview
 
     # Fonts
     (pkgs.unstable.nerdfonts.override {
       fonts = [ "JetBrainsMono" "Monaspace" ];
     })
-
-    nodePackages.node2nix
-    bruno
   ];
 
   # GTK CONFIG

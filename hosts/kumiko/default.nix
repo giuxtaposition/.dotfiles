@@ -3,7 +3,7 @@
 
   networking.hostName = "Kumiko";
 
-  docker.enable = true;
   thunar.enable = true;
   fish.enable = true;
+  jellyfin.enable = true;
 }

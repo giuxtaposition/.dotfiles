@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [ ./common.nix ];
 
   monitors = [
@@ -34,4 +34,15 @@
     home-update = "z dot && home-manager switch --flake .#giu@reina";
     nixos-update = "z dot && sudo nixos-rebuild switch --flake .#reina";
   };
+
+  home.packages = with pkgs; [
+    aseprite # Pixel Art Editor
+    discord # Messaging App
+
+    unstable.qmk
+    unstable.qmk-udev-rules
+    wvkbd
+    ventoy
+  ];
+  coding.enable = true;
 }

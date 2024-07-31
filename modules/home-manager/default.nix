@@ -1,7 +1,4 @@
 {
-  monitors = import ./monitors.nix;
-  laptop = import ./laptop.nix;
-
   # Terminal
   bat = import ./terminal/bat.nix;
   fish = import ./terminal/fish.nix;
@@ -14,4 +11,8 @@
   wayland = import ./wm/wayland.nix;
   sway = import ./wm/sway.nix;
   ags = import ./wm/ags.nix;
+
+  monitors = import ./monitors.nix;
+  laptop = import ./laptop.nix;
+  coding = import ./coding.nix;
 }

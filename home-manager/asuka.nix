@@ -13,6 +13,7 @@
   }];
 
   laptop.enable = true;
+  coding.enable = true;
 
   programs.fish.shellAbbrs = {
     home-update = "z dot && home-manager switch --flake .#giu@asuka";

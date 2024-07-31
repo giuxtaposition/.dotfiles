@@ -10,6 +10,15 @@
       package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
       withNodeJs = true;
       extraPackages = with pkgs; [
+        #Programming
+        go
+        unstable.rustc
+        cargo
+        cmake
+        gnumake
+        tree-sitter
+        nodejs_20
+
         # Language servers
         unstable.vscode-langservers-extracted
         unstable.nodePackages_latest.typescript-language-server

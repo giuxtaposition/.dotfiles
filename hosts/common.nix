@@ -196,21 +196,6 @@
       #Theme
       papirus-icon-theme
 
-      #Programming
-      docker
-      docker-compose
-      mongodb-compass
-      sqlite
-      go
-      unstable.rustc
-      cargo
-      cmake
-      gnumake
-
-      # Typescript/Javascript programming
-      nodejs_20
-      nodePackages_latest.pnpm
-
       # Command line tools
       xclip # clipboard tool
       feh # image viewer
@@ -221,7 +206,6 @@
       wget
       unzip
       gcc
-      tree-sitter
       acpi # power management
       brightnessctl # screen brightness
       pulseaudio

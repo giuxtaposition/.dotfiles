@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [ ./common.nix ];
 
   monitors = [{
@@ -17,4 +17,12 @@
     home-update = "z dot && home-manager switch --flake .#giu@kumiko";
     nixos-update = "z dot && sudo nixos-rebuild switch --flake .#kumiko";
   };
+
+  home.packages = with pkgs; [
+    deluge # Torrent Client
+    opera
+    calibre # Library Management
+    htop
+  ];
+
 }
