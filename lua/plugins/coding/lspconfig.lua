@@ -85,6 +85,15 @@ return {
             "Select TS workspace version",
           },
         },
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "javascript.jsx",
+          "typescript",
+          "typescriptreact",
+          "typescript.tsx",
+          "vue",
+        },
         settings = {
           complete_function_calls = true,
           enableMoveToFileCodeAction = true,
@@ -92,6 +101,18 @@ return {
           experimental = {
             completion = {
               enableServerSideFuzzyMatch = true,
+            },
+          },
+          tsserver = {
+            globalPlugins = {
+              name = "@vue/typescript-plugin",
+              location = require("config.util").lsp.get_pkg_path(
+                "vue-language-server",
+                "/node_modules/@vue/language-server"
+              ),
+              languages = { "vue" },
+              configNamespace = "typescript",
+              enableForWorkspaceTypeScriptVersions = true,
             },
           },
           javascript = {
@@ -126,6 +147,13 @@ return {
       eslint = {
         settings = {
           workingDirectories = { mode = "auto" },
+        },
+      },
+      volar = {
+        init_options = {
+          vue = {
+            hybridMode = true,
+          },
         },
       },
       svelte = {},
@@ -227,7 +255,7 @@ return {
       virtual_text = {
         spacing = 4,
         source = "if_many",
-        prefix = "●",
+        prefix = require("config.icons").diagnostics.prefix,
       },
       severity_sort = true,
       signs = {

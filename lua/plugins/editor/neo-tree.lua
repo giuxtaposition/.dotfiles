@@ -10,18 +10,31 @@ return {
     local icons = require("config.icons")
 
     return {
+      popup_border_style = "rounded",
       default_component_configs = {
         indent = {
           with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-          expander_collapsed = "",
-          expander_expanded = "",
+          expander_collapsed = icons.file_system.folder.arrow_closed,
+          expander_expanded = icons.file_system.folder.arrow_open,
           expander_highlight = "NeoTreeExpander",
         },
         git_status = {
           symbols = {
+            added = icons.git.added,
+            modified = icons.git.modified,
+            deleted = icons.git.deleted,
+            renamed = icons.git.renamed,
+            untracked = icons.git.untracked,
+            ignored = icons.git.ignored,
             unstaged = icons.git.unstaged,
             staged = icons.git.staged,
+            conflict = icons.git.conflict,
           },
+        },
+        icon = {
+          folder_closed = icons.file_system.folder.default,
+          folder_open = icons.file_system.folder.open,
+          folder_empty = icons.file_system.folder.empty,
         },
       },
       filesystem = {

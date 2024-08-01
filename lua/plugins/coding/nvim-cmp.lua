@@ -17,6 +17,32 @@ return {
     require("luasnip.loaders.from_vscode").lazy_load()
 
     return {
+      window = {
+        completion = cmp.config.window.bordered({
+          border = {
+            { "󱐋", "WarningMsg" },
+            { "─", "Comment" },
+            { "╮", "Comment" },
+            { "│", "Comment" },
+            { "╯", "Comment" },
+            { "─", "Comment" },
+            { "╰", "Comment" },
+            { "│", "Comment" },
+          },
+        }),
+        documentation = cmp.config.window.bordered({
+          border = {
+            { "", "DiagnosticHint" },
+            { "─", "Comment" },
+            { "╮", "Comment" },
+            { "│", "Comment" },
+            { "╯", "Comment" },
+            { "─", "Comment" },
+            { "╰", "Comment" },
+            { "│", "Comment" },
+          },
+        }),
+      },
       completion = {
         completeopt = "menu,menuone,noinsert",
       },
@@ -74,17 +100,33 @@ return {
       }),
       formatting = {
         format = function(_, item)
-          local icons = require("config.icons").kinds
-          if icons[item.kind] then
-            item.kind = icons[item.kind] .. " " .. item.kind
+          local icon = require("config.icons").kinds[item.kind]
+          local mini_icon, _, _ = require("mini.icons").get("lsp", item.kind)
+          if mini_icon then
+            icon = mini_icon .. " "
           end
+
+          if icon then
+            item.kind = icon .. " " .. item.kind
+          end
+          local widths = {
+            abbr = vim.g.cmp_widths and vim.g.cmp_widths.abbr or 40,
+            menu = vim.g.cmp_widths and vim.g.cmp_widths.menu or 30,
+          }
+
+          for key, width in pairs(widths) do
+            if item[key] and vim.fn.strdisplaywidth(item[key]) > width then
+              item[key] = vim.fn.strcharpart(item[key], 0, width - 1) .. "…"
+            end
+          end
+
           return item
         end,
       },
       experimental = {
-        ghost_text = {
-          hl_group = "CmpGhostText",
-        },
+        -- ghost_text = {
+        --   hl_group = "CmpGhostText",
+        -- },
       },
     }
   end,
