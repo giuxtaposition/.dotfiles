@@ -50,14 +50,6 @@
 
     home.packages = with pkgs; [ myNodePackages."@vtsls/language-server" ];
 
-    home.file."${config.home.homeDirectory}/.dotfiles/.config/nvim/lua/config/nixosExtra.lua" =
-      {
-        text = ''
-          vim.g.sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.so'
-        '';
-
-      };
-
     home.file."${config.home.homeDirectory}/.config/nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.dotfiles/.config/nvim";

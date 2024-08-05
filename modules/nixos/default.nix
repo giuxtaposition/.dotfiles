@@ -5,4 +5,5 @@
   thunar = import ./thunar.nix;
   fish = import ./fish.nix;
   jellyfin = import ./jellyfin.nix;
+  amdgpu = import ./amdgpu.nix;
 }
