@@ -10,7 +10,6 @@
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
-    wezterm = inputs.wezterm.packages.${prev.system}.default;
     wl-gammarelay-rs =
       inputs.nixpkgs-wayland.packages.${prev.system}.wl-gammarelay-rs;
 

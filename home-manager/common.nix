@@ -65,6 +65,9 @@
     pavucontrol
     libsForQt5.gwenview
 
+    amdgpu_top
+    htop
+
     # Fonts
     (pkgs.unstable.nerdfonts.override {
       fonts = [ "JetBrainsMono" "Monaspace" ];

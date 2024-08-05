@@ -3,18 +3,20 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    wezterm = { url = "github:wez/wezterm?dir=nix"; };
 
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager = {
+      url = "github:nix-community/home-manager/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Candy Icons
     candy-icons = {
@@ -45,8 +47,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Default branch
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, nix-index-database, nixos-hardware

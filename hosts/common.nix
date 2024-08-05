@@ -154,9 +154,6 @@
     upower.enable = true;
   };
 
-  # Sound
-  sound.enable = true;
-
   security.rtkit.enable = true;
 
   # Use swaylock as screen lock
@@ -173,7 +170,6 @@
       settings = { General = { Enable = "Source,Sink,Media,Socket"; }; };
     };
 
-    opengl.enable = true;
     nvidia.modesetting.enable = true;
     keyboard = { qmk.enable = true; };
   };
