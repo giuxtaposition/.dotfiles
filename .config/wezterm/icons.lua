@@ -27,6 +27,9 @@ M.process_icons = {
   ["bun"] = {
     { Text = wezterm.nerdfonts.md_food_croissant },
   },
+  ["btop"] = {
+    { Text = wezterm.nerdfonts.oct_graph },
+  },
   -- for some weird reason nixos has no process name...
   [""] = {
     { Text = wezterm.nerdfonts.linux_nixos },

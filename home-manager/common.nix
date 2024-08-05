@@ -42,6 +42,7 @@
   git.enable = true;
   nvim.enable = true;
   wezterm.enable = true;
+  btop.enable = true;
 
   wayland.enable = true;
   sway.enable = true;
@@ -64,9 +65,6 @@
     libreoffice-qt
     pavucontrol
     libsForQt5.gwenview
-
-    amdgpu_top
-    htop
 
     # Fonts
     (pkgs.unstable.nerdfonts.override {

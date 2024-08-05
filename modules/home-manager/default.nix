@@ -6,6 +6,7 @@
   nvim = import ./terminal/nvim.nix;
   wezterm = import ./terminal/wezterm.nix;
   foot = import ./terminal/foot.nix;
+  btop = import ./terminal/btop.nix;
 
   # WM
   wayland = import ./wm/wayland.nix;
