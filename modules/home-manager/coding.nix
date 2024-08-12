@@ -66,6 +66,8 @@ in {
       # Rust
       rustc
       cargo
+      rust-analyzer
+      rustfmt
 
       # Go
       go
@@ -94,7 +96,9 @@ in {
       gnumake
       tree-sitter
       codespell # code spell
+      vscode-extensions.vadimcn.vscode-lldb
 
+      exercism
     ];
   };
 }
