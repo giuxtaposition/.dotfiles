@@ -92,6 +92,7 @@ return {
           }),
           require("neotest-vitest"),
           require("neotest-gradle"),
+          require("rustaceanvim.neotest"),
         },
       }
     end,
