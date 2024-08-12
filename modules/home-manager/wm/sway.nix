@@ -39,7 +39,7 @@ in {
 
     wayland.windowManager.sway = {
       enable = true;
-      package = pkgs.unstable.swayfx;
+      package = pkgs.swayfx;
       xwayland = true;
       systemd = {
         enable = true; # beta

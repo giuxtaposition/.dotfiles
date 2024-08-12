@@ -4,12 +4,6 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
-
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-
     nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
 
     # Home manager
@@ -17,6 +11,9 @@
       url = "github:nix-community/home-manager/";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    ags.url = "github:Aylur/ags";
 
     # Candy Icons
     candy-icons = {
@@ -24,8 +21,6 @@
         "https://github.com/EliverLara/candy-icons/archive/refs/heads/master.zip";
       flake = false;
     };
-
-    ags.url = "github:Aylur/ags";
 
     fish-catppuccin-theme = {
       url = "github:catppuccin/fish";

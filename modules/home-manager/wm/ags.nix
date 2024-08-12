@@ -31,6 +31,7 @@
       wl-gammarelay-rs
       libdbusmenu-gtk3
       lsof
+      brightnessctl
     ];
 
     home.file."${config.home.homeDirectory}/.dotfiles/.config/ags/env.ts" = {

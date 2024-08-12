@@ -4,7 +4,7 @@
 
   config = lib.mkIf config.wayland.enable {
     home.packages = with pkgs; [
-      unstable.swww # wallpaper manager
+      swww # wallpaper manager
       wl-clipboard # command-line copy/paste utilities for wayland
       slurp # select a region in a wayland compositor
       grim # grab images from a wayland compositor

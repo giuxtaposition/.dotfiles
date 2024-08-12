@@ -7,7 +7,7 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules =
-    [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+    [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -20,11 +20,7 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/6A8B-3D55";
     fsType = "vfat";
-  };
-
-  fileSystems."/home/media" = {
-    device = "/dev/disk/by-uuid/0be1b2ce-8879-4303-a0bf-92a09c127fb4";
-    fsType = "ext4";
+    options = [ "fmask=0022" "dmask=0022" ];
   };
 
   fileSystems."/home/giu/Programming" = {
@@ -37,6 +33,11 @@
     fsType = "ext4";
   };
 
+  fileSystems."/home/media" = {
+    device = "/dev/disk/by-uuid/0be1b2ce-8879-4303-a0bf-92a09c127fb4";
+    fsType = "ext4";
+  };
+
   swapDevices =
     [{ device = "/dev/disk/by-uuid/aee16918-3090-4a93-aa8b-dc8201c06902"; }];
 
@@ -45,6 +46,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp9s0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp7s0.useDHCP = lib.mkDefault true;
 

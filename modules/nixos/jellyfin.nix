@@ -13,6 +13,7 @@
       openFirewall = true;
       group = "media";
     };
+    users.users.jellyfin = { extraGroups = [ "video" "render" ]; };
     environment.systemPackages =
       [ pkgs.jellyfin pkgs.jellyfin-web pkgs.jellyfin-ffmpeg ];
   };

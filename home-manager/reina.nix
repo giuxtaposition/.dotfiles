@@ -39,10 +39,14 @@
     aseprite # Pixel Art Editor
     discord # Messaging App
 
-    unstable.qmk
-    unstable.qmk-udev-rules
+    qmk
+    qmk-udev-rules
     wvkbd
     ventoy
+
+    deluge # Torrent Client
+    opera
+    calibre # Library Management
   ];
   coding.enable = true;
 }

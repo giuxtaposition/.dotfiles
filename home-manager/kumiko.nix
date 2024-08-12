@@ -22,7 +22,6 @@
     deluge # Torrent Client
     opera
     calibre # Library Management
-    htop
   ];
 
 }

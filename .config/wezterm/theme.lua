@@ -129,12 +129,25 @@ function M.basename(s)
   return string.gsub(s, "(.*[/\\])(.*)", "%2")
 end
 
+function M.should_hide_cwd_uri(process_name)
+  local hide_cwd = {
+    "btop",
+    "yazi",
+  }
+
+  for _, name in ipairs(hide_cwd) do
+    if name == process_name then
+      return true
+    end
+  end
+end
+
 function M.tab_title(tab_info)
   local process_name = M.basename(tab_info.active_pane.foreground_process_name)
   local process = w.format(icons.process_icons[process_name] or { { Text = string.format("[%s]", process_name) } })
 
-  local cwd_uri = tab_info.active_pane.current_working_dir
-  local cwd = M.basename(cwd_uri.file_path)
+  local cwd = M.should_hide_cwd_uri(process_name) and ""
+    or M.basename(tab_info.active_pane.current_working_dir.file_path)
   return process .. " " .. cwd
 end
 

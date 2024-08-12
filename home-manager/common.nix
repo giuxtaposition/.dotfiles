@@ -4,7 +4,7 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages
+      # outputs.overlays.unstable-packages
     ];
     config = {
       allowUnfree = true;
@@ -65,11 +65,10 @@
     libreoffice-qt
     pavucontrol
     libsForQt5.gwenview
+    yazi
 
     # Fonts
-    (pkgs.unstable.nerdfonts.override {
-      fonts = [ "JetBrainsMono" "Monaspace" ];
-    })
+    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "Monaspace" ]; })
   ];
 
   # GTK CONFIG

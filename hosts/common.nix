@@ -8,7 +8,7 @@
       # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages
+      # outputs.overlays.unstable-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -22,9 +22,9 @@
     ];
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "openssl-1.1.1w" # needed for mongodb-memory-server
-      ];
+      # permittedInsecurePackages = [
+      #   "openssl-1.1.1w" # needed for mongodb-memory-server
+      # ];
     };
   };
 
@@ -51,14 +51,6 @@
     };
   };
 
-  networking.networkmanager.enable = true;
-  networking.extraHosts = ''
-    127.0.0.1   calc-local.vitesicure.it
-    127.0.0.1   calc-local.bridgebroker.it
-    127.0.0.1   api-v2-local.vitesicure.it
-    127.0.0.1   api-v2-local.bridgebroker.it
-  '';
-
   boot = {
     # Boot Options
     loader = {
@@ -72,6 +64,8 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
+  network.enable = true;
+
   users.users = {
     giu = {
       initialPassword = "pigsarecute";
@@ -79,11 +73,10 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      extraGroups = [ "wheel" "video" "audio" "networkmanager" "rtkit" ];
+      extraGroups = [ "wheel" "video" "audio" "rtkit" ];
     };
   };
 
-  programs.noisetorch.enable = true;
   programs.dconf.enable = true;
   programs.nix-ld = {
     enable = true;
@@ -95,12 +88,12 @@
       stdenv.cc.cc
 
       # mongodb-memory-server
-      curlFull
-      openssl
-      openssl_1_1
-      xz
-      libGL
-      libuuid
+      # curlFull
+      # openssl
+      # openssl_1_1
+      # xz
+      # libGL
+      # libuuid
     ];
   };
 
@@ -170,7 +163,6 @@
       settings = { General = { Enable = "Source,Sink,Media,Socket"; }; };
     };
 
-    nvidia.modesetting.enable = true;
     keyboard = { qmk.enable = true; };
   };
 
@@ -202,7 +194,6 @@
       wget
       unzip
       gcc
-      acpi # power management
       brightnessctl # screen brightness
       pulseaudio
       pamixer
