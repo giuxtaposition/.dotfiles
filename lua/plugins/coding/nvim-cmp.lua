@@ -101,10 +101,6 @@ return {
       formatting = {
         format = function(_, item)
           local icon = require("config.icons").kinds[item.kind]
-          local mini_icon, _, _ = require("mini.icons").get("lsp", item.kind)
-          if mini_icon then
-            icon = mini_icon .. " "
-          end
 
           if icon then
             item.kind = icon .. " " .. item.kind
