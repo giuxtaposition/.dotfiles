@@ -161,7 +161,7 @@ return {
         html = {},
         cssls = {},
         emmet_ls = {},
-        -- marksmans = {},
+        marksman = {},
         nil_ls = {
           settings = {
             ["nil"] = {
