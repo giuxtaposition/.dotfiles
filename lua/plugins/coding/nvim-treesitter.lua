@@ -35,6 +35,7 @@ return {
         "java",
         "kotlin",
         "diff",
+        "http",
       },
       auto_install = true,
       highlight = {
