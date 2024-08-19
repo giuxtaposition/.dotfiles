@@ -56,10 +56,10 @@ function M.apply_to_config(config)
       stat = window:active_key_table()
     end
     if window:leader_is_active() then
-      stat = "LDR"
+      stat = w.nerdfonts.md_lightbulb
     end
 
-    table.insert(cells, w.nerdfonts.oct_table .. "  " .. stat)
+    table.insert(cells, stat)
 
     local cwd_uri = pane:get_current_working_dir()
     local cwd = M.basename(cwd_uri.file_path)

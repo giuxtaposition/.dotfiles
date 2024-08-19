@@ -7,6 +7,7 @@
   wezterm = import ./terminal/wezterm.nix;
   foot = import ./terminal/foot.nix;
   btop = import ./terminal/btop.nix;
+  yazi = import ./terminal/yazi.nix;
 
   # WM
   wayland = import ./wm/wayland.nix;

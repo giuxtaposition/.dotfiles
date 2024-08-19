@@ -43,6 +43,7 @@
   nvim.enable = true;
   wezterm.enable = true;
   btop.enable = true;
+  yazi.enable = true;
 
   wayland.enable = true;
   sway.enable = true;
@@ -65,7 +66,6 @@
     libreoffice-qt
     pavucontrol
     libsForQt5.gwenview
-    yazi
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "Monaspace" ]; })

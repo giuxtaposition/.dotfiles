@@ -5,10 +5,8 @@ local M = {}
 
 function M.apply_to_config(config)
   config.disable_default_key_bindings = true
-  config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+  config.leader = { key = "Enter", mods = "CTRL", timeout_milliseconds = 1000 }
   config.keys = {
-    { key = "a", mods = "LEADER|CTRL", action = act.SendKey({ key = "a", mods = "CTRL" }) },
-
     -- Window pane
     {
       key = "v",
