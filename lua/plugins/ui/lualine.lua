@@ -10,6 +10,8 @@ return {
         theme = "auto",
         globalstatus = vim.o.laststatus == 3,
         disabled_filetypes = { statusline = { "dashboard" } },
+        section_separators = { left = "", right = "" },
+        component_separators = "",
       },
       sections = {
         lualine_a = {
@@ -19,8 +21,8 @@ return {
           "branch",
         },
         lualine_c = {
-          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-          "filename",
+          { "progress", separator = " ", padding = { left = 1, right = 0 } },
+          { "location", padding = { left = 0, right = 1 } },
           {
             "diagnostics",
             symbols = {
@@ -72,14 +74,19 @@ return {
               end
             end,
           },
+          {
+            function()
+              return " " .. vim.lsp.get_clients()[1].name
+            end,
+          },
         },
         lualine_y = {
-          { "progress", separator = " ", padding = { left = 1, right = 0 } },
-          { "location", padding = { left = 0, right = 1 } },
+          { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+          "filename",
         },
         lualine_z = {
           function()
-            return " " .. os.date("%R")
+            return "󰉖 " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
           end,
         },
       },
