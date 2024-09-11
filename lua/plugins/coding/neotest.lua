@@ -6,7 +6,7 @@ return {
       "nvim-lua/plenary.nvim",
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
-      "nvim-neotest/neotest-jest",
+      "giuxtaposition/neotest-jest",
       "marilari88/neotest-vitest",
       "weilbith/neotest-gradle",
     },
@@ -84,11 +84,26 @@ return {
       return {
         adapters = {
           require("neotest-jest")({
-            jestCommand = "npm test --",
+            jestCommand = function(path)
+              if string.match(path, "%." .. "integration%-spec") then
+                return "npm run test:integration --"
+              end
+
+              if string.match(path, "%." .. "api%-spec") then
+                return "npm run test:api --"
+              end
+
+              if string.match(path, "%" .. "/src/pages/") then
+                return "npm run test:component --"
+              end
+
+              return "npm run test --"
+            end,
             env = { CI = true },
             cwd = function()
               return vim.fn.getcwd()
             end,
+            testFileNames = { "api%-spec", "component%-spec", "integration%-spec", "test", "spec" },
           }),
           require("neotest-vitest"),
           require("neotest-gradle"),
@@ -97,16 +112,16 @@ return {
       }
     end,
   },
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   keys = {
-  --     {
-  --       "<leader>td",
-  --       function()
-  --         require("neotest").run.run({ strategy = "dap" })
-  --       end,
-  --       desc = "Debug Nearest",
-  --     },
-  --   },
-  -- },
+  {
+    "mfussenegger/nvim-dap",
+    keys = {
+      {
+        "<leader>td",
+        function()
+          require("neotest").run.run({ strategy = "dap" })
+        end,
+        desc = "Debug Nearest",
+      },
+    },
+  },
 }
