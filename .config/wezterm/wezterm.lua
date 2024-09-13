@@ -6,6 +6,7 @@ local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smar
 local config = wezterm.config_builder()
 
 config.default_workspace = "home"
+config.front_end = "WebGpu"
 
 theme.apply_to_config(config)
 keymaps.apply_to_config(config)
