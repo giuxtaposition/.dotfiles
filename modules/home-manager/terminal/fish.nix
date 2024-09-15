@@ -46,17 +46,6 @@
     programs.fish = {
       enable = true;
 
-      plugins = [
-        {
-          name = "fzf";
-          src = pkgs.fishPlugins.fzf-fish.src;
-        }
-        {
-          name = "z";
-          src = pkgs.fishPlugins.z.src;
-        }
-      ];
-
       interactiveShellInit = ''
         function fish_greeting
           echo (set_color b4befe)'Hello Giu, ^•ﻌ•^ฅ♡'
@@ -102,6 +91,16 @@
         gpf = "git push --force-with-lease";
         gs = "git status --short";
       };
+    };
+
+    programs.zoxide = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
+    programs.fzf = {
+      enable = true;
+      enableFishIntegration = true;
     };
   };
 }

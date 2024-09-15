@@ -14,8 +14,10 @@
   laptop.enable = true;
 
   programs.fish.shellAbbrs = {
-    home-update = "z dot && home-manager switch --flake .#giu@kumiko";
-    nixos-update = "z dot && sudo nixos-rebuild switch --flake .#kumiko";
+    home-update =
+      "cd /home/giu/.dotfiles && home-manager switch --flake .#giu@kumiko";
+    nixos-update =
+      "cd /home/giu/.dotfiles && sudo nixos-rebuild switch --flake .#kumiko";
   };
 
   home.packages = with pkgs; [

@@ -16,8 +16,10 @@
   coding.enable = true;
 
   programs.fish.shellAbbrs = {
-    home-update = "z dot && home-manager switch --flake .#giu@asuka";
-    nixos-update = "z dot && sudo nixos-rebuild switch --flake .#asuka";
+    home-update =
+      "cd /home/giu/.dotfiles && home-manager switch --flake .#giu@asuka";
+    nixos-update =
+      "cd /home/giu/.dotfiles && sudo nixos-rebuild switch --flake .#asuka";
   };
 
 }
