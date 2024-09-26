@@ -59,3 +59,7 @@ opt.mouse = "" -- disable mouse
 opt.formatoptions:append({ "r" })
 
 opt.scrolloff = 10 -- minimum lines to keep above and below cursor
+
+-- Spell checking
+opt.spell = true
+opt.spelllang = "en_us,it"

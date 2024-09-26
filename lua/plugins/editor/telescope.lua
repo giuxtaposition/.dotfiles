@@ -106,5 +106,7 @@ return {
     { "<leader>sf", "<cmd>Telescope grep_string<cr>", desc = "Find string under cursor in cwd" },
     { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
     { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
+
+    { "z=", "<Cmd>Telescope spell_suggest<CR>", desc = "Telescope: Find spell word suggestion" },
   },
 }

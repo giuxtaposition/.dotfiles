@@ -8,6 +8,7 @@ return {
     "L3MON4D3/LuaSnip", -- snippet engine
     "saadparwaiz1/cmp_luasnip", -- for autocompletion
     "rafamadriz/friendly-snippets", -- useful snippets
+    "f3fora/cmp-spell", -- source for spelling errors
   },
   opts = function()
     vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
@@ -97,6 +98,16 @@ return {
         { name = "buffer" }, -- text within current buffer
         { name = "path" }, -- file system paths
         { name = "copilot", group_index = 1, priority = 2 },
+        {
+          name = "spell",
+          option = {
+            keep_all_entries = false,
+            enable_in_context = function()
+              return true
+            end,
+            preselect_correct_word = true,
+          },
+        },
       }),
       formatting = {
         format = function(_, item)
