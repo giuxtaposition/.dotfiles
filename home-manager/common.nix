@@ -57,6 +57,7 @@
     spotify
     asdf-vm # runtime version management
     obsidian
+    cbonsai
 
     (pkgs.wrapFirefox
       (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
@@ -69,6 +70,8 @@
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "Monaspace" ]; })
+
+    vlc
   ];
 
   # GTK CONFIG

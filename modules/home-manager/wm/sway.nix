@@ -133,7 +133,7 @@ in {
 
         keybindings = let
           mod = "Mod4"; # Super
-          term = "wezterm";
+          term = "wezterm start --always-new-process";
           app-menu = ''exec ags --toggle-window "launcher"'';
           power-menu = ''exec ags --toggle-window "powermenu"'';
         in {

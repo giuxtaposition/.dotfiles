@@ -98,7 +98,10 @@ in {
       codespell # code spell
       vscode-extensions.vadimcn.vscode-lldb
 
+      libxml2 # xml parser
       exercism
+      insomnia
+
     ];
   };
 }

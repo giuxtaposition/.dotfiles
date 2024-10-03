@@ -45,7 +45,7 @@ function M.apply_to_config(config)
   config.window_frame = {
     font = w.font("JetBrains Mono Nerd Font"),
   }
-  config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+  config.window_padding = { left = 4, right = 4, top = 1, bottom = 1 }
   config.window_background_opacity = 0.9
 
   w.on("update-right-status", function(window, pane)
