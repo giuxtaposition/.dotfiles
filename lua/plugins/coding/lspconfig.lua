@@ -104,18 +104,6 @@ return {
                 enableServerSideFuzzyMatch = true,
               },
             },
-            tsserver = {
-              globalPlugins = {
-                name = "@vue/typescript-plugin",
-                location = require("config.util").lsp.get_pkg_path(
-                  "vue-language-server",
-                  "/node_modules/@vue/language-server"
-                ),
-                languages = { "vue" },
-                configNamespace = "typescript",
-                enableForWorkspaceTypeScriptVersions = true,
-              },
-            },
             javascript = {
               preferences = {
                 importModuleSpecifier = "relative",

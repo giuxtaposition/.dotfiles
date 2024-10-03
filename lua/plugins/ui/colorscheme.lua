@@ -14,6 +14,10 @@ return {
     priority = 1000,
     opts = {
       flavour = "mocha",
+      show_end_of_buffer = true,
+      dim_inactive = {
+        enabled = true,
+      },
       -- transparent_background = true,
       integrations = {
         dashboard = true,

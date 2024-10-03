@@ -16,6 +16,7 @@ return {
     local luasnip = require("luasnip")
     -- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
     require("luasnip.loaders.from_vscode").lazy_load()
+    -- require("luasnip").filetype_extend("typescript", { "tsdoc", "jsdoc" })
 
     return {
       window = {
@@ -131,9 +132,9 @@ return {
         end,
       },
       experimental = {
-        -- ghost_text = {
-        --   hl_group = "CmpGhostText",
-        -- },
+        ghost_text = {
+          hl_group = "CmpGhostText",
+        },
       },
     }
   end,

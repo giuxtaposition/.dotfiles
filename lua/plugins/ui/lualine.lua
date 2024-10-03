@@ -76,6 +76,11 @@ return {
           },
           {
             function()
+              local vtsls_client = "vtsls"
+              if vim.lsp.get_clients({ name = vtsls_client })[1] then
+                return " " .. vtsls_client
+              end
+
               return " " .. vim.lsp.get_clients()[1].name
             end,
           },
