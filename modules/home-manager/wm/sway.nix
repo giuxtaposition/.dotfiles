@@ -275,7 +275,6 @@ in {
         for_window [shell="xdg_shell"] title_format "%title (%app_id)"
         for_window [shell="x_wayland"] title_format "%class - %title"
 
-        assign [class="Spotify"]                    9
       '';
     };
   };

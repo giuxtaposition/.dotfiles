@@ -4,7 +4,8 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    catppuccin.url = "github:catppuccin/nix";
 
     # Home manager
     home-manager = {
@@ -22,16 +23,6 @@
       flake = false;
     };
 
-    fish-catppuccin-theme = {
-      url = "github:catppuccin/fish";
-      flake = false;
-    };
-
-    bat-catppuccin-theme = {
-      url = "github:catppuccin/bat";
-      flake = false;
-    };
-
     spotify-adblock = {
       url = "github:abba23/spotify-adblock";
       flake = false;
@@ -45,7 +36,7 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nix-index-database, nixos-hardware
-    , ... }@inputs:
+    , catppuccin, ... }@inputs:
     let
       inherit (self) outputs;
       # Supported systems for your flake packages, shell, etc.
@@ -98,19 +89,26 @@
           modules = [
             ./home-manager/kumiko.nix
             nix-index-database.hmModules.nix-index
+            catppuccin.homeManagerModules.catppuccin
           ];
         };
         "giu@asuka" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
-          modules =
-            [ ./home-manager/asuka.nix nix-index-database.hmModules.nix-index ];
+          modules = [
+            ./home-manager/asuka.nix
+            nix-index-database.hmModules.nix-index
+            catppuccin.homeManagerModules.catppuccin
+          ];
         };
         "giu@reina" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
-          modules =
-            [ ./home-manager/reina.nix nix-index-database.hmModules.nix-index ];
+          modules = [
+            ./home-manager/reina.nix
+            nix-index-database.hmModules.nix-index
+            catppuccin.homeManagerModules.catppuccin
+          ];
         };
       };
 

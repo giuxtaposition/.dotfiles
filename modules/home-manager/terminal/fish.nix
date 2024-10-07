@@ -12,11 +12,6 @@
       imagemagick
     ];
 
-    # fish theme
-    home.file."${config.home.homeDirectory}/.config/fish/themes" = {
-      source = "${pkgs.fish-catppuccin-theme.out}/fish-catppuccin-theme";
-    };
-
     # starship config
     home.file."${config.home.homeDirectory}/.config/starship.toml" = {
       source = config.lib.file.mkOutOfStoreSymlink
@@ -60,14 +55,6 @@
         set -gx TERM xterm-256color
         set -gx EDITOR nvim
 
-        # FZF theme
-        set -Ux FZF_DEFAULT_OPTS "\
-        --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-        --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-        --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
-               
-        fish_config theme choose "Catppuccin Mocha"
-
         # starship
         starship init fish | source
 
@@ -82,6 +69,7 @@
           fish_vi_key_bindings
           bind -M insert -m default kj backward-char force-repaint #use kj as Esc'';
       };
+
       shellAliases = {
         vim = "nvim";
         nvim = "env TERM=wezterm nvim";
@@ -90,6 +78,7 @@
         ":q" = "exit";
         keyboard = "wvkbd-mobintl";
       };
+
       shellAbbrs = {
         #GIT
         gp = "git pull --rebase --autostash";
@@ -97,6 +86,8 @@
         gpf = "git push --force-with-lease";
         gs = "git status --short";
       };
+
+      catppuccin.enable = true;
     };
 
     programs.zoxide = {

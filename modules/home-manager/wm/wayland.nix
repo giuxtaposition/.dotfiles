@@ -11,6 +11,7 @@
       swayidle
       qt5.qtwayland
       qt6.qtwayland
+      wdisplays
     ];
 
     # Wallpapers folder
