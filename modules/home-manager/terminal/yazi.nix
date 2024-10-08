@@ -7,6 +7,13 @@
       enable = true;
       enableFishIntegration = true;
       catppuccin.enable = true;
+      settings = {
+        manager = {
+          show_hidden = true;
+          sort_by = "modified";
+          sort_dir_first = true;
+        };
+      };
     };
 
     home.packages = with pkgs; [
