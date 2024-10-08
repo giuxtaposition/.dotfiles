@@ -17,12 +17,13 @@ map("n", "<A>D", '"_D')
 map("v", "<A>d", '"_d')
 map("v", "<A>D", '"_D')
 
+-- Remapping gj gk for wrapped line
+map("n", "j", "gj", { desc = "Down In Wrap", noremap = true, silent = true })
+map("n", "k", "gk", { desc = "Up In Wrap", noremap = true, silent = true })
+
 -- General keymaps
 map({ "i", "v", "s" }, "jk", "<Esc>", { desc = "Map jk to Esc" })
-map("t", "jk", "<C-\\><C-n>", { desc = "Enter normal mode in terminal" })
 map("n", "U", "<C-r>", { desc = "Redo" })
-map("n", "<leader>+", "<C-a>", { desc = "Increment" })
-map("n", "<leader>-", "<C-x>", { desc = "Decrement" })
 map("n", "<C-A>", "<cmd> %y+<cr>", { desc = "Copy whole file" })
 map("n", "<leader><leader>b", ':let @+ = expand("%")<cr>', { desc = "Yank filename path of current buffer" })
 map("n", "<cr>", "o<Esc>", { desc = "add blank line under current line" })

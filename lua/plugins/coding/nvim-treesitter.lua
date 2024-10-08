@@ -74,6 +74,7 @@ return {
               ["l="] = { query = "@assignment.lhs", desc = "Select left hand side of an assignment" },
               ["r="] = { query = "@assignment.rhs", desc = "Select right hand side of an assignment" },
 
+              -- works for javascript/typescript files (custom capture I created in after/queries/ecma/textobjects.scm)
               ["a:"] = { query = "@property.outer", desc = "Select outer part of an object property" },
               ["i:"] = { query = "@property.inner", desc = "Select inner part of an object property" },
               ["l:"] = { query = "@property.lhs", desc = "Select left part of an object property" },
@@ -168,6 +169,6 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     enabled = true,
     opts = { mode = "cursor", max_lines = 3 },
-    event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+    event = { "BufRead" },
   },
 }

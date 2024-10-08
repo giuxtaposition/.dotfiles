@@ -3,7 +3,8 @@ return {
     "neovim/nvim-lspconfig",
     event = { "BufReadPost", "BufWritePost", "BufNewFile" },
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
+      -- Useful status updates for LSP.
+      { "j-hui/fidget.nvim", opts = {} },
     },
     opts = {
       servers = {
@@ -160,7 +161,6 @@ return {
           },
         },
         bashls = {},
-        -- kotlin = {},
       },
     },
     config = function(_, opts)
@@ -170,7 +170,7 @@ return {
         group = vim.api.nvim_create_augroup("giuxtaposition-lsp-attach", { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc, expr)
-            vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc, expr = expr })
+            vim.keymap.set("n", keys, func, { buffer = event.buf, desc = desc, expr = expr, silent = true })
           end
 
           local diagnostic_goto = function(count, severity)
@@ -233,8 +233,6 @@ return {
       })
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- used to enable autocompletion (assign to every lsp server config)
-      capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
       local function setup(server)
         local server_opts = vim.tbl_deep_extend("force", {

@@ -20,19 +20,20 @@ return {
       },
       -- transparent_background = true,
       integrations = {
+        --TODO cleanup unused
         dashboard = true,
         diffview = true,
         flash = true,
         gitsigns = true,
         indent_blankline = {
           enabled = true,
-          scope_color = "mauve", -- catppuccin color (eg. `lavender`) Default: text
+          scope_color = "mauve",
           colored_indent_levels = false,
         },
         markdown = true,
         mini = {
           enabled = true,
-          indentscope_color = "mauve", -- catppuccin color (eg. `lavender`) Default: text
+          indentscope_color = "mauve",
         },
         neotree = true,
         neotest = true,

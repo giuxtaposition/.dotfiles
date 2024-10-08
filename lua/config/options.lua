@@ -20,7 +20,7 @@ opt.wrap = false
 
 -- search settings
 opt.ignorecase = true -- ignore case when searching
-opt.smartcase = true -- if you include mixed cacse in your search, assume you want case-sensitive
+opt.smartcase = true -- if you include mixed case in your search, assume you want case-sensitive
 opt.hlsearch = true -- highlight search results
 opt.path:append("**") -- search in subdirectories
 opt.wildignore:append({ "*/node_modules/*" }) -- ignore node_modules when searching
