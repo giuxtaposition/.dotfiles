@@ -7,9 +7,9 @@
     home.packages = with pkgs; [
       eza # replacement for ls
       starship
-      fzf
       neofetch
       imagemagick
+      ueberzugpp
     ];
 
     # starship config
@@ -72,7 +72,8 @@
 
       shellAliases = {
         vim = "nvim";
-        nvim = "env TERM=wezterm nvim";
+        nvim =
+          "env TERM=wezterm nvim --listen ~/.cache/nvim/(pwd | sed 's/\\//-/g' | sed 's/^-//' | sed 's/\\//./g').pipe";
         ll = "eza -l -g --icons";
         lla = "eza -la -g --icons";
         ":q" = "exit";
@@ -98,6 +99,7 @@
     programs.fzf = {
       enable = true;
       enableFishIntegration = true;
+      catppuccin.enable = true;
     };
   };
 }

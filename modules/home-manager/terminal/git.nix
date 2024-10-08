@@ -3,13 +3,6 @@
   options = { git.enable = lib.mkEnableOption "enables git module"; };
 
   config = lib.mkIf config.git.enable {
-    home.packages = with pkgs; [ lazygit ];
-
-    home.file."${config.home.homeDirectory}/.config/lazygit/config.yml" = {
-      source = config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/.dotfiles/.config/lazygit/config.yml";
-    };
-
     programs.git = {
       enable = true;
       userName = "giuxtaposition";
@@ -34,6 +27,27 @@
       delta = {
         enable = true;
         catppuccin.enable = true;
+      };
+    };
+
+    programs.lazygit = {
+      enable = true;
+      settings = {
+        git.paging = {
+          colorArg = "always";
+          pager = "delta --dark --paging=never";
+        };
+        os = {
+          editCommand = "nvim";
+          editCommandTemplate = ''
+            {{editor}} --server ~/.cache/nvim/$(pwd | sed 's/\\//-/g' | sed 's/^-//' | sed 's/\\//./g').pipe --remote-tab "{{filename}}"
+          '';
+        };
+        promptToReturnFromSubprocess = false;
+      };
+      catppuccin = {
+        enable = true;
+        accent = "lavender";
       };
     };
   };
