@@ -1,19 +1,32 @@
 return {
   {
-    "folke/tokyonight.nvim",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    opts = {},
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-    end,
-  },
-  {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
     opts = {
       flavour = "mocha",
+      custom_highlights = function(palette)
+        return {
+          ["BlinkCmpMenu"] = {
+            fg = palette.overlay0,
+          },
+          ["BlinkCmpLabel"] = {
+            fg = palette.overlay0,
+          },
+          ["BlinkCmpMenuBorder"] = {
+            fg = palette.lavender,
+          },
+          ["BlinkCmpDocBorder"] = {
+            fg = palette.lavender,
+          },
+          ["BlinkCmpSignatureHelpBorder"] = {
+            fg = palette.lavender,
+          },
+          ["BlinkCmpMenuSelection"] = {
+            bg = palette.surface0,
+          },
+        }
+      end,
       show_end_of_buffer = true,
       dim_inactive = {
         enabled = true,
@@ -66,6 +79,7 @@ return {
         },
         lsp_trouble = true,
         which_key = true,
+        render_markdown = true,
       },
     },
     config = function(_, opts)
