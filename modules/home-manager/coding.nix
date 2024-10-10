@@ -21,6 +21,8 @@ in {
         "ubuntu-22.04"; # MONGO MEMORY SERVER not supporting nixos
       CYPRESS_INSTALL_BINARY = "0";
       CYPRESS_RUN_BINARY = "${pkgs.cypress}/bin/Cypress";
+
+      ZK_NOTEBOOK_DIR = "${config.home.homeDirectory}/notes";
     };
 
     nvim.enable = true;
@@ -101,6 +103,7 @@ in {
       libxml2 # xml parser
       exercism
       insomnia
+      zk
 
     ];
   };
