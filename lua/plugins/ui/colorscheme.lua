@@ -5,8 +5,33 @@ return {
     priority = 1000,
     opts = {
       flavour = "mocha",
+      color_overrides = {
+        mocha = {
+          peach = "#e0af68",
+        },
+      },
       custom_highlights = function(palette)
-        return {
+        local groups = {}
+
+        local rainbow = {
+          rainbow1 = { fg = palette.blue },
+          rainbow2 = { fg = palette.peach },
+          rainbow3 = { fg = palette.green },
+          rainbow4 = { fg = palette.teal },
+          rainbow5 = { fg = palette.mauve },
+          rainbow6 = { fg = palette.lavender },
+        }
+
+        for i = 1, 6 do
+          local color = rainbow["rainbow" .. i].fg
+          groups["RenderMarkdownH" .. i] = { fg = color }
+          groups["RenderMarkdownH" .. i .. "Bg"] =
+            { bg = require("catppuccin.utils.colors").darken(color, 0.30, palette.base) }
+        end
+
+        -- print(vim.inspect(groups))
+
+        return vim.tbl_deep_extend("error", {
           ["BlinkCmpMenu"] = {
             fg = palette.overlay0,
           },
@@ -25,7 +50,15 @@ return {
           ["BlinkCmpMenuSelection"] = {
             bg = palette.surface0,
           },
-        }
+          ["@markup.heading.1.markdown"] = rainbow.rainbow1,
+          ["@markup.heading.2.markdown"] = rainbow.rainbow2,
+          ["@markup.heading.3.markdown"] = rainbow.rainbow3,
+          ["@markup.heading.4.markdown"] = rainbow.rainbow4,
+          ["@markup.heading.5.markdown"] = rainbow.rainbow5,
+          ["@markup.heading.6.markdown"] = rainbow.rainbow6,
+          ["@markup.strong"] = { fg = palette.sky, style = { "bold" } },
+          ["@markup.quote"] = { fg = palette.lavender, style = { "bold" } },
+        }, groups)
       end,
       show_end_of_buffer = true,
       dim_inactive = {

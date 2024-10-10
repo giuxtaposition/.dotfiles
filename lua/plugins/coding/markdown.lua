@@ -14,4 +14,28 @@ return {
       { "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
     },
   },
+  {
+    "3rd/image.nvim",
+    opts = {
+      backend = "ueberzug",
+      integrations = {
+        markdown = {
+          only_render_image_at_cursor = true,
+        },
+      },
+    },
+  },
+  {
+    "zk-org/zk-nvim",
+    opts = {
+      picker = "telescope",
+    },
+    config = function(_, opts)
+      require("zk").setup(opts)
+    end,
+
+    keys = {
+      { "<leader>zg", "<cmd>ZkNotes<cr>", desc = "Search Notes" },
+    },
+  },
 }

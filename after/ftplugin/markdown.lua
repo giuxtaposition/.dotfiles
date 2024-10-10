@@ -46,3 +46,40 @@ vim.keymap.set("n", "<localleader>`", 'viwc`<c-r>"`<esc><esc>', {
 vim.keymap.set("n", "<localleader>c", 'viwc-<Space>[<Space>]<Space><c-r>"<esc><esc>', {
   desc = "Add checkbox",
 })
+
+-- Add the key mappings only for Markdown files in a zk notebook.
+if require("zk.util").notebook_root(vim.fn.expand("%:p")) ~= nil then
+  local function map(...)
+    vim.api.nvim_buf_set_keymap(0, ...)
+  end
+  local opts = { noremap = true, silent = false }
+
+  opts.desc = "Open the link under cursor"
+  map("n", "<CR>", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+
+  opts.desc = "Create a new note"
+  map("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
+
+  opts.desc = "Create a new note with the current selection as title"
+  map("v", "<leader>znt", ":'<,'>ZkNewFromTitleSelection { dir = vim.fn.expand('%:p:h') }<CR>", opts)
+
+  opts.desc = "Create a new note with the current selection as content"
+  map(
+    "v",
+    "<leader>znc",
+    ":'<,'>ZkNewFromContentSelection { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>",
+    opts
+  )
+
+  opts.desc = "Open notes linking to the current buffer"
+  map("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)
+
+  opts.desc = "Open notes linked by the current buffer"
+  map("n", "<leader>zl", "<Cmd>ZkLinks<CR>", opts)
+
+  opts.desc = "Preview a linked note"
+  map("n", "K", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+
+  opts.desc = "Open the code actions for a visual selection"
+  map("v", "<leader>za", ":'<,'>lua vim.lsp.buf.range_code_action()<CR>", opts)
+end
