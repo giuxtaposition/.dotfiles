@@ -9,6 +9,8 @@
       vimdiffAlias = true;
       package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
       withNodeJs = true;
+      extraLuaPackages = ps: [ ps.magick ];
+      extraPackages = [ pkgs.imagemagick ];
     };
 
     home.file."${config.home.homeDirectory}/.config/nvim" = {
