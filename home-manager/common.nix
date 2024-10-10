@@ -71,7 +71,7 @@
     # Fonts
     (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "Monaspace" ]; })
 
-    vlc
+    mpv
   ];
 
   # GTK CONFIG
