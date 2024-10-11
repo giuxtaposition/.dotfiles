@@ -13,7 +13,7 @@ return {
     },
     opts = {
       ensure_installed = {
-        "json",
+        "json5",
         "javascript",
         "typescript",
         "tsx",
