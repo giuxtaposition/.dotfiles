@@ -38,4 +38,12 @@ return {
       { "<leader>zg", "<cmd>ZkNotes<cr>", desc = "Search Notes" },
     },
   },
+  -- Otter.nvim provides lsp features for code embedded in other documents (markdown)
+  {
+    "jmbuhr/otter.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {},
+  },
 }
