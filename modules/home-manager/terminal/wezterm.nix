@@ -3,7 +3,10 @@
   options = { wezterm.enable = lib.mkEnableOption "enables wezterm module"; };
 
   config = lib.mkIf config.wezterm.enable {
-    home.packages = with pkgs; [ wezterm ];
+    home.packages = with pkgs; [
+      wezterm
+      playerctl # for spotify media info
+    ];
 
     home.file."${config.home.homeDirectory}/.config/wezterm" = {
       source = config.lib.file.mkOutOfStoreSymlink

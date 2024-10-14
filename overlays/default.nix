@@ -11,6 +11,8 @@
     # ...
     # });
 
+    wezterm = inputs.wezterm.packages.${prev.system}.default;
+
     # make jellyfin skip-intro plugin show skip intro button
     jellyfin-web = prev.jellyfin-web.overrideAttrs (finalAttrs: previousAttrs: {
       installPhase = ''
