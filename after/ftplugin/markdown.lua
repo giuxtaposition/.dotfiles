@@ -43,8 +43,27 @@ vim.keymap.set("n", "<localleader>u", 'viwc[](<c-r>")<c-o>F]', {
 vim.keymap.set("n", "<localleader>`", 'viwc`<c-r>"`<esc><esc>', {
   desc = "Wrap in backticks",
 })
-vim.keymap.set("n", "<localleader>c", 'viwc-<Space>[<Space>]<Space><c-r>"<esc><esc>', {
-  desc = "Add checkbox",
+
+local function toggle_checkbox()
+  local checked = "%[x]"
+  local unchecked = "%[ %]"
+  local current_line = vim.api.nvim_get_current_line()
+  local row, _ = unpack(vim.api.nvim_win_get_cursor(0))
+  local new_line = ""
+
+  if current_line:find(checked) then
+    new_line = string.gsub(current_line, checked, unchecked, 1)
+  elseif current_line:find(unchecked) then
+    new_line = string.gsub(current_line, unchecked, checked, 1)
+  else
+    new_line = "- [ ] " .. current_line
+  end
+
+  vim.api.nvim_buf_set_lines(0, row - 1, row, true, { new_line })
+end
+
+vim.keymap.set("n", "<localleader>c", toggle_checkbox, {
+  desc = "Toggle checkbox",
 })
 
 -- Add the key mappings only for Markdown files in a zk notebook.
