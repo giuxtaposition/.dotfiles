@@ -48,13 +48,13 @@
   wayland.enable = true;
   sway.enable = true;
   ags.enable = true;
+  spotify.enable = true;
 
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
     slack # Messaging App
     zathura
-    spotify
     asdf-vm # runtime version management
     obsidian
     cbonsai

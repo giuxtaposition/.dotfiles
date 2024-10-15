@@ -17,4 +17,7 @@
   monitors = import ./monitors.nix;
   laptop = import ./laptop.nix;
   coding = import ./coding.nix;
+
+  # Others
+  spotify = import ./spotify.nix;
 }

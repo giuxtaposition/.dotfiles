@@ -24,9 +24,9 @@
       flake = false;
     };
 
-    spotify-adblock = {
-      url = "github:abba23/spotify-adblock";
-      flake = false;
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-index-database = {
@@ -83,33 +83,27 @@
         };
       };
 
-      homeConfigurations = {
+      homeConfigurations = let
+        commonModules = [
+          nix-index-database.hmModules.nix-index
+          catppuccin.homeManagerModules.catppuccin
+          inputs.spicetify-nix.homeManagerModules.default
+        ];
+      in {
         "giu@kumiko" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home-manager/kumiko.nix
-            nix-index-database.hmModules.nix-index
-            catppuccin.homeManagerModules.catppuccin
-          ];
+          modules = [ ./home-manager/kumiko.nix ] ++ commonModules;
         };
         "giu@asuka" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home-manager/asuka.nix
-            nix-index-database.hmModules.nix-index
-            catppuccin.homeManagerModules.catppuccin
-          ];
+          modules = [ ./home-manager/asuka.nix ] ++ commonModules;
         };
         "giu@reina" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            ./home-manager/reina.nix
-            nix-index-database.hmModules.nix-index
-            catppuccin.homeManagerModules.catppuccin
-          ];
+          modules = [ ./home-manager/reina.nix ] ++ commonModules;
         };
       };
 

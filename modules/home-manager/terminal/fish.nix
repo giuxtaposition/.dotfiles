@@ -10,6 +10,7 @@
       neofetch
       imagemagick
       ueberzugpp
+      tree
     ];
 
     # starship config

@@ -31,15 +31,6 @@
     wl-gammarelay-rs =
       inputs.nixpkgs-wayland.packages.${prev.system}.wl-gammarelay-rs;
 
-    spotify = prev.spotify.overrideAttrs (oldAttrs: {
-      postInstall = (oldAttrs.postInstall or "") + ''
-        ln -s ${final.spotify-adblock.out}/lib/libspotifyadblock.so $libdir
-        sed -i "s:^Name=Spotify.*:Name=Spotify-adblock:" "$out/share/spotify/spotify.desktop"
-        wrapProgram $out/bin/spotify \
-        --set LD_PRELOAD "${final.spotify-adblock}/lib/libspotifyadblock.so"
-      '';
-    });
-
     slack = prev.slack.overrideAttrs (oldAttrs: {
       fixupPhase = ''
         sed -i -e 's/,"WebRTCPipeWireCapturer"/,"LebRTCPipeWireCapturer"/' $out/lib/slack/resources/app.asar

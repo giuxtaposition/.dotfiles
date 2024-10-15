@@ -6,10 +6,5 @@
     version = "master";
   };
 
-  spotify-adblock = pkgs.callPackage ./spotify-adblock.nix {
-    src = inputs.spotify-adblock;
-    version = "v1.0.3";
-  };
-
   myNodePackages = pkgs.callPackage ./node { };
 }
