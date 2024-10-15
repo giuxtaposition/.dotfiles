@@ -18,6 +18,7 @@ return {
         },
         documentation = {
           border = "single",
+          auto_show = true,
         },
       },
       kind_icons = require("config.icons").kinds,
