@@ -95,15 +95,6 @@
     size = 16;
   };
 
-  home.file."${config.home.homeDirectory}/.local/share/icons/candy-icons" = {
-    source = pkgs.candy-icons;
-  };
-
-  home.file."${config.home.homeDirectory}/.local/share/icons/papirus-icon-theme" =
-    {
-      source = pkgs.papirus-icon-theme;
-    };
-
   systemd.user = {
     # Nicely reload system units when changing configs
     startServices = "sd-switch";

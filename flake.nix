@@ -17,13 +17,6 @@
     wezterm.url = "github:wez/wezterm?dir=nix";
     ags.url = "github:Aylur/ags";
 
-    # Candy Icons
-    candy-icons = {
-      url =
-        "https://github.com/EliverLara/candy-icons/archive/refs/heads/master.zip";
-      flake = false;
-    };
-
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";

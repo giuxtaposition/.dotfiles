@@ -19,19 +19,6 @@
         "type": "github"
       }
     },
-    "candy-icons": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1726614797,
-        "narHash": "sha256-ObZ4ZKPOoGnhLrAqGMYfuTEE/Yz9mKoVA7YqiIkTAXs=",
-        "type": "tarball",
-        "url": "https://github.com/EliverLara/candy-icons/archive/refs/heads/master.zip"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/EliverLara/candy-icons/archive/refs/heads/master.zip"
-      }
-    },
     "catppuccin": {
       "locked": {
         "lastModified": 1727910534,
@@ -624,7 +611,6 @@
     "root": {
       "inputs": {
         "ags": "ags",
-        "candy-icons": "candy-icons",
         "catppuccin": "catppuccin",
         "home-manager": "home-manager",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
