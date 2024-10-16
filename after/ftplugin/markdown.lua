@@ -1,6 +1,11 @@
 -- line wrapping
 vim.opt.wrap = true
 
+-- Automatically add unordered list item on new lines
+vim.opt.formatoptions:append("tcro")
+vim.opt.comments:remove("fb:-")
+vim.opt.comments:append({ ":-", ":+", ":*" })
+
 -- Visual Mode shortcuts
 vim.keymap.set("v", "<localleader>s", 'c~~<c-r>"~~<esc>', {
   desc = "Strikethrough",
