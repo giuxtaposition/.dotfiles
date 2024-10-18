@@ -4,7 +4,7 @@ local M = {}
 
 M.process_icons = {
   ["nvim"] = {
-    { Text = wezterm.nerdfonts.custom_vim },
+    { Text = wezterm.nerdfonts.custom_neovim },
   },
   ["fish"] = {
     { Text = wezterm.nerdfonts.md_fish },

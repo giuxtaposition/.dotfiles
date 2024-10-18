@@ -67,29 +67,15 @@ M.right_status = function()
   w.on("update-right-status", function(window, pane)
     local cells = {}
 
-    local stat = window:active_workspace()
-    if window:active_key_table() then
-      stat = window:active_key_table()
-    end
-    if window:leader_is_active() then
-      stat = w.nerdfonts.md_lightbulb
-    end
+    local active_workspace = window:active_workspace()
+    local active_workspace_icon = window:leader_is_active() and w.nerdfonts.md_lightning_bolt or w.nerdfonts.md_layers
+    table.insert(cells, active_workspace_icon .. " " .. active_workspace)
 
-    table.insert(cells, stat)
-
-    local cwd_uri = pane:get_current_working_dir()
-    local cwd = basename(cwd_uri.file_path)
-    table.insert(cells, w.nerdfonts.md_folder .. " " .. cwd)
-
-    local cmd = basename(pane:get_foreground_process_name())
-    table.insert(cells, w.nerdfonts.fa_code .. "  " .. cmd)
-
-    local time = w.strftime("%H:%M")
-    table.insert(cells, w.nerdfonts.md_clock .. " " .. time)
+    table.insert(cells, w.nerdfonts.md_clock .. " " .. w.strftime("%H:%M"))
 
     local playing = spotify.get_currently_playing(64, 5)
     if playing ~= "" then
-      table.insert(cells, w.nerdfonts.md_music_note .. " " .. playing .. " ")
+      table.insert(cells, w.nerdfonts.md_spotify .. " " .. playing .. " ")
     end
 
     local DIVIDER = "|"
