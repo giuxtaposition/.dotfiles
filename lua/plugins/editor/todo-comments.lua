@@ -1,6 +1,6 @@
 return {
   "folke/todo-comments.nvim",
-  cmd = { "TodoTrouble", "TodoTelescope" },
+  cmd = { "TodoTrouble" },
   event = { "BufReadPost", "BufWritePost", "BufNewFile" },
   opts = {
     keywords = {
@@ -41,7 +41,5 @@ return {
       "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>",
       desc = "Todo/Fix/Fixme (Trouble)",
     },
-    { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-    { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
   },
 }

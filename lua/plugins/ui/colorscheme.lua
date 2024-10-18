@@ -106,13 +106,10 @@ return {
         treesitter_context = true,
         ufo = true,
         rainbow_delimiters = true,
-        telescope = {
-          enabled = true,
-          style = "nvchad",
-        },
         lsp_trouble = true,
         which_key = true,
         render_markdown = true,
+        fzf = true,
       },
     },
     config = function(_, opts)

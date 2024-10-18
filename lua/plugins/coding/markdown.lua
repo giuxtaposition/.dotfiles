@@ -28,7 +28,7 @@ return {
   {
     "zk-org/zk-nvim",
     opts = {
-      picker = "telescope",
+      picker = "fzf_lua",
     },
     config = function(_, opts)
       require("zk").setup(opts)

@@ -33,20 +33,24 @@ return {
 
           map("n", "gd", vim.lsp.buf.definition, "Goto Definition", event.buf) --  To jump back, press <C-t>.
           map("n", "gD", vim.lsp.buf.declaration, "Goto Declaration", event.buf)
-          map("n", "gr", function()
-            vim.lsp.buf.references({ includeDeclaration = false })
-          end, "Goto References", event.buf)
+          map("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Show References", event.buf)
           map("n", "gI", vim.lsp.buf.implementation, "Goto Implementation", event.buf)
           map("n", "gt", vim.lsp.buf.type_definition, "Type Definition", event.buf)
-          map("n", "<leader>cs", vim.lsp.buf.document_symbol, "Document Symbols", event.buf)
-          map("n", "<leader>cS", vim.lsp.buf.workspace_symbol, "Workspace Symbols", event.buf)
+          map("n", "<leader>cs", "<cmd>FzfLua lsp_document_symbols<CR>", "Document Symbols", event.buf)
+          map("n", "<leader>cS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace Symbols", event.buf)
           map("n", "<leader>cr", function()
             local inc_rename = require("inc_rename")
             return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
           end, "Rename", event.buf, { expr = true })
-          map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action", event.buf)
-          map("v", "<leader>ca", "<cmd>'<,'>vim.lsp.buf.code_action()<CR>", "Code Action", event.buf)
-          map("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics", event.buf)
+          map("n", "<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", "Code Action", event.buf)
+          map("v", "<leader>ca", "<cmd>'<,'>FzfLua lsp_code_actions<CR>", "Code Action", event.buf)
+          map(
+            "n",
+            "<leader>D",
+            "<cmd>FzfLua lsp_document_diagnostics bufnr=0<CR>",
+            "Show buffer diagnostics",
+            event.buf
+          )
           map("n", "<leader>cd", vim.diagnostic.open_float, "Show line diagnostics", event.buf)
           map("n", "]d", diagnostic_goto(1), "Next Diagnostic", event.buf)
           map("n", "[d", diagnostic_goto(-1), "Prev Diagnostic", event.buf)
@@ -54,7 +58,7 @@ return {
           map("n", "[e", diagnostic_goto(-1, "ERROR"), "Prev Error", event.buf)
           map("n", "]w", diagnostic_goto(1, "WARN"), "Next Warning", event.buf)
           map("n", "[w", diagnostic_goto(-1, "WARN"), "Prev Warning", event.buf)
-          map("n", "K", vim.lsp.buf.hover, "Show documentation for what is under cursor", event.buf)
+          map("n", "K", vim.lsp.buf.hover, "Show documentation for what is under cursor", event.buf) --TODO
           map("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", event.buf)
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
