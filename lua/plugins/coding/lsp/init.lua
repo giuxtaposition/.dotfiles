@@ -32,7 +32,7 @@ return {
           end
 
           map("n", "gd", vim.lsp.buf.definition, "Goto Definition", event.buf) --  To jump back, press <C-t>.
-          map("n", "gD", vim.lsp.buf.declaration, "Goto Declaration", event.buf)
+          map("n", "gD", "<cmd>FzfLua lsp_definitions<cr>", "Peek definition", event.buf)
           map("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Show References", event.buf)
           map("n", "gI", vim.lsp.buf.implementation, "Goto Implementation", event.buf)
           map("n", "gt", vim.lsp.buf.type_definition, "Type Definition", event.buf)
@@ -42,8 +42,7 @@ return {
             local inc_rename = require("inc_rename")
             return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
           end, "Rename", event.buf, { expr = true })
-          map("n", "<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", "Code Action", event.buf)
-          map("v", "<leader>ca", "<cmd>'<,'>FzfLua lsp_code_actions<CR>", "Code Action", event.buf)
+          map({ "n", "v" }, "<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", "Code actions", event.buf)
           map(
             "n",
             "<leader>D",

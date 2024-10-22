@@ -1,16 +1,85 @@
 return {
   "ibhagwan/fzf-lua",
-  -- optional for icon support
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-  opts = {
-    winopts = {
-      width = 0.9,
-      backdrop = 60,
-    },
-    files = {
-      prompt = "",
-    },
-  },
+  dependencies = { "echasnovski/mini.icons" },
+  opts = function()
+    local actions = require("fzf-lua.actions")
+    return {
+      defaults = {
+        file_icons = "mini",
+        prompt = " ",
+        header = false,
+        formatter = "path.filename_first",
+      },
+
+      -- fzf_colors = {
+      --   bg = { "bg", "Normal" },
+      --   gutter = { "bg", "Normal" },
+      --   info = { "fg", "Conditional" },
+      --   scrollbar = { "bg", "Normal" },
+      --   separator = { "fg", "Comment" },
+      -- },
+      winopts = {
+        height = 0.8,
+        width = 0.9,
+        border = "none",
+        preview = {
+          scrollbar = false,
+          horizontal = "right:50%",
+        },
+      },
+      fzf_opts = {
+        ["--no-info"] = "",
+        ["--info"] = "hidden",
+        ["--layout"] = "reverse-list",
+        ["--padding"] = "5%,5%,5%,5%",
+      },
+      files = {
+        cwd_prompt = false,
+      },
+      helptags = {
+        prompt = " ",
+        actions = {
+          -- Open help pages in a vertical split.
+          ["enter"] = actions.help_vert,
+        },
+      },
+      lsp = {
+        symbols = {
+          symbol_icons = require("config.icons").kinds,
+        },
+        code_actions = {
+          prompt = " ",
+          winopts = {
+            width = 0.8,
+            height = 0.7,
+            preview = {
+              layout = "horizontal",
+              horizontal = "up:75%",
+            },
+          },
+        },
+      },
+      oldfiles = {
+        include_current_session = true,
+      },
+      buffers = {},
+      previewers = {
+        builtin = {
+          extensions = {
+            ["jpg"] = { "ueberzug" },
+            ["png"] = { "ueberzug" },
+            ["svg"] = { "ueberzug" },
+          },
+          -- if using `ueberzug` in the above extensions map
+          -- set the default image scaler, possible scalers:
+          --   false (none), "crop", "distort", "fit_contain",
+          --   "contain", "forced_cover", "cover"
+          -- https://github.com/seebye/ueberzug
+          ueberzug_scaler = "cover",
+        },
+      },
+    }
+  end,
   config = function(_, opts)
     require("fzf-lua").setup(opts)
   end,

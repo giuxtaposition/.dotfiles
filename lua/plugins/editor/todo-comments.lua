@@ -10,7 +10,7 @@ return {
       },
     },
     colors = {
-      giu = require("config.colors").magenta,
+      giu = require("config.colors").purple,
     },
     highlight = {
       pattern = [[.*<(KEYWORDS)\s*]],
