@@ -26,7 +26,7 @@ let
         "disable"
     }") (config.monitors));
 
-  themeColors = import ../../../colors.nix;
+  themeColors = config.colorsWithoutPrefix;
 in {
   options = { sway.enable = lib.mkEnableOption "enables sway module"; };
 
@@ -75,41 +75,41 @@ in {
         focus = { wrapping = "yes"; };
         colors = {
           focused = {
-            border = "${themeColors.lavender}";
-            background = "${themeColors.base}";
-            text = "${themeColors.text}";
-            indicator = "${themeColors.lavender}";
-            childBorder = "${themeColors.lavender}";
+            border = "${themeColors.purple}";
+            background = "${themeColors.bg}";
+            text = "${themeColors.fg}";
+            indicator = "${themeColors.purple}";
+            childBorder = "${themeColors.purple}";
           };
           focusedInactive = {
-            border = "${themeColors.overlay0}";
-            background = "${themeColors.base}";
-            text = "${themeColors.text}";
-            indicator = "${themeColors.lavender}";
-            childBorder = "${themeColors.lavender}";
+            border = "${themeColors.grey}";
+            background = "${themeColors.bg}";
+            text = "${themeColors.fg}";
+            indicator = "${themeColors.purple}";
+            childBorder = "${themeColors.purple}";
           };
           unfocused = {
-            border = "${themeColors.overlay0}";
-            background = "${themeColors.base}";
-            text = "${themeColors.text}";
-            indicator = "${themeColors.lavender}";
-            childBorder = "${themeColors.mauve}";
+            border = "${themeColors.grey}";
+            background = "${themeColors.bg}";
+            text = "${themeColors.fg}";
+            indicator = "${themeColors.purple}";
+            childBorder = "${themeColors.lilac}";
           };
           urgent = {
-            border = "${themeColors.peach}";
-            background = "${themeColors.base}";
-            text = "${themeColors.peach}";
-            indicator = "${themeColors.overlay0}";
-            childBorder = "${themeColors.peach}";
+            border = "${themeColors.orange}";
+            background = "${themeColors.bg}";
+            text = "${themeColors.orange}";
+            indicator = "${themeColors.grey}";
+            childBorder = "${themeColors.orange}";
           };
           placeholder = {
-            border = "${themeColors.overlay0}";
-            background = "${themeColors.base}";
-            text = "${themeColors.text}";
-            indicator = "${themeColors.overlay0}";
-            childBorder = "${themeColors.overlay0}";
+            border = "${themeColors.grey}";
+            background = "${themeColors.bg}";
+            text = "${themeColors.fg}";
+            indicator = "${themeColors.grey}";
+            childBorder = "${themeColors.grey}";
           };
-          background = "${themeColors.base}";
+          background = "${themeColors.bg}";
         };
 
         input = {

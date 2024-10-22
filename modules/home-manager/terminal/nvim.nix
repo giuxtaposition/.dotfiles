@@ -17,5 +17,33 @@
       source = config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.dotfiles/.config/nvim";
     };
+
+    home.file."${config.home.homeDirectory}/.dotfiles/.config/nvim/lua/config/colors.lua" =
+      {
+        text = let c = config.colors;
+        in ''
+          return {
+            fg = "${c.fg}";
+            bg = "${c.bg}";
+            dark_bg = "${c.dark_bg}";
+            darker_bg = "${c.darker_bg}";
+            selection_bg = "${c.selection_bg}";
+            grey = "${c.grey}";
+            green = "${c.green}";
+            purple = "${c.purple}";
+            dark_purple = "${c.dark_purple}";
+            darker_purple = "${c.darker_purple}";
+            lilac = "${c.lilac}";
+            mauve = "${c.mauve}";
+            sky = "${c.sky}";
+            indigo = "${c.indigo}";
+            orange = "${c.orange}";
+            red = "${c.red}";
+            yellow = "${c.yellow}";
+            dark_yellow = "${c.dark_yellow}";
+            pink = "${c.pink}";
+          }
+        '';
+      };
   };
 }

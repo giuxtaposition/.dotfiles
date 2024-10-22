@@ -100,7 +100,26 @@
     programs.fzf = {
       enable = true;
       enableFishIntegration = true;
-      catppuccin.enable = true;
+      colors = let
+
+        c = config.colors;
+      in {
+        fg = "${c.fg}";
+        bg = "${c.bg}";
+        "preview-fg" = "${c.fg}";
+        "preview-bg" = "${c.bg}";
+        hl = "${c.purple}";
+        "fg+" = "${c.fg}";
+        "bg+" = "${c.selection_bg}";
+        "hl+" = "${c.lilac}";
+        info = "${c.sky}";
+        border = "${c.indigo}";
+        prompt = "${c.green}";
+        pointer = "${c.lilac}";
+        marker = "${c.lilac}";
+        spinner = "${c.sky}";
+        header = "${c.indigo}";
+      };
     };
   };
 }
