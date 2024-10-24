@@ -1,7 +1,7 @@
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "giuxtaposition/catppuccin-nvim",
+    branch = "blink-cmp",
     priority = 1000,
     opts = {
       flavour = "mocha",
@@ -11,7 +11,14 @@ return {
         },
       },
       custom_highlights = function(palette)
-        local groups = {}
+        local groups = {
+          FzfLuaPreviewTitle = { fg = palette.base, bg = palette.green, bold = true },
+          FzfLuaScrollBorderEmpty = { fg = palette.base, bg = palette.base },
+          FzfLuaScrollBorderFull = { fg = palette.base, bg = palette.base },
+          FzfLuaScrollFloatEmpty = { fg = palette.base, bg = palette.base },
+          FzfLuaScrollFloatFull = { fg = palette.base, bg = palette.base },
+          BlinkCmpGhostText = { fg = palette.overlay0 },
+        }
 
         local rainbow = {
           rainbow1 = { fg = palette.blue },
@@ -29,27 +36,7 @@ return {
             { bg = require("catppuccin.utils.colors").darken(color, 0.30, palette.base) }
         end
 
-        -- print(vim.inspect(groups))
-
         return vim.tbl_deep_extend("error", {
-          ["BlinkCmpMenu"] = {
-            fg = palette.overlay0,
-          },
-          ["BlinkCmpLabel"] = {
-            fg = palette.overlay0,
-          },
-          ["BlinkCmpMenuBorder"] = {
-            fg = palette.lavender,
-          },
-          ["BlinkCmpDocBorder"] = {
-            fg = palette.lavender,
-          },
-          ["BlinkCmpSignatureHelpBorder"] = {
-            fg = palette.lavender,
-          },
-          ["BlinkCmpMenuSelection"] = {
-            bg = palette.surface0,
-          },
           ["@markup.heading.1.markdown"] = rainbow.rainbow1,
           ["@markup.heading.2.markdown"] = rainbow.rainbow2,
           ["@markup.heading.3.markdown"] = rainbow.rainbow3,
@@ -64,9 +51,8 @@ return {
       dim_inactive = {
         enabled = true,
       },
-      -- transparent_background = true,
       integrations = {
-        --TODO cleanup unused
+        blink_cmp = true,
         dashboard = true,
         diffview = true,
         flash = true,
@@ -76,7 +62,6 @@ return {
           scope_color = "mauve",
           colored_indent_levels = false,
         },
-        markdown = true,
         mini = {
           enabled = true,
           indentscope_color = "mauve",
@@ -84,7 +69,6 @@ return {
         neotree = true,
         neotest = true,
         noice = true,
-        cmp = true,
         dap = true,
         dap_ui = true,
         native_lsp = {
@@ -109,7 +93,6 @@ return {
         lsp_trouble = true,
         which_key = true,
         render_markdown = true,
-        fzf = true,
       },
     },
     config = function(_, opts)
