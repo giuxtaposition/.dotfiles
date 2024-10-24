@@ -3,7 +3,9 @@ return {
     "saghen/blink.cmp",
     lazy = false, -- lazy loading handled internally
     dependencies = "rafamadriz/friendly-snippets",
-    version = "v0.*",
+    version = false,
+    dev = true,
+    build = "nix run .#build-plugin",
     opts = {
       keymap = {
         accept = "<CR>",
@@ -30,7 +32,7 @@ return {
     event = "InsertEnter",
     build = ":Copilot auth",
     opts = {
-      suggestion = { enabled = true, auto_trigger = true, keymap = { accept = "<M-CR>" } },
+      suggestion = { enabled = false, auto_trigger = true, keymap = { accept = "<M-CR>" } },
       panel = { enabled = true },
     },
   },
