@@ -69,12 +69,15 @@
         fish_user_key_bindings = ''
           fish_vi_key_bindings
           bind -M insert -m default kj backward-char force-repaint #use kj as Esc'';
+        nvim = ''
+          set pipe_file ~/.cache/nvim/(pwd | sed 's/\\//-/g' | sed 's/^-//' | sed 's/\\//./g').pipe
+          rm -f $pipe_file
+          env TERM=wezterm nvim --listen $pipe_file
+        '';
       };
 
       shellAliases = {
         vim = "nvim";
-        nvim =
-          "env TERM=wezterm nvim --listen ~/.cache/nvim/(pwd | sed 's/\\//-/g' | sed 's/^-//' | sed 's/\\//./g').pipe";
         ll = "eza -l -g --icons";
         lla = "eza -la -g --icons";
         ":q" = "exit";
