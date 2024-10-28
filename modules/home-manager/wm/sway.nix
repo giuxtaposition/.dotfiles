@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }:
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   startScript = pkgs.writeShellScript "start" ''
     # initializing wallpaper daemon
     swww init &
@@ -14,24 +18,20 @@ let
     wl-gammarelay-rs
   '';
 
-  monitors = lib.concatMapStrings (x: x + "\n") (map (m:
-    let
-      resolution =
-        "${toString m.width}x${toString m.height}@${toString m.refreshRate}Hz";
-      position = "pos ${toString m.x} ${toString m.y}";
-    in "output ${m.name} mode ${
-      if m.enabled then
-        "${resolution} ${position} scale ${toString m.scale}"
-      else
-        "disable"
-    }") (config.monitors));
+  monitors = lib.concatMapStrings (x: x + "\n") (map (m: let
+    resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}Hz";
+    position = "pos ${toString m.x} ${toString m.y}";
+  in "output ${m.name} mode ${
+    if m.enabled
+    then "${resolution} ${position} scale ${toString m.scale}"
+    else "disable"
+  }") (config.monitors));
 
   themeColors = config.colorsWithoutPrefix;
 in {
-  options = { sway.enable = lib.mkEnableOption "enables sway module"; };
+  options = {sway.enable = lib.mkEnableOption "enables sway module";};
 
   config = lib.mkIf config.sway.enable {
-
     home.sessionVariables = {
       XDG_CURRENT_DESKTOP = "sway";
       XDG_SESSION_DESKTOP = "sway";
@@ -52,16 +52,16 @@ in {
       config = {
         modifier = "Mod4";
         terminal = "foot";
-        startup = [{ command = "${startScript}"; }];
-        bars = [ ];
+        startup = [{command = "${startScript}";}];
+        bars = [];
         fonts = {
-          names = [ "JetBrains Mono Nerd Font" ];
+          names = ["JetBrains Mono Nerd Font"];
           size = 0.1;
         };
         gaps = {
           outer = 0;
           inner = 15;
-          smartBorders = "off";
+          smartBorders = "on";
           smartGaps = false;
         };
         window = {
@@ -72,7 +72,7 @@ in {
           border = 3;
           titlebar = false;
         };
-        focus = { wrapping = "yes"; };
+        focus = {wrapping = "yes";};
         colors = {
           focused = {
             border = "${themeColors.purple}";
@@ -121,7 +121,7 @@ in {
           "1:1:AT_Translated_Set_2_keyboard" = {
             xkb_options = "ctrl:swapcaps";
           };
-          "type:pointer" = { natural_scroll = "enabled"; };
+          "type:pointer" = {natural_scroll = "enabled";};
           "type:touchpad" = {
             tap = "enabled";
             natural_scroll = "disabled";
@@ -129,7 +129,7 @@ in {
           };
         };
 
-        focus = { followMouse = "yes"; };
+        focus = {followMouse = "yes";};
 
         keybindings = let
           mod = "Mod4"; # Super
@@ -221,8 +221,7 @@ in {
           "XF86AudioRaiseVolume" = "exec pamixer -i 3";
           "XF86AudioLowerVolume" = "exec pamixer -d 3";
           "XF86AudioMute" = "exec pamixer -t";
-          "XF86AudioMicMute" =
-            "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+          "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
 
           "XF86MonBrightnessDown" = "exec brightnessctl set 3%-";
           "XF86MonBrightnessUp" = "exec brightnessctl set +3%";
@@ -244,7 +243,7 @@ in {
         blur_passes 4
 
         # dim inactive
-        default_dim_inactive 0.0
+        default_dim_inactive 0.2
 
         ${monitors}
 
@@ -278,5 +277,4 @@ in {
       '';
     };
   };
-
 }

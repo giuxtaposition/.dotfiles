@@ -13,18 +13,6 @@ function M.apply_to_config(config)
   config.colors = {
     tab_bar = {
       background = "#1e1e2e",
-
-      -- The new tab button that let you create new tabs
-      new_tab = {
-        bg_color = "#1e1e2e",
-        fg_color = "#cdd6f4",
-      },
-      new_tab_hover = {
-        -- The color of the background area for the tab
-        bg_color = "#313244",
-        -- The color of the text for the tab
-        fg_color = "#cdd6f4",
-      },
     },
   }
 
@@ -45,7 +33,7 @@ function M.apply_to_config(config)
   config.window_frame = {
     font = w.font("JetBrains Mono Nerd Font"),
   }
-  config.window_padding = { left = 4, right = 4, top = 1, bottom = 1 }
+  config.window_padding = { left = 2, right = 2, top = 1, bottom = 1 }
   config.window_background_opacity = 0.9
 
   bar.tabs()

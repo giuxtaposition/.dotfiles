@@ -33,8 +33,8 @@ end
 
 M.tabs = function()
   w.on("format-tab-title", function(tab, tabs, panes, _config, hover, max_width)
-    local edge_background = "#181825"
     local background = "#1e1e2e"
+    local edge_background = background
     local foreground = "#cdd6f4"
 
     if tab.is_active then
@@ -42,6 +42,9 @@ M.tabs = function()
       foreground = "#b4befe"
     elseif hover then
       background = "#313244"
+      foreground = "#cdd6f4"
+    else
+      background = "#181825"
       foreground = "#cdd6f4"
     end
 
