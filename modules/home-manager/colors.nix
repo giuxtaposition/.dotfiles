@@ -1,7 +1,5 @@
-{ lib, ... }:
-with lib;
-let
-
+{lib, ...}:
+with lib; let
   colors = {
     fg = "#cdd6f4";
     bg = "#1e1e2e";
@@ -27,19 +25,21 @@ let
   colornames = builtins.attrNames colors;
 in {
   options.colors = builtins.listToAttrs (map (c: {
-    name = c;
-    value = mkOption { type = types.str; };
-  }) colornames);
+      name = c;
+      value = mkOption {type = types.str;};
+    })
+    colornames);
 
   options.colorsWithoutPrefix = builtins.listToAttrs (map (c: {
-    name = c;
-    value = mkOption { type = types.str; };
-  }) colornames);
+      name = c;
+      value = mkOption {type = types.str;};
+    })
+    colornames);
 
   config.colors = colors;
 
-  config.colorsWithoutPrefix = builtins.mapAttrs
+  config.colorsWithoutPrefix =
+    builtins.mapAttrs
     (name: value: builtins.substring 1 (builtins.stringLength value - 1) value)
     colors;
 }
-

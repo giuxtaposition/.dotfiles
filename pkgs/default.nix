@@ -1,6 +1,8 @@
 # Custom packages, that can be defined similarly to ones from nixpkgs
 # You can build them using 'nix build .#example'
-{ pkgs, inputs }: {
-
-  myNodePackages = pkgs.callPackage ./node { };
+{
+  pkgs,
+  inputs,
+}: {
+  myNodePackages = pkgs.callPackage ./node {};
 }

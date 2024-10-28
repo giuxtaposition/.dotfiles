@@ -1,6 +1,12 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
-
-  imports = (builtins.attrValues outputs.nixosModules);
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
+  imports = builtins.attrValues outputs.nixosModules;
 
   nixpkgs = {
     # You can add overlays here
@@ -31,18 +37,18 @@
   nix = {
     # This will add each flake input as a registry
     # To make nix3 commands consistent with your flake
-    registry = (lib.mapAttrs (_: flake: { inherit flake; }))
+    registry =
+      (lib.mapAttrs (_: flake: {inherit flake;}))
       ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 
     # This will additionally add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
-    nixPath = [ "/etc/nix/path" ];
+    nixPath = ["/etc/nix/path" "nixpkgs=${inputs.nixpkgs}"];
 
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
-      substituters =
-        [ "https://wezterm.cachix.org" "https://nix-community.cachix.org" ];
+      substituters = ["https://wezterm.cachix.org" "https://nix-community.cachix.org"];
       trusted-public-keys = [
         "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -79,7 +85,7 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      extraGroups = [ "wheel" "video" "audio" "rtkit" ];
+      extraGroups = ["wheel" "video" "audio" "rtkit"];
     };
   };
 
@@ -87,7 +93,6 @@
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
-
       # nodejs asdf plugin dependencies
       gpgme
       gawk
@@ -120,7 +125,7 @@
   services = {
     dbus = {
       enable = true;
-      packages = [ pkgs.dconf ];
+      packages = [pkgs.dconf];
     };
 
     libinput.enable = true;
@@ -173,16 +178,16 @@
     bluetooth = {
       enable = true;
       powerOnBoot = true;
-      settings = { General = { Enable = "Source,Sink,Media,Socket"; }; };
+      settings = {General = {Enable = "Source,Sink,Media,Socket";};};
     };
 
-    keyboard = { qmk.enable = true; };
+    keyboard = {qmk.enable = true;};
   };
 
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
+    extraPortals = with pkgs; [xdg-desktop-portal-wlr xdg-desktop-portal-gtk];
     config.common.default = "*";
   };
 
@@ -213,10 +218,12 @@
       libnotify # send notifications from terminal
     ];
 
-    etc = lib.mapAttrs' (name: value: {
-      name = "nix/path/${name}";
-      value.source = value.flake;
-    }) config.nix.registry;
+    etc =
+      lib.mapAttrs' (name: value: {
+        name = "nix/path/${name}";
+        value.source = value.flake;
+      })
+      config.nix.registry;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

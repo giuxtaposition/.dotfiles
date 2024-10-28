@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{inputs, ...}: {
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev:
     import ../pkgs {
@@ -38,11 +38,10 @@
         rm $out/bin/slack
         makeWrapper $out/lib/slack/slack $out/bin/slack \
           --prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
-          --suffix PATH : ${prev.lib.makeBinPath [ prev.pkgs.xdg-utils ]} \
+          --suffix PATH : ${prev.lib.makeBinPath [prev.pkgs.xdg-utils]} \
           --add-flags "--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations,WebRTCPipeWireCapturer"
       '';
     });
-
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

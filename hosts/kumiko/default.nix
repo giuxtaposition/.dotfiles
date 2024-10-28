@@ -1,5 +1,5 @@
-{ ... }: {
-  imports = [ ./hardware-configuration.nix ../common.nix ];
+{...}: {
+  imports = [./hardware-configuration.nix ../common.nix];
 
   networking.hostName = "Kumiko";
 

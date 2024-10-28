@@ -1,9 +1,12 @@
-{ config, pkgs, lib, ... }: {
-
-  options = { fish.enable = lib.mkEnableOption "enables fish module"; };
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  options = {fish.enable = lib.mkEnableOption "enables fish module";};
 
   config = lib.mkIf config.fish.enable {
-
     home.packages = with pkgs; [
       eza # replacement for ls
       starship
@@ -15,13 +18,15 @@
 
     # starship config
     home.file."${config.home.homeDirectory}/.config/starship.toml" = {
-      source = config.lib.file.mkOutOfStoreSymlink
+      source =
+        config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
     };
 
     # neofetch config
     home.file."${config.home.homeDirectory}/.config/neofetch" = {
-      source = config.lib.file.mkOutOfStoreSymlink
+      source =
+        config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
     };
 
@@ -50,7 +55,7 @@
         ZZZzz /,`.-```    -.   /
              |,4-  ) )-,_. ,\ (
             `---``(_/--`  `-`\_)
-        ' 
+        '
         end
 
         set -gx TERM xterm-256color
@@ -104,7 +109,6 @@
       enable = true;
       enableFishIntegration = true;
       colors = let
-
         c = config.colors;
       in {
         fg = "${c.fg}";

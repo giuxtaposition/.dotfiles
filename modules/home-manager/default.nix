@@ -19,5 +19,4 @@
   laptop = import ./laptop.nix;
   coding = import ./coding.nix;
   colors = import ./colors.nix;
-
 }

@@ -1,5 +1,11 @@
-{ outputs, lib, config, pkgs, ... }: {
-  imports = (builtins.attrValues outputs.homeManagerModules);
+{
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
+  imports = builtins.attrValues outputs.homeManagerModules;
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
@@ -60,7 +66,7 @@
     cbonsai
 
     (pkgs.wrapFirefox
-      (pkgs.firefox-unwrapped.override { pipewireSupport = true; }) { })
+      (pkgs.firefox-unwrapped.override {pipewireSupport = true;}) {})
 
     steam-run
     qalculate-gtk
@@ -69,7 +75,7 @@
     libsForQt5.gwenview
 
     # Fonts
-    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "Monaspace" ]; })
+    (pkgs.nerdfonts.override {fonts = ["JetBrainsMono" "Monaspace"];})
 
     mpv
   ];
@@ -81,7 +87,7 @@
       name = "Sweet-Dark";
       package = pkgs.sweet;
     };
-    font = { name = "JetBrains Mono"; };
+    font = {name = "JetBrains Mono";};
     iconTheme = {
       name = "candy-icons";
       package = pkgs.candy-icons;
@@ -101,12 +107,12 @@
 
     services = {
       sync-notes = {
-        Unit = { Description = "Sync notes with github repo"; };
+        Unit = {Description = "Sync notes with github repo";};
         Service = {
           Type = "forking";
           Environment = "PATH=${
-              lib.makeBinPath [ pkgs.openssh pkgs.gawk pkgs.git pkgs.libnotify ]
-            }";
+            lib.makeBinPath [pkgs.openssh pkgs.gawk pkgs.git pkgs.libnotify]
+          }";
           ExecStart = let
             script = pkgs.writeShellScript "sync-notes" ''
               echo "Syncing notes"
@@ -122,7 +128,7 @@
           in "${pkgs.bash}/bin/bash ${script}";
           WorkingDirectory = "${config.home.homeDirectory}/notes";
         };
-        Install.WantedBy = [ "default.target" ];
+        Install.WantedBy = ["default.target"];
       };
     };
 
@@ -134,7 +140,7 @@
           OnBootSec = "1m";
           OnUnitActiveSec = "1h";
         };
-        Install.WantedBy = [ "timers.target" ];
+        Install.WantedBy = ["timers.target"];
       };
     };
   };

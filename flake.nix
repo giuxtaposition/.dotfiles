@@ -2,12 +2,9 @@
   description = "Giuxtaposition's NixOS Flake";
 
   inputs = {
-    # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     catppuccin.url = "github:catppuccin/nix";
-
-    # Home manager
     home-manager = {
       url = "github:nix-community/home-manager/";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -15,17 +12,15 @@
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     wezterm.url = "github:wez/wezterm?dir=nix";
-    ags.url = "github:Aylur/ags";
-
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ags.url = "github:Aylur/ags";
   };
 
   outputs = {

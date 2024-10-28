@@ -1,5 +1,9 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   firefoxWorkScript = pkgs.writeScriptBin "firefoxWork" ''
     #! ${pkgs.bash}/bin/sh
     firefox -P "work"
@@ -13,12 +17,11 @@ let
     icon = "firefox";
   };
 in {
-  options = { coding.enable = lib.mkEnableOption "enables coding module"; };
+  options = {coding.enable = lib.mkEnableOption "enables coding module";};
 
   config = lib.mkIf config.coding.enable {
     home.sessionVariables = {
-      MONGOMS_DISTRO =
-        "ubuntu-22.04"; # MONGO MEMORY SERVER not supporting nixos
+      MONGOMS_DISTRO = "ubuntu-22.04"; # MONGO MEMORY SERVER not supporting nixos
       CYPRESS_INSTALL_BINARY = "0";
       CYPRESS_RUN_BINARY = "${pkgs.cypress}/bin/Cypress";
 

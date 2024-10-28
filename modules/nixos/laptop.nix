@@ -1,6 +1,9 @@
-{ lib, config, ... }: {
-
-  options = { laptop.enable = lib.mkEnableOption "enables laptop module"; };
+{
+  lib,
+  config,
+  ...
+}: {
+  options = {laptop.enable = lib.mkEnableOption "enables laptop module";};
 
   config = lib.mkIf config.laptop.enable {
     services.thermald.enable = true;

@@ -1,6 +1,12 @@
-{ inputs, pkgs, lib, config, ... }: {
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   # add the home manager module
-  imports = [ inputs.ags.homeManagerModules.default ];
+  imports = [inputs.ags.homeManagerModules.default];
 
   options = {
     ags = {
@@ -13,15 +19,15 @@
   };
 
   config = lib.mkIf config.ags.enable {
-
     programs.ags = {
       enable = true;
 
-      configDir = config.lib.file.mkOutOfStoreSymlink
+      configDir =
+        config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.dotfiles/.config/ags";
 
       # additional packages to add to gjs's runtime
-      extraPackages = with pkgs; [ gtksourceview webkitgtk accountsservice ];
+      extraPackages = with pkgs; [gtksourceview webkitgtk accountsservice];
     };
 
     home.packages = with pkgs; [
@@ -41,7 +47,6 @@
         }
         export default env
       '';
-
     };
   };
 }

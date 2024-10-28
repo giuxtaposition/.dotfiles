@@ -1,6 +1,11 @@
-{ config, pkgs, inputs, lib, ... }: {
-
-  options = { wayland.enable = lib.mkEnableOption "enables wayland module"; };
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}: {
+  options = {wayland.enable = lib.mkEnableOption "enables wayland module";};
 
   config = lib.mkIf config.wayland.enable {
     home.packages = with pkgs; [
@@ -16,7 +21,8 @@
 
     # Wallpapers folder
     home.file."${config.home.homeDirectory}/Wallpapers" = {
-      source = config.lib.file.mkOutOfStoreSymlink
+      source =
+        config.lib.file.mkOutOfStoreSymlink
         "${config.home.homeDirectory}/.dotfiles/Wallpapers";
     };
 

@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
-  imports = [ ./common.nix ];
+{pkgs, ...}: {
+  imports = [./common.nix];
 
   monitors = [
     {
@@ -31,10 +31,8 @@
   ags.keyboard_name = "36125:13370:splitkb.com_Aurora_Corne_rev1";
 
   programs.fish.shellAbbrs = {
-    home-update =
-      "cd /home/giu/.dotfiles && home-manager switch --flake .#giu@reina";
-    nixos-update =
-      "cd /home/giu/.dotfiles && sudo nixos-rebuild switch --flake .#reina";
+    home-update = "cd /home/giu/.dotfiles && home-manager switch --flake .#giu@reina";
+    nixos-update = "cd /home/giu/.dotfiles && sudo nixos-rebuild switch --flake .#reina";
   };
 
   home.packages = with pkgs; [
