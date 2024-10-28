@@ -26,79 +26,80 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-index-database, nixos-hardware
-    , catppuccin, ... }@inputs:
-    let
-      inherit (self) outputs;
-      # Supported systems for your flake packages, shell, etc.
-      systems = [ "x86_64-linux" ];
-      # This is a function that generates an attribute by calling a function you
-      # pass to it, with each system as an argument
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-    in {
-      # Your custom packages
-      # Accessible through 'nix build', 'nix shell', etc
-      packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs inputs; });
-      # Formatter for your nix files, available through 'nix fmt'
-      # Other options beside 'alejandra' include 'nixpkgs-fmt'
-      formatter =
-        forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    nix-index-database,
+    nixos-hardware,
+    catppuccin,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+    # Supported systems for your flake packages, shell, etc.
+    systems = ["x86_64-linux"];
+    # This is a function that generates an attribute by calling a function you
+    # pass to it, with each system as an argument
+    forAllSystems = nixpkgs.lib.genAttrs systems;
+  in {
+    # Your custom packages
+    # Accessible through 'nix build', 'nix shell', etc
+    packages = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+      import ./pkgs {inherit pkgs inputs;});
+    formatter =
+      forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
-      # Your custom packages and modifications, exported as overlays
-      overlays = import ./overlays { inherit inputs; };
-      homeManagerModules = import ./modules/home-manager;
-      nixosModules = import ./modules/nixos;
+    # Your custom packages and modifications, exported as overlays
+    overlays = import ./overlays {inherit inputs;};
+    homeManagerModules = import ./modules/home-manager;
+    nixosModules = import ./modules/nixos;
 
-      nixosConfigurations = {
-        # Personal Laptop
-        kumiko = nixpkgs.lib.nixosSystem {
-          modules = [ ./hosts/kumiko ];
-          specialArgs = { inherit inputs outputs; };
-        };
-
-        # Personal Laptop
-        asuka = nixpkgs.lib.nixosSystem {
-          modules =
-            [ ./hosts/asuka nixos-hardware.nixosModules.framework-13-7040-amd ];
-          specialArgs = { inherit inputs outputs; };
-
-        };
-
-        # Personal Desktop
-        reina = nixpkgs.lib.nixosSystem {
-          modules = [ ./hosts/reina ];
-          specialArgs = { inherit inputs outputs; };
-        };
+    nixosConfigurations = {
+      # Personal Laptop
+      kumiko = nixpkgs.lib.nixosSystem {
+        modules = [./hosts/kumiko];
+        specialArgs = {inherit inputs outputs;};
       };
 
-      homeConfigurations = let
-        commonModules = [
-          nix-index-database.hmModules.nix-index
-          catppuccin.homeManagerModules.catppuccin
-          inputs.spicetify-nix.homeManagerModules.default
-        ];
-      in {
-        "giu@kumiko" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home-manager/kumiko.nix ] ++ commonModules;
-        };
-        "giu@asuka" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home-manager/asuka.nix ] ++ commonModules;
-        };
-        "giu@reina" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home-manager/reina.nix ] ++ commonModules;
-        };
+      # Personal Laptop
+      asuka = nixpkgs.lib.nixosSystem {
+        modules = [./hosts/asuka nixos-hardware.nixosModules.framework-13-7040-amd];
+        specialArgs = {inherit inputs outputs;};
       };
 
+      # Personal Desktop
+      reina = nixpkgs.lib.nixosSystem {
+        modules = [./hosts/reina];
+        specialArgs = {inherit inputs outputs;};
+      };
     };
+
+    homeConfigurations = let
+      commonModules = [
+        nix-index-database.hmModules.nix-index
+        catppuccin.homeManagerModules.catppuccin
+        inputs.spicetify-nix.homeManagerModules.default
+      ];
+    in {
+      "giu@kumiko" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home-manager/kumiko.nix] ++ commonModules;
+      };
+      "giu@asuka" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home-manager/asuka.nix] ++ commonModules;
+      };
+      "giu@reina" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home-manager/reina.nix] ++ commonModules;
+      };
+    };
+  };
 }

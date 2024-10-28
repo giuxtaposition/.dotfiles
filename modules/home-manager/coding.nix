@@ -33,8 +33,8 @@ in {
 
     home.packages = with pkgs; [
       chromium
-      (firefoxWork)
-      (firefoxWorkScript)
+      firefoxWork
+      firefoxWorkScript
 
       # Typescript/Javascript
       nodejs_22
@@ -55,8 +55,8 @@ in {
       luajitPackages.luacheck # lua linter
 
       # Nix
-      nil
-      nixfmt-classic
+      nixd # language server
+      alejandra # formatter
 
       # Kotlin
       kotlin
@@ -102,7 +102,6 @@ in {
       exercism
       insomnia
       zk
-
     ];
   };
 }
