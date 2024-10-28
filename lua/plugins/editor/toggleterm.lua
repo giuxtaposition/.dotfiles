@@ -8,13 +8,12 @@ return {
     autochdir = true, -- auto change dir following neovim
     insert_mappings = false, -- whether or not the open mapping applies in insert mode
     float_opts = {
-      width = 180,
+      width = 160,
       height = 40,
     },
     highlights = {
       FloatBorder = {
-        guifg = "#7287fd",
-        -- guibg = "<VALUE-HERE>",
+        guifg = require("config.ui.colors").base,
       },
     },
   },
@@ -27,7 +26,6 @@ return {
       direction = "float",
       float_opts = {
         border = "curved",
-        winblend = 4,
       },
       -- function to run on opening the terminal
       on_open = function(term)
