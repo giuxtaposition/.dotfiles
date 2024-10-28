@@ -1,13 +1,33 @@
+local hostname = string.lower(vim.fn.hostname())
+
 return {
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        nil_ls = {
+        nixd = {
+          cmd = { "nixd" },
           settings = {
-            ["nil"] = {
+            nixd = {
+              nixpkgs = {
+                expr = "import <nixpkgs> { }",
+              },
               formatting = {
-                command = { "nixpkgs-fmt" },
+                command = { "alejandra" },
+              },
+              options = {
+                nixos = {
+                  expr = string.format(
+                    '(builtins.getFlake "/home/giu/.dotfiles").nixosConfigurations.%s.options',
+                    hostname
+                  ),
+                },
+                home_manager = {
+                  expr = string.format(
+                    '(builtins.getFlake "/home/giu/.dotfiles").homeConfigurations.%s.options',
+                    hostname
+                  ),
+                },
               },
             },
           },
