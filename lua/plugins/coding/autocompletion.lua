@@ -2,13 +2,14 @@ return {
   {
     "saghen/blink.cmp",
     lazy = false, -- lazy loading handled internally
+    dev = true,
     dependencies = {
       "rafamadriz/friendly-snippets",
-      {
-        "blink-cmp-copilot",
-        opts = {},
-        dev = true,
-      },
+      -- {
+      --   "blink-cmp-copilot",
+      --   opts = {},
+      --   dev = true,
+      -- },
     },
     version = false,
     build = "nix run .#build-plugin",
@@ -34,18 +35,18 @@ return {
           enabled = true,
         },
       },
-      kind_icons = require("config.icons").kinds,
-      sources = {
-        completion = {
-          enabled_providers = { "lsp", "path", "snippets", "buffer", "copilot" },
-        },
-        providers = {
-          copilot = {
-            name = "Copilot",
-            module = "blink-cmp-copilot",
-          },
-        },
-      },
+      kind_icons = require("config.ui.icons").kinds,
+      -- sources = {
+      --   completion = {
+      --     enabled_providers = { "lsp", "path", "snippets", "buffer", "copilot" },
+      --   },
+      --   providers = {
+      --     copilot = {
+      --       name = "Copilot",
+      --       module = "blink-cmp-copilot",
+      --     },
+      --   },
+      -- },
     },
   },
   {

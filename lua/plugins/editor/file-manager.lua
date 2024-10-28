@@ -19,11 +19,9 @@ return {
       desc = "Resume the last yazi session",
     },
   },
-  ---@type YaziConfig
   opts = {
     open_for_directories = true,
     open_multiple_tabs = true,
-    yazi_floating_window_winblend = 10,
     keymaps = {
       show_help = "g?",
     },

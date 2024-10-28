@@ -45,7 +45,7 @@ return {
       },
       lsp = {
         symbols = {
-          symbol_icons = require("config.icons").kinds,
+          symbol_icons = require("config.ui.icons").kinds,
         },
         code_actions = {
           prompt = " ",
@@ -108,6 +108,7 @@ return {
     { "<leader>sf", "<cmd>FzfLua grep_cword<cr>", desc = "Find string under cursor in cwd" },
     { "<leader>sh", "<cmd>FzfLua helptags<cr>", desc = "Find help tags" },
     { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "Key Maps" },
+    { "<leader>su", "<cmd>FzfLua highlights<cr>", desc = "Highlights" },
     { "<leader>sR", "<cmd>FzfLua resume<cr>", desc = "Resume" },
     { "z=", "<Cmd>FzfLua spell_suggest<CR>", desc = "FzfLua: Find spell word suggestion" },
   },

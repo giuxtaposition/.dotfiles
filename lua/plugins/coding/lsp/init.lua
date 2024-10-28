@@ -31,7 +31,7 @@ return {
             end
           end
 
-          map("n", "gd", vim.lsp.buf.definition, "Goto Definition", event.buf) --  To jump back, press <C-t>.
+          map("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", "Goto Definition", event.buf) --  To jump back, press <C-t>.
           map("n", "gD", "<cmd>FzfLua lsp_definitions<cr>", "Peek definition", event.buf)
           map("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Show References", event.buf)
           map("n", "gI", vim.lsp.buf.implementation, "Goto Implementation", event.buf)
@@ -76,15 +76,15 @@ return {
         virtual_text = {
           spacing = 4,
           source = "if_many",
-          prefix = require("config.icons").diagnostics.prefix,
+          prefix = require("config.ui.icons").diagnostics.prefix,
         },
         severity_sort = true,
         signs = {
           text = {
-            [vim.diagnostic.severity.ERROR] = require("config.icons").diagnostics.error,
-            [vim.diagnostic.severity.WARN] = require("config.icons").diagnostics.warn,
-            [vim.diagnostic.severity.HINT] = require("config.icons").diagnostics.hint,
-            [vim.diagnostic.severity.INFO] = require("config.icons").diagnostics.info,
+            [vim.diagnostic.severity.ERROR] = require("config.ui.icons").diagnostics.error,
+            [vim.diagnostic.severity.WARN] = require("config.ui.icons").diagnostics.warn,
+            [vim.diagnostic.severity.HINT] = require("config.ui.icons").diagnostics.hint,
+            [vim.diagnostic.severity.INFO] = require("config.ui.icons").diagnostics.info,
           },
         },
       })

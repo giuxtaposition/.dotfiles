@@ -1,7 +1,7 @@
 return {
   {
-    "giuxtaposition/catppuccin-nvim",
-    branch = "blink-cmp",
+    "catppuccin/nvim",
+    name = "catppuccin-nvim",
     priority = 1000,
     opts = {
       flavour = "mocha",
@@ -17,7 +17,6 @@ return {
           FzfLuaScrollBorderFull = { fg = palette.base, bg = palette.base },
           FzfLuaScrollFloatEmpty = { fg = palette.base, bg = palette.base },
           FzfLuaScrollFloatFull = { fg = palette.base, bg = palette.base },
-          BlinkCmpGhostText = { fg = palette.overlay0 },
         }
 
         local rainbow = {
