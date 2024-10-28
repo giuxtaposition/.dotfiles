@@ -3,6 +3,7 @@ local M = {}
 
 function M.setup()
   vim.o.statusline = "%!v:lua.require'config.ui.statusline'.render()"
+  M.namespace_id = vim.api.nvim_create_namespace("statusline")
   utils.set_highlights()
 end
 
@@ -12,13 +13,11 @@ function M.render()
   return table.concat({
     modules.mode(),
     modules.file(),
-    modules.git_status(),
-    "%#StatusLine#%=",
     modules.diagnostics(),
+    "%#StatusLine#%=",
     modules.lsp(),
     modules.git_branch(),
   })
-  -- return "%t"
 end
 
 -- TODO: add current typed key

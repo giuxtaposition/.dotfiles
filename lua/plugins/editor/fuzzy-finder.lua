@@ -10,14 +10,6 @@ return {
         header = false,
         formatter = "path.filename_first",
       },
-
-      -- fzf_colors = {
-      --   bg = { "bg", "Normal" },
-      --   gutter = { "bg", "Normal" },
-      --   info = { "fg", "Conditional" },
-      --   scrollbar = { "bg", "Normal" },
-      --   separator = { "fg", "Comment" },
-      -- },
       winopts = {
         height = 0.8,
         width = 0.9,
@@ -26,6 +18,10 @@ return {
           scrollbar = false,
           horizontal = "right:50%",
         },
+        on_create = function()
+          vim.keymap.set("t", "<C-j>", "<Down>", { silent = true, buffer = true })
+          vim.keymap.set("t", "<C-k>", "<Up>", { silent = true, buffer = true })
+        end,
       },
       fzf_opts = {
         ["--no-info"] = "",

@@ -88,7 +88,11 @@ M.git_status = function()
 end
 
 M.git_branch = function()
-  local branch = vim.b.gitsigns_head
+  if not M.is_active_win() then
+    return ""
+  end
+
+  local branch = vim.b[M.statusline_buffer()].gitsigns_head
   if not branch then
     return ""
   end
@@ -102,11 +106,11 @@ M.diagnostics = function()
   local hints_number = #vim.diagnostic.get(M.statusline_buffer(), { severity = vim.diagnostic.severity.HINT })
   local info_number = #vim.diagnostic.get(M.statusline_buffer(), { severity = vim.diagnostic.severity.INFO })
 
-  local err = (err_number and err_number > 0) and string.format("%s %s ", icons.diagnostics.error, err_number) or ""
-  local warn = (warn_number and warn_number > 0) and string.format("%s %s ", icons.diagnostics.info, warn_number) or ""
-  local hints = (hints_number and hints_number > 0) and string.format("%s %s ", icons.diagnostics.hint, hints_number)
+  local err = (err_number and err_number > 0) and string.format("%s %s", icons.diagnostics.error, err_number) or ""
+  local warn = (warn_number and warn_number > 0) and string.format("%s %s", icons.diagnostics.info, warn_number) or ""
+  local hints = (hints_number and hints_number > 0) and string.format("%s %s", icons.diagnostics.hint, hints_number)
     or ""
-  local info = (info_number and info_number > 0) and string.format("%s %s ", icons.diagnostics.info, info_number) or ""
+  local info = (info_number and info_number > 0) and string.format("%s %s", icons.diagnostics.info, info_number) or ""
 
   return {
     err = err,
@@ -117,7 +121,10 @@ M.diagnostics = function()
 end
 
 M.lsp = function()
-  local clients = vim.lsp.get_clients()
+  if not M.is_active_win() then
+    return ""
+  end
+  local clients = vim.lsp.get_clients({ bufnr = M.statusline_buffer() })
   clients = vim.tbl_filter(function(c)
     return c ~= "copilot"
   end, clients)

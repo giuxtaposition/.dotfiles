@@ -17,6 +17,13 @@ return {
           FzfLuaScrollBorderFull = { fg = palette.base, bg = palette.base },
           FzfLuaScrollFloatEmpty = { fg = palette.base, bg = palette.base },
           FzfLuaScrollFloatFull = { fg = palette.base, bg = palette.base },
+
+          FloatBorder = { fg = palette.base },
+
+          BlinkCmpMenu = { fg = palette.text, bg = palette.mantle },
+          BlinkCmpMenuBorder = { fg = palette.mantle, bg = palette.mantle },
+          BlinkCmpDocBorder = { fg = palette.crust, bg = palette.crust },
+          BlinkCmpDoc = { fg = palette.text, bg = palette.crust },
         }
 
         local rainbow = {

@@ -26,10 +26,10 @@ end
 M.diagnostics = function()
   local diagnostics = utils.diagnostics()
 
-  local err = diagnostics.err and string.format("%%#StatusLine_DiagnosticsError# %s", diagnostics.err) or ""
-  local warn = diagnostics.warn and string.format("%%#StatusLine_DiagnosticsWarning# %s", diagnostics.warn) or ""
-  local hints = diagnostics.hints and string.format("%%#StatusLine_DiagnosticsHints# %s", diagnostics.hints) or ""
-  local info = diagnostics.info and string.format("%%#StatusLine_DiagnosticsInfo# %s", diagnostics.info) or ""
+  local err = diagnostics.err and string.format("%%#StatusLine_DiagnosticsError#%s", diagnostics.err) or ""
+  local warn = diagnostics.warn and string.format("%%#StatusLine_DiagnosticsWarning#%s", diagnostics.warn) or ""
+  local hints = diagnostics.hints and string.format("%%#StatusLine_DiagnosticsHints#%s", diagnostics.hints) or ""
+  local info = diagnostics.info and string.format("%%#StatusLine_DiagnosticsInfo#%s", diagnostics.info) or ""
   return err .. warn .. hints .. info
 end
 

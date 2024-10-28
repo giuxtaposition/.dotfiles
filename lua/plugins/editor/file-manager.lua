@@ -25,5 +25,6 @@ return {
     keymaps = {
       show_help = "g?",
     },
+    floating_window_scaling_factor = 0.8,
   },
 }
