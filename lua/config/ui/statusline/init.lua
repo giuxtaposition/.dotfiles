@@ -15,12 +15,12 @@ function M.render()
     modules.file(),
     modules.diagnostics(),
     "%#StatusLine#%=",
+    modules.macro(),
     modules.lsp(),
     modules.git_branch(),
   })
 end
 
 -- TODO: add current typed key
--- TODO: add if macro is recording
 
 return M

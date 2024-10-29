@@ -100,4 +100,8 @@ return {
     fg = colors.base,
     bg = colors.teal,
   },
+  StatusLine_Macro = {
+    fg = colors.mauve,
+    bg = colors.mantle,
+  },
 }

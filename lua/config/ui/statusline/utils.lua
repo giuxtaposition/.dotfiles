@@ -136,6 +136,15 @@ M.lsp = function()
   return ""
 end
 
+M.macro = function()
+  local recording_register = vim.fn.reg_recording()
+  if recording_register == "" then
+    return ""
+  else
+    return "Recording @" .. recording_register
+  end
+end
+
 M.set_highlights = function()
   local groups = require("config.ui.statusline.highlights")
 

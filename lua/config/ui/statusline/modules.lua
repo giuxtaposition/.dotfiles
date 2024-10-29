@@ -43,4 +43,10 @@ M.git_branch = function()
   return git_branch ~= "" and string.format(" %%#StatusLine_GitBranch# %s ", git_branch) or ""
 end
 
+M.macro = function()
+  local macro = utils.macro()
+
+  return macro ~= "" and string.format("%%#StatusLine_Macro# %s ", macro) or ""
+end
+
 return M
