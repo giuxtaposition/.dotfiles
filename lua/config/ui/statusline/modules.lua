@@ -15,8 +15,7 @@ end
 
 M.file = function()
   local file = utils.filetype_icon()
-  -- TODO: make icon colored?
-  return string.format("%%#StatusLine_filename# %s %%t", file[1])
+  return string.format("%%#StatusLine_FileIcon%s# %s %%#StatusLine_FileName#%%t", file[2], file[1])
 end
 
 M.git_status = function()

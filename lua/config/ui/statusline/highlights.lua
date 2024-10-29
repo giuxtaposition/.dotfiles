@@ -1,4 +1,7 @@
 local colors = require("config.ui.colors")
+
+local statusline_bg = colors.mantle
+
 return {
   StatusLine_NormalMode = {
     fg = colors.base,
@@ -74,27 +77,27 @@ return {
   },
   StatusLine_DiagnosticsError = {
     fg = colors.red,
-    bg = colors.mantle,
+    bg = statusline_bg,
   },
   StatusLine_DiagnosticsWarning = {
     fg = colors.yellow,
-    bg = colors.mantle,
+    bg = statusline_bg,
   },
   StatusLine_DiagnosticsHints = {
     fg = colors.sky,
-    bg = colors.mantle,
+    bg = statusline_bg,
   },
   StatusLine_DiagnosticsInfo = {
     fg = colors.yellow, --TODO
-    bg = colors.mantle,
+    bg = statusline_bg,
   },
   StatusLine_LspInfo = {
     fg = colors.lavender,
-    bg = colors.mantle,
+    bg = statusline_bg,
   },
   StatusLine_GitBranchSep = {
     fg = colors.green,
-    bg = colors.mantle,
+    bg = statusline_bg,
   },
   StatusLine_GitBranch = {
     fg = colors.base,
@@ -102,6 +105,42 @@ return {
   },
   StatusLine_Macro = {
     fg = colors.mauve,
-    bg = colors.mantle,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconRed = {
+    fg = colors.red,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconBlue = {
+    fg = colors.blue,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconCyan = {
+    fg = colors.sky,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconGrey = {
+    fg = colors.text,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconAzure = {
+    fg = colors.sapphire,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconGreen = {
+    fg = colors.green,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconOrange = {
+    fg = colors.orange,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconPurple = {
+    fg = colors.mauve,
+    bg = statusline_bg,
+  },
+  StatusLine_FileIconYellow = {
+    fg = colors.yellow,
+    bg = statusline_bg,
   },
 }

@@ -61,16 +61,17 @@ M.modes = {
 --- @return string[]
 M.filetype_icon = function()
   local icon = "󰈔"
-  local icon_hl = ""
+  local icon_color = ""
 
   local icons_present, mini_icons = pcall(require, "mini.icons")
   if icons_present then
     local ft_icon, hl = mini_icons.get("filetype", vim.bo.filetype)
     icon = ft_icon and ft_icon or icon
-    icon_hl = hl
+    local color = hl:match("[A-Z][a-z]+$")
+    icon_color = color
   end
 
-  return { icon, icon_hl }
+  return { icon, icon_color }
 end
 
 M.git_status = function()
