@@ -1,4 +1,6 @@
 local icons = require("config.ui.icons")
+local util = require("config.util").table
+
 local M = {}
 
 M.statusline_buffer = function()
@@ -125,13 +127,20 @@ M.lsp = function()
   if not M.is_active_win() then
     return ""
   end
-  local clients = vim.lsp.get_clients({ bufnr = M.statusline_buffer() })
-  clients = vim.tbl_filter(function(c)
-    return c ~= "copilot"
-  end, clients)
 
-  if next(clients) ~= nil then
-    return " LSP ~ " .. clients[1].name -- TODO: move to icons
+  local clients = vim.tbl_filter(function(client)
+    return client.name ~= "copilot"
+  end, vim.lsp.get_clients({ bufnr = M.statusline_buffer() }))
+
+  if next(clients) then
+    return " ["
+      .. table.concat(
+        util.map(clients, function(c)
+          return c.name
+        end),
+        ", "
+      )
+      .. "]"
   end
 
   return ""
