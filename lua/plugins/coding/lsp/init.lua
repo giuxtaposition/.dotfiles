@@ -1,14 +1,4 @@
----@param mode string|string[]
----@param lhs string
----@param rhs string|function
----@param desc string
----@param buffer boolean|integer O or true for current buffer
----@param additional_opts? vim.keymap.set.Opts
-local map = function(mode, lhs, rhs, desc, buffer, additional_opts)
-  local opts = vim.tbl_extend("force", { buffer = buffer, desc = desc, silent = true }, additional_opts or {})
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
-
+local set_keymap = require("config.util.init").keys.set
 return {
   {
     "neovim/nvim-lspconfig",
@@ -31,42 +21,62 @@ return {
             end
           end
 
-          map("n", "gd", "<cmd>FzfLua lsp_definitions<cr>", "Goto Definition", event.buf) --  To jump back, press <C-t>.
-          map("n", "gD", "<cmd>FzfLua lsp_definitions<cr>", "Peek definition", event.buf)
-          map("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Show References", event.buf)
-          map("n", "gI", vim.lsp.buf.implementation, "Goto Implementation", event.buf)
-          map("n", "gt", vim.lsp.buf.type_definition, "Type Definition", event.buf)
-          map("n", "<leader>cs", "<cmd>FzfLua lsp_document_symbols<CR>", "Document Symbols", event.buf)
-          map("n", "<leader>cS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace Symbols", event.buf)
-          map("n", "<leader>cr", function()
+          set_keymap("n", "gd", function()
+            require("fzf-lua").lsp_definitions({ jump_to_single_result = true })
+          end, "Go to Definition", { buffer = event.buf }) --  To jump back, press <C-t>.
+          set_keymap("n", "gD", "<cmd>FzfLua lsp_definitions<cr>", "Peek definition", { buffer = event.buf })
+          set_keymap("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Show References", { buffer = event.buf })
+          set_keymap("n", "gI", vim.lsp.buf.implementation, "Go to Implementation", { buffer = event.buf })
+          set_keymap("n", "gt", vim.lsp.buf.type_definition, "Type Definition", { buffer = event.buf })
+          set_keymap(
+            "n",
+            "<leader>cs",
+            "<cmd>FzfLua lsp_document_symbols<CR>",
+            "Document Symbols",
+            { buffer = event.buf }
+          )
+          set_keymap(
+            "n",
+            "<leader>cS",
+            "<cmd>FzfLua lsp_workspace_symbols<CR>",
+            "Workspace Symbols",
+            { buffer = event.buf }
+          )
+          set_keymap("n", "<leader>cr", function()
             local inc_rename = require("inc_rename")
             return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
-          end, "Rename", event.buf, { expr = true })
-          map({ "n", "v" }, "<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", "Code actions", event.buf)
-          map(
+          end, "Rename", { buffer = event.buf, expr = true })
+          set_keymap(
+            { "n", "v" },
+            "<leader>ca",
+            "<cmd>FzfLua lsp_code_actions<CR>",
+            "Code actions",
+            { buffer = event.buf }
+          )
+          set_keymap(
             "n",
             "<leader>D",
             "<cmd>FzfLua lsp_document_diagnostics bufnr=0<CR>",
             "Show buffer diagnostics",
-            event.buf
+            { buffer = event.buf }
           )
-          map("n", "<leader>cd", vim.diagnostic.open_float, "Show line diagnostics", event.buf)
-          map("n", "]d", diagnostic_goto(1), "Next Diagnostic", event.buf)
-          map("n", "[d", diagnostic_goto(-1), "Prev Diagnostic", event.buf)
-          map("n", "]e", diagnostic_goto(1, "ERROR"), "Next Error", event.buf)
-          map("n", "[e", diagnostic_goto(-1, "ERROR"), "Prev Error", event.buf)
-          map("n", "]w", diagnostic_goto(1, "WARN"), "Next Warning", event.buf)
-          map("n", "[w", diagnostic_goto(-1, "WARN"), "Prev Warning", event.buf)
-          map("n", "K", vim.lsp.buf.hover, "Show documentation for what is under cursor", event.buf) --TODO
-          map("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", event.buf)
+          set_keymap("n", "<leader>cd", vim.diagnostic.open_float, "Show line diagnostics", { buffer = event.buf })
+          set_keymap("n", "]d", diagnostic_goto(1), "Next Diagnostic", { buffer = event.buf })
+          set_keymap("n", "[d", diagnostic_goto(-1), "Prev Diagnostic", { buffer = event.buf })
+          set_keymap("n", "]e", diagnostic_goto(1, "ERROR"), "Next Error", { buffer = event.buf })
+          set_keymap("n", "[e", diagnostic_goto(-1, "ERROR"), "Prev Error", { buffer = event.buf })
+          set_keymap("n", "]w", diagnostic_goto(1, "WARN"), "Next Warning", { buffer = event.buf })
+          set_keymap("n", "[w", diagnostic_goto(-1, "WARN"), "Prev Warning", { buffer = event.buf })
+          set_keymap("n", "K", vim.lsp.buf.hover, "Show documentation for what is under cursor", { buffer = event.buf }) --TODO
+          set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = event.buf })
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           -- The following code creates a keymap to toggle inlay hints in your
           -- code, if the language server you are using supports them
           if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            map("n", "<leader>uh", function()
+            set_keymap("n", "<leader>uh", function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-            end, "Toggle Inlay Hints", event.buf)
+            end, "Toggle Inlay Hints", { buffer = event.buf })
           end
         end,
       })
@@ -103,7 +113,7 @@ return {
         if server_opts.keys then
           server_opts.on_attach = function(_, bufnr)
             for _, value in pairs(server_opts.keys) do
-              map("n", value[1], value[2], value[3], bufnr)
+              set_keymap("n", value[1], value[2], value[3], { buffer = bufnr })
             end
           end
         end

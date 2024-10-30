@@ -1,71 +1,60 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-local map = vim.keymap.set
+local set_keymap = require("config.util.init").keys.set
 
 -- Do things without affecting the registers
-map("n", "x", '"_x', { desc = "Do not copy after deleting char" })
-map("n", "<A>p", '"0p')
-map("n", "<A>P", '"0P')
-map("v", "<A>p", '"0p')
-map("n", "<A>c", '"_c')
-map("n", "<A>C", '"_C')
-map("v", "<A>c", '"_c')
-map("v", "<A>C", '"_C')
-map("n", "<A>d", '"_d')
-map("n", "<A>D", '"_D')
-map("v", "<A>d", '"_d')
-map("v", "<A>D", '"_D')
+set_keymap("n", "x", '"_x', "Do not copy after deleting char")
 
 -- Remapping gj gk for wrapped line
-map("n", "j", "gj", { desc = "Down In Wrap", noremap = true, silent = true })
-map("n", "k", "gk", { desc = "Up In Wrap", noremap = true, silent = true })
+set_keymap("n", "j", "gj", "Down In Wrap", { noremap = true, silent = true })
+set_keymap("n", "k", "gk", "Up In Wrap", { noremap = true, silent = true })
 
 -- General keymaps
-map({ "i", "v", "s" }, "jk", "<Esc>", { desc = "Map jk to Esc" })
-map("n", "U", "<C-r>", { desc = "Redo" })
-map("n", "<C-A>", "<cmd> %y+<cr>", { desc = "Copy whole file" })
-map("n", "<leader><leader>b", ':let @+ = expand("%")<cr>', { desc = "Yank filename path of current buffer" })
-map("n", "<cr>", "o<Esc>", { desc = "add blank line under current line" })
-map("n", "<leader>wb", "<C-W>s", { desc = "Split window below", remap = true })
-map("n", "<leader>wv", "<C-W>v", { desc = "Split window right", remap = true })
-map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear highlights" })
+set_keymap({ "i", "v", "s" }, "jk", "<Esc>", "Map jk to Esc")
+set_keymap("n", "U", "<C-r>", "Redo")
+set_keymap("n", "<C-A>", "<cmd> %y+<cr>", "Copy whole file")
+set_keymap("n", "<leader><leader>b", ':let @+ = expand("%")<cr>', "Yank filename path of current buffer")
+set_keymap("n", "<cr>", "o<Esc>", "add blank line under current line")
+set_keymap("n", "<leader>wb", "<C-W>s", "Split window below", { remap = true })
+set_keymap("n", "<leader>wv", "<C-W>v", "Split window right", { remap = true })
+set_keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", "Clear highlights")
 
 -- Buffers
-map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
-map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to other buffer" })
+set_keymap("n", "[b", "<cmd>bprevious<cr>", "Prev buffer")
+set_keymap("n", "]b", "<cmd>bnext<cr>", "Next buffer")
+set_keymap("n", "<leader>bb", "<cmd>e #<cr>", "Switch to other buffer")
 
 -- windows
-map("n", "<leader>ww", "<C-W>p", { desc = "Other window", remap = true })
-map("n", "<leader>wd", "<C-W>c", { desc = "Delete window", remap = true })
-map("n", "<leader>wb", "<C-W>s", { desc = "Split window below", remap = true })
-map("n", "<leader>wv", "<C-W>v", { desc = "Split window right", remap = true })
+set_keymap("n", "<leader>ww", "<C-W>p", "Other window", { remap = true })
+set_keymap("n", "<leader>wd", "<C-W>c", "Delete window", { remap = true })
+set_keymap("n", "<leader>wb", "<C-W>s", "Split window below", { remap = true })
+set_keymap("n", "<leader>wv", "<C-W>v", "Split window right", { remap = true })
 
 -- tabs
-map("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
-map("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
-map("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
-map("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
-map("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
-map("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+set_keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", "Last Tab")
+set_keymap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", "First Tab")
+set_keymap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", "New Tab")
+set_keymap("n", "<leader><tab>]", "<cmd>tabnext<cr>", "Next Tab")
+set_keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", "Close Tab")
+set_keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", "Previous Tab")
 
 -- move over a closing element in insert mode
-map("i", "<C-h>", "<Left>", { desc = "Move left in insert mode" })
-map("i", "<C-j>", "<Down>", { desc = "Move down in insert mode" })
-map("i", "<C-k>", "<Up>", { desc = "Move up in insert mode" })
-map("i", "<C-l>", "<Right>", { desc = "Move right in insert mode" })
+set_keymap("i", "<C-h>", "<Left>", "Move left in insert mode")
+set_keymap("i", "<C-j>", "<Down>", "Move down in insert mode")
+set_keymap("i", "<C-k>", "<Up>", "Move up in insert mode")
+set_keymap("i", "<C-l>", "<Right>", "Move right in insert mode")
 
 -- Move Lines
-map("n", "<S-A-j>", ":m .+1<cr>==", { desc = "Move line down" })
-map("n", "<S-A-k>", ":m .-2<cr>==", { desc = "Move line up" })
-map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
-map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
-map("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move line down" })
-map("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move line up" })
+set_keymap("n", "<S-A-j>", ":m .+1<cr>==", "Move line down")
+set_keymap("n", "<S-A-k>", ":m .-2<cr>==", "Move line up")
+set_keymap("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", "Move line down")
+set_keymap("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", "Move line up")
+set_keymap("v", "<A-j>", ":m '>+1<cr>gv=gv", "Move line down")
+set_keymap("v", "<A-k>", ":m '<-2<cr>gv=gv", "Move line up")
 
 -- terminal
-map("t", "<C-h>", "<cmd>wincmd h<cr>", { desc = "Go to left window" })
-map("t", "<C-j>", "<cmd>wincmd j<cr>", { desc = "Go to bottom window" })
-map("t", "<C-k>", "<cmd>wincmd k<cr>", { desc = "Go to top window" })
-map("t", "<C-l>", "<cmd>wincmd l<cr>", { desc = "Go to right window" })
+set_keymap("t", "<C-h>", "<cmd>wincmd h<cr>", "Go to left window")
+set_keymap("t", "<C-j>", "<cmd>wincmd j<cr>", "Go to bottom window")
+set_keymap("t", "<C-k>", "<cmd>wincmd k<cr>", "Go to top window")
+set_keymap("t", "<C-l>", "<cmd>wincmd l<cr>", "Go to right window")
