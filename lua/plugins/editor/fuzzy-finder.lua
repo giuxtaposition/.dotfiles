@@ -93,6 +93,14 @@ return {
     },
     { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find Files" },
     { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent" },
+    {
+      "<leader>ft",
+      function()
+        local file_name = vim.fn.expand("%:t:r")
+        require("fzf-lua").files({ query = file_name })
+      end,
+      desc = "Find tests",
+    },
     -- git
     { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
     { "<leader>gC", "<cmd>FzfLua git_bcommits<CR>", desc = "Commits For Current Buffer" },
