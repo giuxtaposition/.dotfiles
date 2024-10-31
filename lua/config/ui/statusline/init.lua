@@ -15,12 +15,11 @@ function M.render()
     modules.file(),
     modules.diagnostics(),
     "%#StatusLine#%=",
+    modules.typed_key(),
     modules.macro(),
     modules.lsp(),
     modules.git_branch(),
   })
 end
-
--- TODO: add current typed key
 
 return M

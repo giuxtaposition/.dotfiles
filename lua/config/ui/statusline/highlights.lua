@@ -143,4 +143,8 @@ return {
     fg = colors.yellow,
     bg = statusline_bg,
   },
+  StatusLine_TypedKey = {
+    fg = colors.blue,
+    bg = statusline_bg,
+  },
 }

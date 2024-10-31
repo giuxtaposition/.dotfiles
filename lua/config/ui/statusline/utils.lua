@@ -1,7 +1,9 @@
 local icons = require("config.ui.icons")
 local util = require("config.util").table
 
-local M = {}
+local M = {
+  typed_key = "",
+}
 
 M.statusline_buffer = function()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)
@@ -153,6 +155,16 @@ M.macro = function()
   else
     return "Recording @" .. recording_register
   end
+end
+
+M.record_typed_key = function()
+  vim.on_key(function(key, typed)
+    typed = typed or key
+    if not typed or typed == "" then
+      return
+    end
+    M.typed_key = vim.fn.keytrans(typed)
+  end)
 end
 
 M.set_highlights = function()

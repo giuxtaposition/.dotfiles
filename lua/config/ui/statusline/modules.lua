@@ -48,4 +48,10 @@ M.macro = function()
   return macro ~= "" and string.format("%%#StatusLine_Macro# %s ", macro) or ""
 end
 
+M.typed_key = function()
+  utils.record_typed_key()
+
+  return utils.typed_key ~= "" and string.format("%%#StatusLine_TypedKey# %s ", utils.typed_key) or ""
+end
+
 return M
