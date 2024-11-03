@@ -3,6 +3,6 @@ return {
   event = "InsertEnter",
   config = true,
   opts = {
-    disablee_in_macro = false,
+    disable_in_macro = false,
   },
 }
