@@ -4,9 +4,9 @@ return {
   version = "*",
   dependencies = {
     "SmiteshP/nvim-navic",
-    "nvim-tree/nvim-web-devicons", -- optional dependency
   },
   opts = {
     theme = "catppuccin",
+    kinds = require("config.ui.icons"),
   },
 }
