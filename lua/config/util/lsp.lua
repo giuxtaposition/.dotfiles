@@ -33,4 +33,17 @@ M.action = setmetatable({}, {
   end,
 })
 
+---@param count "prev" | "next"
+---@param severity? vim.diagnostic.SeverityFilter
+M.diagnostic_go_to = function(count, severity)
+  severity = severity and vim.diagnostic.severity[severity] or nil
+  return function()
+    vim.diagnostic.jump({
+      count = count == "next" and 1 or -1,
+      severity = severity,
+      float = { border = "rounded", max_width = 100 },
+    })
+  end
+end
+
 return M

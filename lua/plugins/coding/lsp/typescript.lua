@@ -1,6 +1,23 @@
+local lang_settings = {
+  suggest = { completeFunctionCalls = true },
+  inlayHints = {
+    functionLikeReturnTypes = { enabled = true },
+    parameterNames = { enabled = "literals" },
+    variableTypes = { enabled = true },
+  },
+  preferences = {
+    importModuleSpecifier = "relative",
+  },
+  updateImportsOnFileMove = { enabled = "always" },
+}
+
 return {
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      -- LSP wrapper for vtsls.
+      "yioneko/nvim-vtsls",
+    },
     opts = {
       servers = {
         vtsls = {
@@ -66,39 +83,17 @@ return {
             "vue",
           },
           settings = {
-            complete_function_calls = true,
-            enableMoveToFileCodeAction = true,
-            autoUseWorkspaceTsdk = true,
-            experimental = {
-              completion = {
-                enableServerSideFuzzyMatch = true,
-              },
-            },
-            javascript = {
-              preferences = {
-                importModuleSpecifier = "relative",
-              },
-            },
-            typescript = {
-              preferences = {
-                importModuleSpecifier = "relative",
-              },
-              tsserver = {
-                experimental = {
-                  enableProjectDiagnostics = false, -- when true it always open all json in the project?
+            javascript = lang_settings,
+            typescript = lang_settings,
+            vtsls = {
+              complete_function_calls = true,
+              enableMoveToFileCodeAction = true,
+              autoUseWorkspaceTsdk = true,
+              experimental = {
+                completion = {
+                  enableServerSideFuzzyMatch = true,
                 },
-              },
-              updateImportsOnFileMove = { enabled = "always" },
-              suggest = {
-                completeFunctionCalls = true,
-              },
-              inlayHints = {
-                enumMemberValues = { enabled = true },
-                functionLikeReturnTypes = { enabled = true },
-                parameterNames = { enabled = "literals" },
-                parameterTypes = { enabled = true },
-                propertyDeclarationTypes = { enabled = true },
-                variableTypes = { enabled = false },
+                maxInlayHintLength = 30,
               },
             },
           },

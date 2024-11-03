@@ -12,9 +12,7 @@ return {
 
           settings = {
             json = {
-              format = {
-                enable = true,
-              },
+              format = { enable = true },
               validate = { enable = true },
             },
           },
