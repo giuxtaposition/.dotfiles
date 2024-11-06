@@ -10,7 +10,10 @@
     programs.yazi = {
       enable = true;
       enableFishIntegration = true;
-      catppuccin.enable = true;
+      catppuccin = {
+        enable = true;
+        accent = "lavender";
+      };
       settings = {
         manager = {
           show_hidden = true;

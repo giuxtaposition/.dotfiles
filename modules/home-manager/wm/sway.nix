@@ -243,7 +243,7 @@ in {
         blur_passes 4
 
         # dim inactive
-        default_dim_inactive 0.2
+        default_dim_inactive 0.0
 
         ${monitors}
 
