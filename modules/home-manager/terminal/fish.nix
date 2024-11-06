@@ -77,7 +77,7 @@
         nvim = ''
           set pipe_file ~/.cache/nvim/(pwd | sed 's/\\//-/g' | sed 's/^-//' | sed 's/\\//./g').pipe
           rm -f $pipe_file
-          env TERM=wezterm nvim --listen $pipe_file
+          env TERM=wezterm nvim --listen $pipe_file $argv
         '';
       };
 
