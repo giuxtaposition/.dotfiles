@@ -16,7 +16,7 @@
       package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
       withNodeJs = true;
       extraLuaPackages = ps: [ps.magick];
-      extraPackages = [pkgs.imagemagick];
+      extraPackages = [pkgs.imagemagick pkgs.lua51Packages.luarocks];
     };
 
     home.file."${config.home.homeDirectory}/.config/nvim" = {
