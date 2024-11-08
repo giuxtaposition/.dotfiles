@@ -82,16 +82,16 @@ if require("zk.util").notebook_root(vim.fn.expand("%:p")) ~= nil then
   map("n", "<CR>", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
 
   opts.desc = "Create a new note"
-  map("n", "<leader>zn", "<Cmd>ZkNew { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>", opts)
+  map("n", "<leader>zn", "<Cmd>ZkNew { dir = 'notes', title = vim.fn.input('Title: ') }<CR>", opts)
 
   opts.desc = "Create a new note with the current selection as title"
-  map("v", "<leader>znt", ":'<,'>ZkNewFromTitleSelection { dir = vim.fn.expand('%:p:h') }<CR>", opts)
+  map("v", "<leader>znt", ":'<,'>ZkNewFromTitleSelection { dir = 'notes' }<CR>", opts)
 
   opts.desc = "Create a new note with the current selection as content"
   map(
     "v",
     "<leader>znc",
-    ":'<,'>ZkNewFromContentSelection { dir = vim.fn.expand('%:p:h'), title = vim.fn.input('Title: ') }<CR>",
+    ":'<,'>ZkNewFromContentSelection { dir = 'notes', title = vim.fn.input('Title: ') }<CR>",
     opts
   )
 

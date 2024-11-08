@@ -4,7 +4,14 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
-    opts = {},
+    opts = {
+      checkbox = {
+        custom = {
+          migrated = { raw = "[>]", rendered = " ", highlight = "RenderMarkdownTodo", scope_highlight = nil },
+          todo = { raw = "[-]", rendered = "󰄱 ", highlight = "RenderMarkdownError", scope_highlight = nil },
+        },
+      },
+    },
   },
   {
     "HakonHarnes/img-clip.nvim",
@@ -35,7 +42,8 @@ return {
     end,
 
     keys = {
-      { "<leader>zg", "<cmd>ZkNotes<cr>", desc = "Search Notes" },
+      { "<leader>zg", "<cmd>ZkNotes { dir = 'notes'}<cr>", desc = "Search Notes" },
+      { "<leader>zj", "<cmd>ZkNotes { tags = { 'daily' }}<cr>", desc = "Search Daily Notes" },
     },
   },
   -- Otter.nvim provides lsp features for code embedded in other documents (markdown)
