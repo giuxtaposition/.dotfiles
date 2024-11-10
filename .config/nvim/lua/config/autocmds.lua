@@ -90,3 +90,12 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  group = augroup("keymap_filetype"),
+  desc = "Set filetype to c for keymap files",
+  pattern = "*.keymap",
+  callback = function()
+    vim.bo.filetype = "c"
+  end,
+})
