@@ -21,6 +21,24 @@
           sort_dir_first = true;
         };
       };
+      keymap = {
+        manager = {
+          prepend_keymap = [
+            {
+              on = "<C-n>";
+              run = ''shell 'ripdrag "$@" -x 2>/dev/null &' --confirm'';
+            }
+            {
+              on = "y";
+              run = [''shell 'for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list' --confirm'' "yank"];
+            }
+            {
+              on = ["g" "r"];
+              run = ''shell 'ya pub dds-cd --str "$(git rev-parse --show-toplevel)"' --confirm'';
+            }
+          ];
+        };
+      };
     };
 
     home.packages = with pkgs; [
@@ -35,6 +53,7 @@
       zoxide # historical directories navigation
       imagemagick # svg, font, heic and jpeg XL preview
       wl-clipboard # system clipboard support
+      ripdrag # drag and drop files from and to the terminal
     ];
   };
 }
