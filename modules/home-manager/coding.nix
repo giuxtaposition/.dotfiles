@@ -33,6 +33,7 @@ in {
     fish.enable = true;
     git.enable = true;
     wezterm.enable = true;
+    direnv.enable = true;
 
     home.packages = with pkgs; [
       chromium
@@ -40,8 +41,6 @@ in {
       firefoxWorkScript
 
       # Typescript/Javascript
-      nodejs_22
-      nodePackages_latest.pnpm
       cypress
       vscode-langservers-extracted
       nodePackages_latest.typescript-language-server

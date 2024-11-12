@@ -24,6 +24,7 @@
       extraConfig = ''
         load-module module-switch-on-connect
       '';
+      package = pkgs.pulseaudioFull;
     };
     services.blueman.enable = true;
   };

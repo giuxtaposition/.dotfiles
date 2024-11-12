@@ -30,13 +30,6 @@
         "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
     };
 
-    # asdf config
-    home.file."${config.home.homeDirectory}/.asdfrc" = {
-      text = ''
-        legacy_version_file = yes
-      '';
-    };
-
     programs.command-not-found.enable = false;
 
     programs.nix-index = {
@@ -66,9 +59,6 @@
 
         # vim mode
         set fish_key_bindings fish_user_key_bindings
-
-        # load asdf definitions
-        source "$HOME/.nix-profile/share/asdf-vm/asdf.fish"
       '';
       functions = {
         fish_user_key_bindings = ''

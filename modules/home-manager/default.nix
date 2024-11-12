@@ -7,6 +7,7 @@
   wezterm = import ./terminal/wezterm.nix;
   btop = import ./terminal/btop.nix;
   yazi = import ./terminal/yazi.nix;
+  direnv = import ./terminal/direnv.nix;
 
   # WM
   wayland = import ./wm/wayland.nix;

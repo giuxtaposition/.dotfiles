@@ -61,7 +61,6 @@
   home.packages = with pkgs; [
     slack # Messaging App
     zathura
-    asdf-vm # runtime version management
     obsidian
     cbonsai
 

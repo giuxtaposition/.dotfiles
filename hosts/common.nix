@@ -91,23 +91,6 @@
   };
 
   programs.dconf.enable = true;
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      # nodejs asdf plugin dependencies
-      gpgme
-      gawk
-      stdenv.cc.cc
-
-      # mongodb-memory-server
-      # curlFull
-      # openssl
-      # openssl_1_1
-      # xz
-      # libGL
-      # libuuid
-    ];
-  };
 
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
