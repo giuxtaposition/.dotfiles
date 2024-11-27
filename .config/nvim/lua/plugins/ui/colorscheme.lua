@@ -24,6 +24,7 @@ return {
           BlinkCmpMenuBorder = { fg = palette.mantle, bg = palette.mantle },
           BlinkCmpDocBorder = { fg = palette.crust, bg = palette.crust },
           BlinkCmpDoc = { fg = palette.text, bg = palette.crust },
+          BlinkCmpKindCopilot = { fg = palette.sky },
         }
 
         local rainbow = {

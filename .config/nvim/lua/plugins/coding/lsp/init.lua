@@ -94,7 +94,8 @@ return {
         lspconfig[server].setup(server_opts)
       end
 
-      for server in pairs(opts.servers) do
+      for server, config in pairs(opts.servers) do
+        config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
         setup(server)
       end
     end,

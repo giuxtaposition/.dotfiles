@@ -32,33 +32,38 @@ return {
       trigger = { signature_help = { enabled = true } },
       windows = {
         autocomplete = {
-          -- draw = "reversed",
           border = "single",
-          ---@param ctx blink.cmp.CompletionRenderContext
-          ---@returns blink.cmp.Component[]
-          draw = function(ctx)
-            local isCopilot = ctx.item.source_name == "copilot"
+          draw = {
+            align_to_component = "label", -- or 'none' to disable
+            padding = 1,
+            gap = 4,
+            columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
+            components = {
+              kind_icon = {
+                ellipsis = false,
+                text = function(ctx)
+                  return ctx.item.source_name == "copilot" and require("config.ui.icons").kinds.Copilot
+                    or ctx.kind_icon .. ctx.icon_gap
+                end,
+                highlight = function(ctx)
+                  local kind = ctx.item.source_name == "copilot" and "Copilot" or ctx.kind
+                  return (require("blink.cmp.utils").get_tailwind_hl(ctx) or "BlinkCmpKind") .. kind
+                end,
+              },
 
-            return {
-              " ",
-              {
-                ctx.label,
-                ctx.kind == "Snippet" and "~" or nil,
-                (ctx.item.labelDetails and ctx.item.labelDetails.detail) and ctx.item.labelDetails.detail or "",
-                fill = true,
-                hl_group = ctx.deprecated and "BlinkCmpLabelDeprecated" or "BlinkCmpLabel",
-                max_width = 50,
+              kind = {
+                ellipsis = false,
+                width = { fill = true },
+                text = function(ctx)
+                  return ctx.item.source_name == "copilot" and "Copilot" or ctx.kind
+                end,
+                highlight = function(ctx)
+                  local kind = ctx.item.source_name == "copilot" and "Copilot" or ctx.kind
+                  return (require("blink.cmp.utils").get_tailwind_hl(ctx) or "BlinkCmpKind") .. kind
+                end,
               },
-              " ",
-              {
-                isCopilot and require("config.ui.icons").kinds.Copilot or ctx.kind_icon,
-                ctx.icon_gap,
-                isCopilot and "Copilot" or ctx.kind,
-                hl_group = ("BlinkCmpKind" .. ctx.kind),
-              },
-              " ",
-            }
-          end,
+            },
+          },
         },
         documentation = {
           border = "single",
