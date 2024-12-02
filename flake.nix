@@ -20,7 +20,10 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ags.url = "github:Aylur/ags";
+    cassiopea = {
+      url = "github:giuxtaposition/cassiopea";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {

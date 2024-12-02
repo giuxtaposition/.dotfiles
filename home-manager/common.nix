@@ -53,7 +53,6 @@
 
   wayland.enable = true;
   sway.enable = true;
-  ags.enable = true;
   spotify.enable = true;
 
   fonts.fontconfig.enable = true;

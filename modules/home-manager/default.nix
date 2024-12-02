@@ -12,7 +12,6 @@
   # WM
   wayland = import ./wm/wayland.nix;
   sway = import ./wm/sway.nix;
-  ags = import ./wm/ags.nix;
 
   # Others
   spotify = import ./spotify.nix;

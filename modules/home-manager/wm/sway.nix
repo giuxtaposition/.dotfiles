@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }: let
   startScript = pkgs.writeShellScript "start" ''
@@ -13,7 +14,7 @@
     #idle
     swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &
 
-    ags &
+    cassiopea &
 
     wl-gammarelay-rs
   '';
@@ -29,12 +30,17 @@
 
   themeColors = config.colorsWithoutPrefix;
 in {
+  imports = [inputs.cassiopea.homeManagerModules.default];
   options = {sway.enable = lib.mkEnableOption "enables sway module";};
 
   config = lib.mkIf config.sway.enable {
     home.sessionVariables = {
       XDG_CURRENT_DESKTOP = "sway";
       XDG_SESSION_DESKTOP = "sway";
+    };
+
+    programs.cassiopea = {
+      enable = true;
     };
 
     wayland.windowManager.sway = {
@@ -134,12 +140,12 @@ in {
         keybindings = let
           mod = "Mod4"; # Super
           term = "wezterm start --always-new-process";
-          app-menu = ''exec ags --toggle-window "launcher"'';
-          power-menu = ''exec ags --toggle-window "powermenu"'';
+          # app-menu = ''exec ags --toggle-window "launcher"'';
+          # power-menu = ''exec ags --toggle-window "powermenu"'';
         in {
           "${mod}+q" = "exec ${term}";
-          "${mod}+d" = "exec ${app-menu}";
-          "${mod}+Shift+p" = "exec ${power-menu}";
+          # "${mod}+d" = "exec ${app-menu}";
+          # "${mod}+Shift+p" = "exec ${power-menu}";
           "${mod}+c" = "kill";
           "${mod}+f1" = "reload";
 

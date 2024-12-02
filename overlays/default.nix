@@ -12,6 +12,8 @@
     # });
 
     wezterm = inputs.wezterm.packages.${prev.system}.default;
+    cassiopea = inputs.cassiopea.packages.${prev.system}.default;
+    # astal = inputs.cassiopea.packages.${prev.system}.astal;
 
     # make jellyfin skip-intro plugin show skip intro button
     jellyfin-web = prev.jellyfin-web.overrideAttrs (finalAttrs: previousAttrs: {
