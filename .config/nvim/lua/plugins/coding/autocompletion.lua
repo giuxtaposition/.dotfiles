@@ -27,65 +27,54 @@ return {
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
         ["<Tab>"] = { "snippet_forward", "fallback" },
         ["<S-Tab>"] = { "snippet_backward", "fallback" },
+        cmdline = {
+          preset = "super-tab",
+        },
       },
-      accept = { auto_brackets = { enabled = true } },
-      trigger = { signature_help = { enabled = true } },
-      windows = {
-        autocomplete = {
+      completion = {
+        accept = { auto_brackets = { enabled = true } },
+        menu = {
           border = "single",
           draw = {
             align_to_component = "label", -- or 'none' to disable
             padding = 1,
             gap = 4,
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
-            components = {
-              kind_icon = {
-                ellipsis = false,
-                text = function(ctx)
-                  return ctx.item.source_name == "copilot" and require("config.ui.icons").kinds.Copilot
-                    or ctx.kind_icon .. ctx.icon_gap
-                end,
-                highlight = function(ctx)
-                  local kind = ctx.item.source_name == "copilot" and "Copilot" or ctx.kind
-                  return (require("blink.cmp.utils").get_tailwind_hl(ctx) or "BlinkCmpKind") .. kind
-                end,
-              },
-
-              kind = {
-                ellipsis = false,
-                width = { fill = true },
-                text = function(ctx)
-                  return ctx.item.source_name == "copilot" and "Copilot" or ctx.kind
-                end,
-                highlight = function(ctx)
-                  local kind = ctx.item.source_name == "copilot" and "Copilot" or ctx.kind
-                  return (require("blink.cmp.utils").get_tailwind_hl(ctx) or "BlinkCmpKind") .. kind
-                end,
-              },
-            },
           },
         },
         documentation = {
-          border = "single",
           auto_show = true,
         },
         ghost_text = {
           enabled = true,
         },
       },
-      kind_icons = require("config.ui.icons").kinds,
       sources = {
+        default = { "lsp", "path", "snippets", "buffer", "lazydev", "copilot" },
         providers = {
-          lsp = { fallback_for = { "lazydev" } },
-          lazydev = { name = "LazyDev", module = "lazydev.integrations.blink" },
+          lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", fallbacks = { "lsp" } },
           copilot = {
             name = "copilot",
             module = "blink-cmp-copilot",
+            score_offset = 100,
+            async = true,
+            transform_items = function(_, items)
+              local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
+              local kind_idx = #CompletionItemKind + 1
+              CompletionItemKind[kind_idx] = "Copilot"
+              for _, item in ipairs(items) do
+                item.kind = kind_idx
+              end
+              return items
+            end,
           },
         },
-        completion = {
-          enabled_providers = { "lsp", "path", "snippets", "buffer", "lazydev", "copilot" },
-        },
+      },
+      signature = {
+        enabled = true,
+      },
+      appearance = {
+        kind_icons = require("config.ui.icons").kinds,
       },
     },
   },
