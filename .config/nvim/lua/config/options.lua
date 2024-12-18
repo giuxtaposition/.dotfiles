@@ -63,3 +63,22 @@ opt.scrolloff = 10 -- minimum lines to keep above and below cursor
 -- Spell checking
 opt.spell = true
 opt.spelllang = "en_us,it"
+
+-- Folding
+opt.foldcolumn = "1"
+opt.foldlevelstart = 99
+opt.foldlevel = 99
+opt.foldtext = ""
+opt.foldmethod = "indent" -- This is the default, but I set it to LSP if available.
+
+-- UI characters.
+opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
+}
+
+opt.smoothscroll = true

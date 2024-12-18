@@ -1,5 +1,6 @@
 local util = require("config.util")
 local set_keymap = util.keys.set
+local methods = vim.lsp.protocol.Methods
 
 vim.diagnostic.config({
   underline = true,
@@ -54,12 +55,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
     set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = event.buf })
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if not client then
+      return
+    end
+
     -- The following code creates a keymap to toggle inlay hints in your
     -- code, if the language server you are using supports them
-    if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+    if client:supports_method(methods.textDocument_inlayHint) then
       set_keymap("n", "<leader>uh", function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
       end, "Toggle Inlay Hints", { buffer = event.buf })
+    end
+
+    if client:supports_method(methods.textDocument_foldingRange) then
+      vim.wo.foldmethod = "expr"
+      vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
     end
   end,
 })
