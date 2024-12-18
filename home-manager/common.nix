@@ -73,7 +73,7 @@
     libsForQt5.gwenview
 
     # Fonts
-    (pkgs.nerdfonts.override {fonts = ["JetBrainsMono" "Monaspace"];})
+    nerd-fonts.jetbrains-mono
 
     mpv
   ];
