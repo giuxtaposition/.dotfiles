@@ -33,6 +33,14 @@ M.process_icons = {
   ["yazi"] = {
     { Text = wezterm.nerdfonts.md_duck },
   },
+  ["docker"] = {
+    { Text = wezterm.nerdfonts.md_docker },
+  },
+  ["lua"] = {
+    {
+      Text = wezterm.nerdfonts.md_language_lua,
+    },
+  },
 
   -- for some weird reason nixos has no process name...
   [""] = {
