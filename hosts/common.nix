@@ -119,17 +119,6 @@
       xkb.options = "ctrl:swapcaps";
     };
 
-    greetd = {
-      enable = true;
-      settings = {
-        default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
-          user = "giu";
-        };
-      };
-    };
-
-    blueman.enable = true;
     openssh.enable = true;
 
     pipewire = {
@@ -148,31 +137,10 @@
       openFirewall = true;
     };
   };
-
   security.rtkit.enable = true;
 
-  # Use swaylock as screen lock
-  security.pam.services.swaylock = {
-    text = ''
-      auth include login
-    '';
-  };
-
   hardware = {
-    bluetooth = {
-      enable = true;
-      powerOnBoot = true;
-      settings = {General = {Enable = "Source,Sink,Media,Socket";};};
-    };
-
     keyboard = {qmk.enable = true;};
-  };
-
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = with pkgs; [xdg-desktop-portal-wlr xdg-desktop-portal-gtk];
-    config.common.default = "*";
   };
 
   environment = {
@@ -210,6 +178,9 @@
       config.nix.registry;
   };
 
+  bluetooth.enable = true;
+  niri.enable = true;
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 }

@@ -7,4 +7,6 @@
   jellyfin = import ./jellyfin.nix;
   amdgpu = import ./amdgpu.nix;
   network = import ./network.nix;
+  niri = import ./niri.nix;
+  bluetooth = import ./bluetooth.nix;
 }

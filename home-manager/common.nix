@@ -1,5 +1,6 @@
 {
   outputs,
+  inputs,
   lib,
   config,
   pkgs,
@@ -50,10 +51,10 @@
   wezterm.enable = true;
   btop.enable = true;
   yazi.enable = true;
-
   wayland.enable = true;
-  sway.enable = true;
   spotify.enable = true;
+  niri.enable = true;
+  cassiopea.enable = true;
 
   fonts.fontconfig.enable = true;
 

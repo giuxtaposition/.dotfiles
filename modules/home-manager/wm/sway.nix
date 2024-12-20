@@ -30,7 +30,7 @@
 
   themeColors = config.colorsWithoutPrefix;
 in {
-  imports = [inputs.cassiopea.homeManagerModules.default];
+  # imports = [inputs.cassiopea.homeManagerModules.default];
   options = {sway.enable = lib.mkEnableOption "enables sway module";};
 
   config = lib.mkIf config.sway.enable {
@@ -39,9 +39,9 @@ in {
       XDG_SESSION_DESKTOP = "sway";
     };
 
-    programs.cassiopea = {
-      enable = true;
-    };
+    # programs.cassiopea = {
+    #   enable = true;
+    # };
 
     wayland.windowManager.sway = {
       enable = true;
@@ -140,7 +140,7 @@ in {
         keybindings = let
           mod = "Mod4"; # Super
           term = "wezterm start --always-new-process";
-          # app-menu = ''exec ags --toggle-window "launcher"'';
+          app-menu = ''exec ags --toggle-window "launcher"'';
           # power-menu = ''exec ags --toggle-window "powermenu"'';
         in {
           "${mod}+q" = "exec ${term}";

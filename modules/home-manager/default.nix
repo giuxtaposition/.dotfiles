@@ -12,6 +12,8 @@
   # WM
   wayland = import ./wm/wayland.nix;
   sway = import ./wm/sway.nix;
+  niri = import ./wm/niri.nix;
+  cassiopea = import ./wm/cassiopea.nix;
 
   # Others
   spotify = import ./spotify.nix;
