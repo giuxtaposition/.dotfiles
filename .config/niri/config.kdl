@@ -205,7 +205,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Q { spawn "wezterm" "start" "--always-new-process"; }
     Mod+D { spawn "cassiopea" "toggle launcher"; }
-    Mod+P { spawn "cassiopea" "toggle power-menu"; }
+    Mod+P { spawn "cassiopea" "toggle power_menu"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
