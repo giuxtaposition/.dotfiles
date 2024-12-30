@@ -11,12 +11,10 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
-      # outputs.overlays.unstable-packages
+      outputs.overlays.unstable-packages
     ];
     config = {
       allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = _: true;
     };
   };
 
@@ -61,7 +59,6 @@
   home.packages = with pkgs; [
     slack # Messaging App
     zathura
-    obsidian
     cbonsai
 
     (pkgs.wrapFirefox
@@ -74,9 +71,10 @@
     libsForQt5.gwenview
 
     # Fonts
-    nerd-fonts.jetbrains-mono
+    (pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];})
 
     mpv
+    inputs.zen-browser.packages.${pkgs.system}.default
   ];
 
   # GTK CONFIG
