@@ -8,6 +8,7 @@
   btop = import ./terminal/btop.nix;
   yazi = import ./terminal/yazi.nix;
   direnv = import ./terminal/direnv.nix;
+  ghostty = import ./terminal/ghostty.nix;
 
   # WM
   wayland = import ./wm/wayland.nix;

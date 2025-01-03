@@ -10,6 +10,7 @@
     programs.yazi = {
       enable = true;
       enableFishIntegration = true;
+      package = pkgs.unstable.yazi;
       catppuccin = {
         enable = true;
         accent = "lavender";
