@@ -41,6 +41,8 @@ return {
   keys = {
     { "<leader>fh", "<cmd>ToggleTerm size=15 direction=horizontal<cr>", desc = "Horizontal Terminal" },
     { "<leader>fv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical Terminal" },
-    { "<leader>gg", "<cmd>lua _Lazygit_toggle()<CR>", desc = "Lazygit Terminal" },
+    -- { "<leader>gg", "<cmd>lua _Lazygit_toggle()<CR>", desc = "Lazygit Terminal" },
+    --
+    --  nmap "<leader>gc" (vim_cmd [[tab Git commit --verbose]]);
   },
 }
