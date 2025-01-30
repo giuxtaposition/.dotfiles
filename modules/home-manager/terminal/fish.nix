@@ -86,9 +86,8 @@
         gpf = "git push --force-with-lease";
         gs = "git status --short";
       };
-
-      catppuccin.enable = true;
     };
+    catppuccin.fish.enable = true;
 
     programs.zoxide = {
       enable = true;

@@ -4,7 +4,7 @@ local bar = require("ui.bar")
 local M = {}
 
 function M.apply_to_config(config)
-  config.color_scheme = "Tokyo Night Moon"
+  config.color_scheme = "Catppuccin Mocha"
 
   config.tab_bar_at_bottom = true
   config.use_fancy_tab_bar = false
@@ -34,7 +34,7 @@ function M.apply_to_config(config)
     font = w.font("JetBrains Mono Nerd Font"),
   }
   config.window_padding = { left = 2, right = 2, top = 1, bottom = 1 }
-  config.window_background_opacity = 0.9
+  config.window_background_opacity = 1
 
   bar.tabs()
   bar.right_status()

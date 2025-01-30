@@ -11,10 +11,6 @@
       enable = true;
       enableFishIntegration = true;
       package = pkgs.unstable.yazi;
-      catppuccin = {
-        enable = true;
-        accent = "lavender";
-      };
       settings = {
         manager = {
           show_hidden = true;
@@ -40,6 +36,11 @@
           ];
         };
       };
+    };
+
+    catppuccin.yazi = {
+      enable = true;
+      accent = "lavender";
     };
 
     home.packages = with pkgs; [

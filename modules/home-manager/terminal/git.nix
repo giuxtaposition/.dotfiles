@@ -33,9 +33,9 @@
 
       delta = {
         enable = true;
-        catppuccin.enable = true;
       };
     };
+    catppuccin.delta.enable = true;
 
     programs.lazygit = {
       enable = true;
@@ -52,10 +52,11 @@
         };
         promptToReturnFromSubprocess = false;
       };
-      catppuccin = {
-        enable = true;
-        accent = "lavender";
-      };
+    };
+
+    catppuccin.lazygit = {
+      enable = true;
+      accent = "lavender";
     };
   };
 }
