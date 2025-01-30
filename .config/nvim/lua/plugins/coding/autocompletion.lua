@@ -36,7 +36,7 @@ return {
         menu = {
           border = "single",
           draw = {
-            align_to_component = "label", -- or 'none' to disable
+            align_to = "label", -- or 'none' to disable
             padding = 1,
             gap = 4,
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
