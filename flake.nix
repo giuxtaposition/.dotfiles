@@ -109,6 +109,6 @@
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in
-      pkgs.mkShell {packages = [pkgs.nodejs_23];};
+      pkgs.mkShell {packages = [pkgs.cachix pkgs.nodejs_23];};
   };
 }
