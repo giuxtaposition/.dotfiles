@@ -5,10 +5,8 @@ return {
     lazy = false, -- lazy loading handled internally
     dependencies = {
       "rafamadriz/friendly-snippets",
-      {
-        dev = true,
-        "giuxtaposition/blink-cmp-copilot",
-      },
+      "giuxtaposition/blink-cmp-copilot",
+      "moyiz/blink-emoji.nvim",
     },
     version = false,
     build = "nix run .#build-plugin",
@@ -53,7 +51,7 @@ return {
         },
       },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "lazydev", "copilot" },
+        default = { "lsp", "path", "snippets", "buffer", "lazydev", "copilot", "emoji" },
         providers = {
           lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", fallbacks = { "lsp" } },
           copilot = {
@@ -70,6 +68,13 @@ return {
               end
               return items
             end,
+          },
+          emoji = {
+            name = "Emoji",
+            module = "blink-emoji",
+            score_offset = 93,
+            min_keyword_length = 2,
+            opts = { insert = true },
           },
         },
       },
