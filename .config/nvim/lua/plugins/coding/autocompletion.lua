@@ -23,7 +23,9 @@ return {
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
         ["<Tab>"] = { "snippet_forward", "fallback" },
         ["<S-Tab>"] = { "snippet_backward", "fallback" },
-        cmdline = {
+      },
+      cmdline = {
+        keymap = {
           preset = "super-tab",
         },
       },
