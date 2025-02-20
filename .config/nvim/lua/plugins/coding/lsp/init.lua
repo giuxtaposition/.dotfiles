@@ -110,4 +110,15 @@ return {
       end
     end,
   },
+  --- LSP-like explanation for patterns (regex, etc)
+  {
+    "OXY2DEV/patterns.nvim",
+    keys = {
+      {
+        "H",
+        "<cmd>Patterns hover<cr>",
+        desc = "Show documentation for pattern under cursor",
+      },
+    },
+  },
 }

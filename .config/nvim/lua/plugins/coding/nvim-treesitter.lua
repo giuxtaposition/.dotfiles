@@ -59,6 +59,7 @@ return {
         "kotlin",
         "diff",
         "http",
+        "regex",
       },
       auto_install = true,
       highlight = {

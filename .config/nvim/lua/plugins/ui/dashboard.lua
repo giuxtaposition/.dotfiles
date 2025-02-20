@@ -69,12 +69,6 @@ return {
           },
           { action = config, desc = " Config", icon = " ", key = "c" },
           {
-            action = 'lua require("persistence").load()',
-            desc = " Restore Session",
-            icon = " ",
-            key = "s",
-          },
-          {
             action = "Lazy",
             desc = " Lazy",
             icon = "󰒲 ",
