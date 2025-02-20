@@ -10,8 +10,8 @@ Here are some details about my setup:
 - **Shell**: [Fish](https://github.com/fish-shell/fish-shell)
 - **Terminal**: [Wezterm](https://github.com/wez/wezterm)
 - **Editor**: [Neovim](https://github.com/neovim/neovim/)
-- **WM**: [SwayFX](https://github.com/WillPower3309/swayfx)
-- **Widgets**: [AGS](https://github.com/Aylur/ags)
+- **WM**: [Niri](https://github.com/YaLTeR/niri)
+- **Widgets**: [Astal](https://github.com/Aylur/astal)
 
 ![](/.github/images/screenshot1.png)
 ![](/.github/images/screenshot2.png)
