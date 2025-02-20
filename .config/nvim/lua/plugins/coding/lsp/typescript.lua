@@ -117,6 +117,9 @@ return {
         html = {},
         cssls = {},
         emmet_ls = {},
+        -- tailwindcss = {
+        --   filetypes_exclude = { "markdown" },
+        -- },
       },
     },
   },

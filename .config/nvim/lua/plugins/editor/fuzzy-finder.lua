@@ -75,6 +75,7 @@ return {
           --   "contain", "forced_cover", "cover"
           -- https://github.com/seebye/ueberzug
           ueberzug_scaler = "cover",
+          syntax_limit_b = 1024 * 100, -- 100KB
         },
       },
     }
@@ -104,6 +105,8 @@ return {
       end,
       desc = "Find tests",
     },
+    { "<leader>fd", "<cmd>FzfLua lsp_document_diagnostics<cr>", desc = "Document diagnostics" },
+    { "<leader>fD", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", desc = "Workspace diagnostics" },
     -- git
     { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
     { "<leader>gC", "<cmd>FzfLua git_bcommits<CR>", desc = "Commits For Current Buffer" },

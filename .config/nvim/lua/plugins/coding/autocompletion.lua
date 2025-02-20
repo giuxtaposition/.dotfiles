@@ -1,7 +1,6 @@
 ---@module 'blink.cmp'
 return {
   {
-    -- enabled = false,
     "saghen/blink.cmp",
     lazy = false, -- lazy loading handled internally
     dependencies = {
@@ -15,9 +14,6 @@ return {
     build = "nix run .#build-plugin",
     opts = {
       keymap = {
-        -- accept = "<CR>",
-        -- select_prev = { "<C-k>" },
-        -- select_next = { "<C-j>" },
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-e>"] = { "hide" },
         ["<CR>"] = { "select_and_accept", "fallback" },
@@ -47,6 +43,11 @@ return {
         },
         ghost_text = {
           enabled = true,
+        },
+        list = {
+          -- Insert items while navigating the completion list.
+          selection = { preselect = false, auto_insert = true },
+          max_items = 10,
         },
       },
       sources = {

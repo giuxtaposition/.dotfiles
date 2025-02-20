@@ -38,16 +38,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),
   pattern = {
-    "PlenaryTestPopup",
     "help",
     "lspinfo",
-    "notify",
     "qf",
-    "neotest-output",
     "checkhealth",
     "neotest-summary",
     "neotest-output-panel",
-    "gitsigns-blame",
+    "neotest-output",
     "fugitive",
   },
   callback = function(event)
@@ -64,18 +61,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     vim.opt_local.conceallevel = 0
   end,
 })
-
--- Typescript: Remove unused imports on save
--- vim.api.nvim_create_autocmd("BufWritePre", {
--- 	group = augroup("unused_imports_on_save_typescript"),
--- 	desc = "remove unused imports on save for typescript files",
--- 	callback = function()
--- 		local filetype = vim.bo.filetype
--- 		if filetype == "typescript" or filetype == "typescriptreact" then
--- 			vim.cmd("TSToolsRemoveUnusedImports")
--- 		end
--- 	end,
--- })
 
 -- Typescript: Change tab width according to prettierrc
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -98,5 +83,16 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   pattern = "*.keymap",
   callback = function()
     vim.bo.filetype = "c"
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = vim.api.nvim_create_augroup("mariasolos/big_file", { clear = true }),
+  desc = "Disable features in big files",
+  pattern = "bigfile",
+  callback = function(args)
+    vim.schedule(function()
+      vim.bo[args.buf].syntax = vim.filetype.match({ buf = args.buf }) or ""
+    end)
   end,
 })

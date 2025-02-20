@@ -5,12 +5,4 @@ return {
     cmd = "IncRename",
     opts = {},
   },
-  --- Noice integration
-  {
-    "folke/noice.nvim",
-    optional = true,
-    opts = {
-      presets = { inc_rename = true },
-    },
-  },
 }
