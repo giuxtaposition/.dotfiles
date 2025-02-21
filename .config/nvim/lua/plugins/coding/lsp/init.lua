@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("giuxtaposition-lsp-attach", { clear = true }),
   callback = function(event)
     set_keymap("n", "gd", function()
-      require("fzf-lua").lsp_definitions({ jump_to_single_result = true })
+      require("fzf-lua").lsp_definitions({ jump1 = true })
     end, "Go to Definition", { buffer = event.buf }) --  To jump back, press <C-t>.
     set_keymap("n", "gD", "<cmd>FzfLua lsp_definitions<cr>", "Peek definition", { buffer = event.buf })
     set_keymap("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Show References", { buffer = event.buf })
