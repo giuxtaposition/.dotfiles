@@ -50,6 +50,10 @@ in {
       prettierd # typescript formatter
       eslint_d # typescript linter
       myNodePackages."@vtsls/language-server"
+      tailwindcss-language-server
+      bun
+      vue-language-server
+      nodejs_23
 
       # Lua
       lua-language-server
