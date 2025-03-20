@@ -81,19 +81,11 @@ if require("zk.util").notebook_root(vim.fn.expand("%:p")) ~= nil then
   opts.desc = "Open the link under cursor"
   map("n", "<CR>", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
 
-  opts.desc = "Create a new note"
-  map("n", "<leader>zn", "<Cmd>ZkNew { dir = 'notes', title = vim.fn.input('Title: ') }<CR>", opts)
-
   opts.desc = "Create a new note with the current selection as title"
   map("v", "<leader>znt", ":'<,'>ZkNewFromTitleSelection { dir = 'notes' }<CR>", opts)
 
   opts.desc = "Create a new note with the current selection as content"
-  map(
-    "v",
-    "<leader>znc",
-    ":'<,'>ZkNewFromContentSelection { dir = 'notes', title = vim.fn.input('Title: ') }<CR>",
-    opts
-  )
+  map("v", "<leader>znc", ":'<,'>ZkNewFromContentSelection { dir = 'notes' }<CR>", opts)
 
   opts.desc = "Open notes linking to the current buffer"
   map("n", "<leader>zb", "<Cmd>ZkBacklinks<CR>", opts)

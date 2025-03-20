@@ -4,6 +4,14 @@ local lang_settings = {
     functionLikeReturnTypes = { enabled = true },
     parameterNames = { enabled = "literals" },
     variableTypes = { enabled = true },
+    includeInlayParameterNameHints = "all",
+    includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+    includeInlayFunctionParameterTypeHints = true,
+    includeInlayVariableTypeHints = true,
+    includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+    includeInlayPropertyDeclarationTypeHints = true,
+    includeInlayFunctionLikeReturnTypeHints = true,
+    includeInlayEnumMemberValueHints = true,
   },
   preferences = {
     importModuleSpecifier = "relative",
@@ -80,7 +88,6 @@ return {
             "typescript",
             "typescriptreact",
             "typescript.tsx",
-            "vue",
           },
           settings = {
             javascript = lang_settings,
@@ -95,6 +102,18 @@ return {
                 },
                 maxInlayHintLength = 30,
               },
+              tsserver = {
+                globalPlugins = {
+                  {
+                    name = "typescript-svelte-plugin",
+                    enableForWorkspaceTypeScriptVersions = true,
+                  },
+                  {
+                    name = "@vue/typescript-plugin",
+                    languages = { "javascript", "typescript", "vue" },
+                  },
+                },
+              },
             },
           },
         },
@@ -108,18 +127,39 @@ return {
         volar = {
           init_options = {
             vue = {
-              hybridMode = true,
+              hybridMode = false,
+            },
+          },
+          settings = {
+            typescript = {
+              inlayHints = {
+                enumMemberValues = {
+                  enabled = true,
+                },
+                functionLikeReturnTypes = {
+                  enabled = true,
+                },
+                propertyDeclarationTypes = {
+                  enabled = true,
+                },
+                parameterTypes = {
+                  enabled = true,
+                  suppressWhenArgumentMatchesName = true,
+                },
+                variableTypes = {
+                  enabled = true,
+                },
+              },
             },
           },
         },
-
         svelte = {},
         html = {},
         cssls = {},
         emmet_ls = {},
-        -- tailwindcss = {
-        --   filetypes_exclude = { "markdown" },
-        -- },
+        tailwindcss = {
+          filetypes_exclude = { "markdown" },
+        },
       },
     },
   },
