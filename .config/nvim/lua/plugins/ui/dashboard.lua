@@ -29,12 +29,6 @@ return {
 
     logo = string.rep("\n", 8) .. logo .. "\n\n"
 
-    local config = function()
-      require("fzf-lua").files({
-        cwd = vim.fn.stdpath("config"),
-      })
-    end
-
     local opts = {
       theme = "doom",
       hide = {
@@ -56,7 +50,11 @@ return {
             key = "n",
           },
           {
-            action = "FzfLua oldfiles",
+            action = function()
+              require("fzf-lua").oldfiles({
+                cwd = vim.fn.getcwd(),
+              })
+            end,
             desc = " Recent Files",
             icon = " ",
             key = "r",
@@ -67,7 +65,16 @@ return {
             icon = " ",
             key = "g",
           },
-          { action = config, desc = " Config", icon = " ", key = "c" },
+          {
+            action = function()
+              require("fzf-lua").files({
+                cwd = vim.fn.stdpath("config"),
+              })
+            end,
+            desc = " Config",
+            icon = " ",
+            key = "c",
+          },
           {
             action = "Lazy",
             desc = " Lazy",
