@@ -3,7 +3,6 @@
 
   networking.hostName = "Kumiko";
 
-  thunar.enable = true;
   fish.enable = true;
   jellyfin.enable = true;
 }

@@ -19,7 +19,6 @@
   # after reboot run `sudo fprintd-enroll $USER` to enroll fingerprint
 
   docker.enable = true;
-  thunar.enable = true;
   fish.enable = true;
   amdgpu.enable = true;
 }

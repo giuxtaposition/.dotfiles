@@ -15,6 +15,10 @@
     xdg.portal.extraPortals = with pkgs; [xdg-desktop-portal-gtk];
     services.gnome.gnome-keyring.enable = true;
 
+    environment.systemPackages = [
+      pkgs.nautilus
+    ];
+
     systemd = {
       packages = [pkgs.libsForQt5.polkit-kde-agent];
       user.services.plasma-polkit-agent = {
