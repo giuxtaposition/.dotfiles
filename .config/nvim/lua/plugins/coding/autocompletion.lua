@@ -8,7 +8,7 @@ return {
       "giuxtaposition/blink-cmp-copilot",
       "moyiz/blink-emoji.nvim",
     },
-    version = false,
+    version = "1.*",
     build = "nix run .#build-plugin",
     opts = {
       keymap = {
@@ -74,6 +74,12 @@ return {
       },
       appearance = {
         kind_icons = require("config.ui.icons").kinds,
+      },
+      fuzzy = {
+        implementation = "prefer_rust",
+        prebuilt_binaries = {
+          download = true,
+        },
       },
     },
   },

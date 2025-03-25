@@ -46,8 +46,24 @@ return {
       { "<leader>zg", "<cmd>ZkNotes { dir = 'notes'}<cr>", desc = "Search Notes" },
       { "<leader>zw", "<cmd>ZkNotes { dir = 'work'}<cr>", desc = "Search Work Notes" },
       { "<leader>zj", "<cmd>ZkNotes { tags = { 'daily' }}<cr>", desc = "Search Daily Notes" },
-      { "<leader>zn", "<cmd>ZkNew { dir = 'notes' }<cr>", desc = "Create a new note" },
-      { "<leader>zq", "<cmd>ZkNew { dir = 'work' }<cr>", desc = "Create a new work note" },
+      {
+        "<leader>zn",
+        function()
+          vim.ui.input({ prompt = "Title: " }, function(title)
+            require("zk.commands").get("ZkNew")({ dir = "notes", title = title })
+          end)
+        end,
+        desc = "Create a new note",
+      },
+      {
+        "<leader>zq",
+        function()
+          vim.ui.input({ prompt = "Title: " }, function(title)
+            require("zk.commands").get("ZkNew")({ dir = "work", title = title })
+          end)
+        end,
+        desc = "Create a new work note",
+      },
     },
   },
   -- Otter.nvim provides lsp features for code embedded in other documents (markdown)
