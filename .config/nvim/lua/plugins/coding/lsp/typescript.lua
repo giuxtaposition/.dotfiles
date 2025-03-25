@@ -22,10 +22,6 @@ local lang_settings = {
 return {
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      -- LSP wrapper for vtsls.
-      "yioneko/nvim-vtsls",
-    },
     opts = {
       servers = {
         vtsls = {
@@ -158,6 +154,7 @@ return {
         cssls = {},
         emmet_ls = {},
         tailwindcss = {
+          autostart = false,
           filetypes_exclude = { "markdown" },
         },
       },

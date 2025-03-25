@@ -102,12 +102,11 @@ in {
       # Others
       gnumake
       tree-sitter
-      codespell # code spell
       vscode-extensions.vadimcn.vscode-lldb
       libxml2 # xml parser
-      exercism
       insomnia
       zk
+      harper
     ];
   };
 }

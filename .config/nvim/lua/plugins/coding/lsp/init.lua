@@ -26,7 +26,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     set_keymap("n", "gd", function()
       require("fzf-lua").lsp_definitions({ jump1 = true })
     end, "Go to Definition", { buffer = event.buf }) --  To jump back, press <C-t>.
-    set_keymap("n", "gD", "<cmd>FzfLua lsp_definitions<cr>", "Peek definition", { buffer = event.buf })
+    set_keymap("n", "gD", function()
+      require("fzf-lua").lsp_definitions({ jump1 = false })
+    end, "Peek definition", { buffer = event.buf })
     set_keymap("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Show References", { buffer = event.buf })
     set_keymap("n", "gI", vim.lsp.buf.implementation, "Go to Implementation", { buffer = event.buf })
     set_keymap("n", "gt", vim.lsp.buf.type_definition, "Type Definition", { buffer = event.buf })
@@ -70,6 +72,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method(methods.textDocument_foldingRange) then
       vim.wo.foldmethod = "expr"
       vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+    end
+
+    if client:supports_method(methods.textDocument_documentHighlight) then
+      local under_cursor_highlights_group =
+        vim.api.nvim_create_augroup("giuxtaposition/cursor_highlights", { clear = false })
+      vim.api.nvim_create_autocmd({ "CursorHold", "InsertLeave" }, {
+        group = under_cursor_highlights_group,
+        desc = "Highlight references under the cursor",
+        buffer = event.buf,
+        callback = vim.lsp.buf.document_highlight,
+      })
+      vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter", "BufLeave" }, {
+        group = under_cursor_highlights_group,
+        desc = "Clear highlight references",
+        buffer = event.buf,
+        callback = vim.lsp.buf.clear_references,
+      })
     end
   end,
 })
