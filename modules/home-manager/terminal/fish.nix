@@ -63,11 +63,20 @@
       functions = {
         fish_user_key_bindings = ''
           fish_vi_key_bindings
-          bind -M insert -m default kj backward-char force-repaint #use kj as Esc'';
+          bind -M insert -m default kj backward-char force-repaint #use kj as Esc
+          bind -M insert -m default \cp "open_project_in_neovim; commandline -f repaint" #open project in neovim
+        '';
         nvim = ''
           set pipe_file ~/.cache/nvim/(pwd | sed 's/\\//-/g' | sed 's/^-//' | sed 's/\\//./g').pipe
           rm -f $pipe_file
           env TERM=wezterm nvim --listen $pipe_file $argv
+        '';
+        open_project_in_neovim = ''
+          set selected_repo (zoxide query --list | fzf --ansi --preview "eza --color=always --long --no-filesize --icons=always --no-time --no-user --no-permissions {}")
+
+          if test -n "$selected_repo"
+              cd "$selected_repo" && nvim
+          end
         '';
       };
 
