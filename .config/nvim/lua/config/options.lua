@@ -5,60 +5,60 @@ vim.g.have_nerd_font = true
 
 local opt = vim.opt
 
--- line numbers
+-- Line numbers
 opt.relativenumber = true
-opt.number = true -- show absolute line number on cursor line
+opt.number = true -- Show absolute line number on cursor line
 
--- tabs & identation
+-- Tabs & indentation
 opt.tabstop = 2 -- 2 spaces for tabs
 opt.shiftwidth = 2 -- 2 spaces for indent width
-opt.expandtab = true -- expand tab to spaces
-opt.autoindent = true -- copy indent from current line when starting new one
+opt.expandtab = true -- Expand tab to spaces
+opt.autoindent = true -- Copy indent from current line when starting new one
 
--- line wrapping
+-- Line wrapping
 opt.wrap = false
 
--- search settings
-opt.ignorecase = true -- ignore case when searching
-opt.smartcase = true -- if you include mixed case in your search, assume you want case-sensitive
-opt.hlsearch = true -- highlight search results
-opt.path:append("**") -- search in subdirectories
-opt.wildignore:append({ "*/node_modules/*" }) -- ignore node_modules when searching
+-- Search settings
+opt.ignorecase = true -- Ignore case when searching
+opt.smartcase = true -- If you include mixed case in your search, assume you want case-sensitive
+opt.hlsearch = true -- Highlight search results
+opt.path:append("**") -- Search in sub-directories
+opt.wildignore:append({ "*/node_modules/*" }) -- Ignore node_modules when searching
 
--- cursor line
-opt.cursorline = true -- highlight the current cursor line
+-- Cursor line
+opt.cursorline = true -- Highlight the current cursor line
 
--- appearance
+-- Appearance
 opt.termguicolors = true
 opt.background = "dark"
-opt.signcolumn = "yes" -- show sign column so that text doesn't shift
+opt.signcolumn = "yes" -- Show sign column so that text doesn't shift
 
--- backspace
-opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start
+-- Backspace
+opt.backspace = "indent,eol,start" -- Allow backspace on indent, end of line or insert mode start
 
--- clipboard
-opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+-- Clipboard
+opt.clipboard:append("unnamedplus") -- Use system clipboard as default register
 
--- split windows
-opt.splitright = true -- split vertical window to the right
-opt.splitbelow = true -- split horizontal window to the bottom
+-- Split windows
+opt.splitright = true -- Split vertical window to the right
+opt.splitbelow = true -- Split horizontal window to the bottom
 
--- turn off swapfile
+-- Turn off swapfile
 opt.swapfile = false
 
--- sets how neovim will display certain whitespace characters in the editor.
+-- Sets how neovim will display certain whitespace characters in the editor.
 opt.list = true
 opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 
--- preview substitutions live, as you type!
+-- Preview substitutions live, as you type!
 opt.inccommand = "split"
 
-opt.mouse = "" -- disable mouse
+opt.mouse = "" -- Disable mouse
 
 -- Add asterisks in block comments
 opt.formatoptions:append({ "r" })
 
-opt.scrolloff = 10 -- minimum lines to keep above and below cursor
+opt.scrolloff = 10 -- Minimum lines to keep above and below cursor
 
 -- Spell checking
 opt.spell = true
@@ -82,3 +82,5 @@ opt.fillchars = {
 }
 
 opt.smoothscroll = true
+
+vim.o.undofile = true -- Save undo history

@@ -26,6 +26,7 @@ return {
         keymap = {
           preset = "super-tab",
         },
+        completion = { menu = { auto_show = true } },
       },
       completion = {
         accept = { auto_brackets = { enabled = true } },

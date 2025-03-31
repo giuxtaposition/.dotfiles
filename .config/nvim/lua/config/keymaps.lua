@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+vim.g.window_zoomed = false
 
 local set_keymap = require("config.util.init").keys.set
 
@@ -37,6 +38,17 @@ set_keymap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", "New Tab")
 set_keymap("n", "<leader><tab>]", "<cmd>tabnext<cr>", "Next Tab")
 set_keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", "Close Tab")
 set_keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", "Previous Tab")
+
+local function toggle_zoom()
+  if vim.g.window_zoomed then
+    vim.cmd("tabclose")
+    vim.g.window_zoomed = false
+  else
+    vim.cmd("tab split")
+    vim.g.window_zoomed = true
+  end
+end
+set_keymap("n", "<leader>zm", toggle_zoom, "Open current window in new tab")
 
 -- move over a closing element in insert mode
 set_keymap("i", "<C-h>", "<Left>", "Move left in insert mode")

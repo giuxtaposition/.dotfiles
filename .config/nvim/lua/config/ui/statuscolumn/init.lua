@@ -13,7 +13,7 @@ function M.setup()
 end
 
 function M.render()
-  return "%s%l " .. get_fold(vim.v.lnum) .. " "
+  return "%s %l " .. get_fold(vim.v.lnum) .. " "
 end
 
 return M
