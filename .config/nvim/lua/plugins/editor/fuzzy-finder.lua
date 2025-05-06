@@ -35,6 +35,20 @@ return {
       grep = {
         rg_opts = "--hidden --glob '!.git' --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
       },
+      keymap = {
+        fzf = {
+          ["ctrl-q"] = "select-all+accept",
+        },
+      },
+      actions = {
+        files = {
+          ["enter"] = actions.file_edit_or_qf,
+          ["ctrl-x"] = actions.file_split,
+          ["ctrl-v"] = actions.file_vsplit,
+          ["ctrl-t"] = actions.file_tabedit,
+          ["alt-q"] = actions.file_sel_to_qf,
+        },
+      },
       helptags = {
         prompt = " ",
         actions = {
