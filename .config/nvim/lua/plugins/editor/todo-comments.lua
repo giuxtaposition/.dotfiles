@@ -34,12 +34,6 @@ return {
       end,
       desc = "Previous todo comment",
     },
-    { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
-    { "<leader>xg", "<cmd>Trouble todo toggle filter = {tag = {GIU}}<cr>", desc = "Giu (Trouble)" },
-    {
-      "<leader>xT",
-      "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>",
-      desc = "Todo/Fix/Fixme (Trouble)",
-    },
+    { "<leader>xt", "<cmd>TodoQuickFix<cr>", desc = "Todo (QuickFix)" },
   },
 }
