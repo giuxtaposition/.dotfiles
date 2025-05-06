@@ -31,12 +31,12 @@
     fsType = "ext4";
   };
 
-  fileSystems."/home/giu/Games" = {
-    device = "/dev/disk/by-uuid/b99d161f-c7af-481c-88f6-f9c3b4aeba37";
+  fileSystems."/home/media" = {
+    device = "/dev/disk/by-uuid/77209e93-411c-41d1-aed7-77fa3c54d4bc";
     fsType = "ext4";
   };
 
-  fileSystems."/home/media" = {
+  fileSystems."/home/giu/Games" = {
     device = "/dev/disk/by-uuid/0be1b2ce-8879-4303-a0bf-92a09c127fb4";
     fsType = "ext4";
   };

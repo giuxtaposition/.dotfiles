@@ -8,5 +8,7 @@
   steam.enable = true;
   fish.enable = true;
   amdgpu.enable = true;
-  jellyfin.enable = true;
+  media_server.enable = true;
+
+  services.hardware.openrgb.enable = true;
 }

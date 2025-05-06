@@ -136,6 +136,8 @@
       nssmdns4 = true;
       openFirewall = true;
     };
+
+    gvfs.enable = true;
   };
   security.rtkit.enable = true;
 

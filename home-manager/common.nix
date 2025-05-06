@@ -47,7 +47,6 @@
   git.enable = true;
   nvim.enable = true;
   wezterm.enable = true;
-  ghostty.enable = true;
   btop.enable = true;
   yazi.enable = true;
   wayland.enable = true;
@@ -64,6 +63,7 @@
 
     (pkgs.wrapFirefox
       (pkgs.firefox-unwrapped.override {pipewireSupport = true;}) {})
+    pkgs.floorp-unwrapped
 
     steam-run
     qalculate-gtk
@@ -76,7 +76,6 @@
 
     mpv
     inputs.zen-browser.packages.${pkgs.system}.default
-    rio
   ];
 
   # GTK CONFIG

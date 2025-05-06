@@ -4,5 +4,4 @@
   networking.hostName = "Kumiko";
 
   fish.enable = true;
-  jellyfin.enable = true;
 }

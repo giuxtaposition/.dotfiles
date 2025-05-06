@@ -42,9 +42,10 @@
     wvkbd
     ventoy
 
-    deluge # Torrent Client
     opera
     calibre # Library Management
+    ns-usbloader
+    openrgb-with-all-plugins
   ];
   coding.enable = true;
 }
