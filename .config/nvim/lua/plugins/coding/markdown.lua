@@ -22,14 +22,13 @@ return {
     },
   },
   {
-    "3rd/image.nvim",
-    build = false,
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
     opts = {
-      backend = "ueberzug",
-      integrations = {
-        markdown = {
-          only_render_image_at_cursor = true,
-        },
+      image = {
+        enabled = true,
       },
     },
   },
