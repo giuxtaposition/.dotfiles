@@ -46,6 +46,7 @@ in {
     };
     services.deluge = {
       enable = true;
+      group = mediaGroup;
       web = {
         enable = true;
         openFirewall = true;
