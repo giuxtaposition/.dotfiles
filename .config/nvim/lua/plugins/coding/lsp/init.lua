@@ -5,17 +5,25 @@ local methods = vim.lsp.protocol.Methods
 vim.diagnostic.config({
   underline = true,
   virtual_text = {
-    spacing = 4,
-    source = "if_many",
-    prefix = require("config.ui.icons").diagnostics.prefix,
+    enabled = true,
+    prefix = function(diagnostic)
+      if diagnostic.severity == vim.diagnostic.severity.ERROR then
+        return require("config.ui.icons").diagnostics.prefix .. require("config.ui.icons").diagnostics.error .. " "
+      elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+        return require("config.ui.icons").diagnostics.prefix .. require("config.ui.icons").diagnostics.warn .. " "
+      else
+        return require("config.ui.icons").diagnostics.prefix .. require("config.ui.icons").diagnostics.info .. " "
+      end
+    end,
+    suffix = require("config.ui.icons").diagnostics.suffix,
   },
   severity_sort = true,
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = require("config.ui.icons").diagnostics.error,
-      [vim.diagnostic.severity.WARN] = require("config.ui.icons").diagnostics.warn,
-      [vim.diagnostic.severity.HINT] = require("config.ui.icons").diagnostics.hint,
-      [vim.diagnostic.severity.INFO] = require("config.ui.icons").diagnostics.info,
+      [vim.diagnostic.severity.ERROR] = " " .. require("config.ui.icons").diagnostics.error,
+      [vim.diagnostic.severity.WARN] = " " .. require("config.ui.icons").diagnostics.warn,
+      [vim.diagnostic.severity.HINT] = " " .. require("config.ui.icons").diagnostics.hint,
+      [vim.diagnostic.severity.INFO] = " " .. require("config.ui.icons").diagnostics.info,
     },
   },
 })

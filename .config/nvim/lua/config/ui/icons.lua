@@ -1,10 +1,11 @@
 return {
   diagnostics = {
-    error = " ",
-    warn = " ",
-    hint = " ",
-    info = " ",
-    prefix = "",
+    error = "×",
+    warn = "▲",
+    hint = "•",
+    info = "•",
+    prefix = "▏",
+    suffix = "🭵",
   },
   file_system = {
     default = "󰈚",
@@ -74,5 +75,11 @@ return {
   },
   misc = {
     dots = "󰇘",
+  },
+  arrows = {
+    right = "",
+    left = "",
+    up = "",
+    down = "",
   },
 }
