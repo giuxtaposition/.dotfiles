@@ -62,20 +62,30 @@ M.modes = {
   ["x"] = { "CONFIRM", "Confirm" },
 }
 
---- @return string[]
+--- @return string
 M.filetype_icon = function()
   local icon = "󰈔"
   local icon_color = ""
 
-  local icons_present, mini_icons = pcall(require, "mini.icons")
-  if icons_present then
-    local ft_icon, hl = mini_icons.get("filetype", vim.bo.filetype)
-    icon = ft_icon and ft_icon or icon
-    local color = hl:match("[A-Z][a-z]+$")
-    icon_color = color
+  local devicons_present, devicons = pcall(require, "nvim-web-devicons")
+  if devicons_present then
+    local filename = vim.fn.expand("%:t")
+    local extension = vim.fn.expand("%:e")
+    local ft_icon, hl_group = devicons.get_icon(filename, extension, { default = true })
+    icon = ft_icon or icon
+
+    if hl_group then
+      local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = hl_group })
+      if ok and hl and hl.fg then
+        icon_color = string.format("#%06x", hl.fg)
+
+        -- define a highlight group for the icon dynamically
+        vim.api.nvim_set_hl(0, "StatusLine_FileIcon", { fg = icon_color })
+      end
+    end
   end
 
-  return { icon, icon_color }
+  return icon
 end
 
 M.git_status = function()
@@ -111,11 +121,11 @@ M.diagnostics = function()
   local hints_number = #vim.diagnostic.get(M.statusline_buffer(), { severity = vim.diagnostic.severity.HINT })
   local info_number = #vim.diagnostic.get(M.statusline_buffer(), { severity = vim.diagnostic.severity.INFO })
 
-  local err = (err_number and err_number > 0) and string.format("%s %s", icons.diagnostics.error, err_number) or ""
-  local warn = (warn_number and warn_number > 0) and string.format("%s %s", icons.diagnostics.info, warn_number) or ""
-  local hints = (hints_number and hints_number > 0) and string.format("%s %s", icons.diagnostics.hint, hints_number)
+  local err = (err_number and err_number > 0) and string.format(" %s %s", icons.diagnostics.error, err_number) or ""
+  local warn = (warn_number and warn_number > 0) and string.format(" %s %s", icons.diagnostics.info, warn_number) or ""
+  local hints = (hints_number and hints_number > 0) and string.format(" %s %s", icons.diagnostics.hint, hints_number)
     or ""
-  local info = (info_number and info_number > 0) and string.format("%s %s", icons.diagnostics.info, info_number) or ""
+  local info = (info_number and info_number > 0) and string.format(" %s %s", icons.diagnostics.info, info_number) or ""
 
   return {
     err = err,

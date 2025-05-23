@@ -1,11 +1,10 @@
 return {
   "ibhagwan/fzf-lua",
-  dependencies = { "echasnovski/mini.icons" },
+  dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = function()
     local actions = require("fzf-lua.actions")
     return {
       defaults = {
-        file_icons = "mini",
         prompt = " ",
         header = false,
         formatter = "path.filename_first",
@@ -121,6 +120,7 @@ return {
     },
     { "<leader>fd", "<cmd>FzfLua lsp_document_diagnostics<cr>", desc = "Document diagnostics" },
     { "<leader>fD", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", desc = "Workspace diagnostics" },
+    { "<leader>fj", "<cmd>FzfLua changes<cr>", desc = "List Changes" },
     -- git
     { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
     { "<leader>gC", "<cmd>FzfLua git_bcommits<CR>", desc = "Commits For Current Buffer" },

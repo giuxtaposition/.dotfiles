@@ -14,8 +14,8 @@ M.mode = function()
 end
 
 M.file = function()
-  local file = utils.filetype_icon()
-  return string.format("%%#StatusLine_FileIcon%s# %s %%#StatusLine_FileName#%%t", file[2], file[1])
+  local icon = utils.filetype_icon()
+  return string.format("%%#StatusLine_FileIcon# %s %%#StatusLine_FileName#%%t", icon)
 end
 
 M.git_status = function()
