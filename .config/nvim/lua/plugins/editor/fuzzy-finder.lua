@@ -62,11 +62,12 @@ return {
         code_actions = {
           prompt = " ",
           winopts = {
-            width = 0.8,
-            height = 0.7,
+            width = 0.33,
+            height = 0.5,
+            relative = "cursor",
             preview = {
-              layout = "horizontal",
-              horizontal = "up:75%",
+              hidden = true,
+              vertical = "down:60%",
             },
           },
         },
@@ -90,11 +91,36 @@ return {
           ueberzug_scaler = "cover",
           syntax_limit_b = 1024 * 100, -- 100KB
         },
+        codeaction = { toggle_behavior = "extend" },
       },
     }
   end,
   config = function(_, opts)
     require("fzf-lua").setup(opts)
+  end,
+  init = function()
+    vim.ui.select = function(items, opts, on_choice)
+      local ui_select = require("fzf-lua.providers.ui_select")
+
+      -- Register the fzf-lua picker the first time we call select.
+      if not ui_select.is_registered() then
+        ui_select.register(function(ui_opts)
+          ui_opts.winopts = { height = 0.5, width = 0.4 }
+
+          -- Use the kind (if available) to set the previewer's title.
+          if ui_opts.kind then
+            ui_opts.winopts.title = string.format(" %s ", ui_opts.kind)
+          end
+
+          return ui_opts
+        end)
+      end
+
+      -- Don't show the picker if there's nothing to pick.
+      if #items > 0 then
+        return vim.ui.select(items, opts, on_choice)
+      end
+    end
   end,
   keys = {
     -- find
