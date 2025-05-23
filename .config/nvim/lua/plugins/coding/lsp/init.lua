@@ -60,6 +60,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if not client then
       return
     end
+    vim.lsp.document_color.enable(true, event.buf)
 
     -- The following code creates a keymap to toggle inlay hints in your
     -- code, if the language server you are using supports them
