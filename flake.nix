@@ -2,12 +2,12 @@
   description = "Giuxtaposition's NixOS Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     catppuccin.url = "github:catppuccin/nix";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
@@ -85,7 +85,7 @@
     homeConfigurations = let
       commonModules = [
         nix-index-database.hmModules.nix-index
-        catppuccin.homeManagerModules.catppuccin
+        catppuccin.homeModules.catppuccin
         inputs.spicetify-nix.homeManagerModules.default
       ];
     in {
@@ -109,6 +109,6 @@
     devShells.x86_64-linux.default = let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
     in
-      pkgs.mkShell {packages = [pkgs.cachix pkgs.nodejs_23];};
+      pkgs.mkShell {packages = [pkgs.cachix pkgs.nodejs_24];};
   };
 }

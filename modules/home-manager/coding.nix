@@ -49,11 +49,13 @@ in {
       emmet-ls
       prettierd # typescript formatter
       eslint_d # typescript linter
-      myNodePackages."@vtsls/language-server"
+      vtsls
       tailwindcss-language-server
       bun
       vue-language-server
-      nodejs_23
+      nodejs_24
+      vscode-js-debug
+      pnpm
 
       # Lua
       lua-language-server
@@ -111,5 +113,17 @@ in {
       texlab
       texliveFull
     ];
+
+    xdg.desktopEntries = {
+      mongo_db_compass = {
+        name = "MongoDB Compass Working Secret";
+        genericName = "The MongoDB Compass";
+        exec = "mongodb-compass --password-store=\"gnome-libsecret\" --ignore-additional-command-line-flags %U";
+        terminal = false;
+        icon = "mongodb-compass";
+        categories = ["GNOME" "GTK" "Utility"];
+        mimeType = ["x-scheme-handler/mongodb" "x-scheme-handler/mongodb+srv"];
+      };
+    };
   };
 }

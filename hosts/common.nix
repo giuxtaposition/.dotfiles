@@ -150,8 +150,7 @@
       # System-Wide Packages
       home-manager
       nurl
-      ark # archiving tool
-      libsForQt5.qt5.qtgraphicaleffects
+      kdePackages.ark # graphical archiving tool
 
       #Theme
       papirus-icon-theme
@@ -184,5 +183,5 @@
   niri.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

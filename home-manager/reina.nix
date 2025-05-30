@@ -40,7 +40,6 @@
     qmk
     qmk-udev-rules
     wvkbd
-    ventoy
 
     opera
     calibre # Library Management

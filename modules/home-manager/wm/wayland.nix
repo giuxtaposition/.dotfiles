@@ -14,8 +14,7 @@
       slurp # select a region in a wayland compositor
       grim # grab images from a wayland compositor
       swayidle
-      qt5.qtwayland
-      qt6.qtwayland
+      kdePackages.qtwayland
       wdisplays
     ];
 

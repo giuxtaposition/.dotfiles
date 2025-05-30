@@ -69,10 +69,10 @@
     qalculate-gtk
     libreoffice-qt
     pavucontrol
-    libsForQt5.gwenview
+    kdePackages.gwenview
 
     # Fonts
-    (pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];})
+    nerd-fonts.jetbrains-mono
 
     mpv
     inputs.zen-browser.packages.${pkgs.system}.default

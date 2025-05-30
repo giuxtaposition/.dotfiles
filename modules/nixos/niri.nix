@@ -20,7 +20,7 @@
     ];
 
     systemd = {
-      packages = [pkgs.libsForQt5.polkit-kde-agent];
+      packages = [pkgs.kdePackages.polkit-kde-agent-1];
       user.services.plasma-polkit-agent = {
         wantedBy = ["graphical-session.target"];
         after = ["graphical-session.target"];

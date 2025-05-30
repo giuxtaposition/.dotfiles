@@ -55,7 +55,6 @@ in {
 
     services.cloudflared = {
       enable = true;
-      user = "giu";
       tunnels = {
         "26c577c7-9e1b-4632-b4e9-e28392cc165a" = {
           credentialsFile = "${config.users.users.giu.home}/.cloudflared/26c577c7-9e1b-4632-b4e9-e28392cc165a.json";
