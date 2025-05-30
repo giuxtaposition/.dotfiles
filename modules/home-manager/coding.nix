@@ -54,6 +54,7 @@ in {
       bun
       vue-language-server
       nodejs_24
+      deno
       vscode-js-debug
       pnpm
 
