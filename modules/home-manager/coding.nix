@@ -107,6 +107,9 @@ in {
       insomnia
       zk
       harper
+      pplatex
+      texlab
+      texliveFull
     ];
   };
 }
