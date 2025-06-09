@@ -41,7 +41,6 @@
     qmk-udev-rules
     wvkbd
 
-    opera
     calibre # Library Management
     ns-usbloader
     openrgb-with-all-plugins

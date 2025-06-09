@@ -22,7 +22,6 @@
 
   home.packages = with pkgs; [
     deluge # Torrent Client
-    opera
     calibre # Library Management
   ];
 }

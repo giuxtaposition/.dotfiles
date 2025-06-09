@@ -72,6 +72,7 @@
     kdePackages.gwenview
 
     # Fonts
+    merriweather
     nerd-fonts.jetbrains-mono
 
     mpv
