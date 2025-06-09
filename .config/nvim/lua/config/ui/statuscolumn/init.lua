@@ -1,7 +1,7 @@
 local M = {}
 local fcs = vim.opt.fillchars:get()
 
-local function get_fold(lnum)
+local function get_fold_without_numbers(lnum)
   if vim.fn.foldlevel(lnum) <= vim.fn.foldlevel(lnum - 1) then
     return " "
   end
@@ -12,8 +12,9 @@ function M.setup()
   vim.o.statuscolumn = "%!v:lua.require'config.ui.statuscolumn'.render()"
 end
 
+--- @return string
 function M.render()
-  return "%s %l " .. get_fold(vim.v.lnum) .. " "
+  return "%s  %2l " .. get_fold_without_numbers(vim.v.lnum) .. " "
 end
 
 return M

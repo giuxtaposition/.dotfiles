@@ -41,6 +41,11 @@ M.process_icons = {
       Text = wezterm.nerdfonts.md_language_lua,
     },
   },
+  ["deno"] = {
+    {
+      Text = wezterm.nerdfonts.dev_denojs,
+    },
+  },
 
   -- for some weird reason nixos has no process name...
   [""] = {

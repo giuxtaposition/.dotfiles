@@ -60,7 +60,6 @@ return {
         "diff",
         "http",
         "regex",
-        "latex",
       },
       auto_install = true,
       highlight = {
