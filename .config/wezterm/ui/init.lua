@@ -21,6 +21,7 @@ function M.apply_to_config(config)
   config.cursor_thickness = 1
   config.default_cursor_style = "BlinkingBar"
   config.cursor_blink_rate = 800
+  config.force_reverse_video_cursor = true
 
   config.font = w.font_with_fallback({
     "JetBrainsMono Nerd Font",
