@@ -46,6 +46,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "neotest-output-panel",
     "neotest-output",
     "fugitive",
+    "fugitiveblame",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -87,7 +88,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("mariasolos/big_file", { clear = true }),
+  group = augroup("big_file"),
   desc = "Disable features in big files",
   pattern = "bigfile",
   callback = function(args)

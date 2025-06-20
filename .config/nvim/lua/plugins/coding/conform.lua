@@ -26,9 +26,10 @@ return {
       ["yaml"] = { "prettierd" },
       ["markdown"] = { "prettierd" },
       ["markdown.mdx"] = { "prettierd" },
-      ["svelte"] = { "prettierd" },
+      ["svelte"] = { "prettier" },
       ["sh"] = { "shfmt" },
       ["nix"] = { "alejandra" },
+      go = { "goimports", "gofmt" },
     },
   },
 }

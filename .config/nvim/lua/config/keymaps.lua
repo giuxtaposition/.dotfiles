@@ -15,13 +15,17 @@ set_keymap("n", "k", "gk", "Up In Wrap", { noremap = true, silent = true })
 set_keymap({ "i", "v", "s" }, "jk", "<Esc>", "Map jk to Esc")
 set_keymap("n", "U", "<C-r>", "Redo")
 set_keymap("n", "<C-A>", "<cmd> %y+<cr>", "Copy whole file")
-set_keymap("n", "<leader><leader>b", ':let @+ = expand("%")<cr>', "Yank filename path of current buffer")
 set_keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", "Clear highlights")
 
 -- Buffers
 set_keymap("n", "[b", "<cmd>bprevious<cr>", "Prev buffer")
 set_keymap("n", "]b", "<cmd>bnext<cr>", "Next buffer")
 set_keymap("n", "<leader>bb", "<cmd>e #<cr>", "Switch to other buffer")
+set_keymap("n", "<leader>by", function()
+  local path = vim.fn.expand("%:p")
+  vim.fn.setreg("+", path)
+  vim.notify('Copied "' .. path .. '" to the clipboard!')
+end, "Yank filename path of current buffer")
 
 -- windows
 set_keymap("n", "<leader>ww", "<C-W>p", "Other window", { remap = true })

@@ -27,8 +27,19 @@ return {
     lazy = false,
     ---@type snacks.Config
     opts = {
+      styles = {
+        -- INFO: show top right of screen
+        snacks_image = {
+          relative = "editor",
+          col = -1,
+        },
+      },
       image = {
         enabled = true,
+        doc = {
+          max_width = 45,
+          max_height = 20,
+        },
       },
     },
   },
@@ -43,6 +54,8 @@ return {
 
     keys = {
       { "<leader>zg", "<cmd>ZkNotes { dir = 'notes'}<cr>", desc = "Search Notes" },
+      { "<leader>zt", "<cmd>ZkTags { dir = 'notes'}<cr>", desc = "Search Tags" },
+      { "<leader>zl", "<cmd>'<'>ZkInsertLinkAtSelection {matchSelected = true}<cr>", desc = "Add link at selection" },
       { "<leader>zw", "<cmd>ZkNotes { dir = 'work'}<cr>", desc = "Search Work Notes" },
       { "<leader>zj", "<cmd>ZkNotes { tags = { 'daily' }}<cr>", desc = "Search Daily Notes" },
       {

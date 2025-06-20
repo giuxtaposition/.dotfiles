@@ -60,6 +60,7 @@ return {
         "diff",
         "http",
         "regex",
+        "ruby",
       },
       auto_install = true,
       highlight = {

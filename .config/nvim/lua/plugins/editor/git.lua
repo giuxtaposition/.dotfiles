@@ -38,10 +38,17 @@ return {
   },
   {
     "tpope/vim-fugitive",
+    cmd = { "Git", "G" },
     keys = {
       { "<leader>gg", "<cmd>:Git<CR>", desc = "Git status" },
-      -- { "<leader>ghS", "<cmd>:Git add %<CR>", desc = "Git stage current file" },
-      -- { "<leader>ghR", "<cmd>:Git checkout %<CR>", desc = "Git revert current file" },
+      { "<leader>gd", "<cmd>:tab Gvdiffsplit @<CR>", desc = "Git diff current buffer" },
+      { "<leader>gm", "<cmd>:Git mergetool<CR>", desc = "Git mergetool" },
+      { "<leader>gj", "<cmd>:diffget //3<CR>", desc = "Git get from right" },
+      { "<leader>gf", "<cmd>:diffget //2<CR>", desc = "Git get from left" },
     },
+    init = function()
+      vim.opt.diffopt:append("algorithm:patience")
+      vim.opt.diffopt:append("indent-heuristic")
+    end,
   },
 }

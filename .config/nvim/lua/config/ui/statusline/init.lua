@@ -14,7 +14,7 @@ function M.render()
     modules.mode(),
     modules.file(),
     modules.diagnostics(),
-    "%#StatusLine#%=",
+    "%=",
     modules.typed_key(),
     modules.macro(),
     modules.lsp(),

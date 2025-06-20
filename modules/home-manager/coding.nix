@@ -113,6 +113,8 @@ in {
       pplatex
       texlab
       texliveFull
+
+      rubyPackages_3_4.ruby-lsp
     ];
 
     xdg.desktopEntries = {

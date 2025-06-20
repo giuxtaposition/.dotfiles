@@ -23,7 +23,7 @@ M.create_autocommands = function()
 end
 
 M.create_highlights = function()
-  vim.api.nvim_set_hl(0, "CursorWordMatches", { bg = colors.surface0 })
+  vim.api.nvim_set_hl(0, "CursorWordMatches", { bg = colors.black4 })
 end
 
 M.auto_highlight = function()

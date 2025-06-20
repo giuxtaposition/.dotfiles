@@ -1,28 +1,30 @@
-return {
-  rosewater = "#f5e0dc",
-  flamingo = "#f2cdcd",
-  pink = "#f5c2e7",
-  mauve = "#cba6f7",
-  red = "#f38ba8",
-  maroon = "#eba0ac",
-  peach = "#fab387",
-  yellow = "#f9e2af",
-  green = "#a6e3a1",
-  teal = "#94e2d5",
-  sky = "#89dceb",
-  sapphire = "#74c7ec",
-  blue = "#89b4fa",
-  lavender = "#b4befe",
-  text = "#cdd6f4",
-  subtext1 = "#bac2de",
-  subtext0 = "#a6adc8",
-  overlay2 = "#9399b2",
-  overlay1 = "#7f849c",
-  overlay0 = "#6c7086",
-  surface2 = "#585b70",
-  surface1 = "#45475a",
-  surface0 = "#313244",
-  base = "#1e1e2e",
-  mantle = "#181825",
-  crust = "#11111b",
+local colors = {
+  black0 = "#15151f",
+  black1 = "#232136",
+  black2 = "#28243d",
+  black3 = "#393552",
+  black4 = "#575268",
+
+  white0 = "#f5f4fa",
+  white1 = "#b5b0d6",
+  white2 = "#a1a0c5",
+
+  cyan = "#9ee8ff",
+  darkcyan = "#6ee7e1",
+
+  yellow = "#ffe57c",
+  orange = "#ffc199",
+
+  red = "#ff7e7e",
+  darkred = "#ff6b6f",
+
+  green = "#80ffac",
+  darkgreen = "#7ee6af",
+
+  pink = "#ffb2f7",
+  purple0 = "#ae90fa",
+  purple1 = "#a6a9ff",
+  purple2 = "#d4ccff",
 }
+
+return colors

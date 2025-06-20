@@ -7,7 +7,7 @@ return {
       flavour = "mocha",
       color_overrides = {
         mocha = {
-          peach = "#e0af68",
+          peach = "#ffb07c",
         },
       },
       custom_highlights = function(palette)
@@ -34,25 +34,16 @@ return {
           rainbow4 = { fg = palette.teal },
           rainbow5 = { fg = palette.mauve },
           rainbow6 = { fg = palette.lavender },
+          rainbow7 = { fg = palette.sky },
         }
 
-        for i = 1, 6 do
-          local color = rainbow["rainbow" .. i].fg
-          groups["RenderMarkdownH" .. i] = { fg = color }
-          groups["RenderMarkdownH" .. i .. "Bg"] =
-            { bg = require("catppuccin.utils.colors").darken(color, 0.30, palette.base) }
-        end
+        -- for i = 1, 7 do
+        --   local color = rainbow["rainbow" .. i].fg
+        --   groups["MarkviewPalette" .. i] =
+        --     { fg = color, bg = require("catppuccin.utils.colors").darken(color, 0.30, palette.base) }
+        -- end
 
-        return vim.tbl_deep_extend("error", {
-          ["@markup.heading.1.markdown"] = rainbow.rainbow1,
-          ["@markup.heading.2.markdown"] = rainbow.rainbow2,
-          ["@markup.heading.3.markdown"] = rainbow.rainbow3,
-          ["@markup.heading.4.markdown"] = rainbow.rainbow4,
-          ["@markup.heading.5.markdown"] = rainbow.rainbow5,
-          ["@markup.heading.6.markdown"] = rainbow.rainbow6,
-          ["@markup.strong"] = { fg = palette.sky, style = { "bold" } },
-          ["@markup.quote"] = { fg = palette.lavender, style = { "bold" } },
-        }, groups)
+        return groups
       end,
       show_end_of_buffer = true,
       dim_inactive = {
@@ -106,7 +97,27 @@ return {
       require("catppuccin").setup(opts)
 
       -- load the colorscheme here
-      vim.cmd([[colorscheme catppuccin]])
+      -- vim.cmd([[colorscheme catppuccin]])
+    end,
+  },
+  {
+    dir = "~/Programming/andromeda",
+    priority = 1000,
+    config = function(_, opts)
+      require("andromeda").setup()
+
+      vim.cmd([[colorscheme andromeda]])
+    end,
+  },
+  {
+    "webhooked/kanso.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function(_, opts)
+      require("kanso").setup(opts)
+
+      -- load the colorscheme here
+      -- vim.cmd([[colorscheme kanso]])
     end,
   },
 }

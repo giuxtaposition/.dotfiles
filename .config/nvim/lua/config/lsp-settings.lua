@@ -2,7 +2,19 @@ local util = require("config.util")
 local set_keymap = util.keys.set
 local methods = vim.lsp.protocol.Methods
 
-vim.lsp.enable({ "lua-ls", "harper-ls", "texlab", "nixd", "jsonls", "vtsls", "eslint", "bashls", "marksman" })
+vim.lsp.enable({
+  "lua-ls",
+  "harper-ls",
+  "texlab",
+  "nixd",
+  "jsonls",
+  "vtsls",
+  "eslint",
+  "bashls",
+  "marksman",
+  "gopls",
+  "ruby-ls",
+})
 
 vim.diagnostic.config({
   underline = true,
@@ -69,23 +81,6 @@ local function on_attach(client, bufnr)
 
   -- Typescript specific keymaps.
   if client.name == "vtsls" then
-    set_keymap("n", "gD", function()
-      local params = vim.lsp.util.make_position_params(0, "utf-16")
-      require("config.util").lsp.execute({
-        command = "typescript.goToSourceDefinition",
-        arguments = { params.textDocument.uri, params.position },
-        open = true,
-      })
-    end, "Goto Source Definition", { buffer = bufnr })
-
-    set_keymap("n", "gR", function()
-      require("config.util").lsp.execute({
-        command = "typescript.findAllFileReferences",
-        arguments = { vim.uri_from_bufnr(0) },
-        open = true,
-      })
-    end, "File References", { buffer = bufnr })
-
     set_keymap(
       "n",
       "<leader>co",
@@ -132,40 +127,35 @@ local function on_attach(client, bufnr)
   if client:supports_method(methods.textDocument_foldingRange) then
     vim.wo.foldmethod = "expr"
     vim.wo.foldexpr = "v:lua.vim.lsp.foldexpr()"
+  else
+    vim.wo.foldmethod = "expr"
+    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
   end
 
-  if client:supports_method(methods.textDocument_documentHighlight) then
-    local under_cursor_highlights_group =
-      vim.api.nvim_create_augroup("giuxtaposition/cursor_highlights", { clear = false })
-    vim.api.nvim_create_autocmd({ "CursorHold", "InsertLeave" }, {
-      group = under_cursor_highlights_group,
-      desc = "Highlight references under the cursor",
-      buffer = bufnr,
-      callback = vim.lsp.buf.document_highlight,
-    })
-    vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter", "BufLeave" }, {
-      group = under_cursor_highlights_group,
-      desc = "Clear highlight references",
-      buffer = bufnr,
-      callback = vim.lsp.buf.clear_references,
-    })
-  end
+  if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+    local highlight_augroup = vim.api.nvim_create_augroup("giuxtaposition-lsp-highlight", { clear = false })
 
-  if client:supports_method(methods.textDocument_documentHighlight) then
-    local under_cursor_highlights_group =
-      vim.api.nvim_create_augroup("giuxtaposition/cursor_highlights", { clear = false })
-    vim.api.nvim_create_autocmd({ "CursorHold", "InsertLeave" }, {
-      group = under_cursor_highlights_group,
-      desc = "Highlight references under the cursor",
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       buffer = bufnr,
+      group = highlight_augroup,
       callback = vim.lsp.buf.document_highlight,
     })
-    vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter", "BufLeave" }, {
-      group = under_cursor_highlights_group,
-      desc = "Clear highlight references",
+
+    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
       buffer = bufnr,
+      group = highlight_augroup,
       callback = vim.lsp.buf.clear_references,
     })
+
+    vim.api.nvim_create_autocmd("LspDetach", {
+      group = vim.api.nvim_create_augroup("giuxtaposition-lsp-detach", { clear = true }),
+      callback = function(event2)
+        vim.lsp.buf.clear_references()
+        vim.api.nvim_clear_autocmds({ group = "giuxtaposition-lsp-highlight", buffer = event2.buf })
+      end,
+    })
+  else
+    require("config.ui.highlight_matching_words_under_cursor").setup()
   end
 end
 
@@ -222,7 +212,7 @@ end, {})
 
 local function lsp_status()
   local bufnr = vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.get_clients and vim.lsp.get_clients({ bufnr = bufnr })
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
 
   if #clients == 0 then
     print("󰅚 No LSP clients attached")

@@ -1,150 +1,131 @@
 local colors = require("config.ui.colors")
 
-local statusline_bg = colors.mantle
-
 return {
   StatusLine_NormalMode = {
-    fg = colors.base,
-    bg = colors.lavender,
+    fg = colors.black0,
+    bg = colors.purple0,
     bold = true,
   },
   StatusLine_VisualMode = {
-    fg = colors.base,
-    bg = colors.mauve,
+    fg = colors.black0,
+    bg = colors.pink,
     bold = true,
   },
   StatusLine_InsertMode = {
-    fg = colors.base,
+    fg = colors.black0,
     bg = colors.green,
     bold = true,
   },
   StatusLine_TerminalMode = {
-    fg = colors.base,
+    fg = colors.black0,
     bg = colors.green,
     bold = true,
   },
   StatusLine_ReplaceMode = {
-    fg = colors.base,
+    fg = colors.black0,
     bg = colors.red,
     bold = true,
   },
   StatusLine_SelectMode = {
-    fg = colors.base,
-    bg = colors.peach, --TODO
+    fg = colors.black0,
+    bg = colors.orange,
     bold = true,
   },
   StatusLine_CommandMode = {
-    fg = colors.base,
-    bg = colors.peach,
+    fg = colors.black0,
+    bg = colors.orange,
     bold = true,
   },
   StatusLine_ConfirmMode = {
-    fg = colors.base,
-    bg = colors.peach, --TODO
+    fg = colors.black0,
+    bg = colors.orange,
     bold = true,
   },
   StatusLine_NormalModeSep = {
     fg = colors.blue,
-    bg = colors.surface2,
+    bg = colors.black2,
   },
   StatusLine_VisualModeSep = {
-    fg = colors.mauve,
-    bg = colors.surface2,
+    fg = colors.pink,
+    bg = colors.black2,
   },
   StatusLine_InsertModeSep = {
-    bg = colors.surface2,
+    bg = colors.black2,
     fg = colors.green,
   },
   StatusLine_TerminalModeSep = {
-    bg = colors.surface2,
+    bg = colors.black2,
     fg = colors.green,
   },
   StatusLine_ReplaceModeSep = {
-    bg = colors.surface2,
+    bg = colors.black2,
     fg = colors.red,
   },
   StatusLine_SelectModeSep = {
-    bg = colors.surface2,
-    fg = colors.peach, --TODO
+    bg = colors.black2,
+    fg = colors.orange,
   },
   StatusLine_CommandModeSep = {
-    bg = colors.surface2,
-    fg = colors.peach,
+    bg = colors.black2,
+    fg = colors.orange,
   },
   StatusLine_ConfirmModeSep = {
-    bg = colors.surface2,
-    fg = colors.peach, --TODO
+    bg = colors.black2,
+    fg = colors.orange,
   },
   StatusLine_DiagnosticsError = {
     fg = colors.red,
-    bg = statusline_bg,
   },
   StatusLine_DiagnosticsWarning = {
     fg = colors.yellow,
-    bg = statusline_bg,
   },
   StatusLine_DiagnosticsHints = {
     fg = colors.sky,
-    bg = statusline_bg,
   },
   StatusLine_DiagnosticsInfo = {
-    fg = colors.yellow, --TODO
-    bg = statusline_bg,
+    fg = colors.yellow,
   },
   StatusLine_LspInfo = {
-    fg = colors.lavender,
-    bg = statusline_bg,
+    fg = colors.purple0,
   },
   StatusLine_GitBranchSep = {
     fg = colors.green,
-    bg = statusline_bg,
   },
   StatusLine_GitBranch = {
-    fg = colors.base,
-    bg = colors.teal,
+    fg = colors.black0,
+    bg = colors.green,
   },
   StatusLine_Macro = {
-    fg = colors.mauve,
-    bg = statusline_bg,
+    fg = colors.pink,
   },
   StatusLine_FileIconRed = {
     fg = colors.red,
-    bg = statusline_bg,
   },
   StatusLine_FileIconBlue = {
     fg = colors.blue,
-    bg = statusline_bg,
   },
   StatusLine_FileIconCyan = {
-    fg = colors.sky,
-    bg = statusline_bg,
+    fg = colors.cyan,
   },
   StatusLine_FileIconGrey = {
     fg = colors.text,
-    bg = statusline_bg,
   },
   StatusLine_FileIconAzure = {
-    fg = colors.sapphire,
-    bg = statusline_bg,
+    fg = colors.darkcyan,
   },
   StatusLine_FileIconGreen = {
     fg = colors.green,
-    bg = statusline_bg,
   },
   StatusLine_FileIconOrange = {
     fg = colors.orange,
-    bg = statusline_bg,
   },
   StatusLine_FileIconPurple = {
-    fg = colors.mauve,
-    bg = statusline_bg,
+    fg = colors.pink,
   },
   StatusLine_FileIconYellow = {
     fg = colors.yellow,
-    bg = statusline_bg,
   },
   StatusLine_TypedKey = {
-    fg = colors.blue,
-    bg = statusline_bg,
+    fg = colors.purple1,
   },
 }
