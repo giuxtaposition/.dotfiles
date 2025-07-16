@@ -1,5 +1,4 @@
-local _, colors = pcall(require, "andromeda.colors")
-
+local colors = require("config.ui.colors")
 local M = {
   delay = 100,
   timer = vim.uv.new_timer(),

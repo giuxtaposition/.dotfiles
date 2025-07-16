@@ -1,5 +1,3 @@
-local _, colors = pcall(require, "andromeda.colors")
-
 return {
   "folke/todo-comments.nvim",
   cmd = { "TodoTrouble" },
@@ -12,7 +10,7 @@ return {
       },
     },
     colors = {
-      giu = colors.purple0,
+      giu = require("config.ui.colors").purple0,
     },
     highlight = {
       pattern = [[.*<(KEYWORDS)\s*]],

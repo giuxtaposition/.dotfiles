@@ -1,4 +1,4 @@
-local _, colors = pcall(require, "andromeda.colors")
+local colors = require("config.ui.colors")
 
 return {
   StatusLine_NormalMode = {
