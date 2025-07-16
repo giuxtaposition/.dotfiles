@@ -27,22 +27,6 @@ return {
           BlinkCmpKindCopilot = { fg = palette.sky },
         }
 
-        local rainbow = {
-          rainbow1 = { fg = palette.blue },
-          rainbow2 = { fg = palette.peach },
-          rainbow3 = { fg = palette.green },
-          rainbow4 = { fg = palette.teal },
-          rainbow5 = { fg = palette.mauve },
-          rainbow6 = { fg = palette.lavender },
-          rainbow7 = { fg = palette.sky },
-        }
-
-        -- for i = 1, 7 do
-        --   local color = rainbow["rainbow" .. i].fg
-        --   groups["MarkviewPalette" .. i] =
-        --     { fg = color, bg = require("catppuccin.utils.colors").darken(color, 0.30, palette.base) }
-        -- end
-
         return groups
       end,
       show_end_of_buffer = true,
@@ -97,27 +81,7 @@ return {
       require("catppuccin").setup(opts)
 
       -- load the colorscheme here
-      -- vim.cmd([[colorscheme catppuccin]])
-    end,
-  },
-  {
-    dir = "~/Programming/andromeda",
-    priority = 1000,
-    config = function(_, opts)
-      require("andromeda").setup()
-
-      vim.cmd([[colorscheme andromeda]])
-    end,
-  },
-  {
-    "webhooked/kanso.nvim",
-    lazy = false,
-    priority = 1000,
-    config = function(_, opts)
-      require("kanso").setup(opts)
-
-      -- load the colorscheme here
-      -- vim.cmd([[colorscheme kanso]])
+      vim.cmd([[colorscheme catppuccin]])
     end,
   },
 }

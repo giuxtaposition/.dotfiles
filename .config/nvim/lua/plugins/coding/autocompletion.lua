@@ -5,7 +5,6 @@ return {
     lazy = false, -- lazy loading handled internally
     dependencies = {
       "rafamadriz/friendly-snippets",
-      "giuxtaposition/blink-cmp-copilot",
       "moyiz/blink-emoji.nvim",
     },
     version = "1.*",
@@ -42,9 +41,6 @@ return {
         documentation = {
           auto_show = true,
         },
-        ghost_text = {
-          enabled = true,
-        },
         list = {
           -- Insert items while navigating the completion list.
           selection = { preselect = true, auto_insert = false },
@@ -52,15 +48,9 @@ return {
         },
       },
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "lazydev", "copilot", "emoji" },
+        default = { "lsp", "path", "snippets", "buffer", "lazydev", "emoji" },
         providers = {
           lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", fallbacks = { "lsp" } },
-          copilot = {
-            name = "copilot",
-            module = "blink-cmp-copilot",
-            score_offset = 100,
-            async = true,
-          },
           emoji = {
             name = "Emoji",
             module = "blink-emoji",
@@ -68,6 +58,9 @@ return {
             min_keyword_length = 2,
             opts = { insert = true },
           },
+        },
+        per_filetype = {
+          codecompanion = { "codecompanion", "buffer" },
         },
       },
       signature = {
@@ -89,15 +82,5 @@ return {
       -- Extend neovim's client capabilities with the completion ones.
       vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities(nil, true) })
     end,
-  },
-  {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    build = ":Copilot auth",
-    opts = {
-      suggestion = { enabled = false, auto_trigger = true, keymap = { accept = "<M-CR>" } },
-      panel = { enabled = false },
-    },
   },
 }

@@ -1,6 +1,9 @@
 return {
   "lukas-reineke/indent-blankline.nvim",
-  event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+  main = "ibl",
+  event = "VeryLazy",
+  -- For setting shiftwidth and tabstop automatically.
+  dependencies = "tpope/vim-sleuth",
   opts = {
     indent = {
       char = "│",
@@ -11,12 +14,8 @@ return {
       filetypes = {
         "help",
         "dashboard",
-        "trouble",
         "lazy",
-        "notify",
-        "toggleterm",
       },
     },
   },
-  main = "ibl",
 }
