@@ -7,7 +7,7 @@
   options = {niri.enable = lib.mkEnableOption "enables niri module";};
 
   config = lib.mkIf config.niri.enable {
-    home.packages = with pkgs; [xwayland-satellite];
+    home.packages = with pkgs; [xwayland-satellite brightnessctl];
 
     home.file."${config.home.homeDirectory}/.config/niri" = {
       source =
