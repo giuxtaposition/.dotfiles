@@ -59,18 +59,6 @@ return {
         symbols = {
           symbol_icons = require("config.ui.icons").kinds,
         },
-        code_actions = {
-          prompt = " ",
-          winopts = {
-            width = 0.33,
-            height = 0.5,
-            relative = "cursor",
-            preview = {
-              hidden = true,
-              vertical = "down:60%",
-            },
-          },
-        },
       },
       oldfiles = {
         include_current_session = true,
@@ -91,7 +79,6 @@ return {
           ueberzug_scaler = "cover",
           syntax_limit_b = 1024 * 100, -- 100KB
         },
-        codeaction = { toggle_behavior = "extend" },
       },
     }
   end,

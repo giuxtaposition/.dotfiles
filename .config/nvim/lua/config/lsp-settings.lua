@@ -46,22 +46,18 @@ vim.diagnostic.config({
 ---@param client vim.lsp.Client
 ---@param bufnr integer
 local function on_attach(client, bufnr)
-  set_keymap("n", "gd", function()
+  set_keymap("n", "grd", function()
     require("fzf-lua").lsp_definitions({ jump1 = true })
   end, "Go to Definition", { buffer = bufnr }) --  To jump back, press <C-t>.
-  set_keymap("n", "gD", function()
+  set_keymap("n", "grD", function()
     require("fzf-lua").lsp_definitions({ jump1 = false })
   end, "Peek definition", { buffer = bufnr })
-  set_keymap("n", "gr", "<cmd>FzfLua lsp_references<CR>", "Show References", { buffer = bufnr })
-  set_keymap("n", "gI", vim.lsp.buf.implementation, "Go to Implementation", { buffer = bufnr })
-  set_keymap("n", "gt", vim.lsp.buf.type_definition, "Type Definition", { buffer = bufnr })
-  set_keymap("n", "<leader>cs", "<cmd>FzfLua lsp_document_symbols<CR>", "Document Symbols", { buffer = bufnr })
-  set_keymap("n", "<leader>cS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace Symbols", { buffer = bufnr })
-  set_keymap("n", "<leader>cr", function()
-    local inc_rename = require("inc_rename")
-    return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
-  end, "Rename", { buffer = bufnr, expr = true })
-  set_keymap({ "n", "v" }, "<leader>ca", "<cmd>FzfLua lsp_code_actions<CR>", "Code actions", { buffer = bufnr })
+  set_keymap("n", "grr", "<cmd>FzfLua lsp_references<CR>", "Show References", { buffer = bufnr })
+  set_keymap("n", "grs", "<cmd>FzfLua lsp_document_symbols<CR>", "Document Symbols", { buffer = bufnr })
+  set_keymap("n", "grS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace Symbols", { buffer = bufnr })
+  set_keymap({ "n", "v" }, "gra", function()
+    require("tiny-code-action").code_action()
+  end, "Code actions", { buffer = bufnr })
   set_keymap(
     "n",
     "<leader>D",
@@ -72,10 +68,36 @@ local function on_attach(client, bufnr)
   set_keymap("n", "<leader>cd", vim.diagnostic.open_float, "Show line diagnostics", { buffer = bufnr })
   set_keymap("n", "]d", util.lsp.diagnostic_go_to("next"), "Next Diagnostic", { buffer = bufnr })
   set_keymap("n", "[d", util.lsp.diagnostic_go_to("prev"), "Prev Diagnostic", { buffer = bufnr })
-  set_keymap("n", "]e", util.lsp.diagnostic_go_to("next", "ERROR"), "Next Error", { buffer = bufnr })
-  set_keymap("n", "[e", util.lsp.diagnostic_go_to("prev", "ERROR"), "Prev Error", { buffer = bufnr })
-  set_keymap("n", "]w", util.lsp.diagnostic_go_to("next", "WARN"), "Next Warning", { buffer = bufnr })
-  set_keymap("n", "[w", util.lsp.diagnostic_go_to("prev", "WARN"), "Prev Warning", { buffer = bufnr })
+  set_keymap(
+    "n",
+    "]e",
+    util.lsp.diagnostic_go_to("next", vim.diagnostic.severity.ERROR),
+    "Next Error",
+    { buffer = bufnr }
+  )
+  set_keymap(
+    "n",
+    "[e",
+    util.lsp.diagnostic_go_to("prev", vim.diagnostic.severity.ERROR),
+    "Prev Error",
+    { buffer = bufnr }
+  )
+  set_keymap(
+    "n",
+    "]w",
+    util.lsp.diagnostic_go_to("next", vim.diagnostic.severity.WARN),
+    "Next Warning",
+    { buffer = bufnr }
+  )
+  set_keymap(
+    "n",
+    "[w",
+    util.lsp.diagnostic_go_to("prev", vim.diagnostic.severity.WARN),
+    "Prev Warning",
+    { buffer = bufnr }
+  )
+  set_keymap("n", "]r", util.lsp.jump_to_reference("next"), "Next Warning", { buffer = bufnr })
+  set_keymap("n", "[r", util.lsp.jump_to_reference("prev"), "Prev Warning", { buffer = bufnr })
   set_keymap("n", "K", vim.lsp.buf.hover, "Show documentation for what is under cursor", { buffer = bufnr })
   set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = bufnr })
 
@@ -187,80 +209,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Extras
 
-local function restart_lsp(bufnr)
-  bufnr = bufnr or vim.api.nvim_get_current_buf()
-  local clients
-  if vim.lsp.get_clients then
-    clients = vim.lsp.get_clients({ bufnr = bufnr })
-  else
-    ---@diagnostic disable-next-line: deprecated
-    clients = vim.lsp.get_active_clients({ bufnr = bufnr })
-  end
-
-  for _, client in ipairs(clients) do
-    vim.lsp.stop_client(client.id)
-  end
-
-  vim.defer_fn(function()
-    vim.cmd("edit")
-  end, 100)
-end
-
 vim.api.nvim_create_user_command("LspRestart", function()
-  restart_lsp()
+  util.lsp.restart_lsp()
 end, {})
 
-local function lsp_status()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.get_clients({ bufnr = bufnr })
-
-  if #clients == 0 then
-    print("󰅚 No LSP clients attached")
-    return
-  end
-
-  print("󰒋 LSP Status for buffer " .. bufnr .. ":")
-  print("─────────────────────────────────")
-
-  for i, client in ipairs(clients) do
-    print(string.format("󰌘 Client %d: %s (ID: %d)", i, client.name, client.id))
-    print("  Root: " .. (client.config.root_dir or "N/A"))
-    print("  Filetypes: " .. table.concat(client.config.filetypes or {}, ", "))
-
-    -- Check capabilities
-    local caps = client.server_capabilities
-
-    if caps == nil then
-      print("  No capabilities reported")
-      return
-    end
-
-    local features = {}
-    if caps.completionProvider then
-      table.insert(features, "completion")
-    end
-    if caps.hoverProvider then
-      table.insert(features, "hover")
-    end
-    if caps.definitionProvider then
-      table.insert(features, "definition")
-    end
-    if caps.referencesProvider then
-      table.insert(features, "references")
-    end
-    if caps.renameProvider then
-      table.insert(features, "rename")
-    end
-    if caps.codeActionProvider then
-      table.insert(features, "code_action")
-    end
-    if caps.documentFormattingProvider then
-      table.insert(features, "formatting")
-    end
-
-    print("  Features: " .. table.concat(features, ", "))
-    print("")
-  end
-end
-
-vim.api.nvim_create_user_command("LspStatus", lsp_status, { desc = "Show detailed LSP status" })
+vim.api.nvim_create_user_command("LspStatus", util.lsp.lsp_status, { desc = "Show detailed LSP status" })
