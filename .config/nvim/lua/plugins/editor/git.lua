@@ -32,6 +32,10 @@ return {
             gs.blame_line({ full = true })
           end, "Blame Line")
           map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+          map("n", "<leader>ghd", gs.diffthis, "Diff This")
+          map("n", "<leader>ghD", function()
+            gs.diffthis("~")
+          end, "Diff This ~")
         end,
       }
     end,
@@ -40,9 +44,6 @@ return {
     "tpope/vim-fugitive",
     cmd = { "Git", "G" },
     keys = {
-      { "<leader>gg", "<cmd>:Git<CR>", desc = "Git status" },
-      { "<leader>gd", "<cmd>:tab Gvdiffsplit @<CR>", desc = "Git diff current buffer" },
-      { "<leader>gm", "<cmd>:Git mergetool<CR>", desc = "Git mergetool" },
       { "<leader>gj", "<cmd>:diffget //3<CR>", desc = "Git get from right" },
       { "<leader>gf", "<cmd>:diffget //2<CR>", desc = "Git get from left" },
     },
