@@ -6,14 +6,13 @@ return {
     keywords = {
       GIU = {
         icon = "󰄛 ",
-        color = "giu",
+        color = "hint",
       },
-    },
-    colors = {
-      giu = require("config.ui.colors").purple0,
+      IN_PROGRESS = { icon = " ", color = "hint" },
     },
     highlight = {
       pattern = [[.*<(KEYWORDS)\s*]],
+      comments_only = vim.bo.filetype == "markdown" and false or true,
     },
     search = {
       pattern = [[\b(KEYWORDS)\b]],
