@@ -84,7 +84,7 @@
 
     homeConfigurations = let
       commonModules = [
-        nix-index-database.hmModules.nix-index
+        nix-index-database.homeModules.nix-index
         catppuccin.homeModules.catppuccin
         inputs.spicetify-nix.homeManagerModules.default
       ];
