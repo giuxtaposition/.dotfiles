@@ -3,7 +3,7 @@ vim.cmd([[let &t_Cs = "\e[4:3m"]])
 vim.cmd([[let &t_Ce = "\e[4:0m"]])
 vim.g.have_nerd_font = true
 
-local opt = vim.opt
+local opt = vim.o
 
 -- Line numbers
 opt.relativenumber = true
@@ -22,8 +22,8 @@ opt.wrap = false
 opt.ignorecase = true -- Ignore case when searching
 opt.smartcase = true -- If you include mixed case in your search, assume you want case-sensitive
 opt.hlsearch = true -- Highlight search results
-opt.path:append("**") -- Search in sub-directories
-opt.wildignore:append({ "*/node_modules/*" }) -- Ignore node_modules when searching
+vim.opt.path:append("**") -- Search in sub-directories
+vim.opt.wildignore:append({ "*/node_modules/*" }) -- Ignore node_modules when searching
 
 -- Cursor line
 opt.cursorline = true -- Highlight the current cursor line
@@ -37,7 +37,7 @@ opt.signcolumn = "yes" -- Show sign column so that text doesn't shift
 opt.backspace = "indent,eol,start" -- Allow backspace on indent, end of line or insert mode start
 
 -- Clipboard
-opt.clipboard:append("unnamedplus") -- Use system clipboard as default register
+vim.opt.clipboard:append("unnamedplus") -- Use system clipboard as default register
 
 -- Split windows
 opt.splitright = true -- Split vertical window to the right
@@ -48,7 +48,7 @@ opt.swapfile = false
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 opt.list = true
-opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "  ", trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live, as you type!
 opt.inccommand = "split"
@@ -56,7 +56,7 @@ opt.inccommand = "split"
 opt.mouse = "" -- Disable mouse
 
 -- Add asterisks in block comments
-opt.formatoptions:append({ "r" })
+vim.opt.formatoptions:append({ "r" })
 
 opt.scrolloff = 10 -- Minimum lines to keep above and below cursor
 
@@ -72,7 +72,7 @@ opt.foldtext = ""
 opt.foldmethod = "indent" -- This is the default, but I set it to LSP if available.
 
 -- UI characters.
-opt.fillchars = {
+vim.opt.fillchars = {
   foldopen = "",
   foldclose = "",
   fold = " ",
@@ -83,4 +83,4 @@ opt.fillchars = {
 
 opt.smoothscroll = true
 
-vim.o.undofile = true -- Save undo history
+opt.undofile = true -- Save undo history
