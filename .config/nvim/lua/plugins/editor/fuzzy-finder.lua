@@ -147,6 +147,15 @@ return {
     { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "Key Maps" },
     { "<leader>su", "<cmd>FzfLua highlights<cr>", desc = "Highlights" },
     { "<leader>sR", "<cmd>FzfLua resume<cr>", desc = "Resume" },
-    { "z=", "<Cmd>FzfLua spell_suggest<CR>", desc = "FzfLua: Find spell word suggestion" },
+    {
+      "<leader>gS",
+      function()
+        require("fzf-lua").live_grep({
+          search_paths = vim.fn.systemlist("git status --porcelain | cut -c4-"),
+        })
+      end,
+      desc = "Find string in git status files",
+    },
+    { "z=", "<cmd>FzfLua spell_suggest<cr>", desc = "Find spell word suggestion" },
   },
 }
