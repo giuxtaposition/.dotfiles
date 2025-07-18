@@ -1,4 +1,6 @@
-local M = {}
+local M = {
+  hooks = {},
+}
 
 M.action = setmetatable({}, {
   __index = function(_, action)
@@ -159,6 +161,16 @@ M.lsp_status = function()
 
     print("  Features: " .. table.concat(features, ", "))
     print("")
+  end
+end
+
+M.register_hook = function(fn)
+  table.insert(M.hooks, fn)
+end
+
+M.run_hooks = function(client, bufnr)
+  for _, hook in ipairs(M.hooks) do
+    hook(client, bufnr)
   end
 end
 

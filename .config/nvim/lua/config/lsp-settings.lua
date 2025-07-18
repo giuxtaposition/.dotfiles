@@ -92,41 +92,6 @@ local function on_attach(client, bufnr)
   set_keymap("n", "K", vim.lsp.buf.hover, "Show documentation for what is under cursor", { buffer = bufnr })
   set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = bufnr })
 
-  -- Typescript specific keymaps.
-  if client.name == "vtsls" then
-    set_keymap(
-      "n",
-      "<leader>co",
-      require("config.util").lsp.action["source.organizeImports"],
-      "Organize Imports",
-      { buffer = bufnr }
-    )
-    set_keymap(
-      "n",
-      "<leader>cM",
-      require("config.util").lsp.action["source.addMissingImports.ts"],
-      "Add missing imports",
-      { buffer = bufnr }
-    )
-    set_keymap(
-      "n",
-      "<leader>cu",
-      require("config.util").lsp.action["source.removeUnused.ts"],
-      "Remove unused imports",
-      { buffer = bufnr }
-    )
-    set_keymap(
-      "n",
-      "<leader>cD",
-      require("config.util").lsp.action["source.fixAll.ts"],
-      "Fix all diagnostics",
-      { buffer = bufnr }
-    )
-    set_keymap("n", "<leader>cV", function()
-      require("config.util").lsp.execute({ command = "typescript.selectTypeScriptVersion" })
-    end, "Select TS workspace version", { buffer = bufnr })
-  end
-
   vim.lsp.document_color.enable(true, bufnr)
 
   -- The following code creates a keymap to toggle inlay hints in your
@@ -170,6 +135,8 @@ local function on_attach(client, bufnr)
   else
     require("config.ui.highlight_matching_words_under_cursor").setup()
   end
+
+  util.lsp.run_hooks(client, bufnr)
 end
 
 -- Update mappings when registering dynamic capabilities.
