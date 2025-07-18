@@ -34,12 +34,13 @@ set_keymap("n", "<leader>wb", "<C-W>s", "Split window below", { remap = true })
 set_keymap("n", "<leader>wv", "<C-W>v", "Split window right", { remap = true })
 
 -- tabs
-set_keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", "Last Tab")
-set_keymap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", "First Tab")
-set_keymap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", "New Tab")
-set_keymap("n", "<leader><tab>]", "<cmd>tabnext<cr>", "Next Tab")
-set_keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", "Close Tab")
-set_keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", "Previous Tab")
+set_keymap("n", "<C-t>l", "<cmd>tablast<cr>", "Last Tab")
+set_keymap("n", "<C-t>f", "<cmd>tabfirst<cr>", "First Tab")
+set_keymap("n", "<C-t><tab>", "<cmd>tabnew<cr>", "New Tab")
+set_keymap("n", "<C-t>]", "<cmd>tabnext<cr>", "Next Tab")
+set_keymap("n", "<C-t>d", "<cmd>tabclose<cr>", "Close Tab")
+set_keymap("n", "<C-t>[", "<cmd>tabprevious<cr>", "Previous Tab")
+set_keymap("n", "<C-t>o", "<cmd>tabonly<cr>", "Close all other Tabs")
 
 local function toggle_zoom()
   if vim.g.window_zoomed then
