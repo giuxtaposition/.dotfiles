@@ -150,7 +150,7 @@
       # System-Wide Packages
       home-manager
       nurl
-      kdePackages.ark # graphical archiving tool
+      xarchiver # graphical archiving tool
 
       #Theme
       papirus-icon-theme
@@ -164,6 +164,7 @@
       openssh
       wget
       unzip
+      zip
       gcc
       brightnessctl # screen brightness
       pulseaudio

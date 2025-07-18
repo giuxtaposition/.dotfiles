@@ -16,7 +16,16 @@
         pull.rebase = true;
         push.autoSetupRemote = true;
         fetch.prune = true;
+
         init.defaultBranch = "main";
+        merge = {
+          tool = "fugitive";
+        };
+        mergetool = {
+          fugitive = {
+            cmd = ''nvim -f -c \"Gvdiff\" \"$MERGED\"'';
+          };
+        };
       };
 
       includes = [

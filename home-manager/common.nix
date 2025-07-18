@@ -53,6 +53,7 @@
   spotify.enable = true;
   niri.enable = true;
   cassiopea.enable = true;
+  mpv.enable = true;
 
   fonts.fontconfig.enable = true;
 
@@ -74,8 +75,9 @@
     # Fonts
     merriweather
     nerd-fonts.jetbrains-mono
+    inter
+    obs-studio
 
-    mpv
     inputs.zen-browser.packages.${pkgs.system}.default
   ];
 

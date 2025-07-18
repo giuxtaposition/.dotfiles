@@ -16,9 +16,5 @@
         };
       };
     };
-
-    home.sessionVariables = {
-      DIRENV_LOG_FORMAT = "\\e[2mdirenv: %s\\e[0m";
-    };
   };
 }
