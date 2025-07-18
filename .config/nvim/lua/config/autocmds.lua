@@ -30,7 +30,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
   group = augroup("highlight_on_yank"),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
@@ -47,6 +47,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "neotest-output",
     "fugitive",
     "fugitiveblame",
+    "git",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
