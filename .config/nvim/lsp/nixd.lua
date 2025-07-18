@@ -1,3 +1,5 @@
+local hostname = string.lower(vim.fn.hostname())
+---@type vim.lsp.Config
 return {
   cmd = { "nixd" },
   filetypes = { "nix" },

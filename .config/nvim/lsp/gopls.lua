@@ -12,6 +12,7 @@ local function get_root(fname)
   return vim.fs.root(fname, "go.work") or vim.fs.root(fname, "go.mod") or vim.fs.root(fname, ".git")
 end
 
+---@type vim.lsp.Config
 return {
   cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },

@@ -19,6 +19,7 @@ local lang_settings = {
   updateImportsOnFileMove = { enabled = "always" },
 }
 
+---@type vim.lsp.Config
 return {
   cmd = { "vtsls", "--stdio" },
   filetypes = {

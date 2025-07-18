@@ -3,17 +3,8 @@ local set_keymap = util.keys.set
 local methods = vim.lsp.protocol.Methods
 
 vim.lsp.enable({
-  "lua-ls",
   "harper-ls",
-  "texlab",
-  "nixd",
-  "jsonls",
-  "vtsls",
-  "eslint",
   "bashls",
-  "marksman",
-  "gopls",
-  "ruby-ls",
 })
 
 vim.diagnostic.config({

@@ -22,9 +22,6 @@ in {
   config = lib.mkIf config.coding.enable {
     home.sessionVariables = {
       MONGOMS_DISTRO = "ubuntu-22.04"; # MONGO MEMORY SERVER not supporting nixos
-      CYPRESS_INSTALL_BINARY = "0";
-      CYPRESS_RUN_BINARY = "${pkgs.cypress}/bin/Cypress";
-
       ZK_NOTEBOOK_DIR = "${config.home.homeDirectory}/notes";
     };
 
@@ -41,7 +38,7 @@ in {
       firefoxWorkScript
 
       # Typescript/Javascript
-      cypress
+      # cypress
       vscode-langservers-extracted
       nodePackages_latest.typescript-language-server
       nodePackages_latest.svelte-language-server
@@ -83,7 +80,8 @@ in {
       # Go
       go
       gopls
-      gotools
+      gofumpt
+      delve
 
       # Bash/Sh
       nodePackages_latest.bash-language-server
@@ -113,8 +111,6 @@ in {
       pplatex
       texlab
       texliveFull
-
-      rubyPackages_3_4.ruby-lsp
     ];
 
     xdg.desktopEntries = {

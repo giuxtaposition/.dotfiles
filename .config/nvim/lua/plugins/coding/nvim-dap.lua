@@ -23,47 +23,6 @@ return {
 
       require("dap").set_log_level("TRACE")
 
-      -- Setup adapters
-      dap.adapters = {
-        ["pwa-node"] = {
-          type = "server",
-          host = "localhost",
-          port = "${port}",
-          executable = { command = "js-debug", args = { "${port}" } },
-        },
-      }
-
-      -- Setup configurations
-      local js_based_languages = {
-        "javascript",
-        "typescript",
-        "javascriptreact",
-        "typescriptreact",
-        "svelte",
-      }
-
-      for _, ext in ipairs(js_based_languages) do
-        dap.configurations[ext] = {
-          -- Debug single file
-          {
-            type = "pwa-node",
-            request = "launch",
-            name = "Launch file",
-            program = "${file}",
-            cwd = "${workspaceFolder}",
-          },
-          -- Attach to process
-          -- NOTE: must start node process with --inspect or equivalent
-          {
-            type = "pwa-node",
-            request = "attach",
-            name = "Attach to process",
-            processId = require("dap.utils").pick_process,
-            cwd = "${workspaceFolder}",
-          },
-        }
-      end
-
       -- UI
       local icons = {
         Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },

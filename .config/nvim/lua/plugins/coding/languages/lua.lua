@@ -1,4 +1,21 @@
+vim.lsp.enable({
+  "lua-ls",
+})
+
 return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = { ensure_installed = { "lua" } },
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        ["lua"] = { "stylua" },
+      },
+    },
+  },
   {
     "folke/lazydev.nvim",
     ft = "lua",
