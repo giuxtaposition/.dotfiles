@@ -1,5 +1,4 @@
 local icons = require("config.ui.icons")
-local util = require("config.util").table
 
 local M = {
   typed_key = "",
@@ -147,9 +146,9 @@ M.lsp = function()
   if next(clients) then
     return " ["
       .. table.concat(
-        util.map(clients, function(c)
+        vim.tbl_map(function(c)
           return c.name
-        end),
+        end, clients),
         ", "
       )
       .. "]"

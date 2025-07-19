@@ -1,13 +1,14 @@
 local M = {}
 
 ---@param tbl table
----@param f function
-M.map = function(tbl, f)
-  local t = {}
+---@param value any
+M.get_key_by_value = function(tbl, value)
   for k, v in pairs(tbl) do
-    t[k] = f(v)
+    if v == value then
+      return k
+    end
   end
-  return t
+  return nil
 end
 
 return M

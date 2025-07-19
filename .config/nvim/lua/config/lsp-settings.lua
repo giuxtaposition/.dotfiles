@@ -4,7 +4,6 @@ local methods = vim.lsp.protocol.Methods
 
 vim.lsp.enable({
   "harper-ls",
-  "bashls",
 })
 
 vim.diagnostic.config({

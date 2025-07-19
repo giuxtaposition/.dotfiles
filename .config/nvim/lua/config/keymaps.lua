@@ -2,7 +2,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.g.window_zoomed = false
 
-local set_keymap = require("config.util.init").keys.set
+local util = require("config.util.init")
+local set_keymap = util.keys.set
 
 -- Do things without affecting the registers
 set_keymap("n", "x", '"_x', "Do not copy after deleting char")
@@ -72,3 +73,10 @@ set_keymap("t", "<C-h>", "<cmd>wincmd h<cr>", "Go to left window")
 set_keymap("t", "<C-j>", "<cmd>wincmd j<cr>", "Go to bottom window")
 set_keymap("t", "<C-k>", "<cmd>wincmd k<cr>", "Go to top window")
 set_keymap("t", "<C-l>", "<cmd>wincmd l<cr>", "Go to right window")
+
+-- marks
+set_keymap("n", "m", util.marks.add_mark, "Add mark")
+set_keymap("n", "'", util.marks.goto_mark, "Go to mark")
+set_keymap("n", "<leader>md", util.marks.remove_mark, "Delete mark")
+set_keymap("n", "<leader>mD", util.marks.remove_all_marks, "Delete all marks")
+set_keymap("n", "<leader>ml", util.marks.list_marks, "List marks")
