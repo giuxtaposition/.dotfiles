@@ -19,6 +19,12 @@ local lang_settings = {
   updateImportsOnFileMove = { enabled = "always" },
 }
 
+local vue_plugin = {
+  name = "@vue/typescript-plugin",
+  languages = { "vue" },
+  configNamespace = "typescript",
+}
+
 ---@type vim.lsp.Config
 return {
   cmd = { "vtsls", "--stdio" },
@@ -29,6 +35,7 @@ return {
     "typescript",
     "typescriptreact",
     "typescript.tsx",
+    "vue",
   },
   root_markers = { { "tsconfig.json", "package.json", "jsconfig.json" }, ".git" },
   single_file_support = true,
@@ -51,12 +58,14 @@ return {
             name = "typescript-svelte-plugin",
             enableForWorkspaceTypeScriptVersions = true,
           },
-          {
-            name = "@vue/typescript-plugin",
-            languages = { "javascript", "typescript", "vue" },
-          },
+          vue_plugin,
         },
       },
     },
   },
+  on_attach = function(client, bufnr)
+    if vim.bo[bufnr].filetype == "vue" then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
+  end,
 }

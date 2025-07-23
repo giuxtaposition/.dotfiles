@@ -38,11 +38,11 @@ in {
       firefoxWorkScript
 
       # Typescript/Javascript
-      # cypress
       vscode-langservers-extracted
       nodePackages_latest.typescript-language-server
       nodePackages_latest.svelte-language-server
-      vscode-extensions.vue.volar # vue language server
+      vue-language-server
+      vscode-extensions.vue.vscode-typescript-vue-plugin
       emmet-ls
       prettierd # typescript formatter
       eslint_d # typescript linter

@@ -5,6 +5,7 @@ vim.lsp.enable({
   "vtsls",
   "eslint",
   "cssls",
+  "vue-ls",
 })
 
 util.lsp.register_hook(function(client, bufnr)
