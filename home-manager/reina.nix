@@ -35,6 +35,7 @@
 
   home.packages = with pkgs; [
     aseprite # Pixel Art Editor
+    inkscape-with-extensions
     discord # Messaging App
 
     qmk
