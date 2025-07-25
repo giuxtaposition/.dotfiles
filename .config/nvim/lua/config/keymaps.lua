@@ -19,8 +19,6 @@ set_keymap("n", "<C-A>", "<cmd> %y+<cr>", "Copy whole file")
 set_keymap("n", "<Esc>", "<cmd>nohlsearch<CR>", "Clear highlights")
 
 -- Buffers
-set_keymap("n", "[b", "<cmd>bprevious<cr>", "Prev buffer")
-set_keymap("n", "]b", "<cmd>bnext<cr>", "Next buffer")
 set_keymap("n", "<leader>bb", "<cmd>e #<cr>", "Switch to other buffer")
 set_keymap("n", "<leader>by", function()
   local path = vim.fn.expand("%:p")

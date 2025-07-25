@@ -43,7 +43,7 @@ local function on_attach(client, bufnr)
     require("fzf-lua").lsp_definitions({ jump1 = false })
   end, "Peek definition", { buffer = bufnr })
   set_keymap("n", "grr", "<cmd>FzfLua lsp_references<CR>", "Show References", { buffer = bufnr })
-  set_keymap("n", "grs", "<cmd>FzfLua lsp_document_symbols<CR>", "Document Symbols", { buffer = bufnr })
+  set_keymap("n", "gO", "<cmd>FzfLua lsp_document_symbols<CR>", "Document Symbols", { buffer = bufnr })
   set_keymap("n", "grS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace Symbols", { buffer = bufnr })
   set_keymap({ "n", "v" }, "gra", function()
     require("tiny-code-action").code_action()
@@ -56,8 +56,6 @@ local function on_attach(client, bufnr)
     { buffer = bufnr }
   )
   set_keymap("n", "<leader>cd", vim.diagnostic.open_float, "Show line diagnostics", { buffer = bufnr })
-  set_keymap("n", "]d", util.lsp.diagnostic_go_to("next"), "Next Diagnostic", { buffer = bufnr })
-  set_keymap("n", "[d", util.lsp.diagnostic_go_to("prev"), "Prev Diagnostic", { buffer = bufnr })
   set_keymap(
     "n",
     "]e",
@@ -88,7 +86,6 @@ local function on_attach(client, bufnr)
   )
   set_keymap("n", "]r", util.lsp.jump_to_reference("next"), "Next Warning", { buffer = bufnr })
   set_keymap("n", "[r", util.lsp.jump_to_reference("prev"), "Prev Warning", { buffer = bufnr })
-  set_keymap("n", "K", vim.lsp.buf.hover, "Show documentation for what is under cursor", { buffer = bufnr })
   set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = bufnr })
 
   vim.lsp.document_color.enable(true, bufnr)
