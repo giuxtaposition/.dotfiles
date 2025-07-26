@@ -55,9 +55,6 @@
         };
         os = {
           editCommand = "nvim";
-          editCommandTemplate = ''
-            {{editor}} --server ~/.cache/nvim/$(pwd | sed 's/\\//-/g' | sed 's/^-//' | sed 's/\\//./g').pipe --remote-tab "{{filename}}"
-          '';
         };
         promptToReturnFromSubprocess = false;
       };
