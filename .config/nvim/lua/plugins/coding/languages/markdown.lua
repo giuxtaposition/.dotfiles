@@ -22,6 +22,7 @@ return {
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
+    ft = "markdown",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
@@ -37,7 +38,9 @@ return {
   {
     "HakonHarnes/img-clip.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      dir_path = "notes/assets",
+    },
     keys = {
       { "<leader>pi", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
     },

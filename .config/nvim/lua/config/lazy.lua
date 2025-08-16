@@ -29,6 +29,8 @@ require("lazy").setup({
     { import = "plugins.coding.languages.nix" },
     { import = "plugins.coding.languages.ruby" },
     { import = "plugins.coding.languages.typescript" },
+    { import = "plugins.coding.languages.rust" },
+    { import = "plugins.coding.languages.php" },
     { import = "plugins.editor" },
     { import = "plugins.ui" },
   },

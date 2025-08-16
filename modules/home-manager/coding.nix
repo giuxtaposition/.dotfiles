@@ -111,6 +111,9 @@ in {
       pplatex
       texlab
       texliveFull
+
+      phpactor
+      php84Packages.php-codesniffer
     ];
 
     xdg.desktopEntries = {

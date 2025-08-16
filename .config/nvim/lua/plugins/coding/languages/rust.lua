@@ -1,16 +1,18 @@
 return {
   {
     "mrcjkb/rustaceanvim",
-    ft = "rust",
-    version = "^5", -- Recommended
+    version = "^6", -- Recommended
     lazy = false, -- This plugin is already lazy
   },
   {
     "nvim-neotest/neotest",
-    opts = {
-      adapters = {
-        require("rustaceanvim.neotest"),
-      },
+    dependencies = {
+      "mrcjkb/rustaceanvim",
     },
+    opts = function(_, opts)
+      vim.list_extend(opts.adapters, {
+        require("rustaceanvim.neotest"),
+      })
+    end,
   },
 }

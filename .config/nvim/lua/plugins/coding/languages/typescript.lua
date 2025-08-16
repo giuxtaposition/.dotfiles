@@ -6,6 +6,7 @@ vim.lsp.enable({
   "eslint",
   "cssls",
   "vue-ls",
+  "html",
 })
 
 util.lsp.register_hook(function(client, bufnr)
@@ -177,4 +178,5 @@ return {
       require("tsc").setup(opts)
     end,
   },
+  { "dmmulroy/ts-error-translator.nvim" },
 }
