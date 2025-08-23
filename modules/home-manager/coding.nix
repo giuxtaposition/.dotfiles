@@ -114,6 +114,7 @@ in {
 
       phpactor
       php84Packages.php-codesniffer
+      intelephense
     ];
 
     xdg.desktopEntries = {

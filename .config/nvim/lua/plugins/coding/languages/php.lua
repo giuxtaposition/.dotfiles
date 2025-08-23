@@ -1,5 +1,6 @@
 vim.lsp.enable({
   "phpactor",
+  "intelephense",
 })
 
 return {
