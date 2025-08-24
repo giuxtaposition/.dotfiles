@@ -113,7 +113,7 @@ in {
       texliveFull
 
       phpactor
-      php84Packages.php-codesniffer
+      php83Packages.php-cs-fixer
       intelephense
     ];
 
