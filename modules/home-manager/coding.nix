@@ -49,11 +49,11 @@ in {
       vtsls
       tailwindcss-language-server
       bun
-      vue-language-server
       nodejs_24
       deno
       vscode-js-debug
       pnpm
+      unstable.typescript-go
 
       # Lua
       lua-language-server

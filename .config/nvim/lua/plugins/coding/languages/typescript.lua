@@ -2,7 +2,7 @@ local util = require("config.util")
 local set_keymap = util.keys.set
 
 vim.lsp.enable({
-  "vtsls",
+  "tsgo",
   "eslint",
   "cssls",
   "vue-ls",
