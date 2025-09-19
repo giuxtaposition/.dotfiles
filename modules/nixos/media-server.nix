@@ -60,6 +60,10 @@ in {
           credentialsFile = "${config.users.users.giu.home}/.cloudflared/26c577c7-9e1b-4632-b4e9-e28392cc165a.json";
           default = "http_status:404";
         };
+        "fd6dcae2-3538-48ac-9630-d56a53740bbf" = {
+          credentialsFile = "${config.users.users.giu.home}/.cloudflared/fd6dcae2-3538-48ac-9630-d56a53740bbf.json";
+          default = "http_status:404";
+        };
       };
     };
   };

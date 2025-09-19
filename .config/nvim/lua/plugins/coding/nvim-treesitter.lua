@@ -2,7 +2,9 @@ return {
   -- Highlight, edit, and navigate code.
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     build = ":TSUpdate",
+    version = false,
     dependencies = {
       {
         "nvim-treesitter/nvim-treesitter-context",

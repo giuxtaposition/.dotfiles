@@ -77,6 +77,7 @@
     nerd-fonts.jetbrains-mono
     inter
     obs-studio
+    rclone
 
     inputs.zen-browser.packages.${pkgs.system}.default
   ];

@@ -45,6 +45,8 @@
     calibre # Library Management
     ns-usbloader
     openrgb-with-all-plugins
+    kdePackages.konversation
   ];
+
   coding.enable = true;
 }

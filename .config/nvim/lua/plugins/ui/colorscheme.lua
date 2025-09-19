@@ -19,6 +19,7 @@ return {
           FzfLuaScrollFloatFull = { fg = palette.base, bg = palette.base },
 
           FloatBorder = { fg = palette.base },
+          LspInlayHint = { fg = palette.surface2, bg = "NONE" },
 
           BlinkCmpMenu = { fg = palette.text, bg = palette.mantle },
           BlinkCmpMenuBorder = { fg = palette.mantle, bg = palette.mantle },
