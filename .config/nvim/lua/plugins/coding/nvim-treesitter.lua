@@ -65,15 +65,13 @@ return {
       },
     },
     config = function(_, opts)
-      require("nvim-treesitter.install").prefer_git = true
-      require("nvim-treesitter.configs").setup(opts)
+      require("nvim-treesitter").setup(opts)
     end,
   },
   -- Better text objects.
   {
     "nvim-mini/mini.ai",
     event = "VeryLazy",
-    dependencies = "nvim-treesitter/nvim-treesitter-textobjects",
     opts = function()
       local miniai = require("mini.ai")
 

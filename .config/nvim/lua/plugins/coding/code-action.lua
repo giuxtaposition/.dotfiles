@@ -1,7 +1,7 @@
 return {
   {
     "rachartier/tiny-code-action.nvim",
-    event = "LspAttach",
+    lazy = true,
     opts = {
       picker = {
         "buffer",

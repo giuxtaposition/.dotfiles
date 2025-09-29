@@ -27,12 +27,35 @@ return {
         ["--info"] = "hidden",
         ["--layout"] = "reverse-list",
         ["--padding"] = "5%,5%,5%,5%",
+        ["--extended"] = "",
       },
       files = {
         cwd_prompt = false,
       },
       grep = {
         rg_opts = "--hidden --glob '!.git' --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e",
+        rg_glob = true,
+        rg_glob_fn = function(query, opts)
+          local regex, flags = query:match("^(.-)%s%-%-(.*)$")
+
+          local function rebuild_regex(str)
+            local result = str:gsub("%s+", function(r)
+              if #r == 1 then
+                return ".*"
+              else
+                return r:match("%s(.*)")
+              end
+            end)
+            return result
+          end
+
+          if not regex then
+            return rebuild_regex(query), ""
+          end
+
+          return rebuild_regex(regex), flags
+        end,
+        glob_separator = "",
       },
       keymap = {
         fzf = {
@@ -126,8 +149,16 @@ return {
     {
       "<leader>ft",
       function()
-        local file_name = vim.fn.expand("%:t:r")
-        require("fzf-lua").files({ query = file_name })
+        -- Get current filename (no path)
+        local file_name = vim.fn.expand("%:t")
+        -- Part before the first dot
+        local base = file_name:match("^[^.]+")
+        -- Build a query: base + (spec OR test)
+        local query = string.format("%s spec | test", base)
+
+        require("fzf-lua").files({
+          query = query,
+        })
       end,
       desc = "Find tests",
     },

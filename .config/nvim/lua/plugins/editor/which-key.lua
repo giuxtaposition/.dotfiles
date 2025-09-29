@@ -7,6 +7,7 @@ return {
     require("which-key").add({
       { "g", group = "goto" },
       { "gs", group = "surround" },
+      { "gr", group = "LSP Actions" },
       { "z", group = "fold" },
       { "]", group = "next" },
       { "[", group = "prev" },

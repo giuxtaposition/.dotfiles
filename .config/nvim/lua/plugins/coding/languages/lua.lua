@@ -29,7 +29,7 @@ return {
       },
     },
   },
-  { "gonstoll/wezterm-types", lazy = true },
+  { "DrKJeff16/wezterm-types", lazy = true },
   { "Bilal2453/luvit-meta", lazy = true },
   { "LuaCATS/luassert", name = "luassert-types", lazy = true },
   { "LuaCATS/busted", name = "busted-types", lazy = true },

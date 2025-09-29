@@ -1,4 +1,5 @@
 local util = require("config.util")
+local icons = require("config.ui.icons")
 local set_keymap = util.keys.set
 local methods = vim.lsp.protocol.Methods
 
@@ -12,22 +13,22 @@ vim.diagnostic.config({
     enabled = true,
     prefix = function(diagnostic)
       if diagnostic.severity == vim.diagnostic.severity.ERROR then
-        return require("config.ui.icons").diagnostics.prefix .. require("config.ui.icons").diagnostics.error .. " "
+        return icons.diagnostics.prefix .. icons.diagnostics.error .. " "
       elseif diagnostic.severity == vim.diagnostic.severity.WARN then
-        return require("config.ui.icons").diagnostics.prefix .. require("config.ui.icons").diagnostics.warn .. " "
+        return icons.diagnostics.prefix .. icons.diagnostics.warn .. " "
       else
-        return require("config.ui.icons").diagnostics.prefix .. require("config.ui.icons").diagnostics.info .. " "
+        return icons.diagnostics.prefix .. icons.diagnostics.info .. " "
       end
     end,
-    suffix = require("config.ui.icons").diagnostics.suffix,
+    suffix = icons.diagnostics.suffix,
   },
   severity_sort = true,
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = " " .. require("config.ui.icons").diagnostics.error,
-      [vim.diagnostic.severity.WARN] = " " .. require("config.ui.icons").diagnostics.warn,
-      [vim.diagnostic.severity.HINT] = " " .. require("config.ui.icons").diagnostics.hint,
-      [vim.diagnostic.severity.INFO] = " " .. require("config.ui.icons").diagnostics.info,
+      [vim.diagnostic.severity.ERROR] = " " .. icons.diagnostics.error,
+      [vim.diagnostic.severity.WARN] = " " .. icons.diagnostics.warn,
+      [vim.diagnostic.severity.HINT] = " " .. icons.diagnostics.hint,
+      [vim.diagnostic.severity.INFO] = " " .. icons.diagnostics.info,
     },
   },
 })
@@ -36,18 +37,7 @@ vim.diagnostic.config({
 ---@param client vim.lsp.Client
 ---@param bufnr integer
 local function on_attach(client, bufnr)
-  set_keymap("n", "grd", function()
-    require("fzf-lua").lsp_definitions({ jump1 = true })
-  end, "Go to Definition", { buffer = bufnr }) --  To jump back, press <C-t>.
-  set_keymap("n", "grD", function()
-    require("fzf-lua").lsp_definitions({ jump1 = false })
-  end, "Peek definition", { buffer = bufnr })
-  set_keymap("n", "grr", "<cmd>FzfLua lsp_references<CR>", "Show References", { buffer = bufnr })
-  set_keymap("n", "gO", "<cmd>FzfLua lsp_document_symbols<CR>", "Document Symbols", { buffer = bufnr })
   set_keymap("n", "grS", "<cmd>FzfLua lsp_workspace_symbols<CR>", "Workspace Symbols", { buffer = bufnr })
-  set_keymap({ "n", "v" }, "gra", function()
-    require("tiny-code-action").code_action()
-  end, "Code actions", { buffer = bufnr })
   set_keymap(
     "n",
     "<leader>D",
@@ -89,13 +79,54 @@ local function on_attach(client, bufnr)
   set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = bufnr })
 
   vim.lsp.document_color.enable(true, bufnr)
+  if client:supports_method(methods.textDocument_documentColor) then
+    set_keymap({ "n", "x" }, "grc", function()
+      vim.lsp.document_color.color_presentation()
+    end, "vim.lsp.document_color.color_presentation()")
+  end
 
-  -- The following code creates a keymap to toggle inlay hints in your
-  -- code, if the language server you are using supports them
+  if client:supports_method(methods.textDocument_codeAction) then
+    set_keymap({ "n", "v" }, "gra", function()
+      require("tiny-code-action").code_action()
+    end, "Code actions", { buffer = bufnr })
+  end
+
   if client:supports_method(methods.textDocument_inlayHint) then
     set_keymap("n", "<leader>uh", function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
     end, "Toggle Inlay Hints", { buffer = bufnr })
+  end
+
+  if client:supports_method(methods.textDocument_references) then
+    set_keymap("n", "grr", "<cmd>FzfLua lsp_references<CR>", "Show References", { buffer = bufnr })
+  end
+
+  if client:supports_method(methods.textDocument_typeDefinition) then
+    set_keymap("n", "gy", "<cmd>FzfLua lsp_typedefs<cr>", "Go to type definition", { buffer = bufnr })
+  end
+
+  if client:supports_method(methods.textDocument_documentSymbol) then
+    set_keymap("n", "gO", "<cmd>FzfLua lsp_document_symbols<CR>", "Document Symbols", { buffer = bufnr })
+  end
+
+  if client:supports_method(methods.textDocument_definition) then
+    set_keymap("n", "grd", function()
+      require("fzf-lua").lsp_definitions({ jump1 = true })
+    end, "Go to Definition", { buffer = bufnr }) --  To jump back, press <C-t>.
+    set_keymap("n", "grD", function()
+      require("fzf-lua").lsp_definitions({ jump1 = false })
+    end, "Peek definition", { buffer = bufnr })
+  end
+
+  if client:supports_method(methods.textDocument_signatureHelp) then
+    set_keymap({ "n", "i" }, "<C-k>", function()
+      -- Close the completion menu first (if open).
+      if require("blink.cmp.completion.windows.menu").win:is_open() then
+        require("blink.cmp").hide()
+      end
+
+      vim.lsp.buf.signature_help()
+    end, "Signature help")
   end
 
   if client:supports_method(methods.textDocument_foldingRange) then
@@ -111,12 +142,14 @@ local function on_attach(client, bufnr)
 
     vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
       buffer = bufnr,
+      desc = "Highlight references under the cursor",
       group = highlight_augroup,
       callback = vim.lsp.buf.document_highlight,
     })
 
     vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
       buffer = bufnr,
+      desc = "Clear all the references highlights",
       group = highlight_augroup,
       callback = vim.lsp.buf.clear_references,
     })

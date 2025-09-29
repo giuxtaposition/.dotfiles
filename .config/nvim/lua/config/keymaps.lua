@@ -78,3 +78,5 @@ set_keymap("n", "'", util.marks.goto_mark, "Go to mark")
 set_keymap("n", "<leader>md", util.marks.remove_mark, "Delete mark")
 set_keymap("n", "<leader>mD", util.marks.remove_all_marks, "Delete all marks")
 set_keymap("n", "<leader>ml", util.marks.list_marks, "List marks")
+
+set_keymap("n", "<leader>R", "<cmd>restart<cr>", "Restart Neovim")

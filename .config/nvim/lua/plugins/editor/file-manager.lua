@@ -2,12 +2,19 @@ return {
   {
     "nvim-mini/mini.files",
     version = "*",
-    lazy = false,
     keys = {
       {
         "<leader>e",
         function()
-          require("mini.files").open(vim.api.nvim_buf_get_name(0), false)
+          local bufname = vim.api.nvim_buf_get_name(0)
+          local path = vim.fn.fnamemodify(bufname, ":p")
+          local current_buffer_dir = vim.fn.fnamemodify(bufname, ":p:h")
+
+          if path and vim.uv.fs_stat(path) then
+            require("mini.files").open(bufname, false)
+          else
+            require("mini.files").open(current_buffer_dir, false)
+          end
         end,
         desc = "File explorer",
       },
@@ -89,8 +96,8 @@ return {
           end
 
           local buf_id = args.data.buf_id
-          map_split(buf_id, "b", "belowright horizontal")
-          map_split(buf_id, "v", "belowright vertical")
+          map_split(buf_id, "<C-w>b", "belowright horizontal")
+          map_split(buf_id, "<C-w>v", "belowright vertical")
         end,
       })
     end,
