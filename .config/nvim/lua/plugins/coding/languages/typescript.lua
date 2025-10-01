@@ -179,4 +179,9 @@ return {
     end,
   },
   { "dmmulroy/ts-error-translator.nvim" },
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+  },
 }

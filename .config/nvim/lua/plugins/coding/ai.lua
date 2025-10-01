@@ -1,53 +1,49 @@
 return {
   {
-    "olimorris/codecompanion.nvim",
-    cmd = "CodeCompanion",
+    "folke/sidekick.nvim",
+    opts = {},
     keys = {
-      { "<leader>at", "<cmd>CodeCompanionChat Toggle<cr>", desc = "Toggle CodeCompanion chat" },
-      { "<leader>aa", "<cmd>CodeCompanionChat Add<cr>", desc = "Add to CodeCompanion chat", mode = "x" },
+      {
+        "<leader>aa",
+        function()
+          require("sidekick.cli").toggle({ focus = true })
+        end,
+        desc = "Sidekick Toggle CLI",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>ac",
+        function()
+          require("sidekick.cli").toggle({ name = "codex", focus = true })
+        end,
+        desc = "Sidekick Codex Toggle",
+        mode = { "n", "v" },
+      },
+      {
+        "<leader>ap",
+        function()
+          require("sidekick.cli").select_prompt()
+        end,
+        desc = "Sidekick Ask Prompt",
+        mode = { "n", "v" },
+      },
     },
-    opts = function()
-      local config = require("codecompanion.config").config
-
-      local diff_opts = config.display.diff.opts
-      table.insert(diff_opts, "context:99") -- Setting the context to a very large number disables folding.
-
-      return {
-        strategies = {
-          inline = {
-            keymaps = {
-              accept_change = {
-                modes = { n = "<leader>ay" },
-                description = "Accept the suggested change",
-              },
-              reject_change = {
-                modes = { n = "<leader>an" },
-                description = "Reject the suggested change",
-              },
-            },
-          },
-        },
-        display = {
-          diff = { opts = diff_opts },
-        },
-      }
-    end,
   },
   {
-    "zbirenbaum/copilot.lua",
-    event = "InsertEnter",
+    "saghen/blink.cmp",
+    ---@module 'blink.cmp'
+    ---@type blink.cmp.Config
     opts = {
-      panel = { enabled = false },
-      suggestion = {
-        auto_trigger = true,
-        hide_during_completion = false,
-        keymap = {
-          accept = "<C-.>",
-          accept_word = "<M-w>",
-          accept_line = "<M-l>",
-          next = "<M-]>",
-          prev = "<M-[>",
-          dismiss = "<C-/>",
+      keymap = {
+        ["<C-.>"] = {
+          "snippet_forward",
+          function() -- sidekick next edit suggestion
+            return require("sidekick").nes_jump_or_apply()
+          end,
+          function() -- if you are using Neovim's native inline completions
+            return vim.lsp.inline_completion.get()
+          end,
+          "fallback",
         },
       },
     },

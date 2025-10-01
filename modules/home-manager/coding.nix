@@ -112,9 +112,12 @@ in {
       texlab
       texliveFull
 
+      # PHP
       phpactor
       php83Packages.php-cs-fixer
       intelephense
+
+      unstable.copilot-language-server
     ];
 
     xdg.desktopEntries = {

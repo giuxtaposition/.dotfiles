@@ -5,6 +5,7 @@ local methods = vim.lsp.protocol.Methods
 
 vim.lsp.enable({
   "harper-ls",
+  "copilot",
 })
 
 vim.diagnostic.config({
@@ -77,6 +78,8 @@ local function on_attach(client, bufnr)
   set_keymap("n", "]r", util.lsp.jump_to_reference("next"), "Next Warning", { buffer = bufnr })
   set_keymap("n", "[r", util.lsp.jump_to_reference("prev"), "Prev Warning", { buffer = bufnr })
   set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = bufnr })
+
+  vim.lsp.inline_completion.enable()
 
   vim.lsp.document_color.enable(true, bufnr)
   if client:supports_method(methods.textDocument_documentColor) then
