@@ -67,16 +67,16 @@ opt.spelllang = "en_us,it"
 -- Folding
 opt.foldcolumn = "1"
 opt.foldlevelstart = 99
-opt.foldlevel = 99
-opt.foldtext = ""
+vim.wo.foldtext = ""
 opt.foldmethod = "indent" -- This is the default, but I set it to LSP if available.
 
 -- UI characters.
 vim.opt.fillchars = {
-  foldopen = "",
-  foldclose = "",
   fold = " ",
+  foldclose = "",
+  foldopen = "",
   foldsep = " ",
+  foldinner = " ",
   diff = "╱",
   eob = " ",
 }
