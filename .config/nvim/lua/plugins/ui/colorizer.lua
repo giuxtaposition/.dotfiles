@@ -1,8 +1,13 @@
 return {
-  "NvChad/nvim-colorizer.lua",
+  "catgoose/nvim-colorizer.lua",
   event = { "BufReadPre", "BufNewFile" },
   config = true,
   opts = {
+    filetypes = {
+      "*", -- Highlight all files, but customize some others.
+      "!css",
+      "!scss",
+    },
     user_default_options = {
       RGB = true, -- #RGB hex codes
       RRGGBB = true, -- #RRGGBB hex codes
