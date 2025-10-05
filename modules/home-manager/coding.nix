@@ -118,6 +118,7 @@ in {
       intelephense
 
       unstable.copilot-language-server
+      unstable.opencode
     ];
 
     xdg.desktopEntries = {

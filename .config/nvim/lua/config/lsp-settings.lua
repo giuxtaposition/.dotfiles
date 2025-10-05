@@ -79,7 +79,21 @@ local function on_attach(client, bufnr)
   set_keymap("n", "[r", util.lsp.jump_to_reference("prev"), "Prev Warning", { buffer = bufnr })
   set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = bufnr })
 
-  vim.lsp.inline_completion.enable()
+  -- Enable LLM-based inline completion
+  if client:supports_method(methods.textDocument_inlineCompletion) then
+    vim.lsp.inline_completion.enable()
+    set_keymap("i", "<C-.>", function()
+      if not vim.lsp.inline_completion.get() then
+        return "<C-.>"
+      end
+    end, "Apply the currently displayed completion suggestion", { expr = true, replace_keycodes = true })
+    set_keymap("i", "<M-n>", function()
+      vim.lsp.inline_completion.select({})
+    end, "Show next inline completion suggestion")
+    set_keymap("i", "<M-p>", function()
+      vim.lsp.inline_completion.select({ count = -1 })
+    end, "Show previous inline completion suggestion")
+  end
 
   vim.lsp.document_color.enable(true, bufnr)
   if client:supports_method(methods.textDocument_documentColor) then
