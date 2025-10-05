@@ -46,6 +46,21 @@
     };
     catppuccin.delta.enable = true;
 
+    programs.jujutsu = {
+      enable = true;
+      package = pkgs.unstable.jujutsu;
+      settings = {
+        user = {
+          name = "giuxtaposition";
+          email = "yg97.cs@gmail.com";
+        };
+        ui = {
+          "default-command" = ["log"];
+          paginate = "never";
+        };
+      };
+    };
+
     programs.lazygit = {
       enable = true;
       settings = {
@@ -54,7 +69,7 @@
           pager = "delta --dark --paging=never";
         };
         os = {
-          editCommand = "nvim";
+          edit = "nvim";
         };
         promptToReturnFromSubprocess = false;
       };
