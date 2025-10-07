@@ -1,4 +1,13 @@
 local icons = require("config.ui.icons")
+
+local set_keymap = require("config.util.keys").set
+
+set_keymap("n", "<leader>gr", "<cmd>DiffviewFileHistory<cr>", "Repo History")
+set_keymap("n", "<leader>gf", "<cmd>DiffviewFileHistory --follow %<cr>", "File history")
+set_keymap("v", "<leader>gl", "<Esc><Cmd>'<,'>DiffviewFileHistory --follow<CR>", "Range history")
+set_keymap("n", "<leader>gl", "<Esc><Cmd>'<,'>DiffviewFileHistory --follow<CR>", "Line history")
+set_keymap("n", "<leader>gd", "<cmd>DiffviewOpen<cr>", "Repo Diff")
+
 return {
   {
     "lewis6991/gitsigns.nvim",
@@ -300,12 +309,5 @@ return {
         },
       }
     end,
-    keys = {
-      { "<leader>gr", "<cmd>DiffviewFileHistory<cr>", desc = "Repo History" },
-      { "<leader>gf", "<cmd>DiffviewFileHistory --follow %<cr>", desc = "File history" },
-      { "<leader>gl", "<Esc><Cmd>'<,'>DiffviewFileHistory --follow<CR>", desc = "Range history", mode = { "v" } },
-      { "<leader>gl", "<Esc><Cmd>'<,'>DiffviewFileHistory --follow<CR>", desc = "Line history" },
-      { "<leader>gd", "<cmd>DiffviewOpen<cr>", desc = "Repo Diff" },
-    },
   },
 }

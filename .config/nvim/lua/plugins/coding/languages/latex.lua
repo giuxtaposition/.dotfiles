@@ -11,9 +11,5 @@ return {
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } }
       vim.g.vimtex_quickfix_method = "pplatex"
     end,
-    keys = {
-      { "<localLeader>l", "", desc = "+vimtex", ft = "tex" },
-      { "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
-    },
   },
 }

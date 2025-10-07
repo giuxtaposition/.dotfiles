@@ -77,7 +77,6 @@ local function on_attach(client, bufnr)
   )
   set_keymap("n", "]r", util.lsp.jump_to_reference("next"), "Next Warning", { buffer = bufnr })
   set_keymap("n", "[r", util.lsp.jump_to_reference("prev"), "Prev Warning", { buffer = bufnr })
-  set_keymap("n", "<leader>rs", ":LspRestart<CR>", "Restart LSP", { buffer = bufnr })
 
   -- Enable LLM-based inline completion
   if client:supports_method(methods.textDocument_inlineCompletion) then

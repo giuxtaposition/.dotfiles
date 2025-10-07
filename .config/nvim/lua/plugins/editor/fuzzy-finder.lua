@@ -1,3 +1,60 @@
+local set_keymap = require("config.util.keys").set
+
+set_keymap("n", "<leader>e", function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local path = vim.fn.fnamemodify(bufname, ":p")
+  local current_buffer_dir = vim.fn.fnamemodify(bufname, ":p:h")
+
+  if path and vim.uv.fs_stat(path) then
+    require("mini.files").open(bufname, false)
+  else
+    require("mini.files").open(current_buffer_dir, false)
+  end
+end, "File explorer")
+
+set_keymap("n", "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", "Buffers")
+set_keymap("n", "<leader>fc", function()
+  require("fzf-lua").files({
+    cwd = vim.fn.stdpath("config"),
+  })
+end, "Find Config File")
+set_keymap("n", "<leader>ff", "<cmd>FzfLua files<cr>", "Find Files")
+set_keymap("n", "<leader>fr", "<cmd>FzfLua oldfiles<cr>", "Recent")
+set_keymap("n", "<leader>ft", function()
+  -- Get current filename (no path)
+  local file_name = vim.fn.expand("%:t")
+  -- Part before the first dot
+  local base = file_name:match("^[^.]+")
+  -- Build a query: base + (spec OR test)
+  local query = string.format("%s spec | test", base)
+
+  require("fzf-lua").files({
+    query = query,
+  })
+end, "Find tests")
+set_keymap("n", "<leader>fd", "<cmd>FzfLua lsp_document_diagnostics<cr>", "Document diagnostics")
+set_keymap("n", "<leader>fD", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", "Workspace diagnostics")
+set_keymap("n", "<leader>fj", "<cmd>FzfLua changes<cr>", "List Changes")
+-- git
+set_keymap("n", "<leader>gc", "<cmd>FzfLua git_commits<CR>", "Commits")
+set_keymap("n", "<leader>gC", "<cmd>FzfLua git_bcommits<CR>", "Commits For Current Buffer")
+set_keymap("n", "<leader>gs", "<cmd>FzfLua git_status<CR>", "Status")
+-- search
+set_keymap("n", '<leader>s"', "<cmd>FzfLua registers<cr>", "Registers")
+set_keymap("n", "<leader>sC", "<cmd>FzfLua commands<cr>", "Commands")
+set_keymap("n", "<leader>sg", "<cmd>FzfLua live_grep<cr>", "Find string in cwd")
+set_keymap("n", "<leader>sf", "<cmd>FzfLua grep_cword<cr>", "Find string under cursor in cwd")
+set_keymap("n", "<leader>sh", "<cmd>FzfLua helptags<cr>", "Find help tags")
+set_keymap("n", "<leader>sk", "<cmd>FzfLua keymaps<cr>", "Key Maps")
+set_keymap("n", "<leader>su", "<cmd>FzfLua highlights<cr>", "Highlights")
+set_keymap("n", "<leader>sR", "<cmd>FzfLua resume<cr>", "Resume")
+set_keymap("n", "<leader>gS", function()
+  require("fzf-lua").live_grep({
+    search_paths = vim.fn.systemlist("git status --porcelain | cut -c4-"),
+  })
+end, "Find string in git status files")
+set_keymap("n", "z=", "<cmd>FzfLua spell_suggest<cr>", "Find spell word suggestion")
+
 return {
   "ibhagwan/fzf-lua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -132,61 +189,4 @@ return {
       end
     end
   end,
-  keys = {
-    -- find
-    { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },
-    {
-      "<leader>fc",
-      function()
-        require("fzf-lua").files({
-          cwd = vim.fn.stdpath("config"),
-        })
-      end,
-      desc = "Find Config File",
-    },
-    { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find Files" },
-    { "<leader>fr", "<cmd>FzfLua oldfiles<cr>", desc = "Recent" },
-    {
-      "<leader>ft",
-      function()
-        -- Get current filename (no path)
-        local file_name = vim.fn.expand("%:t")
-        -- Part before the first dot
-        local base = file_name:match("^[^.]+")
-        -- Build a query: base + (spec OR test)
-        local query = string.format("%s spec | test", base)
-
-        require("fzf-lua").files({
-          query = query,
-        })
-      end,
-      desc = "Find tests",
-    },
-    { "<leader>fd", "<cmd>FzfLua lsp_document_diagnostics<cr>", desc = "Document diagnostics" },
-    { "<leader>fD", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", desc = "Workspace diagnostics" },
-    { "<leader>fj", "<cmd>FzfLua changes<cr>", desc = "List Changes" },
-    -- git
-    { "<leader>gc", "<cmd>FzfLua git_commits<CR>", desc = "Commits" },
-    { "<leader>gC", "<cmd>FzfLua git_bcommits<CR>", desc = "Commits For Current Buffer" },
-    { "<leader>gs", "<cmd>FzfLua git_status<CR>", desc = "Status" },
-    -- search
-    { '<leader>s"', "<cmd>FzfLua registers<cr>", desc = "Registers" },
-    { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "Commands" },
-    { "<leader>sg", "<cmd>FzfLua live_grep<cr>", desc = "Find string in cwd" },
-    { "<leader>sf", "<cmd>FzfLua grep_cword<cr>", desc = "Find string under cursor in cwd" },
-    { "<leader>sh", "<cmd>FzfLua helptags<cr>", desc = "Find help tags" },
-    { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "Key Maps" },
-    { "<leader>su", "<cmd>FzfLua highlights<cr>", desc = "Highlights" },
-    { "<leader>sR", "<cmd>FzfLua resume<cr>", desc = "Resume" },
-    {
-      "<leader>gS",
-      function()
-        require("fzf-lua").live_grep({
-          search_paths = vim.fn.systemlist("git status --porcelain | cut -c4-"),
-        })
-      end,
-      desc = "Find string in git status files",
-    },
-    { "z=", "<cmd>FzfLua spell_suggest<cr>", desc = "Find spell word suggestion" },
-  },
 }

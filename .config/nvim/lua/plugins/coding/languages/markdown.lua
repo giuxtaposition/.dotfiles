@@ -2,6 +2,25 @@ vim.lsp.enable({
   "marksman",
 })
 
+local set_keymap = require("config.util.keys").set
+
+set_keymap("n", "<leader>xt", "<cmd>TodoQuickFix<cr>", "Todo (QuickFix)")
+set_keymap("n", "<leader>zg", "<cmd>ZkNotes { dir = 'notes'}<cr>", "Search Notes")
+set_keymap("n", "<leader>zt", "<cmd>ZkTags { dir = 'notes'}<cr>", "Search Tags")
+set_keymap("n", "<leader>zl", "<cmd>'<'>ZkInsertLinkAtSelection {matchSelected = true}<cr>", "Add link at selection")
+set_keymap("n", "<leader>zw", "<cmd>ZkNotes { dir = 'work'}<cr>", "Search Work Notes")
+set_keymap("n", "<leader>zj", "<cmd>ZkNotes { tags = { 'daily' }}<cr>", "Search Daily Notes")
+set_keymap("n", "<leader>zn", function()
+  vim.ui.input({ prompt = "Title: " }, function(title)
+    require("zk.commands").get("ZkNew")({ dir = "notes", title = title })
+  end)
+end, "Create a new note")
+set_keymap("n", "<leader>zq", function()
+  vim.ui.input({ prompt = "Title: " }, function(title)
+    require("zk.commands").get("ZkNew")({ dir = "work", title = title })
+  end)
+end, "Create a new work note")
+
 return {
   {
     "nvim-treesitter/nvim-treesitter",
@@ -75,32 +94,6 @@ return {
     config = function(_, opts)
       require("zk").setup(opts)
     end,
-
-    keys = {
-      { "<leader>zg", "<cmd>ZkNotes { dir = 'notes'}<cr>", desc = "Search Notes" },
-      { "<leader>zt", "<cmd>ZkTags { dir = 'notes'}<cr>", desc = "Search Tags" },
-      { "<leader>zl", "<cmd>'<'>ZkInsertLinkAtSelection {matchSelected = true}<cr>", desc = "Add link at selection" },
-      { "<leader>zw", "<cmd>ZkNotes { dir = 'work'}<cr>", desc = "Search Work Notes" },
-      { "<leader>zj", "<cmd>ZkNotes { tags = { 'daily' }}<cr>", desc = "Search Daily Notes" },
-      {
-        "<leader>zn",
-        function()
-          vim.ui.input({ prompt = "Title: " }, function(title)
-            require("zk.commands").get("ZkNew")({ dir = "notes", title = title })
-          end)
-        end,
-        desc = "Create a new note",
-      },
-      {
-        "<leader>zq",
-        function()
-          vim.ui.input({ prompt = "Title: " }, function(title)
-            require("zk.commands").get("ZkNew")({ dir = "work", title = title })
-          end)
-        end,
-        desc = "Create a new work note",
-      },
-    },
   },
   -- Otter.nvim provides lsp features for code embedded in other documents (markdown)
   {

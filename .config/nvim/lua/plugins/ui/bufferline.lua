@@ -1,3 +1,13 @@
+local set_keymap = require("config.util.keys").set
+
+set_keymap("n", "<leader>bp", "<cmd>BufferLinePick<cr>", "Pick a buffer to open")
+set_keymap("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", "Select a buffer to close")
+set_keymap("n", "<leader>bo", "<cmd>BufferLineCloseOthers<cr>", "Delete other buffers")
+set_keymap("n", "<leader>br", "<cmd>BufferLineCloseRight<cr>", "Delete buffers to the right")
+set_keymap("n", "<leader>bl", "<cmd>BufferLineCloseLeft<cr>", "Delete buffers to the left")
+set_keymap("n", "[b", "<cmd>BufferLineCyclePrev<cr>", "Prev buffer")
+set_keymap("n", "]b", "<cmd>BufferLineCycleNext<cr>", "Next buffer")
+
 return {
   "akinsho/bufferline.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -23,13 +33,4 @@ return {
       },
     }
   end,
-  keys = {
-    { "<leader>bp", "<cmd>BufferLinePick<cr>", desc = "Pick a buffer to open" },
-    { "<leader>bc", "<cmd>BufferLinePickClose<cr>", desc = "Select a buffer to close" },
-    { "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete other buffers" },
-    { "<leader>br", "<Cmd>BufferLineCloseRight<CR>", desc = "Delete buffers to the right" },
-    { "<leader>bl", "<Cmd>BufferLineCloseLeft<CR>", desc = "Delete buffers to the left" },
-    { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
-    { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
-  },
 }

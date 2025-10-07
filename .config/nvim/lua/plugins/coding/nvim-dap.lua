@@ -1,3 +1,65 @@
+local set_keymap = require("config.util.keys").set
+
+set_keymap("n", "<leader>dB", function()
+  require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+end, "Breakpoint Condition")
+
+set_keymap("n", "<leader>db", function()
+  require("dap").toggle_breakpoint()
+end, "Toggle Breakpoint")
+
+set_keymap("n", "<leader>dc", function()
+  require("dap").continue()
+end, "Continue")
+
+set_keymap("n", "<leader>dC", function()
+  require("dap").run_to_cursor()
+end, "Run to Cursor")
+
+set_keymap("n", "<leader>dg", function()
+  require("dap").goto_()
+end, "Go to Line (No Execute)")
+
+set_keymap("n", "<leader>di", function()
+  require("dap").step_into()
+end, "Step Into")
+
+set_keymap("n", "<leader>dj", function()
+  require("dap").down()
+end, "Down")
+
+set_keymap("n", "<leader>dk", function()
+  require("dap").up()
+end, "Up")
+
+set_keymap("n", "<leader>dl", function()
+  require("dap").run_last()
+end, "Run Last")
+
+set_keymap("n", "<leader>do", function()
+  require("dap").step_out()
+end, "Step Out")
+
+set_keymap("n", "<leader>dO", function()
+  require("dap").step_over()
+end, "Step Over")
+
+set_keymap("n", "<leader>dp", function()
+  require("dap").pause()
+end, "Pause")
+
+set_keymap("n", "<leader>dr", function()
+  require("dap").repl.toggle()
+end, "Toggle REPL")
+
+set_keymap("n", "<leader>ds", function()
+  require("dap").session()
+end, "Session")
+
+set_keymap("n", "<leader>dt", function()
+  require("dap").terminate()
+end, "Terminate")
+
 return {
   {
     "mfussenegger/nvim-dap",
@@ -55,113 +117,5 @@ return {
         dv.close()
       end
     end,
-    keys = {
-      { "<leader>d", "", desc = "+debug", mode = { "n", "v" } },
-      {
-        "<leader>dB",
-        function()
-          require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-        end,
-        desc = "Breakpoint Condition",
-      },
-      {
-        "<leader>db",
-        function()
-          require("dap").toggle_breakpoint()
-        end,
-        desc = "Toggle Breakpoint",
-      },
-      {
-        "<leader>dc",
-        function()
-          require("dap").continue()
-        end,
-        desc = "Continue",
-      },
-      {
-        "<leader>dC",
-        function()
-          require("dap").run_to_cursor()
-        end,
-        desc = "Run to Cursor",
-      },
-      {
-        "<leader>dg",
-        function()
-          require("dap").goto_()
-        end,
-        desc = "Go to Line (No Execute)",
-      },
-      {
-        "<leader>di",
-        function()
-          require("dap").step_into()
-        end,
-        desc = "Step Into",
-      },
-      {
-        "<leader>dj",
-        function()
-          require("dap").down()
-        end,
-        desc = "Down",
-      },
-      {
-        "<leader>dk",
-        function()
-          require("dap").up()
-        end,
-        desc = "Up",
-      },
-      {
-        "<leader>dl",
-        function()
-          require("dap").run_last()
-        end,
-        desc = "Run Last",
-      },
-      {
-        "<leader>do",
-        function()
-          require("dap").step_out()
-        end,
-        desc = "Step Out",
-      },
-      {
-        "<leader>dO",
-        function()
-          require("dap").step_over()
-        end,
-        desc = "Step Over",
-      },
-      {
-        "<leader>dp",
-        function()
-          require("dap").pause()
-        end,
-        desc = "Pause",
-      },
-      {
-        "<leader>dr",
-        function()
-          require("dap").repl.toggle()
-        end,
-        desc = "Toggle REPL",
-      },
-      {
-        "<leader>ds",
-        function()
-          require("dap").session()
-        end,
-        desc = "Session",
-      },
-      {
-        "<leader>dt",
-        function()
-          require("dap").terminate()
-        end,
-        desc = "Terminate",
-      },
-    },
   },
 }

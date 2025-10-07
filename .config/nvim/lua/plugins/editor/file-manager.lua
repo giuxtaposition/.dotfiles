@@ -1,31 +1,25 @@
+local set_keymap = require("config.util.keys").set
+
+set_keymap("n", "<leader>e", function()
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local path = vim.fn.fnamemodify(bufname, ":p")
+  local current_buffer_dir = vim.fn.fnamemodify(bufname, ":p:h")
+
+  if path and vim.uv.fs_stat(path) then
+    require("mini.files").open(bufname, false)
+  else
+    require("mini.files").open(current_buffer_dir, false)
+  end
+end, "File explorer")
+
+set_keymap("n", "<leader>E", function()
+  require("mini.files").open(nil, false)
+end, "File explorer in root dir")
+
 return {
   {
     "nvim-mini/mini.files",
     version = "*",
-    keys = {
-      {
-        "<leader>e",
-        function()
-          local bufname = vim.api.nvim_buf_get_name(0)
-          local path = vim.fn.fnamemodify(bufname, ":p")
-          local current_buffer_dir = vim.fn.fnamemodify(bufname, ":p:h")
-
-          if path and vim.uv.fs_stat(path) then
-            require("mini.files").open(bufname, false)
-          else
-            require("mini.files").open(current_buffer_dir, false)
-          end
-        end,
-        desc = "File explorer",
-      },
-      {
-        "<leader>E",
-        function()
-          require("mini.files").open(nil, false)
-        end,
-        desc = "File explorer in root dir",
-      },
-    },
     opts = {
       windows = { width_nofocus = 25 },
     },
