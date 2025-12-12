@@ -23,7 +23,6 @@
     };
     cassiopea = {
       url = "github:giuxtaposition/cassiopea";
-      # url = "git+file:///home/giu/Programming/cassiopea";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen-browser = {
