@@ -28,7 +28,7 @@ function M.apply_to_config(config)
     "Noto Color Emoji",
   })
 
-  config.font_size = 12.0
+  config.font_size = 11.0
 
   config.window_frame = {
     font = w.font("JetBrains Mono Nerd Font"),
