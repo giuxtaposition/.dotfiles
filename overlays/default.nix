@@ -6,7 +6,7 @@
     };
 
   modifications = final: prev: {
-    wezterm = inputs.wezterm.packages.${prev.system}.default;
+    wezterm = inputs.wezterm.packages.${prev.stdenv.hostPlatform.system}.default;
 
     # make jellyfin skip-intro plugin show skip intro button
     jellyfin-web = prev.jellyfin-web.overrideAttrs (finalAttrs: previousAttrs: {
@@ -24,7 +24,7 @@
     });
 
     wl-gammarelay-rs =
-      inputs.nixpkgs-wayland.packages.${prev.system}.wl-gammarelay-rs;
+      inputs.nixpkgs-wayland.packages.${prev.stdenv.hostPlatform.system}.wl-gammarelay-rs;
 
     slack = prev.slack.overrideAttrs (oldAttrs: {
       fixupPhase = ''

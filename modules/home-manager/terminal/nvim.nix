@@ -13,7 +13,7 @@
       enable = true;
       defaultEditor = true;
       vimdiffAlias = true;
-      package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+      package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
       withNodeJs = true;
       extraLuaPackages = ps: [ps.magick];
       extraPackages = with pkgs; [imagemagick lua51Packages.luarocks];

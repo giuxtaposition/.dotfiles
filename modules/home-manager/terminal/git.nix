@@ -9,9 +9,11 @@
   config = lib.mkIf config.git.enable {
     programs.git = {
       enable = true;
-      userName = "giuxtaposition";
-      userEmail = "yg97.cs@gmail.com";
-      extraConfig = {
+      settings = {
+        user = {
+          name = "giuxtaposition";
+          email = "yg97.cs@gmail.com";
+        };
         core = {editor = "nvim";};
         pull.rebase = true;
         push.autoSetupRemote = true;
@@ -39,10 +41,11 @@
           };
         }
       ];
+    };
 
-      delta = {
-        enable = true;
-      };
+    programs.delta = {
+      enable = true;
+      enableGitIntegration = true;
     };
     catppuccin.delta.enable = true;
 
@@ -64,10 +67,12 @@
     programs.lazygit = {
       enable = true;
       settings = {
-        git.paging = {
-          colorArg = "always";
-          pager = "delta --dark --paging=never";
-        };
+        git.pagers = [
+          {
+            colorArg = "always";
+            pager = "delta --dark --paging=never";
+          }
+        ];
         os = {
           edit = "nvim";
         };

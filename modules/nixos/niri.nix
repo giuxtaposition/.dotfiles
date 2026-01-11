@@ -31,7 +31,7 @@
       enable = true;
       settings = {
         default_session.command = toString [
-          (lib.getExe pkgs.greetd.tuigreet)
+          (lib.getExe pkgs.tuigreet)
           "--time"
         ];
       };

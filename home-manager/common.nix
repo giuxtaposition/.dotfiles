@@ -64,7 +64,6 @@
 
     (pkgs.wrapFirefox
       (pkgs.firefox-unwrapped.override {pipewireSupport = true;}) {})
-    pkgs.floorp-unwrapped
 
     steam-run
     qalculate-gtk
@@ -78,8 +77,6 @@
     inter
     obs-studio
     rclone
-
-    inputs.zen-browser.packages.${pkgs.system}.default
   ];
 
   # GTK CONFIG
