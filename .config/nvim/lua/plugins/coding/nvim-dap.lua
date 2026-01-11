@@ -71,7 +71,6 @@ return {
             sections = { "scopes", "breakpoints", "threads", "exceptions", "repl", "console" },
             default_section = "scopes",
           },
-          windows = { height = 18 },
         },
       },
       -- virtual text for the debugger

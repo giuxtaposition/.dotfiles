@@ -4,8 +4,8 @@ return {
     "saghen/blink.cmp",
     lazy = false, -- lazy loading handled internally
     dependencies = {
-      "rafamadriz/friendly-snippets",
       "moyiz/blink-emoji.nvim",
+      "L3MON4D3/LuaSnip",
     },
     version = "1.*",
     build = "nix run .#build-plugin",
@@ -27,6 +27,9 @@ return {
         },
         completion = { menu = { auto_show = true } },
       },
+      snippets = {
+        preset = "luasnip",
+      },
       completion = {
         accept = { auto_brackets = { enabled = true } },
         menu = {
@@ -34,8 +37,11 @@ return {
           draw = {
             align_to = "label", -- or 'none' to disable
             padding = 1,
-            gap = 4,
-            columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
+            gap = 2,
+            columns = {
+              { "kind_icon", "kind", gap = 1 },
+              { "label", "label_description", gap = 1 },
+            },
           },
         },
         documentation = {
@@ -82,5 +88,23 @@ return {
       -- Extend neovim's client capabilities with the completion ones.
       vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities(nil, true) })
     end,
+  },
+  {
+    "L3MON4D3/LuaSnip",
+    lazy = true,
+    build = "make install_jsregexp",
+    dependencies = {
+      {
+        "rafamadriz/friendly-snippets",
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+          -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath("config") .. "/snippets" } })
+        end,
+      },
+    },
+    opts = {
+      history = true,
+      delete_check_events = "TextChanged",
+    },
   },
 }

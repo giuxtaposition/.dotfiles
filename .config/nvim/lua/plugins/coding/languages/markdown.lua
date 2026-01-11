@@ -20,6 +20,7 @@ set_keymap("n", "<leader>zq", function()
     require("zk.commands").get("ZkNew")({ dir = "work", title = title })
   end)
 end, "Create a new work note")
+set_keymap("n", "<leader>zr", "<cmd>ZkNotes { dir = 'notes', sort = { 'modified'} }<cr>", "Most recent notes")
 
 return {
   {

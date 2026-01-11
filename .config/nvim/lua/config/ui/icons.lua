@@ -1,9 +1,9 @@
 return {
   diagnostics = {
-    error = "",
-    warn = "",
-    hint = "",
-    info = "",
+    error = "",
+    warn = "",
+    hint = "",
+    info = "",
     prefix = "▏",
     suffix = "🭵",
   },

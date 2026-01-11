@@ -10,28 +10,45 @@ vim.lsp.enable({
 
 vim.diagnostic.config({
   underline = true,
-  virtual_text = {
-    enabled = true,
-    prefix = function(diagnostic)
-      if diagnostic.severity == vim.diagnostic.severity.ERROR then
-        return icons.diagnostics.prefix .. icons.diagnostics.error .. " "
-      elseif diagnostic.severity == vim.diagnostic.severity.WARN then
-        return icons.diagnostics.prefix .. icons.diagnostics.warn .. " "
-      else
-        return icons.diagnostics.prefix .. icons.diagnostics.info .. " "
-      end
-    end,
-    suffix = icons.diagnostics.suffix,
-  },
-  severity_sort = true,
-  signs = {
+  status = {
     text = {
-      [vim.diagnostic.severity.ERROR] = " " .. icons.diagnostics.error,
-      [vim.diagnostic.severity.WARN] = " " .. icons.diagnostics.warn,
-      [vim.diagnostic.severity.HINT] = " " .. icons.diagnostics.hint,
-      [vim.diagnostic.severity.INFO] = " " .. icons.diagnostics.info,
+      [vim.diagnostic.severity.ERROR] = icons.diagnostics.error,
+      [vim.diagnostic.severity.WARN] = icons.diagnostics.warn,
+      [vim.diagnostic.severity.HINT] = icons.diagnostics.hint,
+      [vim.diagnostic.severity.INFO] = icons.diagnostics.info,
     },
   },
+  virtual_text = {
+    enabled = true,
+    spacing = 2,
+    prefix = icons.diagnostics.prefix,
+    suffix = icons.diagnostics.suffix,
+    format = function(diagnostic)
+      local special_sources = {
+        ["Lua Diagnostics."] = "lua",
+        ["Lua Syntax Check."] = "lua",
+      }
+
+      local message = icons.diagnostics[string.lower(vim.diagnostic.severity[diagnostic.severity])]
+      if diagnostic.source then
+        message = string.format("%s [%s]", message, special_sources[diagnostic.source] or diagnostic.source)
+      end
+
+      return message .. " " .. diagnostic.message .. " "
+    end,
+  },
+  severity_sort = true,
+  float = {
+    source = "if_many",
+    -- Show severity icons as prefixes.
+    prefix = function(diag)
+      local level = vim.diagnostic.severity[diag.severity]
+      local prefix = string.format(" %s ", icons.diagnostics[level])
+      return prefix, "Diagnostic" .. level:gsub("^%l", string.upper)
+    end,
+  },
+  -- Disable signs in the gutter.
+  signs = false,
 })
 
 -- Sets up LSP keymaps and autocommands for the given buffer.

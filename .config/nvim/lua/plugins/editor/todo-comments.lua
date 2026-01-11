@@ -15,11 +15,11 @@ return {
       IN_PROGRESS = { icon = " ", color = "hint" },
     },
     highlight = {
-      pattern = [[.*<(KEYWORDS)\s*]],
+      -- pattern = [[.*<(KEYWORDS)\s*]],
       comments_only = vim.bo.filetype == "markdown" and false or true,
     },
-    search = {
-      pattern = [[\b(KEYWORDS)\b]],
-    },
+    -- search = {
+    --   pattern = [[\b(KEYWORDS)\b]],
+    -- },
   },
 }

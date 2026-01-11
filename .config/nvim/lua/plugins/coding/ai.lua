@@ -2,9 +2,16 @@ return {
   {
     "NickvanDyke/opencode.nvim",
     dependencies = {
-      -- Recommended for `ask()`, and required for `toggle()` — otherwise optional
-      -- TODO: use fzf-lua
-      { "folke/snacks.nvim", opts = { input = { enabled = true } } },
+      "nvim-lua/plenary.nvim",
+      {
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          anti_conceal = { enabled = false },
+          file_types = { "markdown", "opencode_output" },
+        },
+        ft = { "markdown", "Avante", "copilot-chat", "opencode_output" },
+      },
+      "ibhagwan/fzf-lua",
     },
     config = function()
       vim.g.opencode_opts = {
