@@ -178,7 +178,18 @@ return {
       require("tsc").setup(opts)
     end,
   },
-  { "dmmulroy/ts-error-translator.nvim" },
+  {
+    "dmmulroy/ts-error-translator.nvim",
+    opts = {
+      auto_attach = true,
+      servers = {
+        "vtsls",
+      },
+    },
+    config = function(_, opts)
+      require("ts-error-translator").setup(opts)
+    end,
+  },
   {
     "folke/ts-comments.nvim",
     opts = {},
