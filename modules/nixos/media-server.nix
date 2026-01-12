@@ -11,7 +11,7 @@ in {
   config = lib.mkIf config.media_server.enable {
     users.groups = {
       ${mediaGroup} = {
-        members = ["jellyfin" "radarr" "sonarr" "bazarr" "prowlarr"];
+        members = ["jellyfin" "radarr" "sonarr" "prowlarr"];
       };
     };
     users.users.giu = {extraGroups = [mediaGroup];};
@@ -31,11 +31,6 @@ in {
       openFirewall = true;
     };
     services.sonarr = {
-      enable = true;
-      group = mediaGroup;
-      openFirewall = true;
-    };
-    services.bazarr = {
       enable = true;
       group = mediaGroup;
       openFirewall = true;

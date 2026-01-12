@@ -9,4 +9,5 @@
   network = import ./network.nix;
   niri = import ./niri.nix;
   bluetooth = import ./bluetooth.nix;
+  homelab = import ./homelab.nix;
 }
