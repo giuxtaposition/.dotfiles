@@ -54,6 +54,7 @@ set_keymap("n", "<leader>gS", function()
   })
 end, "Find string in git status files")
 set_keymap("n", "z=", "<cmd>FzfLua spell_suggest<cr>", "Find spell word suggestion")
+set_keymap("n", "<leader>ut", "<cmd>FzfLua undotree<cr>", "Undotree")
 
 return {
   "ibhagwan/fzf-lua",
