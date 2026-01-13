@@ -4,6 +4,7 @@
   pkgs,
   ...
 }: let
+  photosLocation = "/media/immich";
 in {
   options = {homelab.enable = lib.mkEnableOption "enables homelab module";};
 
@@ -18,6 +19,10 @@ in {
         theme = "dark";
         layout = {
           Media = {
+            style = "row";
+            columns = "4";
+          };
+          Utilities = {
             style = "row";
             columns = "4";
           };
@@ -81,6 +86,13 @@ in {
                 icon = "paperless";
               };
             }
+            {
+              "Immich" = {
+                description = "Photo management system";
+                href = "http://localhost:2283";
+                icon = "immich";
+              };
+            }
           ];
         }
       ];
@@ -97,5 +109,24 @@ in {
         };
       };
     };
+    networking.firewall.allowedTCPPorts = [28981];
+    services.immich = {
+      enable = true;
+      package = pkgs.immich;
+      host = "0.0.0.0";
+      group = "media";
+      openFirewall = true;
+      mediaLocation = photosLocation;
+    };
+
+    fileSystems."/var/lib/immich" = {
+      device = "/media/immich";
+      options = ["bind" "nofail"];
+    };
+
+    users.users.immich.extraGroups = ["media"];
+    systemd.tmpfiles.rules = [
+      "d ${photosLocation} 775 immich media"
+    ];
   };
 }

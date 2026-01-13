@@ -16,7 +16,7 @@ in {
     };
     users.users.giu = {extraGroups = [mediaGroup];};
 
-    systemd.tmpfiles.rules = ["d /home/media 0770 - media - -"];
+    systemd.tmpfiles.rules = ["d /media 0770 - media"];
     users.users.jellyfin = {extraGroups = ["video" "render"];};
     environment.systemPackages = [pkgs.jellyfin pkgs.jellyfin-web pkgs.jellyfin-ffmpeg];
 
