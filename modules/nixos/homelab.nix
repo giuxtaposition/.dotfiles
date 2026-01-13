@@ -9,6 +9,7 @@ in {
 
   config = lib.mkIf config.homelab.enable {
     media_server.enable = true;
+
     services.homepage-dashboard = {
       enable = true;
       settings = {
@@ -71,7 +72,30 @@ in {
             }
           ];
         }
+        {
+          "Utilities" = [
+            {
+              "Paperless" = {
+                description = "Document management system";
+                href = "http://localhost:28981";
+                icon = "paperless";
+              };
+            }
+          ];
+        }
       ];
+    };
+
+    services.paperless = {
+      enable = true;
+      address = "0.0.0.0";
+      settings = {
+        PAPERLESS_OCR_LANGUAGE = "ita+eng";
+        PAPERLESS_OCR_USER_ARGS = {
+          optimize = 1;
+          pdfa_image_compression = "lossless";
+        };
+      };
     };
   };
 }
