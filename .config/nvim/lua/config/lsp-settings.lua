@@ -6,6 +6,19 @@ local methods = vim.lsp.protocol.Methods
 vim.lsp.enable({
   "harper-ls",
   "copilot",
+  "lua-ls",
+  "bashls",
+  "jsonls",
+  "texlab",
+  "marksman",
+  "nixd",
+  "phpactor",
+  "intelephense",
+  "vtsls",
+  "eslint",
+  "cssls",
+  "vue-ls",
+  "html",
 })
 
 vim.diagnostic.config({

@@ -1,19 +1,20 @@
-return {
-  "nvim-mini/mini.indentscope",
-  opts = {
-    symbol = "│",
-    options = { try_as_border = true },
+vim.pack.add({
+  {
+    src = "https://github.com/nvim-mini/mini.indentscope",
   },
-  event = { "BufReadPost", "BufWritePost", "BufNewFile" },
-  init = function()
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = {
-        "help",
-        "dashboard",
-      },
-      callback = function()
-        vim.b.miniindentscope_disable = true
-      end,
-    })
+})
+
+require("mini.indentscope").setup({
+  symbol = "│",
+  options = { try_as_border = true },
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "help",
+    "dashboard",
+  },
+  callback = function()
+    vim.b.miniindentscope_disable = true
   end,
-}
+})

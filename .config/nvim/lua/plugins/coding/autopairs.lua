@@ -1,8 +1,9 @@
-return {
-  "windwp/nvim-autopairs",
-  event = "InsertEnter",
-  config = true,
-  opts = {
-    disable_in_macro = false,
+vim.pack.add({
+  {
+    src = "https://github.com/windwp/nvim-autopairs",
   },
-}
+})
+
+require("nvim-autopairs").setup({
+  disable_in_macro = false,
+})

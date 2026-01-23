@@ -35,7 +35,7 @@ opt.cursorline = true -- Highlight the current cursor line
 opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes" -- Show sign column so that text doesn't shift
-opt.colorcolumn = "+1" -- Draw column on the right of maximum width
+opt.colorcolumn = "+2" -- Draw column on the right of maximum width
 
 -- Backspace
 opt.backspace = "indent,eol,start" -- Allow backspace on indent, end of line or insert mode start
@@ -78,8 +78,8 @@ opt.foldmethod = "indent" -- This is the default, but I set it to LSP if availab
 -- UI characters.
 vim.opt.fillchars = {
   fold = " ",
-  foldclose = "",
   foldopen = "",
+  foldclose = "",
   foldsep = " ",
   foldinner = " ",
   diff = "╱",

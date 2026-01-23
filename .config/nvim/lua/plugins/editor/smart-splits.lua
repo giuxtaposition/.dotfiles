@@ -1,5 +1,9 @@
 local set_keymap = require("config.util.keys").set
 
+vim.pack.add({ {
+  src = "https://github.com/mrjones2014/smart-splits.nvim",
+} })
+
 set_keymap({ "n", "x" }, "<A-h>", "<cmd>SmartResizeLeft<CR>", "Resize left")
 set_keymap({ "n", "x" }, "<A-j>", "<cmd>SmartResizeDown<CR>", "Resize down")
 set_keymap({ "n", "x" }, "<A-k>", "<cmd>SmartResizeUp<CR>", "Resize up")
@@ -24,9 +28,3 @@ set_keymap({ "n", "x" }, "<leader><leader><left>", "<cmd>SmartSwapLeft<CR>", "Sw
 set_keymap({ "n", "x" }, "<leader><leader><down>", "<cmd>SmartSwapDown<CR>", "Swap bottom buffer")
 set_keymap({ "n", "x" }, "<leader><leader><up>", "<cmd>SmartSwapUp<CR>", "Swap top buffer")
 set_keymap({ "n", "x" }, "<leader><leader><right>", "<cmd>SmartSwapRight<CR>", "Swap right buffer")
-
-return {
-  "mrjones2014/smart-splits.nvim",
-  lazy = false,
-  opts = {},
-}

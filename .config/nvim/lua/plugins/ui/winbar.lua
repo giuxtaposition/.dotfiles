@@ -1,12 +1,13 @@
-return {
-  "utilyre/barbecue.nvim",
-  name = "barbecue",
-  version = "*",
-  dependencies = {
-    "SmiteshP/nvim-navic",
+vim.pack.add({
+  {
+    src = "https://github.com/SmiteshP/nvim-navic",
   },
-  opts = {
-    theme = "catppuccin",
-    kinds = require("config.ui.icons"),
+  {
+    src = "https://github.com/utilyre/barbecue.nvim",
   },
-}
+})
+
+require("barbecue").setup({
+  theme = "catppuccin",
+  kinds = require("config.ui.icons"),
+})

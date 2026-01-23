@@ -1,7 +1,6 @@
 require("config.options")
 require("config.keymaps")
 require("config.autocmds")
-require("config.lazy")
 require("config.lsp-settings")
 require("config.ui.statusline").setup()
 require("config.ui.highlight_matching_words_under_cursor").setup()

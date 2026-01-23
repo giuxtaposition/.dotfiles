@@ -1,3 +1,9 @@
+vim.pack.add({
+  {
+    src = "https://github.com/stevearc/quicker.nvim",
+  },
+})
+
 local set_keymap = require("config.util.keys").set
 
 set_keymap("n", "<leader>xq", function()
@@ -18,15 +24,8 @@ set_keymap("n", "<leader>xd", function()
   end
 end, "Toggle diagnostics")
 
--- Improved quickfix UI.
-return {
-  {
-    "stevearc/quicker.nvim",
-    event = "VeryLazy",
-    opts = {
-      borders = {
-        vert = "│",
-      },
-    },
+require("quicker").setup({
+  borders = {
+    vert = "│",
   },
-}
+})

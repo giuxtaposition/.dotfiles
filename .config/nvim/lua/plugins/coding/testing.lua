@@ -1,4 +1,27 @@
+vim.pack.add({
+  {
+    src = "https://github.com/antoinemadec/FixCursorHold.nvim",
+  },
+  {
+    src = "https://github.com/nvim-lua/plenary.nvim",
+  },
+  {
+    src = "https://github.com/nvim-neotest/nvim-nio",
+  },
+  {
+    src = "https://github.com/marilari88/neotest-vitest",
+  },
+  {
+    src = "https://github.com/nvim-neotest/neotest",
+  },
+})
 local set_keymap = require("config.util.keys").set
+
+require("neotest").setup({
+  adapters = {
+    require("neotest-vitest"),
+  },
+})
 
 set_keymap("n", "<leader>tt", function()
   require("neotest").run.run(vim.fn.expand("%"))
@@ -30,23 +53,3 @@ end, "Debug last test")
 set_keymap("n", "<leader>td", function()
   require("neotest").run.run({ strategy = "dap" })
 end, "Debug Nearest")
-
-return {
-  {
-    "nvim-neotest/neotest",
-    dependencies = {
-      "nvim-neotest/nvim-nio",
-      "nvim-lua/plenary.nvim",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "weilbith/neotest-gradle",
-    },
-    opts = function()
-      return {
-        adapters = {
-          require("neotest-gradle"),
-        },
-      }
-    end,
-  },
-}

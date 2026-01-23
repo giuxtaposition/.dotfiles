@@ -1,3 +1,7 @@
+vim.pack.add({ {
+  src = "https://github.com/nvim-mini/mini.bufremove",
+} })
+
 local set_keymap = require("config.util.keys").set
 
 set_keymap("n", "<leader>bd", function()
@@ -14,9 +18,3 @@ set_keymap("n", "<leader>bd", function()
     bd(0)
   end
 end, "Delete Buffer")
-
-return {
-  {
-    "nvim-mini/mini.bufremove",
-  },
-}
