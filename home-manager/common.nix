@@ -52,8 +52,8 @@
   wayland.enable = true;
   spotify.enable = true;
   niri.enable = true;
-  cassiopea.enable = true;
   mpv.enable = true;
+  noctalia-shell.enable = true;
 
   fonts.fontconfig.enable = true;
 

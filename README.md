@@ -11,7 +11,7 @@ Here are some details about my setup:
 - **Terminal**: [Wezterm](https://github.com/wez/wezterm)
 - **Editor**: [Neovim](https://github.com/neovim/neovim/)
 - **WM**: [Niri](https://github.com/YaLTeR/niri)
-- **Widgets**: [Astal](https://github.com/Aylur/astal)
+- **Widgets**: [Noctalia-shell](https://github.com/noctalia-dev/noctalia-shell)
 
 ![](/.github/images/screenshot1.png)
 ![](/.github/images/screenshot2.png)

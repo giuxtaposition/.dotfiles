@@ -6,15 +6,8 @@
   ...
 }: let
   startScript = pkgs.writeShellScript "start" ''
-    # initializing wallpaper daemon
-    swww init &
-    # setting wallpaper
-    swww img ~/Wallpapers/WRztVWQ.jpg &
-
     #idle
     swayidle -w timeout 300 'swaylock -f -c 000000' \ timeout 600 'systemctl suspend' \ before-sleep 'swaylock -f -c 000000' &
-
-    cassiopea &
 
     wl-gammarelay-rs
   '';

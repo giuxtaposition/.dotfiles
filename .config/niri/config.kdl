@@ -116,10 +116,8 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 // spawn-at-startup "alacritty" "-e" "fish"
-spawn-at-startup "cassiopea"
+spawn-at-startup "noctalia-shell"
 spawn-at-startup "xwayland-satellite"
-spawn-at-startup "swww-daemon"
-spawn-at-startup "swww" "img" "~/Wallpapers/WRztVWQ.jpg"
 spawn-at-startup "swayidle" "-w" "timeout" "300" "'swaylock" "-f" "-c" "000000'" "timeout" "600" "'systemctl" "suspend'" "before-sleep" "'swaylock" "-f" "-c" "000000'"
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -186,6 +184,12 @@ window-rule {
     match app-id=".blueman-manager-wrapped" title="^Bluetooth Devices$"
     open-floating true
 }
+
+// Set the overview wallpaper on the backdrop.
+layer-rule {
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
+}
 binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
@@ -207,10 +211,10 @@ binds {
     }
     // Mod+Q { spawn "ghostty"; }
     Mod+D hotkey-overlay-title="Open launcher" {
-        spawn "cassiopea" "toggle launcher"
+        spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"
     }
     Mod+P hotkey-overlay-title="Open power menu" {
-        spawn "cassiopea" "toggle power_menu"
+        spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"
     }
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
@@ -607,6 +611,7 @@ binds {
         power-off-monitors
     }
 }
+
 environment {
     DISPLAY ":0"
 }

@@ -14,7 +14,7 @@
   wayland = import ./wm/wayland.nix;
   sway = import ./wm/sway.nix;
   niri = import ./wm/niri.nix;
-  cassiopea = import ./wm/cassiopea.nix;
+  noctalia-shell = import ./wm/noctalia-shell.nix;
 
   # Others
   spotify = import ./spotify.nix;
