@@ -51,6 +51,12 @@ require("zk").setup({
   picker = "fzf_lua",
 })
 
+require("img-clip").setup({
+  default = {
+    dir_path = "notes/assets",
+  },
+})
+
 set_keymap("n", "<leader>xt", "<cmd>TodoQuickFix<cr>", "Todo (QuickFix)")
 set_keymap("n", "<leader>zg", "<cmd>ZkNotes { dir = 'notes'}<cr>", "Search Notes")
 set_keymap("n", "<leader>zt", "<cmd>ZkTags { dir = 'notes'}<cr>", "Search Tags")
