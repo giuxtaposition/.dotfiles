@@ -7,8 +7,12 @@ vim.pack.add({
     src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
     version = "main",
   },
+  {
+    src = "https://github.com/nvim-treesitter/nvim-treesitter-context",
+  },
 })
 local ts = require("nvim-treesitter")
+local set_keymap = require("config.util.keys").set
 
 ts.install({
   "bash",
@@ -138,3 +142,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
+set_keymap("n", "[c", function()
+  require("treesitter-context").go_to_context(vim.v.count1)
+end, "Jump to context")
