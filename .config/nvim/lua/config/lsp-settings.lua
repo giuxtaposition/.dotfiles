@@ -19,6 +19,8 @@ vim.lsp.enable({
   "cssls",
   "vue-ls",
   "html",
+  "svelte",
+  "tailwindcss",
 })
 
 vim.diagnostic.config({
@@ -62,6 +64,7 @@ vim.diagnostic.config({
   },
   -- Disable signs in the gutter.
   signs = false,
+  jump = { float = true },
 })
 
 -- Sets up LSP keymaps and autocommands for the given buffer.

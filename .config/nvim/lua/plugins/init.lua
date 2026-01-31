@@ -18,6 +18,7 @@ require("plugins.ui.quickfix")
 require("plugins.ui.winbar")
 
 require("plugins.coding.nvim-treesitter")
+require("plugins.coding.text-objects")
 require("plugins.coding.lua")
 require("plugins.coding.autocompletion")
 require("plugins.coding.autopairs")

@@ -106,6 +106,10 @@
       "rev": "e9fa0714fc753e1e737940577904e553ee340903",
       "src": "https://github.com/nvim-mini/mini.indentscope"
     },
+    "mini.nvim": {
+      "rev": "9b935c218ddba02e5dc75c94f90143bce1f7c646",
+      "src": "https://github.com/nvim-mini/mini.nvim"
+    },
     "neotest": {
       "rev": "deadfb1af5ce458742671ad3a013acb9a6b41178",
       "src": "https://github.com/nvim-neotest/neotest"

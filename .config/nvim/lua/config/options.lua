@@ -52,7 +52,7 @@ opt.swapfile = false
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 opt.list = true
-opt.listchars = "extends:…,nbsp:␣,precedes:…,tab:> ,trail:·"
+opt.listchars = "extends:…,nbsp:␣,precedes:…,tab:  ,trail:·"
 
 -- Preview substitutions live, as you type!
 opt.inccommand = "split"

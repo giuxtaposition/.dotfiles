@@ -48,6 +48,6 @@ require("conform").setup({
     scss = { "prettierd" },
     less = { "prettierd" },
     html = { "prettierd" },
-    svelte = { "prettier" },
+    svelte = { "prettierd" },
   },
 })
