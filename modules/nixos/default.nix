@@ -10,4 +10,5 @@
   niri = import ./niri.nix;
   bluetooth = import ./bluetooth.nix;
   homelab = import ./homelab.nix;
+  tailscale = import ./tailscale.nix;
 }
