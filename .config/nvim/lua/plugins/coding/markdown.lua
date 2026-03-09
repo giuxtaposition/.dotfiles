@@ -47,9 +47,7 @@ require("snacks").setup({
   },
 })
 
-require("zk").setup({
-  picker = "fzf_lua",
-})
+require("zk").setup()
 
 require("img-clip").setup({
   default = {

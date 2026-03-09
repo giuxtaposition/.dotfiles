@@ -100,8 +100,8 @@ function M.apply_to_config(config)
 
     { key = "v", mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
     { key = "c", mods = "CTRL|SHIFT", action = act.CopyTo("Clipboard") },
-    { key = "f", mods = "CTRL|SHIFT", action = act.Search({ CaseInSensitiveString = "" }) },
-    { key = "F", mods = "CTRL|SHIFT", action = act.Search({ CaseSensitiveString = "" }) },
+    { key = "F", mods = "CTRL|SHIFT", action = act.Search({ CaseInSensitiveString = "" }) },
+    -- { key = "F", mods = "CTRL|SHIFT", action = act.Search({ CaseSensitiveString = "" }) },
     { key = "X", mods = "CTRL|SHIFT", action = act.ActivateCopyMode },
     {
       key = "p",

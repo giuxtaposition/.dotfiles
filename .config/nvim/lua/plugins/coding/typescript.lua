@@ -56,6 +56,7 @@ require("nvim-ts-autotag").setup()
 require("tsc").setup({
   use_trouble_qflist = true,
   auto_close_qflist = true,
+  flags = "-b",
 })
 
 require("ts-error-translator").setup({ auto_attach = true, servers = {

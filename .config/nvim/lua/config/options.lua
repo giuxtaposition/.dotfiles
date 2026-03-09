@@ -36,6 +36,7 @@ opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes" -- Show sign column so that text doesn't shift
 opt.colorcolumn = "+2" -- Draw column on the right of maximum width
+opt.winborder = "rounded"
 
 -- Backspace
 opt.backspace = "indent,eol,start" -- Allow backspace on indent, end of line or insert mode start

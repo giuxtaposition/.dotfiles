@@ -52,7 +52,6 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "help",
     "lspinfo",
-    "qf",
     "checkhealth",
     "neotest-summary",
     "neotest-output-panel",

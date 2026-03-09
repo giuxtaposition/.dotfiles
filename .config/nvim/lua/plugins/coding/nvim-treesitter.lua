@@ -85,6 +85,10 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-set_keymap("n", "[c", function()
+require("treesitter-context").setup({
+  max_lines = 5,
+})
+
+set_keymap("n", "[C", function()
   require("treesitter-context").go_to_context(vim.v.count1)
 end, "Jump to context")

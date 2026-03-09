@@ -77,6 +77,7 @@
     inter
     obs-studio
     rclone
+    trilium-desktop
   ];
 
   # GTK CONFIG
