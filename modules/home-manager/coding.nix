@@ -22,7 +22,6 @@ in {
   config = lib.mkIf config.coding.enable {
     home.sessionVariables = {
       MONGOMS_DISTRO = "ubuntu-22.04"; # MONGO MEMORY SERVER not supporting nixos
-      ZK_NOTEBOOK_DIR = "${config.home.homeDirectory}/notes";
     };
 
     nvim.enable = true;
@@ -106,7 +105,6 @@ in {
       vscode-extensions.vadimcn.vscode-lldb
       libxml2 # xml parser
       insomnia
-      zk
       harper
       pplatex
       texlab
