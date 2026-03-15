@@ -11,12 +11,14 @@
   config = lib.mkIf config.niri.enable {
     programs.niri = {
       enable = true;
+      useNautilus = true;
     };
     xdg.portal.extraPortals = with pkgs; [xdg-desktop-portal-gtk];
     services.gnome.gnome-keyring.enable = true;
 
     environment.systemPackages = [
       pkgs.nautilus
+      pkgs.gnome-disk-utility
     ];
 
     systemd = {
