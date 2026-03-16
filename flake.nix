@@ -58,12 +58,6 @@
 
     nixosConfigurations = {
       # Personal Laptop
-      kumiko = nixpkgs.lib.nixosSystem {
-        modules = [./hosts/kumiko];
-        specialArgs = {inherit inputs outputs;};
-      };
-
-      # Personal Laptop
       asuka = nixpkgs.lib.nixosSystem {
         modules = [./hosts/asuka nixos-hardware.nixosModules.framework-13-7040-amd];
         specialArgs = {inherit inputs outputs;};
@@ -83,11 +77,6 @@
         inputs.spicetify-nix.homeManagerModules.default
       ];
     in {
-      "giu@kumiko" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home-manager/kumiko.nix] ++ commonModules;
-      };
       "giu@asuka" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = {inherit inputs outputs;};
