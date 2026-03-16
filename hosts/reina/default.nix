@@ -8,7 +8,6 @@
   steam.enable = true;
   fish.enable = true;
   amdgpu.enable = true;
-  homelab.enable = true;
 
   services.hardware.openrgb.enable = true;
   services.fwupd.enable = true;
