@@ -3,7 +3,6 @@
 
   networking.hostName = "Reina";
 
-  ddcutil.enable = true;
   docker.enable = true;
   steam.enable = true;
   fish.enable = true;

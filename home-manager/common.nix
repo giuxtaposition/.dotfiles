@@ -47,6 +47,7 @@
   git.enable = true;
   nvim.enable = true;
   wezterm.enable = true;
+  ghostty.enable = true;
   btop.enable = true;
   yazi.enable = true;
   wayland.enable = true;
@@ -78,6 +79,8 @@
     obs-studio
     rclone
     trilium-desktop
+    obsidian
+    shotcut
   ];
 
   # GTK CONFIG

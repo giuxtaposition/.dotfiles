@@ -127,7 +127,7 @@ local function on_attach(client, bufnr)
     end, "Show previous inline completion suggestion")
   end
 
-  vim.lsp.document_color.enable(true, bufnr)
+  vim.lsp.document_color.enable(true)
   if client:supports_method(methods.textDocument_documentColor) then
     set_keymap({ "n", "x" }, "grc", function()
       vim.lsp.document_color.color_presentation()
