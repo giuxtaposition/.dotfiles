@@ -64,7 +64,7 @@ vim.diagnostic.config({
   },
   -- Disable signs in the gutter.
   signs = false,
-  jump = { float = true },
+  on_jump = { float = true },
 })
 
 -- Sets up LSP keymaps and autocommands for the given buffer.
