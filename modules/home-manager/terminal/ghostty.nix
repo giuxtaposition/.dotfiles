@@ -15,8 +15,9 @@
         font-family = "JetBrainsMono Nerd Font";
         bold-is-bright = true;
         copy-on-select = true;
-        window-decoration = false;
-        gtk-tabs-location = "hidden";
+        window-decoration = "server";
+        window-show-tab-bar = "auto";
+        gtk-toolbar-style = "flat";
         adjust-underline-position = 4;
         background-opacity = 0.85;
         background-blur = 16;
