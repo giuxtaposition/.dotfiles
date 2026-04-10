@@ -107,6 +107,14 @@
           deadnix.enable = true;
         };
       };
+
+      # NixOS configuration checks
+      nixos-asuka = self.nixosConfigurations.asuka.config.system.build.toplevel;
+      nixos-reina = self.nixosConfigurations.reina.config.system.build.toplevel;
+
+      # Home-manager configuration checks
+      home-asuka = self.homeConfigurations."giu@asuka".activationPackage;
+      home-reina = self.homeConfigurations."giu@reina".activationPackage;
     });
 
     devShells = forAllSystems (system: let
