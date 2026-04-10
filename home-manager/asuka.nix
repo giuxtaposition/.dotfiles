@@ -34,7 +34,14 @@
     }
   ];
 
-  coding.enable = true;
+  coding = {
+    enable = true;
+    typescript.enable = true;
+    lua.enable = true;
+    nix.enable = true;
+    bash.enable = true;
+    markdown.enable = true;
+  };
 
   programs.fish.shellAbbrs = {
     home-update = "cd /home/giu/.dotfiles && home-manager switch --flake .#giu@asuka";

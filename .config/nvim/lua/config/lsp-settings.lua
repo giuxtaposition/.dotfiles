@@ -3,7 +3,7 @@ local icons = require("config.ui.icons")
 local set_keymap = util.keys.set
 local methods = vim.lsp.protocol.Methods
 
-vim.lsp.enable({
+vim.lsp.enable(util.lsp.filter_available({
   "harper-ls",
   "copilot",
   "lua-ls",
@@ -21,7 +21,10 @@ vim.lsp.enable({
   "html",
   "svelte",
   "tailwindcss",
-})
+  "gopls",
+  "rust-analyzer",
+  "kotlin-language-server",
+}))
 
 vim.diagnostic.config({
   underline = true,

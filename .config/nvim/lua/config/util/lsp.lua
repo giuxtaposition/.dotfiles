@@ -2,6 +2,31 @@ local M = {
   hooks = {},
 }
 
+-- Map LSP config names to their executables
+-- Only needed when the executable name differs from the config name
+local lsp_executables = {
+  ["lua-ls"] = "lua-language-server",
+  ["harper-ls"] = "harper-ls",
+  ["bashls"] = "bash-language-server",
+  ["jsonls"] = "vscode-json-language-server",
+  ["cssls"] = "vscode-css-language-server",
+  ["html"] = "vscode-html-language-server",
+  ["vue-ls"] = "vue-language-server",
+  ["svelte"] = "svelteserver",
+  ["tailwindcss"] = "tailwindcss-language-server",
+  ["copilot"] = "copilot-language-server",
+}
+
+--- Filter LSP names to only those with available executables
+---@param servers string[] List of LSP config names
+---@return string[] Available LSP names
+M.filter_available = function(servers)
+  return vim.tbl_filter(function(name)
+    local executable = lsp_executables[name] or name
+    return vim.fn.executable(executable) == 1
+  end, servers)
+end
+
 M.action = setmetatable({}, {
   __index = function(_, action)
     return function()
