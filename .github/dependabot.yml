@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    # Dependabot will scan this directory for workflow files that reference actions
+    directory: "/.github/workflows"
+    schedule:
+      # Check once per week for action updates
+      interval: "weekly"
+    # Keep the number of open Dependabot PRs reasonable
+    open-pull-requests-limit: 5
+    # Try to keep PRs up to date automatically
+    rebase-strategy: "auto"
+    labels:
+      - "dependencies"
+      - "ci"
+    commit-message:
+      prefix: "chore(deps):"
