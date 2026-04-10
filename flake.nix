@@ -29,6 +29,10 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -94,9 +98,25 @@
       };
     };
 
-    devShells.x86_64-linux.default = let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-    in
-      pkgs.mkShell {packages = [pkgs.cachix pkgs.nodejs_24];};
+    checks = forAllSystems (system: {
+      pre-commit = inputs.git-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          alejandra.enable = true;
+          statix.enable = true;
+          deadnix.enable = true;
+        };
+      };
+    });
+
+    devShells = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
+      default = pkgs.mkShell {
+        packages = [pkgs.cachix pkgs.nodejs_24];
+        inherit (self.checks.${system}.pre-commit) shellHook;
+        buildInputs = self.checks.${system}.pre-commit.enabledPackages;
+      };
+    });
   };
 }
