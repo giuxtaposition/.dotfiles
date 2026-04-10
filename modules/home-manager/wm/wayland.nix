@@ -1,51 +1,52 @@
 {
   config,
   pkgs,
-  inputs,
   lib,
   ...
 }: {
   options = {wayland.enable = lib.mkEnableOption "enables wayland module";};
 
   config = lib.mkIf config.wayland.enable {
-    home.packages = with pkgs; [
-      wl-clipboard # command-line copy/paste utilities for wayland
-      slurp # select a region in a wayland compositor
-      grim # grab images from a wayland compositor
-      swayidle
-      kdePackages.qtwayland
-      wdisplays
-    ];
+    home = {
+      packages = with pkgs; [
+        wl-clipboard # command-line copy/paste utilities for wayland
+        slurp # select a region in a wayland compositor
+        grim # grab images from a wayland compositor
+        swayidle
+        kdePackages.qtwayland
+        wdisplays
+      ];
 
-    # Wallpapers folder
-    home.file."${config.home.homeDirectory}/Wallpapers" = {
-      source =
-        config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/.dotfiles/Wallpapers";
-    };
+      # Wallpapers folder
+      file."${config.home.homeDirectory}/Wallpapers" = {
+        source =
+          config.lib.file.mkOutOfStoreSymlink
+          "${config.home.homeDirectory}/.dotfiles/Wallpapers";
+      };
 
-    home.sessionVariables = {
-      # XDG Specifications
-      XDG_SESSION = "wayland";
-      XDG_SESSION_TYPE = "wayland";
-      # QT, GDK, SL2, Clutter: use wayland if available, fallback to x11 if not
-      QT_QPA_PLATFORM = "wayland";
-      GDK_BACKEND = "wayland";
-      SDL_VIDEODRIVER = "wayland";
-      CLUTTER_BACKEND = "wayland";
-      EGL_PLATFORM = "wayland";
-      # Hint electron apps to use wayland
-      NIXOS_OZONE_WL = "1";
-      # use legacy DRM instead of atomic mode setting
-      WLR_DRM_NO_ATOMIC = "1";
-      # Firefox
-      MOZ_ENABLE_WAYLAND = "1";
-      MOZ_USE_XINPUT2 = "1";
-      # QT envs
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-      # Fix disappearing cursor
-      WLR_NO_HARDWARE_CURSORS = "1";
+      sessionVariables = {
+        # XDG Specifications
+        XDG_SESSION = "wayland";
+        XDG_SESSION_TYPE = "wayland";
+        # QT, GDK, SL2, Clutter: use wayland if available, fallback to x11 if not
+        QT_QPA_PLATFORM = "wayland";
+        GDK_BACKEND = "wayland";
+        SDL_VIDEODRIVER = "wayland";
+        CLUTTER_BACKEND = "wayland";
+        EGL_PLATFORM = "wayland";
+        # Hint electron apps to use wayland
+        NIXOS_OZONE_WL = "1";
+        # use legacy DRM instead of atomic mode setting
+        WLR_DRM_NO_ATOMIC = "1";
+        # Firefox
+        MOZ_ENABLE_WAYLAND = "1";
+        MOZ_USE_XINPUT2 = "1";
+        # QT envs
+        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+        QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+        # Fix disappearing cursor
+        WLR_NO_HARDWARE_CURSORS = "1";
+      };
     };
 
     programs.swaylock = {

@@ -5,28 +5,12 @@
       inherit inputs;
     };
 
-  modifications = final: prev: {
+  modifications = _final: prev: {
     wezterm = inputs.wezterm.packages.${prev.stdenv.hostPlatform.system}.default;
 
-    # make jellyfin skip-intro plugin show skip intro button
-    jellyfin-web = prev.jellyfin-web.overrideAttrs (finalAttrs: previousAttrs: {
-      installPhase = ''
-        runHook preInstall
+    inherit (inputs.nixpkgs-wayland.packages.${prev.stdenv.hostPlatform.system}) wl-gammarelay-rs;
 
-        # this is the important line
-        sed -i "s#</head>#<script src=\"configurationpage?name=skip-intro-button.js\"></script></head>#" dist/index.html
-
-        mkdir -p $out/share
-        cp -a dist $out/share/jellyfin-web
-
-        runHook postInstall
-      '';
-    });
-
-    wl-gammarelay-rs =
-      inputs.nixpkgs-wayland.packages.${prev.stdenv.hostPlatform.system}.wl-gammarelay-rs;
-
-    slack = prev.slack.overrideAttrs (oldAttrs: {
+    slack = prev.slack.overrideAttrs (_oldAttrs: {
       fixupPhase = ''
         sed -i -e 's/,"WebRTCPipeWireCapturer"/,"LebRTCPipeWireCapturer"/' $out/lib/slack/resources/app.asar
 
@@ -41,7 +25,7 @@
 
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
+      inherit (final.stdenv.hostPlatform) system;
       config.allowUnfree = true;
     };
   };

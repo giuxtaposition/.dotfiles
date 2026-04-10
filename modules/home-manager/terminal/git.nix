@@ -7,79 +7,75 @@
   options = {git.enable = lib.mkEnableOption "enables git module";};
 
   config = lib.mkIf config.git.enable {
-    programs.git = {
-      enable = true;
-      settings = {
-        user = {
-          name = "giuxtaposition";
-          email = "yg97.cs@gmail.com";
-        };
-        core = {editor = "nvim";};
-        pull.rebase = true;
-        push.autoSetupRemote = true;
-        fetch.prune = true;
+    programs = {
+      git = {
+        enable = true;
+        settings = {
+          user = {
+            name = "giuxtaposition";
+            email = "yg97.cs@gmail.com";
+          };
+          core = {editor = "nvim";};
+          pull.rebase = true;
+          push.autoSetupRemote = true;
+          fetch.prune = true;
 
-        init.defaultBranch = "main";
-        merge = {
-          tool = "fugitive";
-        };
-        mergetool = {
-          fugitive = {
-            cmd = ''nvim -f -c \"Gvdiff\" \"$MERGED\"'';
+          init.defaultBranch = "main";
+          merge = {tool = "fugitive";};
+          mergetool = {
+            fugitive = {cmd = ''nvim -f -c \"Gvdiff\" \"$MERGED\"'';};
           };
         };
-      };
 
-      includes = [
-        {
-          condition = "gitdir:~/Programming/vitesicure/";
-          contents = {
-            user = {
-              email = "gye@vitesicure.it";
-              name = "Giulia Ye";
-            };
-          };
-        }
-      ];
-    };
-
-    programs.delta = {
-      enable = true;
-      enableGitIntegration = true;
-    };
-    catppuccin.delta.enable = true;
-
-    programs.jujutsu = {
-      enable = true;
-      package = pkgs.unstable.jujutsu;
-      settings = {
-        user = {
-          name = "giuxtaposition";
-          email = "yg97.cs@gmail.com";
-        };
-        ui = {
-          "default-command" = ["log"];
-          paginate = "never";
-        };
-      };
-    };
-
-    programs.lazygit = {
-      enable = true;
-      settings = {
-        git.pagers = [
+        includes = [
           {
-            colorArg = "always";
-            pager = "delta --dark --paging=never";
+            condition = "gitdir:~/Programming/vitesicure/";
+            contents = {
+              user = {
+                email = "gye@vitesicure.it";
+                name = "Giulia Ye";
+              };
+            };
           }
         ];
-        os = {
-          edit = "nvim";
+      };
+
+      delta = {
+        enable = true;
+        enableGitIntegration = true;
+      };
+
+      jujutsu = {
+        enable = true;
+        package = pkgs.unstable.jujutsu;
+        settings = {
+          user = {
+            name = "giuxtaposition";
+            email = "yg97.cs@gmail.com";
+          };
+          ui = {
+            "default-command" = ["log"];
+            paginate = "never";
+          };
         };
-        promptToReturnFromSubprocess = false;
+      };
+
+      lazygit = {
+        enable = true;
+        settings = {
+          git.pagers = [
+            {
+              colorArg = "always";
+              pager = "delta --dark --paging=never";
+            }
+          ];
+          os = {edit = "nvim";};
+          promptToReturnFromSubprocess = false;
+        };
       };
     };
 
+    catppuccin.delta.enable = true;
     catppuccin.lazygit = {
       enable = true;
       accent = "lavender";

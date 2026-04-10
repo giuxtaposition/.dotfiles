@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  actions = config.lib.niri.actions;
+  inherit (config.lib.niri) actions;
 in {
   options = {niri.enable = lib.mkEnableOption "enables niri module";};
 

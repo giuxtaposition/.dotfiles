@@ -78,6 +78,7 @@ in {
         vscode-js-debug
         pnpm
         unstable.typescript-go
+        vtsls
       ]
       ++ lib.optionals config.coding.vue.enable [
         vue-language-server
