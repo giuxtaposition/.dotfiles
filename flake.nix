@@ -33,6 +33,10 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -49,6 +53,16 @@
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
+    treefmtEval = forAllSystems (system:
+      inputs.treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} {
+        projectRootFile = "flake.nix";
+        programs = {
+          alejandra.enable = true;
+          stylua.enable = true;
+          prettier.enable = true;
+          shfmt.enable = true;
+        };
+      });
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
@@ -56,8 +70,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
       import ./pkgs {inherit pkgs inputs;});
-    formatter =
-      forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forAllSystems (system: treefmtEval.${system}.config.build.wrapper);
 
     # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays {inherit inputs;};
@@ -107,6 +120,9 @@
           deadnix.enable = true;
         };
       };
+
+      # Formatting check
+      formatting = treefmtEval.${system}.config.build.check self;
 
       # NixOS configuration checks
       nixos-asuka = self.nixosConfigurations.asuka.config.system.build.toplevel;
