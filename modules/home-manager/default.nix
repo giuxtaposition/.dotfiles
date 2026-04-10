@@ -12,14 +12,12 @@
 
   # WM
   wayland = import ./wm/wayland.nix;
-  sway = import ./wm/sway.nix;
   niri = import ./wm/niri.nix;
   noctalia-shell = import ./wm/noctalia-shell.nix;
 
   # Others
   spotify = import ./spotify.nix;
   monitors = import ./monitors.nix;
-  laptop = import ./laptop.nix;
   coding = import ./coding.nix;
   colors = import ./colors.nix;
   mpv = import ./mpv.nix;

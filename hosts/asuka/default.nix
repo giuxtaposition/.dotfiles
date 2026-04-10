@@ -21,4 +21,5 @@
   docker.enable = true;
   fish.enable = true;
   amdgpu.enable = true;
+  laptop.enable = true;
 }

@@ -1,5 +1,4 @@
 {
-  ddcutil = import ./ddcutil.nix;
   docker = import ./docker.nix;
   steam = import ./steam.nix;
   thunar = import ./thunar.nix;
@@ -9,4 +8,5 @@
   niri = import ./niri.nix;
   bluetooth = import ./bluetooth.nix;
   tailscale = import ./tailscale.nix;
+  laptop = import ./laptop.nix;
 }
