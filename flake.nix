@@ -25,6 +25,10 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -75,6 +79,7 @@
         nix-index-database.homeModules.nix-index
         catppuccin.homeModules.catppuccin
         inputs.spicetify-nix.homeManagerModules.default
+        inputs.niri.homeModules.niri
       ];
     in {
       "giu@asuka" = home-manager.lib.homeManagerConfiguration {

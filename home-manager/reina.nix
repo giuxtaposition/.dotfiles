@@ -1,5 +1,34 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
   imports = [./common.nix];
+
+  programs.niri.settings.outputs = {
+    "DP-2" = {
+      mode = {
+        width = 1920;
+        height = 1080;
+        refresh = 144.0;
+      };
+      scale = 1.0;
+      position = {
+        x = 2560;
+        y = 0;
+      };
+      variable-refresh-rate = true;
+    };
+    "DP-3" = {
+      mode = {
+        width = 3840;
+        height = 2160;
+        refresh = 160.0;
+      };
+      scale = 1.5;
+      position = {
+        x = 4480;
+        y = 0;
+      };
+      variable-refresh-rate = true;
+    };
+  };
 
   monitors = [
     {
