@@ -7,6 +7,9 @@
 
   config = lib.mkIf config.ghostty.enable {
     catppuccin.ghostty.enable = true;
+
+    xdg.configFile."ghostty/shaders/cursor_warp.glsl".source = ./shaders/cursor_warp.glsl;
+
     programs.ghostty = {
       enable = true;
       enableFishIntegration = true;
