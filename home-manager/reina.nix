@@ -30,7 +30,6 @@
     };
   };
 
-
   home.sessionVariables = {
     WLR_BACKEND = "vulkan";
     WLR_RENDERER = "vulkan";

@@ -114,19 +114,12 @@
     checks = forAllSystems (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      pre-commit = inputs.git-hooks.lib.${system}.run {
+      git-hooks = inputs.git-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
           alejandra.enable = true;
           statix.enable = true;
           deadnix.enable = true;
-        };
-      };
-
-      # Pre-push hook: build all NixOS and home-manager configs before push
-      pre-push = inputs.git-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
           nixos-configs = {
             enable = true;
             name = "Build NixOS configs";
@@ -163,13 +156,8 @@
     in {
       default = pkgs.mkShell {
         packages = [pkgs.cachix pkgs.nodejs_24];
-        shellHook = ''
-          ${self.checks.${system}.pre-commit.shellHook}
-          ${self.checks.${system}.pre-push.shellHook}
-        '';
-        buildInputs =
-          self.checks.${system}.pre-commit.enabledPackages
-          ++ self.checks.${system}.pre-push.enabledPackages;
+        inherit (self.checks.${system}.git-hooks) shellHook;
+        buildInputs = self.checks.${system}.git-hooks.enabledPackages;
       };
     });
   };
