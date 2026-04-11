@@ -111,13 +111,38 @@
       };
     };
 
-    checks = forAllSystems (system: {
+    checks = forAllSystems (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
       pre-commit = inputs.git-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
           alejandra.enable = true;
           statix.enable = true;
           deadnix.enable = true;
+        };
+      };
+
+      # Pre-push hook: build all NixOS and home-manager configs before push
+      pre-push = inputs.git-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          nixos-configs = {
+            enable = true;
+            name = "Build NixOS configs";
+            entry = "${pkgs.nix}/bin/nix build .#nixosConfigurations.asuka.config.system.build.toplevel .#nixosConfigurations.reina.config.system.build.toplevel --no-link";
+            stages = ["pre-push"];
+            pass_filenames = false;
+            language = "system";
+          };
+          home-configs = {
+            enable = true;
+            name = "Build home-manager configs";
+            entry = "${pkgs.nix}/bin/nix build .#homeConfigurations.\"giu@asuka\".activationPackage .#homeConfigurations.\"giu@reina\".activationPackage --no-link";
+            stages = ["pre-push"];
+            pass_filenames = false;
+            language = "system";
+          };
         };
       };
 
@@ -138,8 +163,13 @@
     in {
       default = pkgs.mkShell {
         packages = [pkgs.cachix pkgs.nodejs_24];
-        inherit (self.checks.${system}.pre-commit) shellHook;
-        buildInputs = self.checks.${system}.pre-commit.enabledPackages;
+        shellHook = ''
+          ${self.checks.${system}.pre-commit.shellHook}
+          ${self.checks.${system}.pre-push.shellHook}
+        '';
+        buildInputs =
+          self.checks.${system}.pre-commit.enabledPackages
+          ++ self.checks.${system}.pre-push.enabledPackages;
       };
     });
   };

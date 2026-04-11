@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: {
   options = {tailscale.enable = lib.mkEnableOption "enables tailscale module";};

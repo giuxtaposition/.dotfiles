@@ -1,7 +1,5 @@
 {
   outputs,
-  inputs,
-  lib,
   config,
   pkgs,
   ...

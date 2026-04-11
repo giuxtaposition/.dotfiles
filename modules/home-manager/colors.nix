@@ -40,6 +40,6 @@ in {
 
   config.colorsWithoutPrefix =
     builtins.mapAttrs
-    (name: value: builtins.substring 1 (builtins.stringLength value - 1) value)
+    (_name: value: builtins.substring 1 (builtins.stringLength value - 1) value)
     colors;
 }
