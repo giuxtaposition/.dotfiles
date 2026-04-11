@@ -33,11 +33,6 @@
       fsType = "ext4";
     };
 
-    "/media" = {
-      device = "/dev/disk/by-uuid/77209e93-411c-41d1-aed7-77fa3c54d4bc";
-      fsType = "ext4";
-    };
-
     "/home/giu/Games" = {
       device = "/dev/disk/by-uuid/0be1b2ce-8879-4303-a0bf-92a09c127fb4";
       fsType = "ext4";
