@@ -17,7 +17,6 @@
 
   # Others
   spotify = import ./spotify.nix;
-  monitors = import ./monitors.nix;
   coding = import ./coding;
   colors = import ./colors.nix;
   mpv = import ./mpv.nix;

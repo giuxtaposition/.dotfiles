@@ -30,27 +30,6 @@
     };
   };
 
-  monitors = [
-    {
-      name = "DP-2";
-      index = 0;
-      width = 1920;
-      height = 1080;
-      refreshRate = 144;
-      x = 0;
-      workspace = "1";
-      primary = true;
-    }
-    {
-      name = "HDMI-A-1";
-      index = 1;
-      width = 1920;
-      height = 1080;
-      refreshRate = 60;
-      x = 1920;
-      workspace = "2";
-    }
-  ];
 
   home.sessionVariables = {
     WLR_BACKEND = "vulkan";
