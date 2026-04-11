@@ -26,4 +26,4 @@ jobs:
         run: nix fmt -- --fail-on-change .
 
       - name: Run flake checks
-        run: nix flake check --all-systems
+        run: nix flake check -j auto
