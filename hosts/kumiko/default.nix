@@ -1,14 +1,8 @@
 # Kumiko — Home media server
 {...}: {
-  imports = [./hardware-configuration.nix ../common.nix];
+  imports = [./hardware-configuration.nix ../common.nix ../desktop.nix];
 
   networking.hostName = "kumiko";
-
-  # Boot — GRUB for server (will be updated after hardware-configuration.nix is generated)
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/sda";
-  };
 
   # Server base configuration
   server.enable = true;
@@ -30,5 +24,7 @@
   # Notes
   triliumnext.enable = true;
 
-  system.stateVersion = "25.11";
+  # Provide the standard desktop modules used by other hosts.
+  fish.enable = true;
+  amdgpu.enable = true;
 }
