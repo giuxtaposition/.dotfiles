@@ -43,6 +43,13 @@ in {
       spawn-at-startup = [
         {command = ["noctalia-shell"];}
         {command = ["xwayland-satellite"];}
+        {
+          command = [
+            "cachix"
+            "watch-store"
+            "giuxtaposition"
+          ];
+        }
       ];
 
       prefer-no-csd = true;
