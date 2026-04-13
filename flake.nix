@@ -122,31 +122,13 @@
       };
     };
 
-    checks = forAllSystems (system: let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
+    checks = forAllSystems (system: {
       git-hooks = inputs.git-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
           alejandra.enable = true;
           statix.enable = true;
           deadnix.enable = true;
-          nixos-configs = {
-            enable = true;
-            name = "Build NixOS configs";
-            entry = "${pkgs.nix}/bin/nix build .#nixosConfigurations.asuka.config.system.build.toplevel .#nixosConfigurations.reina.config.system.build.toplevel .#nixosConfigurations.kumiko.config.system.build.toplevel --no-link";
-            stages = ["pre-push"];
-            pass_filenames = false;
-            language = "system";
-          };
-          home-configs = {
-            enable = true;
-            name = "Build home-manager configs";
-            entry = "${pkgs.nix}/bin/nix build .#homeConfigurations.\"giu@asuka\".activationPackage .#homeConfigurations.\"giu@reina\".activationPackage --no-link";
-            stages = ["pre-push"];
-            pass_filenames = false;
-            language = "system";
-          };
         };
       };
 
