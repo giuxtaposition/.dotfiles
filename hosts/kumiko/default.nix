@@ -42,9 +42,6 @@
   # VPN + torrent downloading
   vpn.enable = true;
 
-  # Notes
-  triliumnext.enable = true;
-
   fish.enable = true;
   amdgpu.enable = true;
 
