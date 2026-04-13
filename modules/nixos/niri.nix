@@ -44,7 +44,7 @@
     environment.etc."niri/config.kdl".text = ''
       binds {
         "Mod+Q" {
-          action.spawn = ["ghostty"];
+          spawn "ghostty";
         }
       }
     '';
