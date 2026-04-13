@@ -72,7 +72,7 @@
       initialPassword = "pigsarecute";
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ/ZtdnGzYTF7xrk9kYEltadoO3RC7FNvU0nUEJ4V8FA yg97.cs@gmail.com"
       ];
       extraGroups = ["wheel"];
     };

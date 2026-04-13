@@ -1,8 +1,22 @@
 # Kumiko — Home media server
-{...}: {
-  imports = [./hardware-configuration.nix ../common.nix ../desktop.nix];
+{pkgs, ...}: {
+  imports = [./hardware-configuration.nix ../common.nix];
 
   networking.hostName = "kumiko";
+
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 5;
+      };
+      efi.canTouchEfiVariables = true;
+      timeout = 1;
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
+
+  network.enable = true;
 
   # Server base configuration
   server.enable = true;
@@ -24,7 +38,9 @@
   # Notes
   triliumnext.enable = true;
 
-  # Provide the standard desktop modules used by other hosts.
   fish.enable = true;
   amdgpu.enable = true;
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  system.stateVersion = "25.05";
 }

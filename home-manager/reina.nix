@@ -1,43 +1,50 @@
 {pkgs, ...}: {
   imports = [./common.nix];
 
-  programs.niri.settings.outputs = {
-    "DP-2" = {
-      mode = {
-        width = 1920;
-        height = 1080;
-        refresh = 144.0;
+  programs = {
+    niri.settings.outputs = {
+      "DP-2" = {
+        mode = {
+          width = 1920;
+          height = 1080;
+          refresh = 144.0;
+        };
+        scale = 1.0;
+        position = {
+          x = 2560;
+          y = 0;
+        };
+        variable-refresh-rate = true;
       };
-      scale = 1.0;
-      position = {
-        x = 2560;
-        y = 0;
+      "DP-3" = {
+        mode = {
+          width = 3840;
+          height = 2160;
+          refresh = 160.0;
+        };
+        scale = 1.5;
+        position = {
+          x = 4480;
+          y = 0;
+        };
+        variable-refresh-rate = true;
       };
-      variable-refresh-rate = true;
     };
-    "DP-3" = {
-      mode = {
-        width = 3840;
-        height = 2160;
-        refresh = 160.0;
+
+    ssh = {
+      enable = true;
+      matchBlocks = {
+        "kumiko" = {
+          hostname = "kumiko";
+          user = "giu";
+        };
       };
-      scale = 1.5;
-      position = {
-        x = 4480;
-        y = 0;
-      };
-      variable-refresh-rate = true;
     };
-  };
 
-  home.sessionVariables = {
-    WLR_BACKEND = "vulkan";
-    WLR_RENDERER = "vulkan";
-  };
-
-  programs.fish.shellAbbrs = {
-    home-update = "cd /home/giu/.dotfiles && home-manager switch --flake .#giu@reina";
-    nixos-update = "cd /home/giu/.dotfiles && sudo nixos-rebuild switch --flake .#reina";
+    fish.shellAbbrs = {
+      home-update = "cd /home/giu/.dotfiles && home-manager switch --flake .#giu@reina";
+      nixos-update = "cd /home/giu/.dotfiles && sudo nixos-rebuild switch --flake .#reina";
+    };
   };
 
   home.packages = with pkgs; [
