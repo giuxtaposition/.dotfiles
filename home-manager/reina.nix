@@ -33,9 +33,14 @@
 
     ssh = {
       enable = true;
+      enableDefaultConfig = false;
       matchBlocks = {
         "kumiko" = {
-          hostname = "kumiko";
+          hostname = "kumiko.local";
+          user = "giu";
+        };
+        "kumiko-ts" = {
+          hostname = "kumiko"; # Tailscale MagicDNS — replace with IP if MagicDNS is not enabled
           user = "giu";
         };
       };

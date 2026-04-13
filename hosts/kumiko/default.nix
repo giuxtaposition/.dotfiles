@@ -18,6 +18,13 @@
 
   network.enable = true;
 
+  # mDNS — lets reina reach kumiko via kumiko.local
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
   # Server base configuration
   server.enable = true;
   tailscale.enable = true;
