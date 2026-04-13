@@ -56,6 +56,9 @@
 
           # vim mode
           set fish_key_bindings fish_user_key_bindings
+
+          # cachix
+          cachix watch-store giuxtaposition &
         '';
 
         functions = {
