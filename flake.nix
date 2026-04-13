@@ -126,7 +126,10 @@
       git-hooks = inputs.git-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
-          alejandra.enable = true;
+          treefmt = {
+            enable = true;
+            package = treefmtEval.${system}.config.build.wrapper;
+          };
           statix.enable = true;
           deadnix.enable = true;
         };
