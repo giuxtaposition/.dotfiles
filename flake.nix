@@ -37,6 +37,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -46,6 +50,7 @@
     nix-index-database,
     nixos-hardware,
     catppuccin,
+    sops-nix,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -80,13 +85,19 @@
     nixosConfigurations = {
       # Personal Laptop
       asuka = nixpkgs.lib.nixosSystem {
-        modules = [./hosts/asuka nixos-hardware.nixosModules.framework-13-7040-amd];
+        modules = [./hosts/asuka nixos-hardware.nixosModules.framework-13-7040-amd sops-nix.nixosModules.sops];
         specialArgs = {inherit inputs outputs;};
       };
 
       # Personal Desktop
       reina = nixpkgs.lib.nixosSystem {
-        modules = [./hosts/reina];
+        modules = [./hosts/reina sops-nix.nixosModules.sops];
+        specialArgs = {inherit inputs outputs;};
+      };
+
+      # Home Server
+      kumiko = nixpkgs.lib.nixosSystem {
+        modules = [./hosts/kumiko sops-nix.nixosModules.sops];
         specialArgs = {inherit inputs outputs;};
       };
     };
@@ -123,7 +134,7 @@
           nixos-configs = {
             enable = true;
             name = "Build NixOS configs";
-            entry = "${pkgs.nix}/bin/nix build .#nixosConfigurations.asuka.config.system.build.toplevel .#nixosConfigurations.reina.config.system.build.toplevel --no-link";
+            entry = "${pkgs.nix}/bin/nix build .#nixosConfigurations.asuka.config.system.build.toplevel .#nixosConfigurations.reina.config.system.build.toplevel .#nixosConfigurations.kumiko.config.system.build.toplevel --no-link";
             stages = ["pre-push"];
             pass_filenames = false;
             language = "system";
@@ -145,6 +156,7 @@
       # NixOS configuration checks
       nixos-asuka = self.nixosConfigurations.asuka.config.system.build.toplevel;
       nixos-reina = self.nixosConfigurations.reina.config.system.build.toplevel;
+      nixos-kumiko = self.nixosConfigurations.kumiko.config.system.build.toplevel;
 
       # Home-manager configuration checks
       home-asuka = self.homeConfigurations."giu@asuka".activationPackage;
@@ -155,7 +167,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       default = pkgs.mkShell {
-        packages = [pkgs.cachix pkgs.nodejs_24];
+        packages = [pkgs.cachix pkgs.nodejs_24 pkgs.sops pkgs.age];
         inherit (self.checks.${system}.git-hooks) shellHook;
         buildInputs = self.checks.${system}.git-hooks.enabledPackages;
       };

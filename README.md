@@ -74,3 +74,91 @@ nix flake update # to update the flake.lock file (packages versions)
 sudo nixos-rebuild switch --flake .#reina # update and rebuild nixos config
 home-manager switch --flake .#giu@reina # update and rebuild home-manager config
 ```
+
+## Secrets Management
+
+Secrets are managed with [sops-nix](https://github.com/Mic92/sops-nix) using [age](https://github.com/FiloSottile/age) encryption.
+Encrypted secrets live in `secrets/secrets.yaml` and are decrypted at NixOS activation time to `/run/secrets/<name>`.
+
+### Initial setup (per host)
+
+1. Generate an age key on the target machine:
+
+```bash
+sudo mkdir -p /var/lib/sops-nix
+sudo age-keygen -o /var/lib/sops-nix/key.txt
+```
+
+The public key is printed to stderr — copy it.
+
+2. Add the public key to `secrets/.sops.yaml`:
+
+```yaml
+keys:
+  - &kumiko age1abc123...
+
+creation_rules:
+  - path_regex: secrets\.yaml$
+    key_groups:
+      - age:
+          - *kumiko
+```
+
+3. Create or edit the encrypted secrets file (requires `sops` and `age` in your shell, available via `nix develop`):
+
+```bash
+sops secrets/secrets.yaml
+```
+
+This opens your `$EDITOR` with the decrypted YAML. Add secrets using path-style keys:
+
+```yaml
+vpn:
+  protonvpn:
+    env-file: |
+      OPENVPN_USER=username+pmp
+      OPENVPN_PASSWORD=password
+```
+
+Save and close — sops encrypts the file automatically.
+
+### Using secrets in modules
+
+Reference secrets in NixOS modules via `config.sops.secrets`:
+
+```nix
+# Declare the secret
+sops.secrets."vpn/protonvpn/env-file" = {};
+
+# Use the decrypted path
+environmentFiles = [
+  config.sops.secrets."vpn/protonvpn/env-file".path
+];
+```
+
+Secrets are decrypted to `/run/secrets/<name>` with `0400 root:root` by default.
+To grant access to a service user, set the `owner` field:
+
+```nix
+sops.secrets."services/paperless/admin-password" = {
+  owner = "paperless";
+};
+```
+
+### Adding a new host
+
+When adding a new server that needs secrets:
+
+1. Generate an age key on the host (step 1 above)
+2. Add the new public key to `secrets/.sops.yaml` under `keys` and the relevant `creation_rules`
+3. Re-encrypt existing secrets so the new host can decrypt them:
+
+```bash
+sops updatekeys secrets/secrets.yaml
+```
+
+4. Enable the secrets module in the host config:
+
+```nix
+secrets.enable = true;
+```

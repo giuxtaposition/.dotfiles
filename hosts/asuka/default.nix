@@ -1,5 +1,5 @@
-{pkgs, ...}: {
-  imports = [./hardware-configuration.nix ../common.nix];
+{...}: {
+  imports = [./hardware-configuration.nix ../common.nix ../desktop.nix];
 
   networking.hostName = "Asuka";
 

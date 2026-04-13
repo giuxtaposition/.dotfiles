@@ -1,3 +1,4 @@
+# Shared configuration for ALL machines (desktops + servers)
 {
   inputs,
   outputs,
@@ -9,28 +10,13 @@
   imports = builtins.attrValues outputs.nixosModules;
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
     config = {
       allowUnfree = true;
-      # permittedInsecurePackages = [
-      #   "openssl-1.1.1w" # needed for mongodb-memory-server
-      # ];
     };
   };
 
@@ -64,34 +50,6 @@
     };
   };
 
-  boot = {
-    # Boot Options
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 5;
-      };
-      efi.canTouchEfiVariables = true;
-      timeout = 1;
-    };
-    kernelPackages = pkgs.linuxPackages_latest;
-  };
-
-  network.enable = true;
-
-  users.users = {
-    giu = {
-      initialPassword = "pigsarecute";
-      isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      ];
-      extraGroups = ["wheel" "video" "audio" "rtkit"];
-    };
-  };
-
-  programs.dconf.enable = true;
-
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -100,76 +58,31 @@
     LC_MONETARY = "it_IT.UTF-8";
   };
 
-  console = {
-    useXkbConfig = true;
-    font = "Lat2-Terminus16";
+  users.users = {
+    giu = {
+      initialPassword = "pigsarecute";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+      ];
+      extraGroups = ["wheel"];
+    };
   };
 
-  # Services
-  services = {
-    dbus = {
-      enable = true;
-      packages = [pkgs.dconf];
-    };
-
-    libinput.enable = true;
-
-    xserver = {
-      enable = true;
-      xkb.options = "ctrl:swapcaps";
-    };
-
-    openssh.enable = true;
-
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      jack.enable = true;
-    };
-    upower.enable = true;
-
-    printing.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
-
-    gvfs.enable = true;
-  };
-  security.rtkit.enable = true;
-
-  hardware = {
-    keyboard = {qmk.enable = true;};
-  };
+  services.openssh.enable = true;
 
   environment = {
     systemPackages = with pkgs; [
-      # System-Wide Packages
-      home-manager
-      nurl
-      xarchiver # graphical archiving tool
-
-      #Theme
-      papirus-icon-theme
-
-      # Command line tools
-      xclip # clipboard tool
-      feh # image viewer
-      fd # replacement for find
+      git
+      wget
+      curl
+      fd
       ripgrep
       rsync
       openssh
-      wget
       unzip
       zip
-      gcc
-      brightnessctl # screen brightness
-      pulseaudio
-      pamixer
-      libnotify # send notifications from terminal
+      htop
     ];
 
     etc =
@@ -179,12 +92,4 @@
       })
       config.nix.registry;
   };
-
-  bluetooth.enable = true;
-  niri.enable = true;
-  programs.kdeconnect.enable = true;
-  tailscale.enable = true;
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "25.05";
 }
