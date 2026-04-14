@@ -12,6 +12,7 @@
       openFirewall = true; # Port 2283
       mediaLocation = "/media/immich";
       machine-learning.enable = true;
+      host = "0.0.0.0";
     };
 
     systemd.tmpfiles.rules = [
