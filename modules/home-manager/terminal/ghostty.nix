@@ -17,7 +17,7 @@
         theme = "catppuccin-mocha";
         font-family = "JetBrainsMono Nerd Font";
         bold-is-bright = true;
-        copy-on-select = true;
+        copy-on-select = "clipboard";
         window-decoration = "server";
         window-show-tab-bar = "auto";
         gtk-toolbar-style = "flat";
@@ -25,6 +25,7 @@
         background-opacity = 0.85;
         background-blur = 16;
         cursor-style = "block";
+        unfocused-split-opacity = 1;
         custom-shader = "shaders/cursor_warp.glsl";
         keybind = [
           "ctrl+a>t=new_tab"
