@@ -1,5 +1,3 @@
--- vim.opt.rtp:prepend(vim.fn.stdpath("data") .. "/site")
-
 require("config")
 require("plugins")
 
