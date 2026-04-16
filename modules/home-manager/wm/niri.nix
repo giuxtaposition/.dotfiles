@@ -105,7 +105,7 @@ in {
       binds = {
         "Mod+Shift+Slash".action = actions."show-hotkey-overlay";
 
-        "Mod+Q".action.spawn = ["ghostty"];
+        "Mod+Q".action.spawn = ["kitty"];
         "Mod+D".action.spawn = ["noctalia-shell" "ipc" "call" "launcher" "toggle"];
         "Mod+P".action.spawn = ["noctalia-shell" "ipc" "call" "sessionMenu" "toggle"];
 
