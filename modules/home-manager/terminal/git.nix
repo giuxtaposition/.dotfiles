@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }: {
@@ -40,23 +39,11 @@
         ];
       };
 
-      delta = {
+      difftastic = {
         enable = true;
-        enableGitIntegration = true;
-      };
-
-      jujutsu = {
-        enable = true;
-        package = pkgs.unstable.jujutsu;
-        settings = {
-          user = {
-            name = "giuxtaposition";
-            email = "yg97.cs@gmail.com";
-          };
-          ui = {
-            "default-command" = ["log"];
-            paginate = "never";
-          };
+        git = {
+          enable = true;
+          diffToolMode = true;
         };
       };
 
@@ -65,8 +52,7 @@
         settings = {
           git.pagers = [
             {
-              colorArg = "always";
-              pager = "delta --dark --paging=never";
+              "externalDiffCommand" = "difft --color=always --display=inline";
             }
           ];
           os = {edit = "nvim";};
@@ -75,7 +61,6 @@
       };
     };
 
-    catppuccin.delta.enable = true;
     catppuccin.lazygit = {
       enable = true;
       accent = "lavender";
