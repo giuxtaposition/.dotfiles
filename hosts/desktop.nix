@@ -1,17 +1,5 @@
 # Desktop-specific configuration shared by personal machines (asuka, reina)
 {pkgs, ...}: {
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 5;
-      };
-      efi.canTouchEfiVariables = true;
-      timeout = 1;
-    };
-    kernelPackages = pkgs.linuxPackages_latest;
-  };
-
   network.enable = true;
 
   users.users.giu.extraGroups = ["video" "audio" "rtkit"];
@@ -31,10 +19,7 @@
 
     libinput.enable = true;
 
-    xserver = {
-      enable = true;
-      xkb.options = "ctrl:swapcaps";
-    };
+    xserver.enable = true;
 
     pipewire = {
       enable = true;
@@ -46,31 +31,16 @@
     upower.enable = true;
 
     printing.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
-
     gvfs.enable = true;
   };
   security.rtkit.enable = true;
 
-  hardware = {
-    keyboard = {qmk.enable = true;};
-  };
-
   environment.systemPackages = with pkgs; [
     home-manager
-    nurl
     xarchiver
-    papirus-icon-theme
-    xclip
-    feh
     gcc
     brightnessctl
     pulseaudio
-    pamixer
     libnotify
   ];
 

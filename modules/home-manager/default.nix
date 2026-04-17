@@ -17,7 +17,9 @@
   noctalia-shell = import ./wm/noctalia-shell.nix;
 
   # Others
-  spotify = import ./spotify.nix;
+  work = import ./work.nix;
+  media = import ./media.nix;
+  gaming = import ./gaming.nix;
   coding = import ./coding;
   colors = import ./colors.nix;
   mpv = import ./mpv.nix;

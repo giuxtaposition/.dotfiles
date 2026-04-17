@@ -1,29 +1,11 @@
 # Kumiko — Home media server
-{pkgs, ...}: {
+{...}: {
   imports = [./hardware-configuration.nix ../common.nix];
 
   networking.hostName = "kumiko";
 
-  boot = {
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 5;
-      };
-      efi.canTouchEfiVariables = true;
-      timeout = 1;
-    };
-    kernelPackages = pkgs.linuxPackages_latest;
-  };
-
   network.enable = true;
-
-  # mDNS — lets reina reach kumiko via kumiko.local
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
+  avahi.enable = true; # mDNS — lets reina reach kumiko via kumiko.local
 
   # Server base configuration
   server.enable = true;

@@ -21,6 +21,8 @@
     ];
   };
 
+  work.enable = true;
+
   coding = {
     enable = true;
     typescript.enable = true;

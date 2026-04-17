@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }: let
@@ -9,8 +8,6 @@ in {
   options = {niri.enable = lib.mkEnableOption "enables niri module";};
 
   config = lib.mkIf config.niri.enable {
-    home.packages = with pkgs; [xwayland-satellite brightnessctl];
-
     programs.niri.settings = {
       input = {
         keyboard.xkb = {
@@ -66,10 +63,6 @@ in {
             bottom-right = r;
           };
           clip-to-geometry = true;
-        }
-        {
-          matches = [{app-id = "^spotify$";}];
-          default-column-width = {proportion = 0.5;};
         }
         {
           matches = [{app-id = "^\\.blueman-manager-wrapped$";}];

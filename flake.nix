@@ -13,10 +13,6 @@
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     wezterm.url = "github:wez/wezterm?dir=nix";
-    spicetify-nix = {
-      url = "github:Gerg-L/spicetify-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -106,7 +102,6 @@
       commonModules = [
         nix-index-database.homeModules.nix-index
         catppuccin.homeModules.catppuccin
-        inputs.spicetify-nix.homeManagerModules.default
         inputs.niri.homeModules.niri
       ];
     in {

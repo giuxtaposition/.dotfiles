@@ -11,6 +11,10 @@
   tailscale = import ./tailscale.nix;
   laptop = import ./laptop.nix;
 
+  # Work modules
+  work = import ./work.nix;
+  avahi = import ./avahi.nix;
+
   # Server modules
   server = import ./server.nix;
   secrets = import ./secrets.nix;
@@ -20,5 +24,4 @@
   paperless = import ./services/paperless.nix;
   immich = import ./services/immich.nix;
   vpn = import ./services/vpn.nix;
-  triliumnext = import ./services/triliumnext.nix;
 }

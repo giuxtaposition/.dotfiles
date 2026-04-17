@@ -3,20 +3,7 @@
   config,
   pkgs,
   ...
-}: let
-  firefoxWorkScript = pkgs.writeScriptBin "firefoxWork" ''
-    #! ${pkgs.bash}/bin/sh
-    firefox -P "work"
-  '';
-
-  firefoxWork = pkgs.makeDesktopItem {
-    name = "firefox-work-profile";
-    desktopName = "Firefox Work Profile";
-    exec = ''firefox -P "work"'';
-    terminal = false;
-    icon = "firefox";
-  };
-in {
+}: {
   options.coding = {
     enable = lib.mkEnableOption "enables coding module";
     typescript.enable = lib.mkEnableOption "enables TypeScript/JavaScript development";
@@ -35,10 +22,6 @@ in {
   };
 
   config = lib.mkIf config.coding.enable {
-    home.sessionVariables = {
-      MONGOMS_DISTRO = "ubuntu-22.04";
-    };
-
     nvim.enable = true;
     bat.enable = true;
     fish.enable = true;
@@ -49,8 +32,6 @@ in {
     home.packages = with pkgs;
       [
         chromium
-        firefoxWork
-        firefoxWorkScript
 
         # DBs
         mongodb-compass
@@ -142,8 +123,11 @@ in {
       ];
 
     xdg.desktopEntries = {
-      mongo_db_compass = {
-        name = "MongoDB Compass Working Secret";
+      # Key must match the package's .desktop filename to shadow it.
+      # home-manager writes ~/.local/share/applications/mongodb-compass.desktop
+      # which takes XDG precedence over the system-level entry from the package.
+      "mongodb-compass" = {
+        name = "MongoDB Compass";
         genericName = "The MongoDB Compass";
         exec = "mongodb-compass --password-store=\"gnome-libsecret\" --ignore-additional-command-line-flags %U";
         terminal = false;

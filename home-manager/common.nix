@@ -19,12 +19,6 @@
   home = {
     username = "giu";
     homeDirectory = "/home/giu";
-
-    sessionVariables = {
-      XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
-      XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
-      XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
-    };
   };
 
   programs.home-manager.enable = true;
@@ -50,7 +44,6 @@
   btop.enable = true;
   yazi.enable = true;
   wayland.enable = true;
-  spotify.enable = true;
   niri.enable = true;
   mpv.enable = true;
   noctalia-shell.enable = true;
@@ -58,14 +51,12 @@
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    slack # Messaging App
     zathura
     cbonsai
 
     (pkgs.wrapFirefox
       (pkgs.firefox-unwrapped.override {pipewireSupport = true;}) {})
 
-    steam-run
     qalculate-gtk
     libreoffice-qt
     pavucontrol
@@ -75,11 +66,8 @@
     merriweather
     nerd-fonts.jetbrains-mono
     inter
-    obs-studio
     rclone
-    trilium-desktop
     obsidian
-    shotcut
   ];
 
   # GTK CONFIG

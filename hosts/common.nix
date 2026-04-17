@@ -59,6 +59,18 @@
     };
   };
 
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 5;
+      };
+      efi.canTouchEfiVariables = true;
+      timeout = 1;
+    };
+    kernelPackages = pkgs.linuxPackages_latest;
+  };
+
   # Time Zone and Locale
   time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -88,7 +100,6 @@
       fd
       ripgrep
       rsync
-      openssh
       unzip
       zip
       htop
