@@ -17,7 +17,6 @@
     environment.systemPackages = [
       pkgs.nautilus
       pkgs.gnome-disk-utility
-      pkgs.ghostty
       pkgs.xwayland-satellite
     ];
 

@@ -8,13 +8,12 @@ Here are some details about my setup:
 
 - **OS**: [NixOs](https://github.com/NixOS/nixpkgs)
 - **Shell**: [Fish](https://github.com/fish-shell/fish-shell)
-- **Terminal**: [Wezterm](https://github.com/wez/wezterm)
+- **Terminal**: [Kitty](https://github.com/kovidgoyal/kitty)
 - **Editor**: [Neovim](https://github.com/neovim/neovim/)
 - **WM**: [Niri](https://github.com/YaLTeR/niri)
 - **Widgets**: [Noctalia-shell](https://github.com/noctalia-dev/noctalia-shell)
 
 ![](/.github/images/screenshot1.png)
-![](/.github/images/screenshot2.png)
 
 ## NixOS Installation Guide
 

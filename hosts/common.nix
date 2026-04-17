@@ -39,14 +39,12 @@
         "https://giuxtaposition.cachix.org"
         "https://nix-community.cachix.org"
         "https://nixpkgs-wayland.cachix.org"
-        "https://wezterm.cachix.org"
         "https://yazi.cachix.org"
       ];
       extra-trusted-public-keys = [
         "giuxtaposition.cachix.org-1:ZY2fy+5YOPsu79QNFd6TUR9gCR/AHkP2m/ygLRu5Hm8="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
-        "wezterm.cachix.org-1:kAbhjYUC9qvblTE+s7S+kl5XM1zVa4skO+E/1IDWdH0="
         "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
       ];
     };

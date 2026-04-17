@@ -11,7 +11,6 @@
       packages = with pkgs; [
         eza
         starship
-        neofetch
         imagemagick
         ueberzugpp
         tree
@@ -20,12 +19,9 @@
       file."${config.home.homeDirectory}/.config/starship.toml" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
       };
-
-      file."${config.home.homeDirectory}/.config/neofetch" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/neofetch";
-      };
     };
 
+    programs.fastfetch.enable = true;
     programs = {
       command-not-found = {enable = false;};
 

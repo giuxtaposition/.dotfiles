@@ -6,8 +6,6 @@
     };
 
   modifications = _final: prev: {
-    wezterm = inputs.wezterm.packages.${prev.stdenv.hostPlatform.system}.default;
-
     inherit (inputs.nixpkgs-wayland.packages.${prev.stdenv.hostPlatform.system}) wl-gammarelay-rs;
 
     slack = prev.slack.overrideAttrs (_oldAttrs: {

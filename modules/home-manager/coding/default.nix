@@ -26,7 +26,6 @@
     bat.enable = true;
     fish.enable = true;
     git.enable = true;
-    wezterm.enable = true;
     direnv.enable = true;
 
     home.packages = with pkgs;

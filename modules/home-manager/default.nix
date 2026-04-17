@@ -4,11 +4,9 @@
   fish = import ./terminal/fish.nix;
   git = import ./terminal/git.nix;
   nvim = import ./terminal/nvim.nix;
-  wezterm = import ./terminal/wezterm.nix;
   btop = import ./terminal/btop.nix;
   yazi = import ./terminal/yazi.nix;
   direnv = import ./terminal/direnv.nix;
-  ghostty = import ./terminal/ghostty.nix;
   kitty = import ./terminal/kitty.nix;
 
   # WM

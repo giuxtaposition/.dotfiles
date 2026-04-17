@@ -38,8 +38,6 @@
   fish.enable = true;
   git.enable = true;
   nvim.enable = true;
-  wezterm.enable = true;
-  ghostty.enable = true;
   kitty.enable = true;
   btop.enable = true;
   yazi.enable = true;

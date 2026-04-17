@@ -1,8 +1,5 @@
 vim.pack.add({
   {
-    src = "https://github.com/DrKJeff16/wezterm-types",
-  },
-  {
     src = "https://github.com/Bilal2453/luvit-meta",
   },
   {
@@ -29,7 +26,6 @@ vim.api.nvim_create_autocmd("FileType", {
     require("lazydev").setup({
       library = {
         { path = "luvit-meta/library", words = { "vim%.uv" } },
-        { path = "wezterm-types", mods = { "wezterm" } },
         { plugins = { "nvim-dap-ui" }, types = true },
         { path = "luassert-types/library", words = { "assert" } },
         { path = "busted-types/library", words = { "describe" } },
