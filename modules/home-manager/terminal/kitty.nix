@@ -113,5 +113,13 @@
     catppuccin.kitty = {
       enable = true;
     };
+
+    xdg = {
+      configFile = {
+        "kitty/neighboring_window.py".source = "${pkgs.vimPlugins.smart-splits-nvim}/kitty/neighboring_window.py";
+        "kitty/relative_resize.py".source = "${pkgs.vimPlugins.smart-splits-nvim}/kitty/relative_resize.py";
+        "kitty/split_window.py".source = "${pkgs.vimPlugins.smart-splits-nvim}/kitty/split_window.py";
+      };
+    };
   };
 }
