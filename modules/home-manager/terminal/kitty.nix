@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
   options = {kitty.enable = lib.mkEnableOption "enables kitty module";};
@@ -30,6 +31,44 @@
         "kitty_mod+t" = "new_tab_with_cwd";
         "kitty_mod+enter" = "new_window_with_cwd";
         "ctrl+shift+g" = "launch --type=background --cwd=current kitten quick-access-terminal -- lazygit";
+        "kitty_mod+f" = let
+          fzf_ksb_find_script = pkgs.writeShellScript "fzf_ksb_find.sh" ''
+            #! ${pkgs.bash}/bin/sh
+            # Purpose: Fuzzy-find through the Kitty scrollback buffer
+            # and copy the selected line to clipboard
+
+            set -euo pipefail
+
+            stdin="$(mktemp)"
+            trap 'rm -f "$stdin"' EXIT
+
+            # Read scrollback into temp file
+            cat > "$stdin"
+
+            # Add line numbers and run fzf
+            selection=$(
+              nl -ba "$stdin" | fzf \
+                --ansi \
+                --no-sort \
+                --exact \
+                --tac \
+                --delimiter=$'\t' \
+                --with-nth=2.. \
+                --preview "bat --color=always --decorations=never --highlight-line {1} $stdin" \
+                --preview-label 'Scrollback Buffer (Search Result Highlighted)' \
+                --preview-window 'up,80%,border-rounded,+{1}/2' \
+                --bind 'ctrl-c:abort' \
+                --bind 'ctrl-b:preview-half-page-up' \
+                --bind 'ctrl-f:preview-half-page-down'
+            )
+
+            # Extract the actual line (remove line number column)
+            line="$(printf '%s\n' "$selection" | cut -f2-)"
+
+            # Copy to clipboard (no trailing newline)
+            printf "%s" "$line" | kitty +kitten clipboard
+          '';
+        in "launch --type=overlay --stdin-source=@screen_scrollback --stdin-add-formatting --copy-env ${fzf_ksb_find_script}";
       };
       extraConfig = ''
         map --when-focus-on var:IS_NVIM ctrl+j
@@ -51,7 +90,7 @@
         map --when-focus-on var:IS_NVIM alt+right
       '';
       settings = {
-        font_family = ''family="JetBrainsMono Nerd Font Mono"'';
+        font_family = "JetBrainsMono Nerd Font Mono";
         cursor_shape = "block";
         cursor_trail = "1";
         copy_on_select = "true";
