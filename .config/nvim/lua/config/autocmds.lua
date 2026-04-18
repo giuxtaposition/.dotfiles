@@ -90,6 +90,18 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
+-- Register a socket per working directory for lazygit integration
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = augroup("dir_socket"),
+  desc = "Register a server socket based on the working directory",
+  callback = function()
+    local cwd = vim.fn.getcwd()
+    local hash = vim.fn.sha256(cwd):sub(1, 8)
+    local socket = "/tmp/nvim-" .. hash
+    vim.fn.serverstart(socket)
+  end,
+})
+
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   group = augroup("keymap_filetype"),
   desc = "Set filetype to c for keymap files",
