@@ -24,4 +24,7 @@
   paperless = import ./services/paperless.nix;
   immich = import ./services/immich.nix;
   vpn = import ./services/vpn.nix;
+
+  #  # Game server modules
+  dst-server = import ./dont_starve_together_server.nix;
 }

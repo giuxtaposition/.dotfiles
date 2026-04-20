@@ -27,6 +27,16 @@
   fish.enable = true;
   amdgpu.enable = true;
 
+  services.dst-server = {
+    enable = true;
+
+    cluster = {
+      description = "Survival Madness";
+      maxPlayers = 8;
+      pvp = false;
+    };
+  };
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "25.05";
 }
