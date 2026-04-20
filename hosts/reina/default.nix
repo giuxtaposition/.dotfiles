@@ -7,6 +7,7 @@
   steam.enable = true;
   fish.enable = true;
   amdgpu.enable = true;
+  work.enable = true;
 
   hardware = {
     keyboard = {qmk.enable = true;};

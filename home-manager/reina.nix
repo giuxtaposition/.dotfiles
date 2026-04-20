@@ -2,11 +2,11 @@
   imports = [./common.nix];
 
   media.enable = true;
+  work.enable = true;
   gaming.enable = true;
 
   programs = {
     niri.settings = {
-      input.keyboard.xkb.options = "ctrl:swapcaps";
       outputs = {
         "DP-2" = {
           mode = {
