@@ -31,9 +31,11 @@
     enable = true;
 
     cluster = {
-      description = "Survival Madness";
+      name = "Giuxtaposition Survival Madness";
+      description = "Giuxtaposition Survival Madness";
       maxPlayers = 8;
       pvp = false;
+      key = "giuxtaposition-survival-madness-shard-key";
     };
   };
 

@@ -16,18 +16,49 @@
 }: let
   cfg = config.services.dst-server;
   hasSecrets = builtins.pathExists ../../secrets/secrets.yaml;
-  clusterDir = "${cfg.dataDir}/.klei/DoNotStarveTogether/${cfg.clusterName}";
+  # DST uses ${dataDir}/DoNotStarveTogether/ directly (no .klei prefix)
+  # when -persistent_storage_root is passed; confirmed by PersistRootStorage log.
+  clusterDir = "${cfg.dataDir}/DoNotStarveTogether/${cfg.clusterName}";
   serverDir = "${cfg.dataDir}/server";
   serverBin = "${serverDir}/bin64/dontstarve_dedicated_server_nullrenderer_x64";
 
-  # Runtime library paths needed by the DST binary.
-  # libcurl-gnutls.so.4: DST expects this Debian-specific name; NixOS ships
-  # libcurl.so.4 which is ABI-compatible (same library, different TLS backend).
+  # DST was built against Debian's libcurl4-gnutls which adds CURL_GNUTLS_3
+  # versioned symbols via a version script. NixOS's curlWithGnuTls doesn't
+  # apply that script, so we rebuild it with the version script added.
+  curlGnutls4 = let
+    versionScript = pkgs.writeText "curl-gnutls.map" ''
+      CURL_GNUTLS_3 {
+        global: curl_*; CURL*;
+      };
+    '';
+  in
+    pkgs.curlWithGnuTls.overrideAttrs (old: {
+      env =
+        (old.env or {})
+        // {
+          LDFLAGS = (old.env.LDFLAGS or "") + " -Wl,--version-script=${versionScript}";
+        };
+    });
+
   dstRpath = lib.concatStringsSep ":" [
-    "${pkgs.curlWithGnuTls.out}/lib" # curl splits bin/out: out has libcurl.so.4, bin has just the curl binary
+    "${curlGnutls4.out}/lib"
     "${pkgs.stdenv.cc.cc.lib}/lib"
     "${serverDir}/bin64/lib64"
   ];
+
+  # Named pipes for injecting console commands (used by ExecStop to send
+  # c_shutdown(true) which triggers a full world+user save before exit).
+  masterPipe = "${cfg.dataDir}/master-console.fifo";
+  cavesPipe = "${cfg.dataDir}/caves-console.fifo";
+
+  # ExecStop scripts: write c_shutdown(true) to the shard's stdin pipe.
+  # DST executes it in Lua → saves world+users → exits cleanly.
+  masterStopScript = pkgs.writeShellScript "dst-master-stop" ''
+    [ -p ${masterPipe} ] && echo 'c_shutdown(true)' > ${masterPipe} || true
+  '';
+  cavesStopScript = pkgs.writeShellScript "dst-caves-stop" ''
+    [ -p ${cavesPipe} ] && echo 'c_shutdown(true)' > ${cavesPipe} || true
+  '';
 in {
   options.services.dst-server = {
     enable = lib.mkEnableOption "Don't Starve Together dedicated server (Master + Caves)";
@@ -57,9 +88,16 @@ in {
     };
 
     cluster = {
-      description = lib.mkOption {
+      name = lib.mkOption {
         type = lib.types.str;
         default = "My DST Server";
+        description = "Server name shown in the server browser";
+      };
+
+      description = lib.mkOption {
+        type = lib.types.str;
+        default = "";
+        description = "Server description shown in the server browser";
       };
 
       password = lib.mkOption {
@@ -81,6 +119,14 @@ in {
         type = lib.types.bool;
         default = false;
       };
+
+      # Shared secret used for Master↔Caves shard authentication.
+      # Not sensitive — just needs to be identical across all shards.
+      key = lib.mkOption {
+        type = lib.types.str;
+        default = "defaultclusterkey";
+        description = "Shared cluster key for inter-shard authentication";
+      };
     };
   };
 
@@ -97,7 +143,8 @@ in {
     };
 
     # ---- Open firewall ports ----
-    networking.firewall.allowedUDPPorts = [10999 11000];
+    # 10998 = inter-shard (loopback), 10999 = Master, 11000 = Caves
+    networking.firewall.allowedUDPPorts = [10998 10999 11000];
 
     # ---- Generate cluster.ini ----
     environment.etc = {
@@ -110,10 +157,11 @@ in {
           then "true"
           else "false"
         }
+        pause_when_empty = true
 
         [NETWORK]
         cluster_description = ${cfg.cluster.description}
-        cluster_name = ${cfg.cluster.description}
+        cluster_name = ${cfg.cluster.name}
         cluster_password = ${cfg.cluster.password}
 
         [MISC]
@@ -121,6 +169,10 @@ in {
 
         [SHARD]
         shard_enabled = true
+        bind_ip = 127.0.0.1
+        master_ip = 127.0.0.1
+        master_port = 10998
+        cluster_key = ${cfg.cluster.key}
       '';
 
       # ---- Generate shard configs ----
@@ -145,8 +197,7 @@ in {
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0755 ${cfg.user} ${cfg.user} -"
       "d ${serverDir} 0755 ${cfg.user} ${cfg.user} -"
-      "d ${cfg.dataDir}/.klei 0755 ${cfg.user} ${cfg.user} -"
-      "d ${cfg.dataDir}/.klei/DoNotStarveTogether 0755 ${cfg.user} ${cfg.user} -"
+      "d ${cfg.dataDir}/DoNotStarveTogether 0755 ${cfg.user} ${cfg.user} -"
       "d ${clusterDir} 0755 ${cfg.user} ${cfg.user} -"
       "d ${clusterDir}/Master 0755 ${cfg.user} ${cfg.user} -"
       "d ${clusterDir}/Caves 0755 ${cfg.user} ${cfg.user} -"
@@ -183,7 +234,8 @@ in {
             ${serverBin}
 
           # Create the libcurl-gnutls.so.4 alias that DST expects.
-          ln -sf ${pkgs.curlWithGnuTls.out}/lib/libcurl.so.4 \
+          # Must use curlGnutls4 (rebuilt with CURL_GNUTLS_3 version script).
+          ln -sf ${curlGnutls4.out}/lib/libcurl.so.4 \
             ${serverDir}/bin64/lib64/libcurl-gnutls.so.4
         '';
       };
@@ -224,9 +276,16 @@ in {
         serviceConfig = {
           Type = "simple";
           User = cfg.user;
-          WorkingDirectory = serverDir;
+          WorkingDirectory = "${serverDir}/bin64";
           Restart = "on-failure";
           RestartSec = "10s";
+          # Send c_shutdown(true) via stdin pipe → DST saves world+users then exits.
+          # KillMode=mixed: after ExecStop, systemd waits TimeoutStopSec for DST to
+          # exit cleanly, then sends SIGTERM to the main process as a fallback.
+          # This prevents orphan processes when the clean shutdown doesn't complete.
+          ExecStop = "${masterStopScript}";
+          KillMode = "mixed";
+          TimeoutStopSec = 90;
         };
 
         # FMOD and other bundled libs are loaded via dlopen() which ignores
@@ -234,11 +293,18 @@ in {
         environment.LD_LIBRARY_PATH = "${serverDir}/bin64/lib64";
 
         script = ''
+          # Create stdin pipe for console command injection (e.g. c_shutdown).
+          [ -p ${masterPipe} ] || mkfifo ${masterPipe}
+          # Open FIFO read+write so the bash process always holds the read end
+          # open — prevents ExecStop's write from blocking when DST closes stdin.
+          exec 3<>${masterPipe}
           ${serverBin} \
             -console \
             -persistent_storage_root ${cfg.dataDir} \
             -cluster ${cfg.clusterName} \
-            -shard Master
+            -shard Master \
+            <&3
+          exec 3>&-
         '';
       };
 
@@ -251,19 +317,26 @@ in {
         serviceConfig = {
           Type = "simple";
           User = cfg.user;
-          WorkingDirectory = serverDir;
+          WorkingDirectory = "${serverDir}/bin64";
           Restart = "on-failure";
           RestartSec = "10s";
+          ExecStop = "${cavesStopScript}";
+          KillMode = "mixed";
+          TimeoutStopSec = 90;
         };
 
         environment.LD_LIBRARY_PATH = "${serverDir}/bin64/lib64";
 
         script = ''
+          [ -p ${cavesPipe} ] || mkfifo ${cavesPipe}
+          exec 3<>${cavesPipe}
           ${serverBin} \
             -console \
             -persistent_storage_root ${cfg.dataDir} \
             -cluster ${cfg.clusterName} \
-            -shard Caves
+            -shard Caves \
+            <&3
+          exec 3>&-
         '';
       };
     };
