@@ -35,6 +35,7 @@
       description = "Giuxtaposition Survival Madness";
       maxPlayers = 8;
       pvp = false;
+      gameMode = "endless";
       key = "giuxtaposition-survival-madness-shard-key";
     };
   };

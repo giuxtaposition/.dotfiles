@@ -51,13 +51,14 @@
   masterPipe = "${cfg.dataDir}/master-console.fifo";
   cavesPipe = "${cfg.dataDir}/caves-console.fifo";
 
-  # ExecStop scripts: write c_shutdown(true) to the shard's stdin pipe.
+  # ExecStop scripts: write c_shutdown() to the shard's stdin pipe.
   # DST executes it in Lua → saves world+users → exits cleanly.
+  # Note: c_shutdown(true) means nosave=true (no save!) — always use c_shutdown().
   masterStopScript = pkgs.writeShellScript "dst-master-stop" ''
-    [ -p ${masterPipe} ] && echo 'c_shutdown(true)' > ${masterPipe} || true
+    [ -p ${masterPipe} ] && echo 'c_shutdown()' > ${masterPipe} || true
   '';
   cavesStopScript = pkgs.writeShellScript "dst-caves-stop" ''
-    [ -p ${cavesPipe} ] && echo 'c_shutdown(true)' > ${cavesPipe} || true
+    [ -p ${cavesPipe} ] && echo 'c_shutdown()' > ${cavesPipe} || true
   '';
 in {
   options.services.dst-server = {
@@ -87,6 +88,12 @@ in {
       description = "Key in SOPS file for cluster token";
     };
 
+    sopsPasswordKey = lib.mkOption {
+      type = lib.types.str;
+      default = "dst/cluster_password";
+      description = "Key in SOPS file for cluster password";
+    };
+
     cluster = {
       name = lib.mkOption {
         type = lib.types.str;
@@ -98,11 +105,6 @@ in {
         type = lib.types.str;
         default = "";
         description = "Server description shown in the server browser";
-      };
-
-      password = lib.mkOption {
-        type = lib.types.str;
-        default = "";
       };
 
       maxPlayers = lib.mkOption {
@@ -162,7 +164,7 @@ in {
         [NETWORK]
         cluster_description = ${cfg.cluster.description}
         cluster_name = ${cfg.cluster.name}
-        cluster_password = ${cfg.cluster.password}
+        cluster_password = __DST_PASSWORD_PLACEHOLDER__
 
         [MISC]
         console_enabled = true
@@ -259,6 +261,12 @@ in {
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/server.ini ${clusterDir}/Master/
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/server.ini ${clusterDir}/Caves/
 
+          # Inject cluster password from sops secret
+          DST_PASSWORD=$(cat ${config.sops.secrets.${cfg.sopsPasswordKey}.path})
+          ${pkgs.gnused}/bin/sed -i \
+            "s|cluster_password = __DST_PASSWORD_PLACEHOLDER__|cluster_password = $DST_PASSWORD|" \
+            ${clusterDir}/cluster.ini
+
           # Inject secret token
           ${pkgs.coreutils}/bin/cp ${config.sops.secrets.${cfg.sopsTokenKey}.path} \
             ${clusterDir}/cluster_token.txt
@@ -279,7 +287,7 @@ in {
           WorkingDirectory = "${serverDir}/bin64";
           Restart = "on-failure";
           RestartSec = "10s";
-          # Send c_shutdown(true) via stdin pipe → DST saves world+users then exits.
+          # Send c_shutdown() via stdin pipe → DST saves world+users then exits.
           # KillMode=mixed: after ExecStop, systemd waits TimeoutStopSec for DST to
           # exit cleanly, then sends SIGTERM to the main process as a fallback.
           # This prevents orphan processes when the clean shutdown doesn't complete.
@@ -341,9 +349,10 @@ in {
       };
     };
 
-    # Cluster token secret (only when secrets file exists)
-    sops.secrets.${cfg.sopsTokenKey} = lib.mkIf hasSecrets {
-      owner = cfg.user;
+    # Cluster token and password secrets (only when secrets file exists)
+    sops.secrets = lib.mkIf hasSecrets {
+      ${cfg.sopsTokenKey}.owner = cfg.user;
+      ${cfg.sopsPasswordKey}.owner = cfg.user;
     };
   };
 }
