@@ -71,11 +71,23 @@ in {
         ];
       };
 
-      difftastic = {
+      delta = {
         enable = true;
-        git = {
-          enable = true;
-          diffToolMode = true;
+        enableGitIntegration = true;
+      };
+
+      jujutsu = {
+        enable = true;
+        package = pkgs.unstable.jujutsu;
+        settings = {
+          user = {
+            name = "giuxtaposition";
+            email = "yg97.cs@gmail.com";
+          };
+          ui = {
+            "default-command" = ["log"];
+            paginate = "never";
+          };
         };
       };
 
@@ -84,7 +96,8 @@ in {
         settings = {
           git.pagers = [
             {
-              "externalDiffCommand" = "difft --color=always --display=inline";
+              colorArg = "always";
+              pager = "delta --dark --paging=never";
             }
           ];
           os = {
@@ -96,6 +109,7 @@ in {
       };
     };
 
+    catppuccin.delta.enable = true;
     catppuccin.lazygit = {
       enable = true;
       accent = "lavender";
