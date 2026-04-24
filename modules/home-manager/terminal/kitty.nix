@@ -69,8 +69,20 @@
             printf "%s" "$line" | kitty +kitten clipboard
           '';
         in "launch --type=overlay --stdin-source=@screen_scrollback --stdin-add-formatting --copy-env ${fzf_ksb_find_script}";
+        "kitty_mod+a" = let
+          test_terminal_script = pkgs.writeShellScript "nvim-test-terminal.sh" ''
+            #!${pkgs.bash}/bin/sh
+            if kitty @ focus-window --match "title:nvim-test-runner" 2>/dev/null; then
+              exit 0
+            fi
+            # No window — open one showing previous results (if any)
+            kitty @ launch --type=os-window --cwd=current fish -C 'function fish_title; echo nvim-test-runner; end; cat /tmp/nvim-test-runner.log 2>/dev/null'
+          '';
+        in "launch --type=background --copy-env ${test_terminal_script}";
       };
       extraConfig = ''
+        map --when-focus-on title:nvim-test-runner kitty_mod+a close_window
+
         map --when-focus-on var:IS_NVIM ctrl+j
         map --when-focus-on var:IS_NVIM ctrl+k
         map --when-focus-on var:IS_NVIM ctrl+h
@@ -90,6 +102,7 @@
         map --when-focus-on var:IS_NVIM alt+right
       '';
       settings = {
+        background_opacity = "0.9";
         font_family = "JetBrainsMono Nerd Font Mono";
         cursor_shape = "block";
         cursor_trail = "1";
