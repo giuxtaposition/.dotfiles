@@ -38,7 +38,7 @@ in {
   options = {git.enable = lib.mkEnableOption "enables git module";};
 
   config = lib.mkIf config.git.enable {
-    home.packages = [nvimOpen];
+    home.packages = [nvimOpen pkgs.gitmoji-cli];
     programs = {
       git = {
         enable = true;
@@ -95,17 +95,49 @@ in {
       lazygit = {
         enable = true;
         settings = {
-          git.pagers = [
-            {
-              colorArg = "always";
-              pager = "delta --dark --paging=never";
-            }
-          ];
+          git = {
+            pagers = [
+              {
+                colorArg = "always";
+                pager = "delta --dark --paging=never";
+              }
+            ];
+            parseEmoji = true;
+          };
           os = {
             edit = "nvim-open {{filename}}";
             editAtLine = "nvim-open {{filename}} {{line}}";
           };
           promptToReturnFromSubprocess = false;
+          customCommands = [
+            {
+              key = "C";
+              context = "files";
+              description = "Commit changes using gitmojis";
+              command = "git commit -m '{{ .Form.emoji }}{{ if .Form.scope }} ({{ .Form.scope }}):{{ end }} {{ .Form.message }}'";
+              prompts = [
+                {
+                  type = "menuFromCommand";
+                  title = "Choose a gitmoji:";
+                  command = "gitmoji -l";
+                  filter = "^(.*?) - (:.*?:) - (.*)$";
+                  key = "emoji";
+                  labelFormat = "{{ .group_1 }} - {{ .group_3 }}";
+                  valueFormat = "{{ .group_2 }}";
+                }
+                {
+                  type = "input";
+                  title = "Enter the scope of current changes:";
+                  key = "scope";
+                }
+                {
+                  type = "input";
+                  title = "Enter the commit title:";
+                  key = "message";
+                }
+              ];
+            }
+          ];
         };
       };
     };
