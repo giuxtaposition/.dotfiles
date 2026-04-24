@@ -30,7 +30,24 @@
         "alt+right" = "kitten relative_resize.py right 3";
         "kitty_mod+t" = "new_tab_with_cwd";
         "kitty_mod+enter" = "new_window_with_cwd";
-        "ctrl+shift+g" = "launch --type=background --cwd=current kitten quick-access-terminal -- lazygit";
+        "ctrl+shift+g" = "launch --type=background --cwd=current --copy-env kitten quick-access-terminal -- lazygit";
+        "kitty_mod+o" = let
+          open_in_nvim = pkgs.writeShellScript "kitty-open-in-nvim.sh" ''
+            #!${pkgs.bash}/bin/sh
+            # $1 is the full regex match, e.g. "src/utils/Error.test.ts:15"
+            FILE="$(printf '%s' "$1" | cut -d: -f1)"
+            LINE="$(printf '%s' "$1" | cut -d: -f2)"
+            nvim-open "$FILE" "$LINE"
+          '';
+        in "kitten hints --type regex --regex '[^\\s]+\\.[a-z]+:[0-9]+' --program ${open_in_nvim}";
+        "kitty_mod+e" = let
+          open_in_nvim = pkgs.writeShellScript "kitty-open-in-nvim.sh" ''
+            #!${pkgs.bash}/bin/sh
+            file="$1"
+            line="$2"
+            kitty @ send-text --match "var:IS_NVIM" "$(printf '\033\033:e +%s %s\r' "$line" "$file")"
+          '';
+        in "kitten hints --type=linenum --linenum-action=background ${open_in_nvim} {path} {line}";
         "kitty_mod+f" = let
           fzf_ksb_find_script = pkgs.writeShellScript "fzf_ksb_find.sh" ''
             #! ${pkgs.bash}/bin/sh

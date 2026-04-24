@@ -16,6 +16,7 @@
       fi
       if [ -n "$KITTY_LISTEN_ON" ]; then
         kitty @ focus-window --match "var:IS_NVIM and cwd:$PWD"
+        kitty @ close-window --match "id:$KITTY_WINDOW_ID"
       fi
     }
 
