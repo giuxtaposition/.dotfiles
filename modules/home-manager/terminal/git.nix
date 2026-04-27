@@ -51,14 +51,14 @@ in {
           pull.rebase = true;
           push.autoSetupRemote = true;
           fetch.prune = true;
-
           init.defaultBranch = "main";
-          merge = {tool = "fugitive";};
-          mergetool = {
-            fugitive = {cmd = ''nvim -f -c \"Gvdiff\" \"$MERGED\"'';};
+          merge = {
+            conflictStyle = "zdiff3";
+          };
+          diff = {
+            colorMoved = "default";
           };
         };
-
         includes = [
           {
             condition = "gitdir:~/Programming/vitesicure/";
@@ -75,20 +75,11 @@ in {
       delta = {
         enable = true;
         enableGitIntegration = true;
-      };
-
-      jujutsu = {
-        enable = true;
-        package = pkgs.unstable.jujutsu;
-        settings = {
-          user = {
-            name = "giuxtaposition";
-            email = "yg97.cs@gmail.com";
-          };
-          ui = {
-            "default-command" = ["log"];
-            paginate = "never";
-          };
+        options = {
+          navigate = true;
+          side-by-side = true;
+          diff-highlight = true;
+          true-color = "always";
         };
       };
 
@@ -98,8 +89,9 @@ in {
           git = {
             pagers = [
               {
-                colorArg = "always";
                 pager = "delta --dark --paging=never";
+                colorArg = "always";
+                useConfig = true;
               }
             ];
             parseEmoji = true;
