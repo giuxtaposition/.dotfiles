@@ -105,7 +105,7 @@ local function send_command(cmd)
 
   local logged_cmd = cmd .. " 2>&1 | tee " .. LOG_FILE
   local init = "function fish_title; echo " .. KITTY_WINDOW .. "; end; " .. logged_cmd
-  os.execute("kitty @ launch --cwd=current --type=os-window fish -C " .. shell_escape(init))
+  os.execute("kitty --title nvim-test-runner fish -C " .. shell_escape(init) .. " &")
 end
 
 function M.test_file()

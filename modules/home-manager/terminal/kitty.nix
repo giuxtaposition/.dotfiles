@@ -93,7 +93,7 @@
               exit 0
             fi
             # No window — open one showing previous results (if any)
-            kitty @ launch --type=os-window --cwd=current fish -C 'function fish_title; echo nvim-test-runner; end; cat /tmp/nvim-test-runner.log 2>/dev/null'
+            kitty --title nvim-test-runner fish -C 'function fish_title; echo nvim-test-runner; end; cat /tmp/nvim-test-runner.log 2>/dev/null'
           '';
         in "launch --type=background --copy-env ${test_terminal_script}";
       };

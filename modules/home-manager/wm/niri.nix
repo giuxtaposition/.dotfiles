@@ -39,7 +39,6 @@ in {
 
       spawn-at-startup = [
         {command = ["noctalia-shell"];}
-        {command = ["xwayland-satellite"];}
         {
           command = [
             "cachix"
@@ -85,6 +84,23 @@ in {
             }
           ];
           open-floating = true;
+        }
+        {
+          matches = [
+            {
+              app-id = "^kitty$";
+              title = "^nvim-test-runner$";
+            }
+          ];
+          open-floating = true;
+          default-column-width = {proportion = 0.8;};
+          default-window-height = {proportion = 0.8;};
+          border = {
+            enable = true;
+            width = 2;
+            active.color = "#a6e3a1";
+            inactive.color = "#a6e3a1";
+          };
         }
       ];
 
@@ -265,9 +281,7 @@ in {
         "Mod+Shift+P".action = actions."power-off-monitors";
       };
 
-      environment = {
-        DISPLAY = ":0";
-      };
+      xwayland-satellite.enable = true;
     };
   };
 }
