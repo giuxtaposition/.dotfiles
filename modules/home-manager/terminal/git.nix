@@ -115,7 +115,7 @@ in {
                   filter = "^(.*?) - (:.*?:) - (.*)$";
                   key = "emoji";
                   labelFormat = "{{ .group_1 }} - {{ .group_3 }}";
-                  valueFormat = "{{ .group_2 }}";
+                  valueFormat = "{{ .group_1 }}";
                 }
                 {
                   type = "input";
