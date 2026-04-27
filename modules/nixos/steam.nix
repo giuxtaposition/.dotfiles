@@ -10,6 +10,10 @@
       enable = true;
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
+      gamescopeSession.enable = true;
+      localNetworkGameTransfers.openFirewall = true;
     };
+
+    programs.gamemode.enable = true;
   };
 }
