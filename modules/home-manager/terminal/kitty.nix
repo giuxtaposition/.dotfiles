@@ -125,7 +125,7 @@
         cursor_shape = "block";
         cursor_trail = "1";
         copy_on_select = "true";
-        tab_bar_min_tabs = "1";
+        tab_bar_min_tabs = "2";
         tab_bar_edge = "bottom";
         tab_bar_style = "powerline";
         tab_powerline_style = "round";

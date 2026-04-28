@@ -95,6 +95,13 @@
       }
 
       window-rule {
+          match app-id="^kitty$" title="^nvim-scratch$"
+          open-floating true
+          default-column-width { proportion 0.6; }
+          default-window-height { proportion 0.6; }
+      }
+
+      window-rule {
           match app-id="^kitty$" title="^nvim-test-runner$"
           open-floating true
           default-column-width { proportion 0.8; }
@@ -259,6 +266,8 @@
 
           Mod+V       { toggle-window-floating; }
           Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+          Mod+Shift+N repeat=false { spawn-sh "wtype -M ctrl a -m ctrl; wtype -M ctrl c -m ctrl; sleep 0.1; wl-paste > /tmp/nvimedit; kitty --title nvim-scratch -e nvim /tmp/nvimedit; wl-copy -n < /tmp/nvimedit; sleep 0.3; wtype -M ctrl v -m ctrl; rm -f /tmp/nvimedit"; }
 
           Print      { screenshot; }
           Ctrl+Print { screenshot-screen; }

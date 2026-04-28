@@ -10,6 +10,7 @@
     home = {
       packages = with pkgs; [
         wl-clipboard # command-line copy/paste utilities for wayland
+        wtype # simulate keyboard input on wayland
         slurp # select a region in a wayland compositor
         grim # grab images from a wayland compositor
         swayidle
