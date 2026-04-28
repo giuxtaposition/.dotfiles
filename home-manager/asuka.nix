@@ -1,24 +1,15 @@
 {...}: {
   imports = [./common.nix];
 
-  programs.niri.settings = {
-    outputs = {
-      "eDP-1" = {
-        mode = {
-          width = 2256;
-          height = 1504;
-        };
-        scale = 1.25;
-        position = {
-          x = 0;
-          y = 0;
-        };
-      };
-    };
-    spawn-at-startup = [
-      {command = ["swayidle" "-w" "timeout" "300" "swaylock -f -c 000000" "timeout" "600" "systemctl suspend" "before-sleep" "swaylock -f -c 000000"];}
-    ];
-  };
+  niri.extraConfig = ''
+    output "eDP-1" {
+        mode "2256x1504"
+        scale 1.25
+        position x=0 y=0
+    }
+
+    spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f -c 000000" "timeout" "600" "systemctl suspend" "before-sleep" "swaylock -f -c 000000"
+  '';
 
   work.enable = true;
 

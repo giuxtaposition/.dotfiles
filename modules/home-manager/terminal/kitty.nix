@@ -120,6 +120,7 @@
       '';
       settings = {
         background_opacity = "0.9";
+        background_blur = "5";
         font_family = "JetBrainsMono Nerd Font Mono";
         cursor_shape = "block";
         cursor_trail = "1";

@@ -5,6 +5,8 @@
       inherit inputs;
     };
 
+  niri-latest = inputs.niri.overlays.default;
+
   modifications = _final: prev: {
     inherit (inputs.nixpkgs-wayland.packages.${prev.stdenv.hostPlatform.system}) wl-gammarelay-rs;
 

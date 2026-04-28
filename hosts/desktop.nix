@@ -4,19 +4,12 @@
 
   users.users.giu.extraGroups = ["video" "audio" "rtkit"];
 
-  programs.dconf.enable = true;
-
   console = {
     useXkbConfig = true;
     font = "Lat2-Terminus16";
   };
 
   services = {
-    dbus = {
-      enable = true;
-      packages = [pkgs.dconf];
-    };
-
     libinput.enable = true;
 
     xserver.enable = true;

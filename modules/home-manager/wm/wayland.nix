@@ -36,11 +36,6 @@
         EGL_PLATFORM = "wayland";
         # Hint electron apps to use wayland
         NIXOS_OZONE_WL = "1";
-        # use legacy DRM instead of atomic mode setting
-        WLR_DRM_NO_ATOMIC = "1";
-        # Firefox
-        MOZ_ENABLE_WAYLAND = "1";
-        MOZ_USE_XINPUT2 = "1";
         # QT envs
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         QT_AUTO_SCREEN_SCALE_FACTOR = "1";

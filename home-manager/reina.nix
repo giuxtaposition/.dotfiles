@@ -5,38 +5,23 @@
   work.enable = true;
   gaming.enable = true;
 
-  programs = {
-    niri.settings = {
-      outputs = {
-        "DP-2" = {
-          mode = {
-            width = 1920;
-            height = 1080;
-            refresh = 144.0;
-          };
-          scale = 1.0;
-          position = {
-            x = 2560;
-            y = 0;
-          };
-          variable-refresh-rate = true;
-        };
-        "DP-3" = {
-          mode = {
-            width = 3840;
-            height = 2160;
-            refresh = 160.0;
-          };
-          scale = 1.5;
-          position = {
-            x = 4480;
-            y = 0;
-          };
-          variable-refresh-rate = true;
-        };
-      };
-    };
+  niri.extraConfig = ''
+    output "DP-2" {
+        mode "1920x1080@144.0"
+        scale 1.0
+        position x=2560 y=0
+        variable-refresh-rate
+    }
 
+    output "DP-3" {
+        mode "3840x2160@160.0"
+        scale 1.5
+        position x=4480 y=0
+        variable-refresh-rate
+    }
+  '';
+
+  programs = {
     ssh = {
       enable = true;
       enableDefaultConfig = false;

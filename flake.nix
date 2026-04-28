@@ -20,10 +20,7 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    niri.url = "github:niri-wm/niri";
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -101,7 +98,6 @@
       commonModules = [
         nix-index-database.homeModules.nix-index
         catppuccin.homeModules.catppuccin
-        inputs.niri.homeModules.niri
       ];
     in {
       "giu@asuka" = home-manager.lib.homeManagerConfiguration {
