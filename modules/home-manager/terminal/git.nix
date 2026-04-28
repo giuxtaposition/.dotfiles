@@ -104,10 +104,16 @@ in {
           promptToReturnFromSubprocess = false;
           customCommands = [
             {
+              key = "R";
+              context = "files";
+              description = "Retry last failed commit (reuse COMMIT_EDITMSG)";
+              command = "git commit -F .git/COMMIT_EDITMSG";
+            }
+            {
               key = "C";
               context = "files";
               description = "Commit changes using gitmojis";
-              command = "git commit -m '{{ .Form.emoji }}{{ if .Form.scope }} ({{ .Form.scope }}):{{ end }} {{ .Form.message }}'";
+              command = "git commit -m '{{ .Form.emoji }}{{ if .Form.scope }} {{ .Form.scope }}:{{ end }} {{ .Form.message }}'";
               prompts = [
                 {
                   type = "menuFromCommand";
