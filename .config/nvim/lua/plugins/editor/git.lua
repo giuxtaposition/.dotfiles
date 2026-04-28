@@ -1,16 +1,6 @@
 vim.pack.add({
-  {
-    src = "https://github.com/lewis6991/gitsigns.nvim",
-  },
-  {
-    src = "https://github.com/tpope/vim-fugitive",
-  },
-  {
-    src = "https://github.com/esmuellert/codediff.nvim",
-  },
+  { src = "https://github.com/lewis6991/gitsigns.nvim" },
 })
-
-local set_keymap = require("config.util.keys").set
 
 local signs = require("config.ui.icons").gitsigns
 require("gitsigns").setup({
@@ -44,10 +34,33 @@ require("gitsigns").setup({
   end,
 })
 
-require("codediff").setup()
+-- Lazy-loaded: codediff deferred to first use
+local codediff_loaded = false
 
-set_keymap("n", "<leader>gr", "<cmd>CodeDiff history<cr>", "Repo History")
-set_keymap("n", "<leader>gf", "<cmd>CodeDiff history %<cr>", "File history")
-set_keymap("v", "<leader>gl", "<esc><cmd>'<,'>CodeDiff history<cr>", "Visual Range history")
-set_keymap("n", "<leader>gl", "<cmd>'<,'>CodeDiff history<cr>", "Line history")
-set_keymap("n", "<leader>gd", "<cmd>CodeDiff<cr>", "Repo Diff")
+local function ensure_codediff()
+  if codediff_loaded then
+    return
+  end
+  codediff_loaded = true
+  vim.pack.add({ { src = "https://github.com/esmuellert/codediff.nvim" } })
+  require("codediff").setup()
+end
+
+local function codediff_cmd(args)
+  return function()
+    ensure_codediff()
+    vim.cmd("CodeDiff " .. args)
+  end
+end
+
+vim.keymap.set("n", "<leader>gr", codediff_cmd("history"), { desc = "Repo History", silent = true })
+vim.keymap.set("n", "<leader>gf", codediff_cmd("history %"), { desc = "File history", silent = true })
+vim.keymap.set("v", "<leader>gl", function()
+  ensure_codediff()
+  vim.cmd("'<,'>CodeDiff history")
+end, { desc = "Visual Range history", silent = true })
+vim.keymap.set("n", "<leader>gl", function()
+  ensure_codediff()
+  vim.cmd("'<,'>CodeDiff history")
+end, { desc = "Line history", silent = true })
+vim.keymap.set("n", "<leader>gd", codediff_cmd(""), { desc = "Repo Diff", silent = true })

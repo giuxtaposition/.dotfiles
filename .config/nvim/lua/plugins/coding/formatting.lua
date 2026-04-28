@@ -25,16 +25,7 @@ require("conform").setup({
     ["markdown.mdx"] = { "prettierd" },
     nix = { "alejandra" },
 
-    php = {
-      command = "php-cs-fixer",
-      args = {
-        "fix",
-        "$FILENAME",
-        "--config=/your/path/to/config/file/[filename].php",
-        "--allow-risky=yes", -- if you have risky stuff in config, if not you dont need it.
-      },
-      stdin = false,
-    },
+    php = { "php_cs_fixer" },
 
     ruby = { "rubocop" },
     eruby = { "erb_format" },

@@ -2,76 +2,76 @@ local colors = require("config.ui.colors")
 
 return {
   StatusLine_NormalMode = {
-    fg = colors.black0,
-    bg = colors.purple0,
+    fg = colors.crust,
+    bg = colors.mauve,
     bold = true,
   },
   StatusLine_VisualMode = {
-    fg = colors.black0,
+    fg = colors.crust,
     bg = colors.pink,
     bold = true,
   },
   StatusLine_InsertMode = {
-    fg = colors.black0,
+    fg = colors.crust,
     bg = colors.green,
     bold = true,
   },
   StatusLine_TerminalMode = {
-    fg = colors.black0,
+    fg = colors.crust,
     bg = colors.green,
     bold = true,
   },
   StatusLine_ReplaceMode = {
-    fg = colors.black0,
+    fg = colors.crust,
     bg = colors.red,
     bold = true,
   },
   StatusLine_SelectMode = {
-    fg = colors.black0,
-    bg = colors.orange,
+    fg = colors.crust,
+    bg = colors.peach,
     bold = true,
   },
   StatusLine_CommandMode = {
-    fg = colors.black0,
-    bg = colors.orange,
+    fg = colors.crust,
+    bg = colors.peach,
     bold = true,
   },
   StatusLine_ConfirmMode = {
-    fg = colors.black0,
-    bg = colors.orange,
+    fg = colors.crust,
+    bg = colors.peach,
     bold = true,
   },
   StatusLine_NormalModeSep = {
     fg = colors.blue,
-    bg = colors.black2,
+    bg = colors.mantle,
   },
   StatusLine_VisualModeSep = {
     fg = colors.pink,
-    bg = colors.black2,
+    bg = colors.mantle,
   },
   StatusLine_InsertModeSep = {
-    bg = colors.black2,
+    bg = colors.mantle,
     fg = colors.green,
   },
   StatusLine_TerminalModeSep = {
-    bg = colors.black2,
+    bg = colors.mantle,
     fg = colors.green,
   },
   StatusLine_ReplaceModeSep = {
-    bg = colors.black2,
+    bg = colors.mantle,
     fg = colors.red,
   },
   StatusLine_SelectModeSep = {
-    bg = colors.black2,
-    fg = colors.orange,
+    bg = colors.mantle,
+    fg = colors.peach,
   },
   StatusLine_CommandModeSep = {
-    bg = colors.black2,
-    fg = colors.orange,
+    bg = colors.mantle,
+    fg = colors.peach,
   },
   StatusLine_ConfirmModeSep = {
-    bg = colors.black2,
-    fg = colors.orange,
+    bg = colors.mantle,
+    fg = colors.peach,
   },
   StatusLine_DiagnosticsError = {
     fg = colors.red,
@@ -86,13 +86,13 @@ return {
     fg = colors.yellow,
   },
   StatusLine_LspInfo = {
-    fg = colors.purple0,
+    fg = colors.mauve,
   },
   StatusLine_GitBranchSep = {
     fg = colors.green,
   },
   StatusLine_GitBranch = {
-    fg = colors.black0,
+    fg = colors.crust,
     bg = colors.green,
   },
   StatusLine_Macro = {
@@ -105,19 +105,19 @@ return {
     fg = colors.blue,
   },
   StatusLine_FileIconCyan = {
-    fg = colors.cyan,
+    fg = colors.sky,
   },
   StatusLine_FileIconGrey = {
     fg = colors.text,
   },
   StatusLine_FileIconAzure = {
-    fg = colors.darkcyan,
+    fg = colors.teal,
   },
   StatusLine_FileIconGreen = {
     fg = colors.green,
   },
   StatusLine_FileIconOrange = {
-    fg = colors.orange,
+    fg = colors.peach,
   },
   StatusLine_FileIconPurple = {
     fg = colors.pink,
@@ -126,6 +126,6 @@ return {
     fg = colors.yellow,
   },
   StatusLine_TypedKey = {
-    fg = colors.purple1,
+    fg = colors.lavender,
   },
 }

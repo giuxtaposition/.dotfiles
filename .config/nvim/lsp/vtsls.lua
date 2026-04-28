@@ -68,6 +68,27 @@ return {
       client.server_capabilities.semanticTokensProvider = nil
     end
 
+    -- TypeScript-specific keymaps
+    local function code_action(action)
+      return function()
+        vim.lsp.buf.code_action({
+          apply = true,
+          context = { only = { action }, diagnostics = {} },
+        })
+      end
+    end
+
+    local opts = function(desc)
+      return { buffer = bufnr, desc = desc, silent = true }
+    end
+    vim.keymap.set("n", "<leader>co", code_action("source.organizeImports"), opts("Organize Imports"))
+    vim.keymap.set("n", "<leader>cM", code_action("source.addMissingImports.ts"), opts("Add missing imports"))
+    vim.keymap.set("n", "<leader>cu", code_action("source.removeUnused.ts"), opts("Remove unused imports"))
+    vim.keymap.set("n", "<leader>cD", code_action("source.fixAll.ts"), opts("Fix all diagnostics"))
+    vim.keymap.set("n", "<leader>cV", function()
+      vim.lsp.buf.execute_command({ command = "typescript.selectTypeScriptVersion" })
+    end, opts("Select TS workspace version"))
+
     client.commands["_typescript.moveToFileRefactoring"] = function(command, ctx)
       ---@type string, string, lsp.Range
       local action, uri, range = unpack(command.arguments)

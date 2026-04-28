@@ -111,8 +111,8 @@ local function on_attach(client, bufnr)
     "Prev Warning",
     { buffer = bufnr }
   )
-  set_keymap("n", "]r", util.lsp.jump_to_reference("next"), "Next Warning", { buffer = bufnr })
-  set_keymap("n", "[r", util.lsp.jump_to_reference("prev"), "Prev Warning", { buffer = bufnr })
+  set_keymap("n", "]r", util.lsp.jump_to_reference("next"), "Next Reference", { buffer = bufnr })
+  set_keymap("n", "[r", util.lsp.jump_to_reference("prev"), "Prev Reference", { buffer = bufnr })
 
   -- Enable LLM-based inline completion
   if client:supports_method(methods.textDocument_inlineCompletion) then
@@ -138,13 +138,11 @@ local function on_attach(client, bufnr)
   end
 
   if client:supports_method(methods.textDocument_codeAction) then
-    set_keymap({ "n", "v" }, "gra", function()
-      require("tiny-code-action").code_action()
-    end, "Code actions", { buffer = bufnr })
+    set_keymap({ "n", "v" }, "gra", vim.lsp.buf.code_action, "Code actions", { buffer = bufnr })
   end
 
   if client:supports_method(methods.textDocument_inlayHint) then
-    set_keymap("n", "<leader>uh", function()
+    set_keymap("n", "<leader>h", function()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }))
     end, "Toggle Inlay Hints", { buffer = bufnr })
   end
@@ -192,18 +190,23 @@ local function on_attach(client, bufnr)
   if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
     local highlight_augroup = vim.api.nvim_create_augroup("giuxtaposition-lsp-highlight", { clear = false })
 
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+    vim.api.nvim_create_autocmd({ "CursorMoved" }, {
       buffer = bufnr,
       desc = "Highlight references under the cursor",
       group = highlight_augroup,
-      callback = vim.lsp.buf.document_highlight,
+      callback = function()
+        vim.lsp.buf.clear_references()
+        vim.lsp.buf.document_highlight()
+      end,
     })
 
-    vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+    vim.api.nvim_create_autocmd({ "CursorMovedI" }, {
       buffer = bufnr,
       desc = "Clear all the references highlights",
       group = highlight_augroup,
-      callback = vim.lsp.buf.clear_references,
+      callback = function()
+        vim.lsp.buf.clear_references()
+      end,
     })
 
     vim.api.nvim_create_autocmd("LspDetach", {
@@ -213,11 +216,7 @@ local function on_attach(client, bufnr)
         vim.api.nvim_clear_autocmds({ group = "giuxtaposition-lsp-highlight", buffer = event2.buf })
       end,
     })
-  else
-    require("config.ui.highlight_matching_words_under_cursor").setup()
   end
-
-  util.lsp.run_hooks(client, bufnr)
 end
 
 -- Update mappings when registering dynamic capabilities.

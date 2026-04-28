@@ -45,8 +45,6 @@ require("catppuccin").setup({
       enabled = true,
       indentscope_color = "mauve",
     },
-    neotest = true,
-    noice = true,
     dap = true,
     dap_ui = true,
     native_lsp = {
@@ -65,9 +63,6 @@ require("catppuccin").setup({
       },
     },
     treesitter = true,
-    ufo = true,
-    rainbow_delimiters = true,
-    lsp_trouble = true,
     which_key = true,
     markview = true,
   },

@@ -31,7 +31,7 @@ require("fzf-lua").setup({
     ["--no-info"] = "",
     ["--info"] = "hidden",
     ["--layout"] = "reverse-list",
-    ["--padding"] = "5%,5%,5%,5%",
+    ["--padding"] = "1%,1%,1%,1%",
     ["--extended"] = "",
   },
   files = {
@@ -135,18 +135,6 @@ end
 
 local set_keymap = require("config.util.keys").set
 
-set_keymap("n", "<leader>e", function()
-  local bufname = vim.api.nvim_buf_get_name(0)
-  local path = vim.fn.fnamemodify(bufname, ":p")
-  local current_buffer_dir = vim.fn.fnamemodify(bufname, ":p:h")
-
-  if path and vim.uv.fs_stat(path) then
-    require("mini.files").open(bufname, false)
-  else
-    require("mini.files").open(current_buffer_dir, false)
-  end
-end, "File explorer")
-
 set_keymap("n", "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", "Buffers")
 set_keymap("n", "<leader>fc", function()
   require("fzf-lua").files({
@@ -154,7 +142,11 @@ set_keymap("n", "<leader>fc", function()
   })
 end, "Find Config File")
 set_keymap("n", "<leader>ff", "<cmd>FzfLua files<cr>", "Find Files")
-set_keymap("n", "<leader>fr", "<cmd>FzfLua oldfiles<cr>", "Recent")
+set_keymap("n", "<leader>fr", function()
+  require("fzf-lua").oldfiles({
+    cwd = vim.fn.getcwd(),
+  })
+end, "Recent (cwd)")
 set_keymap("n", "<leader>ft", function()
   -- Get current filename (no path)
   local file_name = vim.fn.expand("%:t")

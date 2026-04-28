@@ -62,7 +62,8 @@ opt.mouse = "" -- Disable mouse
 
 opt.formatoptions = "rqnl1j" -- Improve comment editing
 
-opt.scrolloff = 10 -- Minimum lines to keep above and below cursor
+opt.scrolloff = 99 -- Minimum lines to keep above and below cursor
+opt.scrolloffpad = 1 -- Minimum number of screen lines to keep above and below the cursor when scrolloff is set
 
 -- Spell checking
 opt.spell = true

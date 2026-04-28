@@ -56,7 +56,6 @@ set_keymap("n", "<leader>zm", toggle_zoom, "Open current window in new tab")
 -- move over a closing element in insert mode
 set_keymap("i", "<C-h>", "<Left>", "Move left in insert mode")
 set_keymap("i", "<C-j>", "<Down>", "Move down in insert mode")
-set_keymap("i", "<C-k>", "<Up>", "Move up in insert mode")
 set_keymap("i", "<C-l>", "<Right>", "Move right in insert mode")
 
 -- Move Lines
@@ -66,12 +65,6 @@ set_keymap("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", "Move line down")
 set_keymap("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", "Move line up")
 set_keymap("v", "<A-j>", ":m '>+1<cr>gv=gv", "Move line down")
 set_keymap("v", "<A-k>", ":m '<-2<cr>gv=gv", "Move line up")
-
--- terminal
-set_keymap("t", "<C-h>", "<cmd>wincmd h<cr>", "Go to left window")
-set_keymap("t", "<C-j>", "<cmd>wincmd j<cr>", "Go to bottom window")
-set_keymap("t", "<C-k>", "<cmd>wincmd k<cr>", "Go to top window")
-set_keymap("t", "<C-l>", "<cmd>wincmd l<cr>", "Go to right window")
 
 -- marks
 set_keymap("n", "m", util.marks.add_mark, "Add mark")
@@ -107,5 +100,12 @@ vim.keymap.set({ "n", "x", "o" }, "<A-i>", function()
   end
 end, { desc = "Select child treesitter node or inner incremental lsp selections" })
 
+set_keymap("n", "<leader>ta", tr.test_all, "Test all")
 set_keymap("n", "<leader>tf", tr.test_file, "Test file")
 set_keymap("n", "<leader>tn", tr.test_nearest, "Test nearest")
+
+-- todo comments
+local todo = require("config.todo-comments")
+set_keymap("n", "]t", todo.next, "Next TODO comment")
+set_keymap("n", "[t", todo.prev, "Previous TODO comment")
+set_keymap("n", "<leader>st", todo.quickfix, "Search TODO comments (quickfix)")

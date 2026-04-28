@@ -53,11 +53,6 @@ vim.api.nvim_create_autocmd("FileType", {
     "help",
     "lspinfo",
     "checkhealth",
-    "neotest-summary",
-    "neotest-output-panel",
-    "neotest-output",
-    "fugitive",
-    "fugitiveblame",
     "git",
   },
   callback = function(event)
@@ -119,5 +114,68 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.schedule(function()
       vim.bo[args.buf].syntax = vim.filetype.match({ buf = args.buf }) or ""
     end)
+  end,
+})
+
+-- Resize splits if the terminal window got resized
+vim.api.nvim_create_autocmd("VimResized", {
+  group = augroup("resize_splits"),
+  desc = "Resize splits when the terminal window is resized",
+  callback = function()
+    vim.cmd("wincmd =")
+  end,
+})
+
+-- No autocomment on new lines
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("no_autocomment"),
+  desc = "Disable auto-commenting on new lines",
+  callback = function()
+    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+  end,
+})
+
+-- Show cursor line only in the active window
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
+  group = augroup("cursorline"),
+  desc = "Show cursor line only in the active window",
+  callback = function()
+    vim.opt_local.cursorline = true
+  end,
+})
+vim.api.nvim_create_autocmd({ "BufLeave", "WinLeave" }, {
+  group = augroup("cursorline"),
+  desc = "Disable cursor line in inactive windows",
+  callback = function()
+    vim.opt_local.cursorline = false
+  end,
+})
+
+-- Highlight the current word under the cursor using LSP reference highlight groups
+vim.api.nvim_create_autocmd("CursorMoved", {
+  group = augroup("highlight_word_under_cursor"),
+  desc = "Highlight the current word under the cursor using LSP reference highlight groups",
+  callback = function()
+    if vim.fn.mode() ~= "i" then
+      local clients = vim.lsp.get_clients({ bufnr = 0 })
+      local support_highlight = false
+      for _, client in pairs(clients) do
+        if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          support_highlight = true
+          break
+        end
+      end
+      if support_highlight then
+        vim.lsp.buf.clear_references()
+        vim.lsp.buf.document_highlight()
+      end
+    end
+  end,
+})
+vim.api.nvim_create_autocmd("CursorMovedI", {
+  group = augroup("highlight_word_under_cursor"),
+  desc = "Clear LSP reference highlights when entering insert mode",
+  callback = function()
+    vim.lsp.buf.clear_references()
   end,
 })

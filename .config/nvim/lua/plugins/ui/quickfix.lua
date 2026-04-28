@@ -1,31 +1,21 @@
-vim.pack.add({
-  {
-    src = "https://github.com/stevearc/quicker.nvim",
-  },
+vim.pack.add({ { src = "https://github.com/stevearc/quicker.nvim" } })
+require("quicker").setup({
+  borders = { vert = "│" },
 })
 
-local set_keymap = require("config.util.keys").set
-
-set_keymap("n", "<leader>xq", function()
+vim.keymap.set("n", "<leader>xq", function()
   require("quicker").toggle()
-end, "Toggle quickfix")
+end, { desc = "Toggle quickfix", silent = true })
 
-set_keymap("n", "<leader>xl", function()
+vim.keymap.set("n", "<leader>xl", function()
   require("quicker").toggle({ loclist = true })
-end, "Toggle loclist list")
+end, { desc = "Toggle loclist list", silent = true })
 
-set_keymap("n", "<leader>xd", function()
+vim.keymap.set("n", "<leader>xd", function()
   local quicker = require("quicker")
-
   if quicker.is_open() then
     quicker.close()
   else
     vim.diagnostic.setqflist()
   end
-end, "Toggle diagnostics")
-
-require("quicker").setup({
-  borders = {
-    vert = "│",
-  },
-})
+end, { desc = "Toggle diagnostics", silent = true })

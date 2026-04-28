@@ -108,6 +108,19 @@ local function send_command(cmd)
   os.execute("kitty --title nvim-test-runner fish -C " .. shell_escape(init) .. " &")
 end
 
+function M.test_all()
+  local runner = detect_runner()
+  local cmd
+  if runner == "vitest" then
+    cmd = "pnpm vitest run"
+  elseif runner == "jest" then
+    cmd = "pnpm jest"
+  else
+    cmd = "pnpm test"
+  end
+  send_command(cmd)
+end
+
 function M.test_file()
   send_command(build_command(false))
 end

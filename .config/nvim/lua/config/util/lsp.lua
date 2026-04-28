@@ -1,6 +1,4 @@
-local M = {
-  hooks = {},
-}
+local M = {}
 
 -- Map LSP config names to their executables
 -- Only needed when the executable name differs from the config name
@@ -26,20 +24,6 @@ M.filter_available = function(servers)
     return vim.fn.executable(executable) == 1
   end, servers)
 end
-
-M.action = setmetatable({}, {
-  __index = function(_, action)
-    return function()
-      vim.lsp.buf.code_action({
-        apply = true,
-        context = {
-          only = { action },
-          diagnostics = {},
-        },
-      })
-    end
-  end,
-})
 
 ---@param count "prev" | "next"
 ---@param severity? vim.diagnostic.SeverityFilter
@@ -119,13 +103,7 @@ end
 
 M.restart_lsp = function(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  local clients
-  if vim.lsp.get_clients then
-    clients = vim.lsp.get_clients({ bufnr = bufnr })
-  else
-    ---@diagnostic disable-next-line: deprecated
-    clients = vim.lsp.get_active_clients({ bufnr = bufnr })
-  end
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
 
   for _, client in ipairs(clients) do
     vim.lsp.stop_client(client.id)
@@ -186,16 +164,6 @@ M.lsp_status = function()
 
     print("  Features: " .. table.concat(features, ", "))
     print("")
-  end
-end
-
-M.register_hook = function(fn)
-  table.insert(M.hooks, fn)
-end
-
-M.run_hooks = function(client, bufnr)
-  for _, hook in ipairs(M.hooks) do
-    hook(client, bufnr)
   end
 end
 

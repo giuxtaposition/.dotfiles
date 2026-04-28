@@ -1,26 +1,30 @@
-vim.pack.add({
-  {
-    src = "https://github.com/catgoose/nvim-colorizer.lua",
-  },
-})
+-- Lazy-loaded: colorizer deferred to first buffer read
+vim.api.nvim_create_autocmd("BufReadPost", {
+  once = true,
+  callback = function()
+    vim.pack.add({ { src = "https://github.com/catgoose/nvim-colorizer.lua" } })
 
-require("colorizer").setup({
+    require("colorizer").setup({
+      filetypes = {
+        "*",
+        "!css",
+        "!scss",
+      },
+      user_default_options = {
+        RGB = true,
+        RRGGBB = true,
+        names = false,
+        RRGGBBAA = true,
+        AARRGGBB = false,
+        rgb_fn = true,
+        hsl_fn = true,
+        css = false,
+        css_fn = true,
+        mode = "background",
+      },
+    })
 
-  filetypes = {
-    "*", -- Highlight all files, but customize some others.
-    "!css",
-    "!scss",
-  },
-  user_default_options = {
-    RGB = true, -- #RGB hex codes
-    RRGGBB = true, -- #RRGGBB hex codes
-    names = false, -- "Name" codes like Blue
-    RRGGBBAA = true, -- #RRGGBBAA hex codes
-    AARRGGBB = false, -- 0xAARRGGBB hex codes
-    rgb_fn = true, -- CSS rgb() and rgba() functions
-    hsl_fn = true, -- CSS hsl() and hsla() functions
-    css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-    css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-    mode = "background",
-  },
+    -- Trigger colorizer on the current buffer
+    vim.cmd("ColorizerAttachToBuffer")
+  end,
 })

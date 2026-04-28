@@ -16,4 +16,15 @@ return {
       },
     },
   },
+  on_attach = function(_, bufnr)
+    local opts = function(desc)
+      return { silent = true, buffer = bufnr, desc = desc }
+    end
+    vim.keymap.set("n", "gra", function()
+      vim.cmd.RustLsp("codeAction")
+    end, opts("Rust code actions"))
+    vim.keymap.set("n", "K", function()
+      vim.cmd.RustLsp({ "hover", "actions" })
+    end, opts("Rust hover actions"))
+  end,
 }
