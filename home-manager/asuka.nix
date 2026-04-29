@@ -1,6 +1,8 @@
 {...}: {
   imports = [./common.nix ./desktop.nix];
 
+  niri.xkbOptions = "ctrl:swapcaps";
+
   niri.extraConfig = ''
     output "eDP-1" {
         mode "2256x1504"

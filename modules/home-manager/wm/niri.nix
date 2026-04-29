@@ -7,6 +7,11 @@
 }: {
   options.niri = {
     enable = lib.mkEnableOption "enables niri module";
+    xkbOptions = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "XKB options string passed to niri keyboard config (e.g. \"ctrl:swapcaps\")";
+    };
     extraConfig = lib.mkOption {
       type = lib.types.lines;
       default = "";
@@ -24,6 +29,7 @@
               xkb {
                   layout "us"
                   variant "altgr-intl"
+                  ${lib.optionalString (config.niri.xkbOptions != "") "options \"${config.niri.xkbOptions}\""}
               }
           }
           touchpad {
