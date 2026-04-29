@@ -122,7 +122,7 @@
 
       layer-rule {
           match namespace="noctalia"
-          exclude namespace="(bar|noctalia-background)"
+          exclude namespace="(bar|noctalia-background|noctalia-notification)"
 
           background-effect {
               blur true
