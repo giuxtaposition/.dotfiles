@@ -1,5 +1,5 @@
 # Kumiko — Home media server
-{...}: {
+{pkgs, ...}: {
   imports = [./hardware-configuration.nix ../common.nix];
 
   networking.hostName = "kumiko";
@@ -37,6 +37,27 @@
       pvp = false;
       gameMode = "endless";
       key = "giuxtaposition-survival-madness-shard-key";
+    };
+  };
+
+  # Power schedule: wake at 8am, shut down at 11pm
+  systemd.services.scheduled-poweroff = {
+    description = "Set RTC wake alarm for 8am and power off";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = pkgs.writeShellScript "poweroff-with-wake" ''
+        ${pkgs.util-linux}/bin/rtcwake -m no -t $(${pkgs.coreutils}/bin/date -d "tomorrow 08:00" +%s)
+        /run/current-system/sw/bin/systemctl poweroff
+      '';
+    };
+  };
+
+  systemd.timers.scheduled-poweroff = {
+    description = "Shut down kumiko at 11pm daily";
+    wantedBy = ["timers.target"];
+    timerConfig = {
+      OnCalendar = "*-*-* 23:00:00";
+      Persistent = true;
     };
   };
 
