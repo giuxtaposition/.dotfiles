@@ -150,6 +150,11 @@
           }
       }
 
+      layer-rule {
+          match namespace="noctalia-notification"
+          block-out-from "screencast"
+      }
+
       // Key bindings
       binds {
           Mod+Shift+Slash { show-hotkey-overlay; }
