@@ -51,6 +51,17 @@
 
           # vim mode
           set fish_key_bindings fish_user_key_bindings
+
+          function __postexec_notify_on_long_running_commands --on-event fish_postexec
+            set --function interactive_commands 'vim' 'nvim' 'yazi' 'claude'
+            set --function command (string split ' ' $argv[1])
+            if contains $command $interactive_commands
+              return
+            end
+            if test $CMD_DURATION -gt 30000
+              notify-send 'command finished' "$argv"
+            end
+          end
         '';
 
         functions = {
