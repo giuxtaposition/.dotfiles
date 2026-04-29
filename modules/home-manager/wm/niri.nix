@@ -120,6 +120,12 @@
           }
       }
 
+      window-rule {
+          match app-id="Emulator"
+          default-column-width { fixed 1080; }
+          default-window-height { fixed 2400; }
+      }
+
       // Layer rules
       layer-rule {
           match namespace="^noctalia-overview"
