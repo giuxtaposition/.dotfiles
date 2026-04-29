@@ -56,15 +56,6 @@ vim.diagnostic.config({
     end,
   },
   severity_sort = true,
-  float = {
-    source = "if_many",
-    -- Show severity icons as prefixes.
-    prefix = function(diag)
-      local level = vim.diagnostic.severity[diag.severity]
-      local prefix = string.format(" %s ", icons.diagnostics[level])
-      return prefix, "Diagnostic" .. level:gsub("^%l", string.upper)
-    end,
-  },
   -- Disable signs in the gutter.
   signs = false,
   on_jump = { float = true },
@@ -82,7 +73,16 @@ local function on_attach(client, bufnr)
     "Show buffer diagnostics",
     { buffer = bufnr }
   )
-  set_keymap("n", "<leader>cd", vim.diagnostic.open_float, "Show line diagnostics", { buffer = bufnr })
+  set_keymap("n", "<leader>cd", function()
+    vim.diagnostic.open_float({
+      source = "if_many",
+      prefix = function(diag)
+        local level = vim.diagnostic.severity[diag.severity]
+        local prefix = string.format(" %s ", icons.diagnostics[level])
+        return prefix, "Diagnostic" .. level:gsub("^%l", string.upper)
+      end,
+    })
+  end, "Show line diagnostics", { buffer = bufnr })
   set_keymap(
     "n",
     "]e",

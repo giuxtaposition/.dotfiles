@@ -109,3 +109,5 @@ local todo = require("config.todo-comments")
 set_keymap("n", "]t", todo.next, "Next TODO comment")
 set_keymap("n", "[t", todo.prev, "Previous TODO comment")
 set_keymap("n", "<leader>st", todo.quickfix, "Search TODO comments (quickfix)")
+
+set_keymap("n", "<leader>it", require("config.i18n").toggle, "Toggle i18n virtual text")

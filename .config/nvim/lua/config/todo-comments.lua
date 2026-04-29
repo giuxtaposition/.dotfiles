@@ -85,10 +85,11 @@ end
 
 ---@param line string
 ---@param col number 1-indexed column of keyword start
+---@param prefixes? string[] comment prefix patterns; defaults to config.comment_prefixes
 ---@return boolean
-local function is_comment_regex(line, col)
+local function is_comment_regex(line, col, prefixes)
   local before = line:sub(1, col - 1)
-  for _, prefix in ipairs(config.comment_prefixes) do
+  for _, prefix in ipairs(prefixes or config.comment_prefixes) do
     if before:match(prefix) then
       return true
     end
@@ -115,11 +116,12 @@ end
 
 --- Find first keyword match in a line
 ---@param line string
+---@param keywords? string[] sorted keyword list; defaults to module-level sorted_keywords
 ---@return string|nil keyword
 ---@return number|nil col_start 1-indexed
 ---@return number|nil col_end 1-indexed
-local function find_keyword_in_line(line)
-  for _, kw in ipairs(sorted_keywords) do
+local function find_keyword_in_line(line, keywords)
+  for _, kw in ipairs(keywords or sorted_keywords) do
     local col_start, col_end = line:find("%f[%w]" .. kw .. "%f[%W]")
     if not col_start then
       goto continue
@@ -274,8 +276,9 @@ end
 -- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ---@param stdout string
+---@param keywords? string[] sorted keyword list; defaults to module-level sorted_keywords
 ---@return table[] quickfix items
-local function parse_ripgrep_output(stdout)
+local function parse_ripgrep_output(stdout, keywords)
   local items = {}
 
   for line in stdout:gmatch("[^\n]+") do
@@ -284,7 +287,7 @@ local function parse_ripgrep_output(stdout)
       goto continue
     end
 
-    local kw = find_keyword_in_line(text)
+    local kw = find_keyword_in_line(text, keywords)
     items[#items + 1] = {
       filename = file,
       lnum = tonumber(lnum),
@@ -307,19 +310,16 @@ local function highlight_quickfix_buffer()
   vim.api.nvim_buf_clear_namespace(qf_buf, qf_ns_id, 0, -1)
 
   for row, line in ipairs(vim.api.nvim_buf_get_lines(qf_buf, 0, -1, false)) do
-    local kw = find_keyword_in_line(line)
+    local kw, col_start, col_end = find_keyword_in_line(line)
     if not kw then
       goto continue
     end
 
-    local col_start, col_end = line:find("%f[%w]" .. kw .. "%f[%W]")
-    if col_start then
-      pcall(vim.api.nvim_buf_set_extmark, qf_buf, qf_ns_id, row - 1, col_start - 1, {
-        end_col = col_end,
-        hl_group = hl_group(resolve_keyword(kw)),
-        priority = HIGHLIGHT_PRIORITY,
-      })
-    end
+    pcall(vim.api.nvim_buf_set_extmark, qf_buf, qf_ns_id, row - 1, col_start - 1, {
+      end_col = col_end,
+      hl_group = hl_group(resolve_keyword(kw)),
+      priority = HIGHLIGHT_PRIORITY,
+    })
 
     ::continue::
   end
@@ -377,5 +377,14 @@ function M.setup(opts)
     callback = create_highlights,
   })
 end
+
+-- Expose pure internals for testing only
+M._ = {
+  find_keyword_in_line = find_keyword_in_line,
+  is_comment_regex = is_comment_regex,
+  find_next_match = find_next_match,
+  find_prev_match = find_prev_match,
+  parse_ripgrep_output = parse_ripgrep_output,
+}
 
 return M

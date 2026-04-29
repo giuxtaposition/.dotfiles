@@ -68,9 +68,13 @@ require("blink.cmp").setup({
     default = { "lsp", "path", "snippets", "buffer", "lazydev" },
     providers = {
       lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", fallbacks = { "lsp" } },
+      i18n = { name = "i18n", module = "config.i18n-completion" },
     },
     per_filetype = {
-      codecompanion = { "codecompanion", "buffer" },
+      typescript = { "lsp", "path", "snippets", "buffer", "lazydev", "i18n" },
+      typescriptreact = { "lsp", "path", "snippets", "buffer", "lazydev", "i18n" },
+      javascript = { "lsp", "path", "snippets", "buffer", "lazydev", "i18n" },
+      javascriptreact = { "lsp", "path", "snippets", "buffer", "lazydev", "i18n" },
     },
   },
   signature = {
