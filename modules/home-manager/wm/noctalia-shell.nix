@@ -62,6 +62,9 @@
           };
         };
         colorSchemes.predefinedScheme = "Tokyo Night";
+        launcher = {
+          iconMode = "native";
+        };
         general = {
           avatarImage = "${config.home.homeDirectory}/.dotfiles/assets/avatar.jpg";
         };

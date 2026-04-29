@@ -38,6 +38,7 @@
         # Hint electron apps to use wayland
         NIXOS_OZONE_WL = "1";
         # QT envs
+        QT_QPA_PLATFORMTHEME = "gtk3";
         QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
         QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       };
