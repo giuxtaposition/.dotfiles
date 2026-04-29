@@ -1,5 +1,5 @@
 {...}: {
-  imports = [./common.nix];
+  imports = [./common.nix ./desktop.nix];
 
   niri.extraConfig = ''
     output "eDP-1" {

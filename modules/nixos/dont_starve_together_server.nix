@@ -56,9 +56,14 @@
   # Note: c_shutdown(true) means nosave=true (no save!) — always use c_shutdown().
   masterStopScript = pkgs.writeShellScript "dst-master-stop" ''
     [ -p ${masterPipe} ] && echo 'c_shutdown()' > ${masterPipe} || true
+    # Wait for the main process to exit before returning so that systemd does
+    # not send SIGTERM while DST is still writing the save to disk.
+    # $MAINPID is provided by systemd to ExecStop scripts.
+    [ -n "$MAINPID" ] && ${pkgs.coreutils}/bin/tail --pid="$MAINPID" -f /dev/null 2>/dev/null || true
   '';
   cavesStopScript = pkgs.writeShellScript "dst-caves-stop" ''
     [ -p ${cavesPipe} ] && echo 'c_shutdown()' > ${cavesPipe} || true
+    [ -n "$MAINPID" ] && ${pkgs.coreutils}/bin/tail --pid="$MAINPID" -f /dev/null 2>/dev/null || true
   '';
 in {
   options.services.dst-server = {

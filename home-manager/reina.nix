@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  imports = [./common.nix];
+  imports = [./common.nix ./desktop.nix];
 
   media.enable = true;
   work.enable = true;

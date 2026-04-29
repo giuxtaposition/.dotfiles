@@ -110,6 +110,11 @@
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home-manager/reina.nix] ++ commonModules;
       };
+      "giu@kumiko" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home-manager/kumiko.nix] ++ commonModules;
+      };
     };
 
     checks = forAllSystems (system: {
@@ -136,6 +141,7 @@
       # Home-manager configuration checks
       home-asuka = self.homeConfigurations."giu@asuka".activationPackage;
       home-reina = self.homeConfigurations."giu@reina".activationPackage;
+      home-kumiko = self.homeConfigurations."giu@kumiko".activationPackage;
     });
 
     devShells = forAllSystems (system: let
