@@ -1,35 +1,12 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }: {
   options = {fish.enable = lib.mkEnableOption "enables fish module";};
 
   config = lib.mkIf config.fish.enable {
-    home = {
-      packages = with pkgs; [
-        eza
-        starship
-        imagemagick
-        ueberzugpp
-        tree
-      ];
-
-      file."${config.home.homeDirectory}/.config/starship.toml" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/starship.toml";
-      };
-    };
-
-    programs.fastfetch.enable = true;
     programs = {
-      command-not-found = {enable = false;};
-
-      nix-index = {
-        enable = true;
-        enableFishIntegration = true;
-      };
-
       fish = {
         enable = true;
 
@@ -94,37 +71,6 @@
           gs = "git status --short";
         };
       };
-
-      zoxide = {
-        enable = true;
-        enableFishIntegration = true;
-      };
-
-      fzf = {
-        enable = true;
-        enableFishIntegration = true;
-        colors = let
-          c = config.colors;
-        in {
-          fg = "${c.fg}";
-          bg = "${c.bg}";
-          "preview-fg" = "${c.fg}";
-          "preview-bg" = "${c.bg}";
-          hl = "${c.purple}";
-          "fg+" = "${c.fg}";
-          "bg+" = "${c.selection_bg}";
-          "hl+" = "${c.lilac}";
-          info = "${c.sky}";
-          border = "${c.indigo}";
-          prompt = "${c.green}";
-          pointer = "${c.lilac}";
-          marker = "${c.lilac}";
-          spinner = "${c.sky}";
-          header = "${c.indigo}";
-        };
-      };
     };
-
-    catppuccin.fish.enable = true;
   };
 }

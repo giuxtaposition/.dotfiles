@@ -38,11 +38,6 @@
       };
     };
 
-    catppuccin.yazi = {
-      enable = true;
-      accent = "lavender";
-    };
-
     home.packages = with pkgs; [
       file # file type detection
       ffmpegthumbnailer # video thumbnails

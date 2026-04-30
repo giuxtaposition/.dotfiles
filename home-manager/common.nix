@@ -20,12 +20,19 @@
 
   xdg.enable = true;
 
-  bat.enable = true;
+  terminal-tools.enable = true;
   fish.enable = true;
   git.enable = true;
   nvim.enable = true;
-  btop.enable = true;
   yazi.enable = true;
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "teal";
+    gtk.icon.enable = false;
+    nvim.enable = false;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "25.05";

@@ -23,7 +23,6 @@
 
   config = lib.mkIf config.coding.enable {
     nvim.enable = true;
-    bat.enable = true;
     fish.enable = true;
     git.enable = true;
     direnv.enable = true;

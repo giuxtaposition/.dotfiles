@@ -1,10 +1,9 @@
 {
   # Terminal
-  bat = import ./terminal/bat.nix;
+  terminal-tools = import ./terminal/terminal-tools.nix;
   fish = import ./terminal/fish.nix;
   git = import ./terminal/git.nix;
   nvim = import ./terminal/nvim.nix;
-  btop = import ./terminal/btop.nix;
   yazi = import ./terminal/yazi.nix;
   direnv = import ./terminal/direnv.nix;
   kitty = import ./terminal/kitty.nix;

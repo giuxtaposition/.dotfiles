@@ -141,10 +141,6 @@
       };
     };
 
-    catppuccin.kitty = {
-      enable = true;
-    };
-
     xdg = {
       configFile = {
         "kitty/neighboring_window.py".source = "${pkgs.vimPlugins.smart-splits-nvim}/kitty/neighboring_window.py";

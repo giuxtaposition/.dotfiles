@@ -140,11 +140,5 @@ in {
         };
       };
     };
-
-    catppuccin.delta.enable = true;
-    catppuccin.lazygit = {
-      enable = true;
-      accent = "lavender";
-    };
   };
 }

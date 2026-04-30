@@ -95,13 +95,9 @@
     systemPackages = with pkgs; [
       git
       wget
-      curl
-      fd
-      ripgrep
       rsync
       unzip
       zip
-      htop
     ];
 
     etc =
