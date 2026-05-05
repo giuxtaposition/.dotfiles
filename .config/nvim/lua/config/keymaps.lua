@@ -111,3 +111,7 @@ set_keymap("n", "[t", todo.prev, "Previous TODO comment")
 set_keymap("n", "<leader>st", todo.quickfix, "Search TODO comments (quickfix)")
 
 set_keymap("n", "<leader>it", require("config.i18n").toggle, "Toggle i18n virtual text")
+
+-- Terminal mode
+set_keymap("t", "<Esc>", "<C-\\><C-n>", "Exit terminal mode")
+set_keymap("t", "jk", "<C-\\><C-n>", "Exit terminal mode")

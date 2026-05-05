@@ -3,22 +3,10 @@ vim.pack.add({
     src = "https://github.com/rafamadriz/friendly-snippets",
   },
   {
-    src = "https://github.com/L3MON4D3/LuaSnip",
-    version = vim.version.range("^2"),
-  },
-  {
     src = "https://github.com/saghen/blink.cmp",
     version = vim.version.range("^1"),
   },
 })
-
-local ls = require("luasnip")
-ls.setup({
-  history = true,
-  delete_check_events = "TextChanged",
-})
-
-require("luasnip.loaders.from_vscode").lazy_load()
 
 require("blink.cmp").setup({
   keymap = {
@@ -37,9 +25,6 @@ require("blink.cmp").setup({
       preset = "super-tab",
     },
     completion = { menu = { auto_show = true } },
-  },
-  snippets = {
-    preset = "luasnip",
   },
   completion = {
     accept = { auto_brackets = { enabled = true } },

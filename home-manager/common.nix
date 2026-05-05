@@ -25,6 +25,7 @@
   git.enable = true;
   nvim.enable = true;
   yazi.enable = true;
+  notes.enable = true;
 
   catppuccin = {
     enable = true;

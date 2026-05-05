@@ -126,6 +126,17 @@ vim.api.nvim_create_autocmd("VimResized", {
   end,
 })
 
+-- Enter insert mode when switching to a terminal buffer
+vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
+  group = augroup("terminal_insert"),
+  desc = "Auto-enter insert mode in terminal buffers",
+  callback = function()
+    if vim.bo.buftype == "terminal" then
+      vim.cmd("startinsert")
+    end
+  end,
+})
+
 -- No autocomment on new lines
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("no_autocomment"),
