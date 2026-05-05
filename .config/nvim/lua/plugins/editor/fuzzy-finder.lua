@@ -147,18 +147,43 @@ set_keymap("n", "<leader>fr", function()
     cwd = vim.fn.getcwd(),
   })
 end, "Recent (cwd)")
-set_keymap("n", "<leader>ft", function()
-  -- Get current filename (no path)
-  local file_name = vim.fn.expand("%:t")
-  -- Part before the first dot
-  local base = file_name:match("^[^.]+")
-  -- Build a query: base + (spec OR test)
-  local query = string.format("%s spec | test", base)
 
-  require("fzf-lua").files({
-    query = query,
-  })
-end, "Find tests")
+local function test_toggle_query()
+  local file_name = vim.fn.expand("%:t")
+  -- Strip only the last extension to preserve multi-part stems like "foo.service"
+  local stem = file_name:match("^(.+)%.[^.]+$") or file_name
+  local is_test = stem:match("%.spec$") or stem:match("%.test$") or stem:match("_spec$") or stem:match("_test$")
+  if is_test then
+    return stem:gsub("%.spec$", ""):gsub("%.test$", ""):gsub("_spec$", ""):gsub("_test$", "")
+  end
+  return string.format("%s spec | test", stem)
+end
+
+set_keymap("n", "<leader>fT", function()
+  require("fzf-lua").files({ query = test_toggle_query() })
+end, "Find test/implementation")
+
+set_keymap("n", "<leader>ft", function()
+  local file_name = vim.fn.expand("%:t")
+  local stem = file_name:match("^(.+)%.[^.]+$") or file_name
+  local is_test = stem:match("%.spec$") or stem:match("%.test$") or stem:match("_spec$") or stem:match("_test$")
+
+  local results
+  if is_test then
+    local impl_stem = stem:gsub("%.spec$", ""):gsub("%.test$", ""):gsub("_spec$", ""):gsub("_test$", "")
+    results = vim.fn.systemlist(string.format("fd --type f --regex '%s\\.[^.]+$'", impl_stem))
+    results = vim.tbl_filter(function(f)
+      return not f:match("[._]spec%.") and not f:match("[._]test%.")
+    end, results)
+  else
+    results = vim.fn.systemlist(string.format("fd --type f --regex '%s[._](spec|test)\\.'", stem))
+  end
+
+  if results and #results > 0 then
+    vim.cmd("edit " .. vim.fn.fnameescape(results[1]))
+  end
+end, "Jump to test/implementation")
+
 set_keymap("n", "<leader>fd", "<cmd>FzfLua lsp_document_diagnostics<cr>", "Document diagnostics")
 set_keymap("n", "<leader>fD", "<cmd>FzfLua lsp_workspace_diagnostics<cr>", "Workspace diagnostics")
 set_keymap("n", "<leader>fj", "<cmd>FzfLua changes<cr>", "List Changes")

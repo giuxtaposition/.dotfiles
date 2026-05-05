@@ -39,7 +39,7 @@
             LINE="$(printf '%s' "$1" | cut -d: -f2)"
             nvim-open "$FILE" "$LINE"
           '';
-        in "kitten hints --type regex --regex '[^\\s]+\\.[a-z]+:[0-9]+' --program ${open_in_nvim}";
+        in "kitten hints --type regex --regex '[^\\s()]+\\.[a-z]+:[0-9]+' --program ${open_in_nvim}";
         "kitty_mod+e" = let
           open_in_nvim = pkgs.writeShellScript "kitty-open-in-nvim.sh" ''
             #!${pkgs.bash}/bin/sh

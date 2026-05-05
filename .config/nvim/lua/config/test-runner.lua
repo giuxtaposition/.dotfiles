@@ -26,6 +26,10 @@ local function shell_escape(str)
   return "'" .. str:gsub("'", "'\\''") .. "'"
 end
 
+local function escape_regex(str)
+  return str:gsub("([%*%+%?%.%(%)%[%]%{%}%^%$%|%\\])", "\\%1")
+end
+
 local function get_node_at_cursor()
   local cursor = vim.api.nvim_win_get_cursor(0)
   local row, col = cursor[1] - 1, cursor[2]
@@ -81,7 +85,7 @@ local function build_command(nearest)
     if nearest then
       local test_name = get_full_test_name()
       if test_name then
-        return string.format("pnpm vitest run %s -t %s", file, shell_escape(test_name))
+        return string.format("pnpm vitest run %s -t %s", file, shell_escape(escape_regex(test_name)))
       else
         return string.format("pnpm vitest run %s:%d", file, line)
       end
@@ -91,10 +95,10 @@ local function build_command(nearest)
     if nearest then
       local test_name = get_full_test_name()
       if test_name then
-        return string.format("pnpm jest %s -t '%s'", file, test_name)
+        return string.format("pnpm jest --colors %s -t '%s'", file, escape_regex(test_name))
       end
     end
-    return string.format("pnpm jest %s", file)
+    return string.format("pnpm jest --colors %s", file)
   end
 
   return "pnpm test " .. file
@@ -114,7 +118,7 @@ function M.test_all()
   if runner == "vitest" then
     cmd = "pnpm vitest run"
   elseif runner == "jest" then
-    cmd = "pnpm jest"
+    cmd = "pnpm jest --colors"
   else
     cmd = "pnpm test"
   end

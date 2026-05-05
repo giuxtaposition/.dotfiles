@@ -10,6 +10,7 @@
     home = {
       packages = with pkgs; [
         wl-clipboard # command-line copy/paste utilities for wayland
+        wl-clip-persist # keep clipboard content after source app closes
         wtype # simulate keyboard input on wayland
         slurp # select a region in a wayland compositor
         grim # grab images from a wayland compositor
@@ -43,6 +44,8 @@
         QT_AUTO_SCREEN_SCALE_FACTOR = "1";
       };
     };
+
+    services.wl-clip-persist.enable = true;
 
     programs.swaylock = {
       enable = true;
