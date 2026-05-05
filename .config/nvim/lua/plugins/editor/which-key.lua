@@ -21,4 +21,5 @@ require("which-key").add({
   { "<leader>t", group = "test" },
   { "<leader>w", group = "windows" },
   { "<leader>x", group = "diagnostics/quickfix" },
+  { "<leader>a", group = "ai/claude" },
 })

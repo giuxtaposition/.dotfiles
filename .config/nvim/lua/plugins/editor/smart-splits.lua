@@ -33,16 +33,16 @@ set_keymap({ "n", "x" }, "<A-Up>", require("smart-splits").resize_up, "Resize up
 set_keymap({ "n", "x" }, "<A-Right>", require("smart-splits").resize_right, "Resize right")
 
 -- Move
-set_keymap({ "n", "x" }, "<C-h>", function()
+set_keymap({ "n", "x", "t" }, "<C-h>", function()
   require("smart-splits").move_cursor_left()
 end, "Focus left window")
-set_keymap({ "n", "x" }, "<C-j>", require("smart-splits").move_cursor_down, "Focus bottom window")
-set_keymap({ "n", "x" }, "<C-k>", require("smart-splits").move_cursor_up, "Focus top window")
-set_keymap({ "n", "x" }, "<C-l>", require("smart-splits").move_cursor_right, "Focus right window")
-set_keymap({ "n", "x" }, "<C-Left>", require("smart-splits").move_cursor_left, "Focus left window")
-set_keymap({ "n", "x" }, "<C-Down>", require("smart-splits").move_cursor_down, "Focus bottom window")
-set_keymap({ "n", "x" }, "<C-Up>", require("smart-splits").move_cursor_up, "Focus top window")
-set_keymap({ "n", "x" }, "<C-Right>", require("smart-splits").move_cursor_right, "Focus right window")
+set_keymap({ "n", "x", "t" }, "<C-j>", require("smart-splits").move_cursor_down, "Focus bottom window")
+set_keymap({ "n", "x", "t" }, "<C-k>", require("smart-splits").move_cursor_up, "Focus top window")
+set_keymap({ "n", "x", "t" }, "<C-l>", require("smart-splits").move_cursor_right, "Focus right window")
+set_keymap({ "n", "x", "t" }, "<C-Left>", require("smart-splits").move_cursor_left, "Focus left window")
+set_keymap({ "n", "x", "t" }, "<C-Down>", require("smart-splits").move_cursor_down, "Focus bottom window")
+set_keymap({ "n", "x", "t" }, "<C-Up>", require("smart-splits").move_cursor_up, "Focus top window")
+set_keymap({ "n", "x", "t" }, "<C-Right>", require("smart-splits").move_cursor_right, "Focus right window")
 
 -- Swap
 set_keymap({ "n", "x" }, "<leader><leader>h", require("smart-splits").swap_buf_left, "Swap left buffer")
