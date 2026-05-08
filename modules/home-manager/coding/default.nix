@@ -27,10 +27,17 @@
     git.enable = true;
     direnv.enable = true;
 
+    programs.chromium = {
+      enable = true;
+      commandLineArgs = [
+        "--ozone-platform=wayland"
+        "--enable-features=WaylandWindowDecorations"
+        "--gtk-version=4"
+      ];
+    };
+
     home.packages = with pkgs;
       [
-        chromium
-
         # DBs
         mongodb-compass
         sqlite
@@ -119,6 +126,13 @@
         texliveFull
         libxml2
       ];
+
+    home.file = {
+      ".claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/CLAUDE.md";
+      ".claude/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/settings.json";
+      ".claude/statusline.sh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/statusline.sh";
+      ".claude/commands".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/commands";
+    };
 
     xdg.desktopEntries = {
       # Key must match the package's .desktop filename to shadow it.
