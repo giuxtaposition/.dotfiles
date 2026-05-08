@@ -9,6 +9,7 @@
   fish.enable = true;
   amdgpu.enable = true;
   work.enable = true;
+  brightness-control-desktop.enable = true;
 
   hardware = {
     keyboard = {qmk.enable = true;};

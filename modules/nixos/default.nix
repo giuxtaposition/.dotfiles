@@ -10,6 +10,7 @@
   bluetooth = import ./bluetooth.nix;
   tailscale = import ./tailscale.nix;
   laptop = import ./laptop.nix;
+  brightness-control-desktop = import ./brightness-control-desktop.nix;
 
   # Work modules
   work = import ./work.nix;
