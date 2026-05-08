@@ -112,6 +112,8 @@ local function send_command(cmd)
   os.execute("kitty --title nvim-test-runner fish -C " .. shell_escape(init) .. " &")
 end
 
+M.detect_runner = detect_runner
+
 function M.test_all()
   local runner = detect_runner()
   local cmd

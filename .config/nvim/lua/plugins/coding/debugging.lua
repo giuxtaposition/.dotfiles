@@ -27,9 +27,9 @@ local function ensure_dap()
   -- UI
   local icons = {
     Stopped = { "󰁕 ", "DiagnosticWarn", "DapStoppedLine" },
-    Breakpoint = " ",
-    BreakpointCondition = " ",
-    BreakpointRejected = { " ", "DiagnosticError" },
+    Breakpoint = "●",
+    BreakpointCondition = "◆",
+    BreakpointRejected = { "○", "DiagnosticError" },
     LogPoint = ".>",
   }
   vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
@@ -60,7 +60,7 @@ local function ensure_dap()
   dap.adapters = {
     ["pwa-node"] = {
       type = "server",
-      host = "localhost",
+      host = "::1",
       port = "${port}",
       executable = { command = "js-debug", args = { "${port}" } },
     },
@@ -91,6 +91,22 @@ local function ensure_dap()
         processId = require("dap.utils").pick_process,
         cwd = "${workspaceFolder}",
       },
+      {
+        type = "pwa-node",
+        request = "attach",
+        name = "Debug test file (Vitest)",
+        port = 9229,
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+      },
+      {
+        type = "pwa-node",
+        request = "attach",
+        name = "Debug test file (Jest)",
+        port = 9229,
+        cwd = "${workspaceFolder}",
+        sourceMaps = true,
+      },
     }
   end
 end
@@ -112,6 +128,46 @@ end
 local function map(lhs, fn, desc)
   vim.keymap.set("n", lhs, fn, { desc = desc, silent = true })
 end
+
+local function debug_test_file()
+  ensure_dap()
+  local tr = require("config.test-runner")
+  local runner = tr.detect_runner()
+  local file = vim.fn.expand("%:p")
+  local cwd = vim.fn.getcwd()
+  local cmd = runner == "vitest" and { "pnpm", "vitest", "run", file } or { "pnpm", "jest", "--runInBand", file }
+
+  local attach_config = {
+    type = "pwa-node",
+    request = "attach",
+    name = "Debug test file (" .. runner .. ")",
+    port = 9229,
+    cwd = cwd,
+    sourceMaps = true,
+  }
+
+  local attached = false
+  vim.fn.jobstart(cmd, {
+    cwd = cwd,
+    env = { NODE_OPTIONS = "--inspect-brk", PATH = vim.env.PATH },
+    on_stderr = function(_, data)
+      if attached then
+        return
+      end
+      for _, line in ipairs(data) do
+        if line:match("Debugger listening") then
+          attached = true
+          vim.schedule(function()
+            require("dap").run(attach_config)
+          end)
+          return
+        end
+      end
+    end,
+  })
+end
+
+map("<leader>dv", debug_test_file, "Debug test file")
 
 map("<leader>dB", function()
   ensure_dap()
