@@ -35,6 +35,7 @@
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
+      download-buffer-size = 524288000; # 500 MiB
       # Use extra-* to add to defaults (cache.nixos.org) rather than replace
       extra-substituters = [
         "https://giuxtaposition.cachix.org"
