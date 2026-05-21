@@ -51,6 +51,88 @@
   masterPipe = "${cfg.dataDir}/master-console.fifo";
   cavesPipe = "${cfg.dataDir}/caves-console.fifo";
 
+  backupDir = "${cfg.dataDir}/player-backups";
+
+  deletePlayerScript = pkgs.writeShellApplication {
+    name = "dst-delete-player";
+    runtimeInputs = [pkgs.coreutils pkgs.bash];
+    text = ''
+      LOG_FILE="${clusterDir}/Master/server_log.txt"
+
+      if [[ ! -f "$LOG_FILE" ]]; then
+        echo "Log file not found: $LOG_FILE"
+        exit 1
+      fi
+
+      declare -A USER_MAP=()
+      while IFS= read -r line; do
+        if [[ "$line" =~ Client\ authenticated:\ \(([A-Za-z0-9_]+)\)\ (.+) ]]; then
+          ku_id="''${BASH_REMATCH[1]}"
+          name="''${BASH_REMATCH[2]}"
+          USER_MAP["$name"]="$ku_id"
+        fi
+      done < "$LOG_FILE"
+
+      if [[ ''${#USER_MAP[@]} -eq 0 ]]; then
+        echo "No players found."
+        exit 1
+      fi
+
+      mapfile -t NAMES < <(printf '%s\n' "''${!USER_MAP[@]}" | sort)
+
+      echo "Players found:"
+      for i in "''${!NAMES[@]}"; do
+        printf "  [%d] %s (%s)\n" "$((i+1))" "''${NAMES[$i]}" "''${USER_MAP[''${NAMES[$i]}]}"
+      done
+
+      echo
+      read -rp "Pick number (or 0 to cancel): " choice
+
+      if [[ "$choice" == "0" || -z "$choice" ]]; then
+        echo "Cancelled."
+        exit 0
+      fi
+
+      if ! [[ "$choice" =~ ^[0-9]+$ ]] || (( choice < 1 || choice > ''${#NAMES[@]} )); then
+        echo "Invalid choice."
+        exit 1
+      fi
+
+      selected="''${NAMES[$((choice-1))]}"
+      ku_id="''${USER_MAP[$selected]}"
+
+      echo
+      echo "Delete data for: $selected ($ku_id)"
+      read -rp "Confirm? [y/N] " confirm
+
+      if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+        echo "Cancelled."
+        exit 0
+      fi
+
+      BACKUP_DEST="${backupDir}/''${ku_id}_$(date +%Y%m%d_%H%M%S)"
+      mkdir -p "$BACKUP_DEST"
+
+      deleted=0
+      for shard in Master Caves; do
+        session_dir=$(find "${clusterDir}/$shard/save/session" -maxdepth 2 -type d -name "''${ku_id}_" 2>/dev/null | head -n1)
+        if [[ -n "$session_dir" ]]; then
+          cp -r "$session_dir" "$BACKUP_DEST/$shard"
+          rm -rf "$session_dir"
+          echo "Backed up and deleted: $session_dir"
+          deleted=1
+        fi
+      done
+
+      if [[ $deleted -eq 0 ]]; then
+        rmdir "$BACKUP_DEST"
+        echo "No session data found for $ku_id."
+      else
+        echo "Backup saved to: $BACKUP_DEST"
+      fi
+    '';
+  };
+
   # ExecStop scripts: write c_shutdown() to the shard's stdin pipe.
   # DST executes it in Lua → saves world+users → exits cleanly.
   # Note: c_shutdown(true) means nosave=true (no save!) — always use c_shutdown().
@@ -149,6 +231,8 @@ in {
       home = cfg.dataDir;
     };
 
+    environment.systemPackages = [deletePlayerScript];
+
     # ---- Open firewall ports ----
     # 10998 = inter-shard (loopback), 10999 = Master, 11000 = Caves
     networking.firewall.allowedUDPPorts = [10998 10999 11000];
@@ -208,6 +292,7 @@ in {
       "d ${clusterDir} 0755 ${cfg.user} ${cfg.user} -"
       "d ${clusterDir}/Master 0755 ${cfg.user} ${cfg.user} -"
       "d ${clusterDir}/Caves 0755 ${cfg.user} ${cfg.user} -"
+      "d ${backupDir} 0755 ${cfg.user} ${cfg.user} -"
     ];
 
     systemd.services = {
