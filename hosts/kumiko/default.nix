@@ -38,6 +38,11 @@
       gameMode = "endless";
       key = "giuxtaposition-survival-madness-shard-key";
     };
+    mods = [
+      {id = "378160973";}
+      {id = "2189004162";}
+      {id = "2477889104";}
+    ];
   };
 
   # Power schedule: wake at 8am, shut down at 11pm

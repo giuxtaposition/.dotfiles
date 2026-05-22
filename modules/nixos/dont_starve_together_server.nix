@@ -217,6 +217,24 @@ in {
         description = "Shared cluster key for inter-shard authentication";
       };
     };
+
+    mods = lib.mkOption {
+      type = lib.types.listOf (lib.types.submodule {
+        options = {
+          id = lib.mkOption {
+            type = lib.types.str;
+            description = "Steam Workshop item ID";
+          };
+          config = lib.mkOption {
+            type = lib.types.str;
+            default = "";
+            description = "Lua configuration_options table string, e.g. '{ key = \"val\" }'";
+          };
+        };
+      });
+      default = [];
+      description = "Workshop mods to install and enable on all shards";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -238,52 +256,69 @@ in {
     networking.firewall.allowedUDPPorts = [10998 10999 11000];
 
     # ---- Generate cluster.ini ----
-    environment.etc = {
-      "dst/${cfg.clusterName}/cluster.ini".text = ''
-        [GAMEPLAY]
-        game_mode = ${cfg.cluster.gameMode}
-        max_players = ${toString cfg.cluster.maxPlayers}
-        pvp = ${
-          if cfg.cluster.pvp
-          then "true"
-          else "false"
-        }
-        pause_when_empty = true
+    environment.etc =
+      {
+        "dst/${cfg.clusterName}/cluster.ini".text = ''
+          [GAMEPLAY]
+          game_mode = ${cfg.cluster.gameMode}
+          max_players = ${toString cfg.cluster.maxPlayers}
+          pvp = ${
+            if cfg.cluster.pvp
+            then "true"
+            else "false"
+          }
+          pause_when_empty = true
 
-        [NETWORK]
-        cluster_description = ${cfg.cluster.description}
-        cluster_name = ${cfg.cluster.name}
-        cluster_password = __DST_PASSWORD_PLACEHOLDER__
+          [NETWORK]
+          cluster_description = ${cfg.cluster.description}
+          cluster_name = ${cfg.cluster.name}
+          cluster_password = __DST_PASSWORD_PLACEHOLDER__
 
-        [MISC]
-        console_enabled = true
+          [MISC]
+          console_enabled = true
 
-        [SHARD]
-        shard_enabled = true
-        bind_ip = 127.0.0.1
-        master_ip = 127.0.0.1
-        master_port = 10998
-        cluster_key = ${cfg.cluster.key}
-      '';
+          [SHARD]
+          shard_enabled = true
+          bind_ip = 127.0.0.1
+          master_ip = 127.0.0.1
+          master_port = 10998
+          cluster_key = ${cfg.cluster.key}
+        '';
 
-      # ---- Generate shard configs ----
-      "dst/${cfg.clusterName}/Master/server.ini".text = ''
-        [NETWORK]
-        server_port = 10999
+        # ---- Generate shard configs ----
+        "dst/${cfg.clusterName}/Master/server.ini".text = ''
+          [NETWORK]
+          server_port = 10999
 
-        [SHARD]
-        is_master = true
-      '';
+          [SHARD]
+          is_master = true
+        '';
 
-      "dst/${cfg.clusterName}/Caves/server.ini".text = ''
-        [NETWORK]
-        server_port = 11000
+        "dst/${cfg.clusterName}/Caves/server.ini".text = ''
+          [NETWORK]
+          server_port = 11000
 
-        [SHARD]
-        is_master = false
-        name = Caves
-      '';
-    };
+          [SHARD]
+          is_master = false
+          name = Caves
+        '';
+      }
+      // lib.optionalAttrs (cfg.mods != []) {
+        "dst/mods_setup.lua".text =
+          lib.concatMapStrings
+          (mod: "ServerModSetup(\"${mod.id}\")\n")
+          cfg.mods;
+
+        "dst/${cfg.clusterName}/Master/modoverrides.lua".text = let
+          modEntry = mod: ''            ["workshop-${mod.id}"] = { enabled = true${
+              lib.optionalString (mod.config != "") ", configuration_options = ${mod.config}"
+            } },
+          '';
+        in "return {\n${lib.concatMapStrings modEntry cfg.mods}}";
+
+        "dst/${cfg.clusterName}/Caves/modoverrides.lua".text =
+          config.environment.etc."dst/${cfg.clusterName}/Master/modoverrides.lua".text;
+      };
 
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0755 ${cfg.user} ${cfg.user} -"
@@ -350,6 +385,12 @@ in {
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/cluster.ini ${clusterDir}/
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/server.ini ${clusterDir}/Master/
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/server.ini ${clusterDir}/Caves/
+
+          ${lib.optionalString (cfg.mods != []) ''
+            ${pkgs.coreutils}/bin/cp /etc/dst/mods_setup.lua ${serverDir}/mods/dedicated_server_mods_setup.lua
+            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/modoverrides.lua ${clusterDir}/Master/
+            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/modoverrides.lua ${clusterDir}/Caves/
+          ''}
 
           # Inject cluster password from sops secret
           DST_PASSWORD=$(cat ${config.sops.secrets.${cfg.sopsPasswordKey}.path})
