@@ -117,9 +117,13 @@
       for shard in Master Caves; do
         session_dir=$(find "${clusterDir}/$shard/save/session" -maxdepth 2 -type d -name "''${ku_id}_" 2>/dev/null | head -n1)
         if [[ -n "$session_dir" ]]; then
-          cp -r "$session_dir" "$BACKUP_DEST/$shard"
+          if cp -r "$session_dir" "$BACKUP_DEST/$shard"; then
+            echo "Backed up: $session_dir -> $BACKUP_DEST/$shard"
+          else
+            echo "Warning: backup failed for $session_dir, deleting anyway"
+          fi
           rm -rf "$session_dir"
-          echo "Backed up and deleted: $session_dir"
+          echo "Deleted: $session_dir"
           deleted=1
         fi
       done
