@@ -51,8 +51,26 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "poweroff-with-wake" ''
-        ${pkgs.util-linux}/bin/rtcwake -m no -t $(${pkgs.coreutils}/bin/date -d "tomorrow 08:00" +%s)
-        /run/current-system/sw/bin/systemctl poweroff
+        set -e
+        echo "Stopping DST caves shard..."
+        systemctl stop dst-caves.service || true
+        while systemctl is-active --quiet dst-caves.service; do
+          sleep 1
+        done
+
+        echo "Stopping DST master shard..."
+        systemctl stop dst-master.service || true
+        while systemctl is-active --quiet dst-master.service; do
+          sleep 1
+        done
+
+        echo "Setting RTC wake alarm..."
+        ${pkgs.util-linux}/bin/rtcwake \
+          -m no \
+          -t $(${pkgs.coreutils}/bin/date -d "tomorrow 08:00" +%s)
+
+        echo "Powering off..."
+        systemctl poweroff
       '';
     };
   };

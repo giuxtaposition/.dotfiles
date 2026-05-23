@@ -137,19 +137,20 @@
     '';
   };
 
-  # ExecStop scripts: write c_shutdown() to the shard's stdin pipe.
-  # DST executes it in Lua → saves world+users → exits cleanly.
-  # Note: c_shutdown(true) means nosave=true (no save!) — always use c_shutdown().
   masterStopScript = pkgs.writeShellScript "dst-master-stop" ''
-    [ -p ${masterPipe} ] && echo 'c_shutdown()' > ${masterPipe} || true
-    # Wait for the main process to exit before returning so that systemd does
-    # not send SIGTERM while DST is still writing the save to disk.
-    # $MAINPID is provided by systemd to ExecStop scripts.
-    [ -n "$MAINPID" ] && ${pkgs.coreutils}/bin/tail --pid="$MAINPID" -f /dev/null 2>/dev/null || true
+    if [ -p ${masterPipe} ]; then
+      echo 'c_shutdown()' > ${masterPipe} || true
+    fi
+
+    sleep 15
   '';
+
   cavesStopScript = pkgs.writeShellScript "dst-caves-stop" ''
-    [ -p ${cavesPipe} ] && echo 'c_shutdown()' > ${cavesPipe} || true
-    [ -n "$MAINPID" ] && ${pkgs.coreutils}/bin/tail --pid="$MAINPID" -f /dev/null 2>/dev/null || true
+    if [ -p ${cavesPipe} ]; then
+      echo 'c_shutdown()' > ${cavesPipe} || true
+    fi
+
+    sleep 15
   '';
 in {
   options.services.dst-server = {
@@ -280,6 +281,7 @@ in {
 
           [MISC]
           console_enabled = true
+          max_snapshots = 10
 
           [SHARD]
           shard_enabled = true
@@ -414,33 +416,30 @@ in {
       dst-master = {
         description = "DST Master shard";
         wantedBy = ["multi-user.target"];
-        after = ["dst-setup.service" "dst-update.service"];
-
+        after = [
+          "dst-setup.service"
+          "dst-update.service"
+          "network-online.target"
+        ];
+        wants = ["network-online.target"];
         serviceConfig = {
           Type = "simple";
           User = cfg.user;
           WorkingDirectory = "${serverDir}/bin64";
-          Restart = "on-failure";
-          RestartSec = "10s";
-          # Send c_shutdown() via stdin pipe → DST saves world+users then exits.
-          # KillMode=mixed: after ExecStop, systemd waits TimeoutStopSec for DST to
-          # exit cleanly, then sends SIGTERM to the main process as a fallback.
-          # This prevents orphan processes when the clean shutdown doesn't complete.
+          Restart = "always";
+          RestartSec = "15s";
           ExecStop = "${masterStopScript}";
-          KillMode = "mixed";
-          TimeoutStopSec = 90;
+          KillMode = "control-group";
+          TimeoutStopSec = 300;
+          SuccessExitStatus = ["139" "SIGSEGV"];
         };
 
-        # FMOD and other bundled libs are loaded via dlopen() which ignores
-        # rpath — LD_LIBRARY_PATH is required for those to be found.
         environment.LD_LIBRARY_PATH = "${serverDir}/bin64/lib64";
-
         script = ''
-          # Create stdin pipe for console command injection (e.g. c_shutdown).
-          [ -p ${masterPipe} ] || mkfifo ${masterPipe}
-          # Open FIFO read+write so the bash process always holds the read end
-          # open — prevents ExecStop's write from blocking when DST closes stdin.
+          rm -f ${masterPipe}
+          mkfifo ${masterPipe}
           exec 3<>${masterPipe}
+          echo "Starting DST master shard..."
           ${serverBin} \
             -console \
             -persistent_storage_root ${cfg.dataDir} \
@@ -451,34 +450,58 @@ in {
         '';
       };
 
-      # ---- Caves shard ----
       dst-caves = {
         description = "DST Caves shard";
         wantedBy = ["multi-user.target"];
-        after = ["dst-setup.service" "dst-update.service" "dst-master.service"];
-
+        requires = ["dst-master.service"];
+        after = [
+          "dst-master.service"
+          "dst-setup.service"
+          "dst-update.service"
+        ];
+        bindsTo = ["dst-master.service"];
+        partOf = ["dst-master.service"];
         serviceConfig = {
           Type = "simple";
           User = cfg.user;
           WorkingDirectory = "${serverDir}/bin64";
-          Restart = "on-failure";
-          RestartSec = "10s";
+          Restart = "always";
+          RestartSec = "15s";
           ExecStop = "${cavesStopScript}";
-          KillMode = "mixed";
-          TimeoutStopSec = 90;
+          KillMode = "control-group";
+          TimeoutStopSec = 300;
+          SuccessExitStatus = ["139" "SIGSEGV"];
         };
 
         environment.LD_LIBRARY_PATH = "${serverDir}/bin64/lib64";
 
         script = ''
-          [ -p ${cavesPipe} ] || mkfifo ${cavesPipe}
+          echo "Waiting for master shard networking..."
+
+          for i in $(seq 1 90); do
+            if ${pkgs.netcat}/bin/nc -z 127.0.0.1 10998; then
+              echo "Master shard port is ready"
+              break
+            fi
+
+            sleep 2
+          done
+
+          # Additional stabilization delay.
+          # DST often binds the port before shard auth is fully ready.
+          sleep 10
+          rm -f ${cavesPipe}
+          mkfifo ${cavesPipe}
           exec 3<>${cavesPipe}
+          echo "Starting DST caves shard..."
+
           ${serverBin} \
             -console \
             -persistent_storage_root ${cfg.dataDir} \
             -cluster ${cfg.clusterName} \
             -shard Caves \
             <&3
+
           exec 3>&-
         '';
       };

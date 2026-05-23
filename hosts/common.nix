@@ -99,6 +99,7 @@
       rsync
       unzip
       zip
+      libnotify
     ];
 
     etc =

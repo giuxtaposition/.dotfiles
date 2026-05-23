@@ -34,7 +34,6 @@
     gcc
     brightnessctl
     pulseaudio
-    libnotify
   ];
 
   bluetooth.enable = true;
