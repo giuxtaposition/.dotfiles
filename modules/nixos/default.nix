@@ -27,5 +27,5 @@
   vpn = import ./services/vpn.nix;
 
   #  # Game server modules
-  dst-server = import ./dont_starve_together_server.nix;
+  dst-server = import ./dont_starve_together/dont_starve_together_server.nix;
 }

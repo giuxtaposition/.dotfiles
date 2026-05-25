@@ -15,7 +15,7 @@
   ...
 }: let
   cfg = config.services.dst-server;
-  hasSecrets = builtins.pathExists ../../secrets/secrets.yaml;
+  hasSecrets = builtins.pathExists ../../../secrets/secrets.yaml;
   # DST uses ${dataDir}/DoNotStarveTogether/ directly (no .klei prefix)
   # when -persistent_storage_root is passed; confirmed by PersistRootStorage log.
   clusterDir = "${cfg.dataDir}/DoNotStarveTogether/${cfg.clusterName}";
@@ -308,6 +308,9 @@ in {
           is_master = false
           name = Caves
         '';
+
+        "dst/${cfg.clusterName}/Master/worldgenoverride.lua".source = ./worldgenoverride_master.lua;
+        "dst/${cfg.clusterName}/Caves/worldgenoverride.lua".source = ./worldgenoverride_caves.lua;
       }
       // lib.optionalAttrs (cfg.mods != []) {
         "dst/mods_setup.lua".text =
@@ -390,7 +393,9 @@ in {
 
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/cluster.ini ${clusterDir}/
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/server.ini ${clusterDir}/Master/
+          ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/worldgenoverride.lua ${clusterDir}/Master/
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/server.ini ${clusterDir}/Caves/
+          ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/worldgenoverride.lua ${clusterDir}/Caves/
 
           ${lib.optionalString (cfg.mods != []) ''
             ${pkgs.coreutils}/bin/cp /etc/dst/mods_setup.lua ${serverDir}/mods/dedicated_server_mods_setup.lua
