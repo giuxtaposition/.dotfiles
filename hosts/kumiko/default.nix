@@ -38,6 +38,7 @@
       gameMode = "endless";
       key = "giuxtaposition-survival-madness-shard-key";
     };
+    adminlist = ["KU_2DNgIgiw"];
     mods = [
       {id = "378160973";}
       {id = "2189004162";}

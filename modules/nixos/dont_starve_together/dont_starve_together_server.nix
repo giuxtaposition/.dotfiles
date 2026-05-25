@@ -240,6 +240,12 @@ in {
       default = [];
       description = "Workshop mods to install and enable on all shards";
     };
+
+    adminlist = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "List of KU IDs to grant admin access (e.g. [ \"KU_xxxxxxxx\" ])";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -311,6 +317,10 @@ in {
 
         "dst/${cfg.clusterName}/Master/worldgenoverride.lua".source = ./worldgenoverride_master.lua;
         "dst/${cfg.clusterName}/Caves/worldgenoverride.lua".source = ./worldgenoverride_caves.lua;
+      }
+      // lib.optionalAttrs (cfg.adminlist != []) {
+        "dst/${cfg.clusterName}/adminlist.txt".text =
+          lib.concatMapStrings (id: "${id}\n") cfg.adminlist;
       }
       // lib.optionalAttrs (cfg.mods != []) {
         "dst/mods_setup.lua".text =
@@ -396,6 +406,10 @@ in {
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/worldgenoverride.lua ${clusterDir}/Master/
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/server.ini ${clusterDir}/Caves/
           ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/worldgenoverride.lua ${clusterDir}/Caves/
+
+          ${lib.optionalString (cfg.adminlist != []) ''
+            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/adminlist.txt ${clusterDir}/
+          ''}
 
           ${lib.optionalString (cfg.mods != []) ''
             ${pkgs.coreutils}/bin/cp /etc/dst/mods_setup.lua ${serverDir}/mods/dedicated_server_mods_setup.lua
