@@ -139,7 +139,7 @@
 
   masterStopScript = pkgs.writeShellScript "dst-master-stop" ''
     if [ -p ${masterPipe} ]; then
-      echo 'c_shutdown()' > ${masterPipe} || true
+      echo 'c_shutdown(true)' > ${masterPipe} || true
     fi
 
     sleep 15
@@ -147,7 +147,7 @@
 
   cavesStopScript = pkgs.writeShellScript "dst-caves-stop" ''
     if [ -p ${cavesPipe} ]; then
-      echo 'c_shutdown()' > ${cavesPipe} || true
+      echo 'c_shutdown(true)' > ${cavesPipe} || true
     fi
 
     sleep 15
