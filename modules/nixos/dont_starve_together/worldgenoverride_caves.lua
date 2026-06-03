@@ -28,6 +28,19 @@ return {
     prefabswaps_start = "default", -- "classic", "default", "highly random"
     petrification = "default", -- "none", "few", "default", "many", "max"
 
+    -- EVENTS
+    winters_feast = "enabled",
+    year_of_the_knight = "enabled",
+    year_of_the_beefalo = "default",
+    year_of_the_bunnyman = "default",
+    year_of_the_carrat = "default",
+    year_of_the_catcoon = "default",
+    year_of_the_dragonfly = "default",
+    year_of_the_gobbler = "default",
+    year_of_the_pig = "default",
+    year_of_the_snake = "default",
+    year_of_the_varg = "default",
+
     -- RESOURCES
     flowers = "default", -- "never", "rare", "default", "often", "always"
     grass = "default", -- "never", "rare", "default", "often", "always"
