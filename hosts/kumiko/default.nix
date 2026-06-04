@@ -44,6 +44,7 @@
       {id = "2189004162";}
       {id = "2477889104";}
       {id = "3734456345";}
+      {id = "1207269058";}
     ];
   };
 
@@ -69,7 +70,7 @@
         echo "Setting RTC wake alarm..."
         ${pkgs.util-linux}/bin/rtcwake \
           -m no \
-          -t $(${pkgs.coreutils}/bin/date -d "tomorrow 08:00" +%s)
+          -t $(${pkgs.coreutils}/bin/date -d "today 08:00" +%s)
 
         echo "Powering off..."
         systemctl poweroff
@@ -78,11 +79,10 @@
   };
 
   systemd.timers.scheduled-poweroff = {
-    description = "Shut down kumiko at 11pm daily";
+    description = "Shut down kumiko at midnight daily";
     wantedBy = ["timers.target"];
     timerConfig = {
-      OnCalendar = "*-*-* 23:00:00";
-      Persistent = true;
+      OnCalendar = "*-*-* 00:00:00";
     };
   };
 
