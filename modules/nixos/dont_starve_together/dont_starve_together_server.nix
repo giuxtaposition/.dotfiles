@@ -52,6 +52,7 @@
   cavesPipe = "${cfg.dataDir}/caves-console.fifo";
 
   backupDir = "${cfg.dataDir}/player-backups";
+  worldBackupDir = "${cfg.dataDir}/world-backups";
 
   deletePlayerScript = pkgs.writeShellApplication {
     name = "dst-delete-player";
@@ -134,6 +135,30 @@
       else
         echo "Backup saved to: $BACKUP_DEST"
       fi
+    '';
+  };
+
+  worldBackupScript = pkgs.writeShellApplication {
+    name = "dst-world-backup";
+    runtimeInputs = [pkgs.coreutils];
+    text = ''
+      TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+      DEST="${worldBackupDir}/$TIMESTAMP"
+      mkdir -p "$DEST"
+
+      for shard in Master Caves; do
+        SAVE_DIR="${clusterDir}/$shard/save"
+        if [[ -d "$SAVE_DIR" ]]; then
+          cp -r "$SAVE_DIR" "$DEST/$shard"
+          echo "Backed up $shard -> $DEST/$shard"
+        fi
+      done
+
+      mapfile -t OLD < <(find "${worldBackupDir}" -mindepth 1 -maxdepth 1 -type d -name '[0-9]*' | sort -r | tail -n +13)
+      for old in "''${OLD[@]}"; do
+        rm -rf "$old"
+        echo "Pruned: $old"
+      done
     '';
   };
 
@@ -260,7 +285,7 @@ in {
       home = cfg.dataDir;
     };
 
-    environment.systemPackages = [deletePlayerScript];
+    environment.systemPackages = [deletePlayerScript worldBackupScript];
 
     # ---- Open firewall ports ----
     # 10998 = inter-shard (loopback), 10999 = Master, 11000 = Caves
@@ -347,6 +372,7 @@ in {
       "d ${clusterDir}/Master 0755 ${cfg.user} ${cfg.user} -"
       "d ${clusterDir}/Caves 0755 ${cfg.user} ${cfg.user} -"
       "d ${backupDir} 0755 ${cfg.user} ${cfg.user} -"
+      "d ${worldBackupDir} 0755 ${cfg.user} ${cfg.user} -"
     ];
 
     systemd.services = {
@@ -523,6 +549,26 @@ in {
 
           exec 3>&-
         '';
+      };
+      dst-backup = {
+        description = "DST world backup";
+        after = ["dst-master.service"];
+
+        serviceConfig = {
+          Type = "oneshot";
+          User = cfg.user;
+          ExecStart = "${worldBackupScript}/bin/dst-world-backup";
+        };
+      };
+    };
+
+    systemd.timers.dst-backup = {
+      description = "DST world backup every 2 hours";
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnBootSec = "2h";
+        OnUnitActiveSec = "2h";
+        Unit = "dst-backup.service";
       };
     };
 
