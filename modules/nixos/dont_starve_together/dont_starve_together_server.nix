@@ -163,19 +163,41 @@
   };
 
   masterStopScript = pkgs.writeShellScript "dst-master-stop" ''
+    # Caves must save first — it holds player position data that master reads.
+    if [ -p ${cavesPipe} ]; then
+      echo 'c_shutdown(true)' > ${cavesPipe} || true
+    fi
+    for i in $(seq 1 60); do
+      if ! ${pkgs.procps}/bin/pgrep -f "shard Caves" > /dev/null 2>&1; then
+        echo "Caves shard exited cleanly"
+        break
+      fi
+      sleep 2
+    done
+
     if [ -p ${masterPipe} ]; then
       echo 'c_shutdown(true)' > ${masterPipe} || true
     fi
-
-    sleep 15
+    for i in $(seq 1 60); do
+      if ! ${pkgs.procps}/bin/pgrep -f "shard Master" > /dev/null 2>&1; then
+        echo "Master shard exited cleanly"
+        break
+      fi
+      sleep 2
+    done
   '';
 
   cavesStopScript = pkgs.writeShellScript "dst-caves-stop" ''
     if [ -p ${cavesPipe} ]; then
       echo 'c_shutdown(true)' > ${cavesPipe} || true
     fi
-
-    sleep 15
+    for i in $(seq 1 60); do
+      if ! ${pkgs.procps}/bin/pgrep -f "shard Caves" > /dev/null 2>&1; then
+        echo "Caves shard exited cleanly"
+        break
+      fi
+      sleep 2
+    done
   '';
 in {
   options.services.dst-server = {
@@ -364,211 +386,213 @@ in {
           config.environment.etc."dst/${cfg.clusterName}/Master/modoverrides.lua".text;
       };
 
-    systemd.tmpfiles.rules = [
-      "d ${cfg.dataDir} 0755 ${cfg.user} ${cfg.user} -"
-      "d ${serverDir} 0755 ${cfg.user} ${cfg.user} -"
-      "d ${cfg.dataDir}/DoNotStarveTogether 0755 ${cfg.user} ${cfg.user} -"
-      "d ${clusterDir} 0755 ${cfg.user} ${cfg.user} -"
-      "d ${clusterDir}/Master 0755 ${cfg.user} ${cfg.user} -"
-      "d ${clusterDir}/Caves 0755 ${cfg.user} ${cfg.user} -"
-      "d ${backupDir} 0755 ${cfg.user} ${cfg.user} -"
-      "d ${worldBackupDir} 0755 ${cfg.user} ${cfg.user} -"
-    ];
+    systemd = {
+      tmpfiles.rules = [
+        "d ${cfg.dataDir} 0755 ${cfg.user} ${cfg.user} -"
+        "d ${serverDir} 0755 ${cfg.user} ${cfg.user} -"
+        "d ${cfg.dataDir}/DoNotStarveTogether 0755 ${cfg.user} ${cfg.user} -"
+        "d ${clusterDir} 0755 ${cfg.user} ${cfg.user} -"
+        "d ${clusterDir}/Master 0755 ${cfg.user} ${cfg.user} -"
+        "d ${clusterDir}/Caves 0755 ${cfg.user} ${cfg.user} -"
+        "d ${backupDir} 0755 ${cfg.user} ${cfg.user} -"
+        "d ${worldBackupDir} 0755 ${cfg.user} ${cfg.user} -"
+      ];
 
-    systemd.services = {
-      # ---- Install / update server binaries via steamcmd ----
-      dst-update = {
-        description = "DST server install/update";
-        wantedBy = ["multi-user.target"];
-        before = ["dst-master.service" "dst-caves.service"];
-        after = ["network-online.target"];
-        wants = ["network-online.target"];
+      services = {
+        # ---- Install / update server binaries via steamcmd ----
+        dst-update = {
+          description = "DST server install/update";
+          wantedBy = ["multi-user.target"];
+          before = ["dst-master.service" "dst-caves.service"];
+          after = ["network-online.target"];
+          wants = ["network-online.target"];
 
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          User = cfg.user;
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            User = cfg.user;
+          };
+
+          script = ''
+            ${pkgs.steamcmd}/bin/steamcmd \
+              +force_install_dir ${serverDir} \
+              +login anonymous \
+              +app_update 343050 validate \
+              +quit
+
+            # Patch the binary to use NixOS's dynamic linker and explicit rpath.
+            # Re-run after every steamcmd update in case the binary was replaced.
+            ORIG_RPATH=$(${pkgs.patchelf}/bin/patchelf --print-rpath ${serverBin} 2>/dev/null || true)
+            ${pkgs.patchelf}/bin/patchelf \
+              --set-interpreter ${pkgs.glibc}/lib/ld-linux-x86-64.so.2 \
+              --set-rpath "${dstRpath}''${ORIG_RPATH:+:$ORIG_RPATH}" \
+              ${serverBin}
+
+            # Create the libcurl-gnutls.so.4 alias that DST expects.
+            # Must use curlGnutls4 (rebuilt with CURL_GNUTLS_3 version script).
+            ln -sf ${curlGnutls4.out}/lib/libcurl.so.4 \
+              ${serverDir}/bin64/lib64/libcurl-gnutls.so.4
+          '';
         };
 
-        script = ''
-          ${pkgs.steamcmd}/bin/steamcmd \
-            +force_install_dir ${serverDir} \
-            +login anonymous \
-            +app_update 343050 validate \
-            +quit
+        # ---- Copy configs into runtime dir ----
+        dst-setup = {
+          description = "DST config setup";
+          wantedBy = ["multi-user.target"];
+          before = ["dst-master.service" "dst-caves.service"];
+          after = ["dst-update.service"];
 
-          # Patch the binary to use NixOS's dynamic linker and explicit rpath.
-          # Re-run after every steamcmd update in case the binary was replaced.
-          ORIG_RPATH=$(${pkgs.patchelf}/bin/patchelf --print-rpath ${serverBin} 2>/dev/null || true)
-          ${pkgs.patchelf}/bin/patchelf \
-            --set-interpreter ${pkgs.glibc}/lib/ld-linux-x86-64.so.2 \
-            --set-rpath "${dstRpath}''${ORIG_RPATH:+:$ORIG_RPATH}" \
-            ${serverBin}
+          serviceConfig.Type = "oneshot";
 
-          # Create the libcurl-gnutls.so.4 alias that DST expects.
-          # Must use curlGnutls4 (rebuilt with CURL_GNUTLS_3 version script).
-          ln -sf ${curlGnutls4.out}/lib/libcurl.so.4 \
-            ${serverDir}/bin64/lib64/libcurl-gnutls.so.4
-        '';
-      };
+          # Run as root: avoids permission issues when files already exist
+          # owned by root from previous runs. Chowns everything at the end
+          # so dst-master/caves (running as cfg.user) can read the configs.
+          script = ''
+            ${pkgs.coreutils}/bin/mkdir -p ${clusterDir}/Master ${clusterDir}/Caves
 
-      # ---- Copy configs into runtime dir ----
-      dst-setup = {
-        description = "DST config setup";
-        wantedBy = ["multi-user.target"];
-        before = ["dst-master.service" "dst-caves.service"];
-        after = ["dst-update.service"];
+            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/cluster.ini ${clusterDir}/
+            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/server.ini ${clusterDir}/Master/
+            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/worldgenoverride.lua ${clusterDir}/Master/
+            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/server.ini ${clusterDir}/Caves/
+            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/worldgenoverride.lua ${clusterDir}/Caves/
 
-        serviceConfig.Type = "oneshot";
+            ${lib.optionalString (cfg.adminlist != []) ''
+              ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/adminlist.txt ${clusterDir}/
+            ''}
 
-        # Run as root: avoids permission issues when files already exist
-        # owned by root from previous runs. Chowns everything at the end
-        # so dst-master/caves (running as cfg.user) can read the configs.
-        script = ''
-          ${pkgs.coreutils}/bin/mkdir -p ${clusterDir}/Master ${clusterDir}/Caves
+            ${lib.optionalString (cfg.mods != []) ''
+              ${pkgs.coreutils}/bin/cp /etc/dst/mods_setup.lua ${serverDir}/mods/dedicated_server_mods_setup.lua
+              ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/modoverrides.lua ${clusterDir}/Master/
+              ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/modoverrides.lua ${clusterDir}/Caves/
+            ''}
 
-          ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/cluster.ini ${clusterDir}/
-          ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/server.ini ${clusterDir}/Master/
-          ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/worldgenoverride.lua ${clusterDir}/Master/
-          ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/server.ini ${clusterDir}/Caves/
-          ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/worldgenoverride.lua ${clusterDir}/Caves/
+            # Inject cluster password from sops secret
+            DST_PASSWORD=$(cat ${config.sops.secrets.${cfg.sopsPasswordKey}.path})
+            ${pkgs.gnused}/bin/sed -i \
+              "s|cluster_password = __DST_PASSWORD_PLACEHOLDER__|cluster_password = $DST_PASSWORD|" \
+              ${clusterDir}/cluster.ini
 
-          ${lib.optionalString (cfg.adminlist != []) ''
-            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/adminlist.txt ${clusterDir}/
-          ''}
+            # Inject secret token
+            ${pkgs.coreutils}/bin/cp ${config.sops.secrets.${cfg.sopsTokenKey}.path} \
+              ${clusterDir}/cluster_token.txt
 
-          ${lib.optionalString (cfg.mods != []) ''
-            ${pkgs.coreutils}/bin/cp /etc/dst/mods_setup.lua ${serverDir}/mods/dedicated_server_mods_setup.lua
-            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Master/modoverrides.lua ${clusterDir}/Master/
-            ${pkgs.coreutils}/bin/cp /etc/dst/${cfg.clusterName}/Caves/modoverrides.lua ${clusterDir}/Caves/
-          ''}
-
-          # Inject cluster password from sops secret
-          DST_PASSWORD=$(cat ${config.sops.secrets.${cfg.sopsPasswordKey}.path})
-          ${pkgs.gnused}/bin/sed -i \
-            "s|cluster_password = __DST_PASSWORD_PLACEHOLDER__|cluster_password = $DST_PASSWORD|" \
-            ${clusterDir}/cluster.ini
-
-          # Inject secret token
-          ${pkgs.coreutils}/bin/cp ${config.sops.secrets.${cfg.sopsTokenKey}.path} \
-            ${clusterDir}/cluster_token.txt
-
-          ${pkgs.coreutils}/bin/chown -R ${cfg.user}:${cfg.user} ${cfg.dataDir}
-        '';
-      };
-
-      # ---- Master shard (overworld) ----
-      dst-master = {
-        description = "DST Master shard";
-        wantedBy = ["multi-user.target"];
-        after = [
-          "dst-setup.service"
-          "dst-update.service"
-          "network-online.target"
-        ];
-        wants = ["network-online.target"];
-        serviceConfig = {
-          Type = "simple";
-          User = cfg.user;
-          WorkingDirectory = "${serverDir}/bin64";
-          Restart = "always";
-          RestartSec = "15s";
-          ExecStop = "${masterStopScript}";
-          KillMode = "control-group";
-          TimeoutStopSec = 300;
-          SuccessExitStatus = ["139" "SIGSEGV"];
+            ${pkgs.coreutils}/bin/chown -R ${cfg.user}:${cfg.user} ${cfg.dataDir}
+          '';
         };
 
-        environment.LD_LIBRARY_PATH = "${serverDir}/bin64/lib64";
-        script = ''
-          rm -f ${masterPipe}
-          mkfifo ${masterPipe}
-          exec 3<>${masterPipe}
-          echo "Starting DST master shard..."
-          ${serverBin} \
-            -console \
-            -persistent_storage_root ${cfg.dataDir} \
-            -cluster ${cfg.clusterName} \
-            -shard Master \
-            <&3
-          exec 3>&-
-        '';
-      };
+        # ---- Master shard (overworld) ----
+        dst-master = {
+          description = "DST Master shard";
+          wantedBy = ["multi-user.target"];
+          after = [
+            "dst-setup.service"
+            "dst-update.service"
+            "network-online.target"
+          ];
+          wants = ["network-online.target"];
+          serviceConfig = {
+            Type = "simple";
+            User = cfg.user;
+            WorkingDirectory = "${serverDir}/bin64";
+            Restart = "always";
+            RestartSec = "15s";
+            ExecStop = "${masterStopScript}";
+            KillMode = "control-group";
+            TimeoutStopSec = 300;
+            SuccessExitStatus = ["139" "SIGSEGV"];
+          };
 
-      dst-caves = {
-        description = "DST Caves shard";
-        wantedBy = ["multi-user.target"];
-        requires = ["dst-master.service"];
-        after = [
-          "dst-master.service"
-          "dst-setup.service"
-          "dst-update.service"
-        ];
-        bindsTo = ["dst-master.service"];
-        partOf = ["dst-master.service"];
-        serviceConfig = {
-          Type = "simple";
-          User = cfg.user;
-          WorkingDirectory = "${serverDir}/bin64";
-          Restart = "always";
-          RestartSec = "15s";
-          ExecStop = "${cavesStopScript}";
-          KillMode = "control-group";
-          TimeoutStopSec = 300;
-          SuccessExitStatus = ["139" "SIGSEGV"];
+          environment.LD_LIBRARY_PATH = "${serverDir}/bin64/lib64";
+          script = ''
+            rm -f ${masterPipe}
+            mkfifo ${masterPipe}
+            exec 3<>${masterPipe}
+            echo "Starting DST master shard..."
+            ${serverBin} \
+              -console \
+              -persistent_storage_root ${cfg.dataDir} \
+              -cluster ${cfg.clusterName} \
+              -shard Master \
+              <&3
+            exec 3>&-
+          '';
         };
 
-        environment.LD_LIBRARY_PATH = "${serverDir}/bin64/lib64";
+        dst-caves = {
+          description = "DST Caves shard";
+          wantedBy = ["multi-user.target"];
+          requires = ["dst-master.service"];
+          after = [
+            "dst-master.service"
+            "dst-setup.service"
+            "dst-update.service"
+          ];
+          bindsTo = ["dst-master.service"];
+          partOf = ["dst-master.service"];
+          serviceConfig = {
+            Type = "simple";
+            User = cfg.user;
+            WorkingDirectory = "${serverDir}/bin64";
+            Restart = "always";
+            RestartSec = "15s";
+            ExecStop = "${cavesStopScript}";
+            KillMode = "control-group";
+            TimeoutStopSec = 300;
+            SuccessExitStatus = ["139" "SIGSEGV"];
+          };
 
-        script = ''
-          echo "Waiting for master shard networking..."
+          environment.LD_LIBRARY_PATH = "${serverDir}/bin64/lib64";
 
-          for i in $(seq 1 90); do
-            if ${pkgs.netcat}/bin/nc -z 127.0.0.1 10998; then
-              echo "Master shard port is ready"
-              break
-            fi
+          script = ''
+            echo "Waiting for master shard networking..."
 
-            sleep 2
-          done
+            for i in $(seq 1 90); do
+              if ${pkgs.netcat}/bin/nc -z 127.0.0.1 10998; then
+                echo "Master shard port is ready"
+                break
+              fi
 
-          # Additional stabilization delay.
-          # DST often binds the port before shard auth is fully ready.
-          sleep 10
-          rm -f ${cavesPipe}
-          mkfifo ${cavesPipe}
-          exec 3<>${cavesPipe}
-          echo "Starting DST caves shard..."
+              sleep 2
+            done
 
-          ${serverBin} \
-            -console \
-            -persistent_storage_root ${cfg.dataDir} \
-            -cluster ${cfg.clusterName} \
-            -shard Caves \
-            <&3
+            # Additional stabilization delay.
+            # DST often binds the port before shard auth is fully ready.
+            sleep 10
+            rm -f ${cavesPipe}
+            mkfifo ${cavesPipe}
+            exec 3<>${cavesPipe}
+            echo "Starting DST caves shard..."
 
-          exec 3>&-
-        '';
-      };
-      dst-backup = {
-        description = "DST world backup";
-        after = ["dst-master.service"];
+            ${serverBin} \
+              -console \
+              -persistent_storage_root ${cfg.dataDir} \
+              -cluster ${cfg.clusterName} \
+              -shard Caves \
+              <&3
 
-        serviceConfig = {
-          Type = "oneshot";
-          User = cfg.user;
-          ExecStart = "${worldBackupScript}/bin/dst-world-backup";
+            exec 3>&-
+          '';
+        };
+        dst-backup = {
+          description = "DST world backup";
+          after = ["dst-master.service"];
+
+          serviceConfig = {
+            Type = "oneshot";
+            User = cfg.user;
+            ExecStart = "${worldBackupScript}/bin/dst-world-backup";
+          };
         };
       };
-    };
 
-    systemd.timers.dst-backup = {
-      description = "DST world backup every 2 hours";
-      wantedBy = ["timers.target"];
-      timerConfig = {
-        OnBootSec = "2h";
-        OnUnitActiveSec = "2h";
-        Unit = "dst-backup.service";
+      timers.dst-backup = {
+        description = "DST world backup every 2 hours";
+        wantedBy = ["timers.target"];
+        timerConfig = {
+          OnBootSec = "2h";
+          OnUnitActiveSec = "2h";
+          Unit = "dst-backup.service";
+        };
       };
     };
 
