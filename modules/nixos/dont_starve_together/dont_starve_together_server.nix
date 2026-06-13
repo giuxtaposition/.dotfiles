@@ -164,8 +164,8 @@
 
   masterStopScript = pkgs.writeShellScript "dst-master-stop" ''
     # Caves must save first — it holds player position data that master reads.
-    if [ -p ${cavesPipe} ]; then
-      echo 'c_shutdown(true)' > ${cavesPipe} || true
+    if [ -p ${cavesPipe} ] && ${pkgs.procps}/bin/pgrep -f "shard Caves" > /dev/null 2>&1; then
+      ${pkgs.coreutils}/bin/timeout 5 ${pkgs.bash}/bin/bash -c "echo 'c_shutdown(true)' > ${cavesPipe}" || true
     fi
     for i in $(seq 1 60); do
       if ! ${pkgs.procps}/bin/pgrep -f "shard Caves" > /dev/null 2>&1; then
@@ -175,8 +175,8 @@
       sleep 2
     done
 
-    if [ -p ${masterPipe} ]; then
-      echo 'c_shutdown(true)' > ${masterPipe} || true
+    if [ -p ${masterPipe} ] && ${pkgs.procps}/bin/pgrep -f "shard Master" > /dev/null 2>&1; then
+      ${pkgs.coreutils}/bin/timeout 5 ${pkgs.bash}/bin/bash -c "echo 'c_shutdown(true)' > ${masterPipe}" || true
     fi
     for i in $(seq 1 60); do
       if ! ${pkgs.procps}/bin/pgrep -f "shard Master" > /dev/null 2>&1; then
@@ -188,8 +188,8 @@
   '';
 
   cavesStopScript = pkgs.writeShellScript "dst-caves-stop" ''
-    if [ -p ${cavesPipe} ]; then
-      echo 'c_shutdown(true)' > ${cavesPipe} || true
+    if [ -p ${cavesPipe} ] && ${pkgs.procps}/bin/pgrep -f "shard Caves" > /dev/null 2>&1; then
+      ${pkgs.coreutils}/bin/timeout 5 ${pkgs.bash}/bin/bash -c "echo 'c_shutdown(true)' > ${cavesPipe}" || true
     fi
     for i in $(seq 1 60); do
       if ! ${pkgs.procps}/bin/pgrep -f "shard Caves" > /dev/null 2>&1; then
@@ -360,6 +360,7 @@ in {
           [SHARD]
           is_master = false
           name = Caves
+          id = 2299602462
         '';
 
         "dst/${cfg.clusterName}/Master/worldgenoverride.lua".source = ./worldgenoverride_master.lua;
