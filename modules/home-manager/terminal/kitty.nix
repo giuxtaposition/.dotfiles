@@ -52,17 +52,15 @@
           fzf_ksb_find_script = pkgs.writeShellScript "fzf_ksb_find.sh" ''
             #! ${pkgs.bash}/bin/sh
             # Purpose: Fuzzy-find through the Kitty scrollback buffer
-            # and copy the selected line to clipboard
+            # and jump to the selected line in the underlying window
 
             set -euo pipefail
 
             stdin="$(mktemp)"
             trap 'rm -f "$stdin"' EXIT
 
-            # Read scrollback into temp file
             cat > "$stdin"
 
-            # Add line numbers and run fzf
             selection=$(
               nl -ba "$stdin" | fzf \
                 --ansi \
@@ -77,13 +75,24 @@
                 --bind 'ctrl-c:abort' \
                 --bind 'ctrl-b:preview-half-page-up' \
                 --bind 'ctrl-f:preview-half-page-down'
-            )
+            ) || exit 0
 
-            # Extract the actual line (remove line number column)
-            line="$(printf '%s\n' "$selection" | cut -f2-)"
+            [ -z "$selection" ] && exit 0
 
-            # Copy to clipboard (no trailing newline)
-            printf "%s" "$line" | kitty +kitten clipboard
+            line_no="$(printf '%s\n' "$selection" | cut -f1 | tr -d ' ')"
+            total="$(wc -l < "$stdin" | tr -d ' ')"
+            offset=$((total - line_no))
+
+            parent_id="$(kitty @ ls --match state:overlay_parent 2>/dev/null \
+              | ${pkgs.jq}/bin/jq -r '[.. | objects | select(.is_self == false) | .id] | first // empty')"
+
+            if [ -n "$parent_id" ] && [ "$offset" -gt 0 ]; then
+              setsid sh -c "
+                sleep 0.2
+                kitty @ scroll-window --match id:$parent_id end
+                kitty @ scroll-window --match id:$parent_id ''${offset}l-
+              " </dev/null >/dev/null 2>&1 &
+            fi
           '';
         in "launch --type=overlay --stdin-source=@screen_scrollback --stdin-add-formatting --copy-env ${fzf_ksb_find_script}";
         "kitty_mod+a" = let
