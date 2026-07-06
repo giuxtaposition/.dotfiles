@@ -52,9 +52,15 @@
     # Data directories with correct ownership
     systemd.tmpfiles.rules = [
       "d /media 0775 root media -"
+      "d /media/Movies 0775 radarr media -"
+      "d /media/TVSeries 0775 sonarr media -"
+      "Z /media/TVSeries - sonarr media - -"
       "d /var/lib/jellyfin 0750 jellyfin media - -"
       "d /var/lib/sonarr 0750 sonarr media - -"
       "d /var/lib/radarr 0750 radarr media - -"
+      "Z /var/lib/jellyfin - jellyfin media - -"
+      "Z /var/lib/sonarr - sonarr media - -"
+      "Z /var/lib/radarr - radarr media - -"
     ];
   };
 }

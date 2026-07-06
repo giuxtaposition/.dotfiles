@@ -114,7 +114,7 @@ in {
     systemd.tmpfiles.rules = [
       "d /var/lib/gluetun 0750 root root - -"
       "d /var/lib/qbittorrent 0750 1000 media - -"
-      "d /media/downloads 0775 1000 media - -"
+      "d /media/downloads 2775 1000 media - -"
     ];
 
     # qBittorrent WebUI access from LAN
