@@ -45,12 +45,13 @@
         # Common tools
         gnumake
         tree-sitter
-        insomnia
+        bruno
         harper
 
         unstable.copilot-language-server
         unstable.opencode
         claude-code
+        tig
       ]
       ++ lib.optionals config.coding.typescript.enable [
         vscode-langservers-extracted

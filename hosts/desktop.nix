@@ -39,6 +39,7 @@
   bluetooth.enable = true;
   niri.enable = true;
   programs.kdeconnect.enable = true;
+  programs.dconf.enable = true;
   tailscale.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
