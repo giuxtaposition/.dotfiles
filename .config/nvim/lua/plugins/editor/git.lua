@@ -63,3 +63,8 @@ vim.keymap.set("n", "<leader>gl", function()
   vim.cmd("'<,'>CodeDiff history")
 end, { desc = "Line history", silent = true })
 vim.keymap.set("n", "<leader>gd", codediff_cmd(""), { desc = "Repo Diff", silent = true })
+
+vim.api.nvim_create_user_command("GdiffCard", function(opts)
+  ensure_codediff()
+  vim.cmd("CodeDiff " .. opts.args)
+end, { nargs = 1 })

@@ -54,6 +54,42 @@
                 cd "$selected_repo" && nvim
             end
           '';
+          gdiff-card = ''
+            if test (count $argv) -eq 0
+                echo "Usage: gdiff-card <pattern>"
+                return 1
+            end
+
+            set pattern $argv[1]
+            set escaped_pattern (string escape --style=regex $pattern)
+            set commits (git log --format="%H" --grep=$escaped_pattern --reverse)
+
+            if test (count $commits) -eq 0
+                echo "No commits matching: $pattern"
+                return 1
+            end
+
+            set base (git rev-parse "$commits[1]^")
+            set sanitized (string replace -ra '[^a-zA-Z0-9_-]' '-' $pattern)
+            set branch temp/diff-$sanitized
+
+            git switch -c $branch $base
+
+            for sha in $commits
+                if not git cherry-pick $sha
+                    git cherry-pick --abort
+                    git switch -
+                    git branch -D $branch
+                    echo "Cherry-pick failed: $sha depends on non-CARD commits"
+                    return 1
+                end
+            end
+
+            nvim -c "GdiffCard $base"
+
+            git switch -
+            git branch -D $branch
+          '';
         };
 
         shellAliases = {
