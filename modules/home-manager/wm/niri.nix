@@ -68,7 +68,7 @@
       }
 
       // Startup
-      spawn-at-startup "noctalia-shell"
+      spawn-at-startup "noctalia"
       spawn-at-startup "cachix" "watch-store" "giuxtaposition"
 
       // Misc
@@ -160,8 +160,8 @@
           Mod+Shift+Slash { show-hotkey-overlay; }
 
           Mod+Q { spawn "kitty"; }
-          Mod+D { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
-          Mod+P { spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"; }
+          Mod+D { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+          Mod+P { spawn "noctalia" "msg" "panel-toggle" "session"; }
 
           XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
           XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }

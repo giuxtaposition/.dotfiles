@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   inputs,
   ...
 }: {
@@ -9,110 +10,49 @@
   ];
 
   options = {
-    noctalia-shell.enable = lib.mkEnableOption "enables noctalia-shell shell module";
+    noctalia-shell.enable = lib.mkEnableOption "enables noctalia shell module";
   };
 
   config = lib.mkIf config.noctalia-shell.enable {
-    programs.noctalia-shell = {
+    programs.noctalia = {
       enable = true;
+      package = inputs.noctalia.packages.${pkgs.system}.default;
       settings = {
-        bar = {
+        shell = {
+          avatar_path = "${config.home.homeDirectory}/.dotfiles/assets/avatar.jpg";
+        };
+
+        theme = {
+          mode = "dark";
+          source = "builtin";
+          builtin = "Tokyo-Night";
+        };
+
+        bar.main = {
           position = "left";
-          showCapsule = false;
-          widgets = {
-            left = [
-              {
-                id = "ControlCenter";
-                useDistroLogo = true;
-              }
-              {
-                id = "Launcher";
-              }
-              {
-                id = "plugin:privacy-indicator";
-              }
-            ];
-            center = [
-              {
-                hideUnoccupied = false;
-                id = "Workspace";
-                labelMode = "none";
-              }
-            ];
-            right = [
-              # {
-              #   alwaysShowPercentage = false;
-              #   id = "Battery";
-              #   warningThreshold = 30;
-              # }
-              {
-                id = "plugin:pomodoro";
-              }
-              {
-                id = "Tray";
-              }
-              {
-                formatHorizontal = "HH:mm";
-                formatVertical = "HH mm";
-                id = "Clock";
-                useMonospacedFont = true;
-                usePrimaryColor = true;
-              }
-            ];
-          };
+          capsule = false;
+          start = ["control-center" "launcher"];
+          center = ["workspaces"];
+          end = ["tray" "clock"];
         };
-        colorSchemes.predefinedScheme = "Tokyo Night";
-        launcher = {
-          iconMode = "native";
+
+        widget.clock = {
+          format = "{:%H:%M}";
+          vertical_format = "{:%H\n%M}";
         };
-        general = {
-          avatarImage = "${config.home.homeDirectory}/.dotfiles/assets/avatar.jpg";
-        };
+
         location = {
-          monthBeforeDay = false;
-          name = "Rimini, Italy";
+          address = "Rimini, Italy";
         };
-        nightLight = {
+
+        nightlight = {
           enabled = true;
         };
+
         wallpaper = {
-          "overviewEnabled" = true;
-        };
-        plugins = {
-          sources = [
-            {
-              enabled = true;
-              name = "Official Noctalia Plugins";
-              url = "https://github.com/noctalia-dev/noctalia-plugins";
-            }
-          ];
-          states = {
-            privacy-indicator = {
-              enabled = true;
-              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-            };
-            pomodoro = {
-              enabled = true;
-              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-            };
-          };
-          version = 1;
-        };
-
-        pluginSettings = {
-          privacy-indicator = {
-            hideInactiveStates = true;
-          };
-        };
-      };
-    };
-
-    ## Setup wallpaper
-    home.file.".cache/noctalia/wallpapers.json" = {
-      text = builtins.toJSON {
-        defaultWallpaper = "${config.home.homeDirectory}/.dotfiles/Wallpapers/alena-aenami-lost-1k.jpg";
-        wallpapers = {
-          "DP-1" = "/path/to/monitor/wallpaper.png";
+          enabled = true;
+          directory = "${config.home.homeDirectory}/.dotfiles/Wallpapers";
+          default.path = "${config.home.homeDirectory}/.dotfiles/Wallpapers/alena-aenami-lost-1k.jpg";
         };
       };
     };
