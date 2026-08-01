@@ -15,6 +15,9 @@
   # Media services
   media.enable = true;
 
+  # Manga library
+  suwayomi.enable = true;
+
   # Document management
   paperless.enable = true;
 
