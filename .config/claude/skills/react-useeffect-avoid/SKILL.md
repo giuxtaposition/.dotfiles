@@ -1,6 +1,7 @@
 ---
 name: react-useeffect-avoid
 description: When NOT to use useEffect — covers derived state, event handling, and state sync anti-patterns. Use whenever the user reaches for useEffect, especially for derived state, event handling, or reacting to prop changes. Load proactively when reviewing React code that uses useEffect.
+paths: "**/*.{tsx,jsx}"
 ---
 
 # React: When Not to Use useEffect

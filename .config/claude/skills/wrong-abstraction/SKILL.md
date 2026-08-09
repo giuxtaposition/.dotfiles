@@ -1,6 +1,7 @@
 ---
 name: wrong-abstraction
 description: Avoiding wrong abstractions — prefer duplication until patterns stabilize, apply Rule of Three before extracting. Use when the user creates a new abstraction, extracts a utility function, or refactors duplicate code. Load proactively when reviewing code that introduces new shared utilities or base classes.
+user-invocable: false
 ---
 
 # Avoiding Wrong Abstractions

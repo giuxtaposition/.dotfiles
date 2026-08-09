@@ -1,6 +1,8 @@
 ---
 name: typescript-best-practices
 description: TypeScript best practices covering strictness, type safety, common patterns, and what to avoid. Use whenever writing or reviewing TypeScript code. Load proactively for any TypeScript file to enforce quality standards.
+paths: "**/*.{ts,tsx}"
+user-invocable: false
 ---
 
 # TypeScript Best Practices

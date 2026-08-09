@@ -3,6 +3,7 @@
     "commit": "",
     "pr": ""
   },
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash \"/home/giu/.claude/statusline.sh\""
@@ -10,7 +11,8 @@
   "enabledPlugins": {
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
     "caveman@caveman": true,
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "ui-ux-pro-max-skill": {
@@ -24,7 +26,12 @@
         "source": "github",
         "repo": "JuliusBrussee/caveman"
       }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
     }
-  },
-  "model": "opus[1m]"
+  }
 }

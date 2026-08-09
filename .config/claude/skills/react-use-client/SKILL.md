@@ -1,6 +1,7 @@
 ---
 name: react-use-client
 description: React "use client" directive — how to correctly place client boundaries in Next.js and React Server Components. Use in any Next.js App Router or RSC project when discussing server vs client components, "use client" placement, or hydration issues. Always load when working with Next.js 13+ App Router.
+paths: "**/*.{tsx,jsx}"
 ---
 
 # React "use client" Directive

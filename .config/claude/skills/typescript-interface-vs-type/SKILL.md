@@ -1,6 +1,7 @@
 ---
 name: typescript-interface-vs-type
 description: When to use TypeScript interface vs type alias — the definitive guide. Use whenever the user declares a new type or interface, or when there is a choice between the two. Always load when reviewing TypeScript type declarations.
+paths: "**/*.{ts,tsx}"
 ---
 
 # TypeScript: Interface vs Type

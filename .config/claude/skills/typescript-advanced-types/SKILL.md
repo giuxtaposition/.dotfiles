@@ -1,6 +1,7 @@
 ---
 name: typescript-advanced-types
 description: TypeScript advanced types — generics, conditional types, mapped types, template literals, and utility types. Use when writing complex TypeScript, generic functions, or type-level programming. Load when the user needs type inference, conditional types, or is struggling with TypeScript's type system.
+paths: "**/*.{ts,tsx}"
 ---
 
 # TypeScript Advanced Types

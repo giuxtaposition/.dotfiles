@@ -1,6 +1,7 @@
 ---
 name: react-key-prop
 description: React key prop best practices. Use when rendering lists with .map(), when seeing array index used as key, or any time React list rendering is involved. Always apply when the user is mapping over arrays to render JSX elements.
+paths: "**/*.{tsx,jsx}"
 ---
 
 # React: Key Prop Best Practices

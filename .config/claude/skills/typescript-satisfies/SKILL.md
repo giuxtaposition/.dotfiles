@@ -1,6 +1,7 @@
 ---
 name: typescript-satisfies
 description: TypeScript satisfies operator — preserves inferred type while validating against a shape. Use when the user type-casts with "as", needs both type checking and inference, or wants to validate object shapes without losing literal types. Load when reviewing TypeScript with type assertions.
+paths: "**/*.{ts,tsx}"
 ---
 
 # TypeScript: satisfies Operator

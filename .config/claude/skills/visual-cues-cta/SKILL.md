@@ -1,6 +1,7 @@
 ---
 name: visual-cues-cta
 description: Visual cues and CTA psychology — human attention patterns, button design, and conversion principles. Use when designing CTAs, landing pages, buttons, or any UI element meant to drive action. Load when working on conversion-focused UI, marketing pages, or when discussing user attention and visual hierarchy.
+user-invocable: false
 ---
 
 # Visual Cues & CTA Psychology

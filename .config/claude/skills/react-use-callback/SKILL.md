@@ -1,6 +1,7 @@
 ---
 name: react-use-callback
 description: React useCallback best practices — when to use it, when to skip it, and how memoization affects child renders. Use when the user adds useCallback, passes callbacks to child components, or discusses React performance. Load when seeing useCallback in code being reviewed or written.
+paths: "**/*.{tsx,jsx}"
 ---
 
 # React: useCallback Best Practices

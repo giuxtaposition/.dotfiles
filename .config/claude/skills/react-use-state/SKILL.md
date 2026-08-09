@@ -1,6 +1,7 @@
 ---
 name: react-use-state
 description: React useState best practices — when to use it, how to structure state, and common pitfalls. Use when the user works with React component state, discusses local vs global state, or initializes state incorrectly. Load when reviewing React components with state management.
+paths: "**/*.{tsx,jsx}"
 ---
 
 # React: useState Best Practices

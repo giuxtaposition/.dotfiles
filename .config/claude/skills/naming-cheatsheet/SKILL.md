@@ -1,6 +1,7 @@
 ---
 name: naming-cheatsheet
 description: Naming conventions for variables, functions, components, and booleans using the A/HC/LC pattern. Use when naming anything — functions, components, hooks, booleans, constants — or when reviewing code with unclear or inconsistent names. Always load when the user asks how to name something or when renaming during refactoring.
+user-invocable: false
 ---
 
 # Naming Cheatsheet
