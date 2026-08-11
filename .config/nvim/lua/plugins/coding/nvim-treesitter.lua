@@ -53,6 +53,7 @@ ts.install({
   "html",
   "svelte",
   "vue",
+  "astro",
 })
 
 vim.api.nvim_create_autocmd("PackChanged", {

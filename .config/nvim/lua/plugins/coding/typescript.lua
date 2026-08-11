@@ -1,6 +1,6 @@
 -- Lazy-loaded: TypeScript tooling deferred to relevant filetypes/commands
 
-local ts_fts = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "html" }
+local ts_fts = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "astro", "html" }
 
 -- nvim-ts-autotag: defer to first relevant filetype
 vim.api.nvim_create_autocmd("FileType", {

@@ -19,6 +19,7 @@
     latex.enable = lib.mkEnableOption "enables LaTeX editing";
     vue.enable = lib.mkEnableOption "enables Vue.js development";
     svelte.enable = lib.mkEnableOption "enables Svelte development";
+    astro.enable = lib.mkEnableOption "enables Astro development";
   };
 
   config = lib.mkIf config.coding.enable {
@@ -73,6 +74,9 @@
       ]
       ++ lib.optionals config.coding.svelte.enable [
         nodePackages_latest.svelte-language-server
+      ]
+      ++ lib.optionals config.coding.astro.enable [
+        astro-language-server
       ]
       ++ lib.optionals config.coding.lua.enable [
         lua-language-server

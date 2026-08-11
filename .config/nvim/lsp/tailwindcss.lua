@@ -15,6 +15,7 @@ return {
     -- mixed
     "vue",
     "svelte",
+    "astro",
   },
   capabilities = {
     workspace = {

@@ -20,6 +20,7 @@ vim.lsp.enable(util.lsp.filter_available({
   "vue-ls",
   "html",
   "svelte",
+  "astro-ls",
   "tailwindcss",
   "gopls",
   "rust-analyzer",
