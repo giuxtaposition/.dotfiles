@@ -1,6 +1,6 @@
 vim.pack.add({
   {
-    src = "https://github.com/catppuccin/nvim",
+    src = "https://github.com/rebelot/kanagawa.nvim",
     name = "catppuccin-nvim",
   },
 })
@@ -23,6 +23,21 @@ require("catppuccin").setup({
       BlinkCmpDocBorder = { fg = palette.crust, bg = palette.crust },
       BlinkCmpDoc = { fg = palette.text, bg = palette.crust },
       BlinkCmpKindCopilot = { fg = palette.sky },
+
+      RenderMarkdownBullet = { fg = palette.green },
+      RenderMarkdownCode = { bg = palette.base },
+      RenderMarkdownCodeBorder = { bg = palette.surface1 },
+      RenderMarkdownTableHead = { fg = palette.mauve },
+      RenderMarkdownTableRow = { fg = palette.mauve },
+
+      ["@markup.heading.1.markdown"] = { link = "MiniStatusLineModeNormal" },
+      ["@markup.heading.2.markdown"] = { link = "MiniStatusLineModeInsert" },
+      ["@markup.heading.3.markdown"] = { link = "MiniStatusLineModeReplace" },
+      ["@markup.heading.4.markdown"] = { link = "MiniStatusLineModeVisual" },
+      ["@markup.heading.5.markdown"] = { link = "MiniStatusLineModeCommand" },
+      ["@markup.heading.6.markdown"] = { link = "MiniStatusLineModeOther" },
+      ["@markup.strong"] = { fg = palette.green, bold = true },
+      ["@markup.italic"] = { fg = palette.green, italic = true },
     }
 
     return groups

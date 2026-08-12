@@ -15,26 +15,27 @@
         sync-notes = {
           Unit = {Description = "Sync notes with github repo";};
           Service = {
-            Type = "forking";
-            Environment = "PATH=${
-              lib.makeBinPath [pkgs.openssh pkgs.gawk pkgs.git pkgs.libnotify]
-            }";
+            Type = "oneshot";
+            Environment = [
+              "PATH=${lib.makeBinPath [pkgs.openssh pkgs.git pkgs.libnotify]}"
+              "DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus"
+            ];
+            TimeoutStartSec = "5m";
             ExecStart = let
               script = pkgs.writeShellScript "sync-notes" ''
+                set -euo pipefail
                 echo "Syncing notes"
                 git pull --rebase --autostash
-                filesChanged=$(git status --porcelain | awk '{print $2}')
-                if [ -n "$filesChanged" ]; then
-                git add .
-                git commit -m "updating notes 📘"
-                git push
-                notify-send "Synced notes"
+                if [ -n "$(git status --porcelain)" ]; then
+                  git add .
+                  git commit -m "updating notes 📘"
+                  git push
+                  notify-send "Synced notes"
                 fi
               '';
             in "${pkgs.bash}/bin/bash ${script}";
             WorkingDirectory = "${config.home.homeDirectory}/notes";
           };
-          Install.WantedBy = ["default.target"];
         };
       };
 

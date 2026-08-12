@@ -35,7 +35,6 @@
     nerd-fonts.jetbrains-mono
     inter
     rclone
-    obsidian
   ];
 
   # GTK CONFIG
