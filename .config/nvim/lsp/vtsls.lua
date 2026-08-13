@@ -25,6 +25,11 @@ local vue_plugin = {
   configNamespace = "typescript",
 }
 
+local astro_plugin = {
+  name = "@astrojs/ts-plugin",
+  enableForWorkspaceTypeScriptVersions = true,
+}
+
 ---@type vim.lsp.Config
 return {
   cmd = { "vtsls", "--stdio" },
@@ -59,6 +64,7 @@ return {
             enableForWorkspaceTypeScriptVersions = true,
           },
           vue_plugin,
+          astro_plugin,
         },
       },
     },

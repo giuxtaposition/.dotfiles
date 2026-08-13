@@ -91,3 +91,17 @@ vim.opt.fillchars = {
 opt.smoothscroll = true
 
 opt.undofile = true -- Save undo history
+opt.autoread = true -- Automatically read file when changed outside of nvim
+
+-- Native insert-mode autocompletion (nvim 0.12+)
+opt.complete = "o" -- LSP omni only — buffer text sources loaded faster and won the race
+opt.completeopt = "menuone,noselect,fuzzy,popup"
+opt.autocomplete = true
+opt.autocompletedelay = 250
+opt.pumheight = 10
+opt.pummaxwidth = 40
+
+-- Cmdline completion popup (nvim 0.12+)
+opt.wildmenu = true
+opt.wildmode = "noselect:lastused,full"
+opt.wildoptions = "pum,fuzzy,tagfile"

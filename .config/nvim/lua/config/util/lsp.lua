@@ -106,7 +106,7 @@ M.restart_lsp = function(bufnr)
   local clients = vim.lsp.get_clients({ bufnr = bufnr })
 
   for _, client in ipairs(clients) do
-    vim.lsp.stop_client(client.id)
+    client:stop()
   end
 
   vim.defer_fn(function()
@@ -129,7 +129,6 @@ M.lsp_status = function()
   for i, client in ipairs(clients) do
     print(string.format("󰌘 Client %d: %s (ID: %d)", i, client.name, client.id))
     print("  Root: " .. (client.config.root_dir or "N/A"))
-    print("  Filetypes: " .. table.concat(client.config.filetypes or {}, ", "))
 
     -- Check capabilities
     local caps = client.server_capabilities

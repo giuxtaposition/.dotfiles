@@ -2,16 +2,6 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("giuxtaposition_" .. name, { clear = true })
 end
 
--- check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-  group = augroup("checktime"),
-  callback = function()
-    if vim.o.buftype ~= "nofile" then
-      vim.cmd("checktime")
-    end
-  end,
-})
-
 -- go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup("last_loc"),
@@ -42,7 +32,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   desc = "Highlight when yanking (copying) text",
   group = augroup("highlight_on_yank"),
   callback = function()
-    vim.hl.on_yank()
+    vim.hl.hl_op()
   end,
 })
 

@@ -59,6 +59,15 @@ local function sign_out(_, client)
   )
 end
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client and client.name == "copilot" and vim.bo[ev.buf].filetype == "markdown" then
+      vim.lsp.buf_detach_client(ev.buf, client.id)
+    end
+  end,
+})
+
 ---@type vim.lsp.Config
 return {
   cmd = {

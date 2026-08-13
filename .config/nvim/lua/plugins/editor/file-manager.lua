@@ -43,6 +43,32 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 vim.api.nvim_create_autocmd("User", {
+  desc = "Sync buffer with deleted, renamed, or moved file",
+  pattern = { "MiniFilesActionDelete", "MiniFilesActionRename", "MiniFilesActionMove" },
+  callback = function(args)
+    local buf = vim.fn.bufnr(args.data.from)
+    if buf == -1 then
+      return
+    end
+
+    if args.match == "MiniFilesActionDelete" then
+      vim.api.nvim_buf_delete(buf, { force = true })
+      return
+    end
+
+    vim.api.nvim_buf_set_name(buf, args.data.to)
+    vim.api.nvim_buf_call(buf, function()
+      vim.cmd("silent! edit!")
+    end)
+
+    local shadow = vim.fn.bufnr(args.data.from)
+    if shadow ~= -1 and shadow ~= buf then
+      vim.api.nvim_buf_delete(shadow, { force = true })
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
   desc = "Add minifiles split keymaps",
   pattern = "MiniFilesBufferCreate",
   callback = function(args)

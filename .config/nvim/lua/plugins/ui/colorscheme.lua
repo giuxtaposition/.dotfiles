@@ -47,7 +47,6 @@ require("catppuccin").setup({
     enabled = true,
   },
   integrations = {
-    blink_cmp = true,
     dashboard = true,
     diffview = true,
     gitsigns = true,
