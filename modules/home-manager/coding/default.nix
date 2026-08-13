@@ -52,6 +52,7 @@
         unstable.copilot-language-server
         unstable.opencode
         claude-code
+        rtk
         tig
       ]
       ++ lib.optionals config.coding.typescript.enable [

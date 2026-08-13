@@ -8,6 +8,19 @@
     "type": "command",
     "command": "bash \"/home/giu/.claude/statusline.sh\""
   },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "ui-ux-pro-max@ui-ux-pro-max-skill": true,
     "caveman@caveman": true,

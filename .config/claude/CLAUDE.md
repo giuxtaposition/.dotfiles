@@ -5,15 +5,6 @@
 - Respond in English.
 - Lead with the main answer or conclusion, then provide supporting details.
 
-## CLI
-
-Prefer modern CLI tools over legacy equivalents:
-
-- `rg` instead of `grep`
-- `fd` instead of `find`
-- `bat` instead of `cat`
-- `eza` instead of `ls`
-
 ## Development
 
 - Use pnpm for package management.
@@ -26,6 +17,8 @@ Prefer modern CLI tools over legacy equivalents:
 - Avoid unrelated refactoring.
 - Prefer self-explanatory code over comments.
 - Use comments only when they explain non-obvious intent, constraints, or why something is done.
+- Suggest small refactors that improve readability or maintainability when you encounter them, following the Boy Scout Rule: leave the code a little cleaner than you found it.
+- Avoid excessive abbreviations, especially for variables, functions, types, and domain concepts; prefer clear, descriptive names that make the code easy to understand.
 
 ## TDD
 
@@ -80,3 +73,5 @@ Treat large files, long functions, high complexity, and excessive abstraction as
 - Reuse existing utilities, components, patterns, and dependencies where appropriate.
 - Do not introduce a new dependency when the existing stack can solve the problem cleanly.
 - Do not refactor unrelated code unless explicitly asked.
+
+@RTK.md
