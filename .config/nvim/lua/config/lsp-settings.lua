@@ -27,9 +27,6 @@ vim.lsp.enable(util.lsp.filter_available({
   "kotlin-language-server",
 }))
 
--- In-process LSPs (no external executable, skip filter_available).
-vim.lsp.enable({ "i18n-ls", "snippets-ls" })
-
 vim.diagnostic.config({
   underline = true,
   status = {
@@ -174,9 +171,11 @@ local function on_attach(client, bufnr)
 
   if client:supports_method(methods.textDocument_signatureHelp) then
     set_keymap({ "n", "i" }, "<C-k>", function()
-      if vim.fn.pumvisible() == 1 then
-        vim.api.nvim_feedkeys(vim.keycode("<C-e>"), "n", false)
+      -- Close the completion menu first (if open).
+      if require("blink.cmp.completion.windows.menu").win:is_open() then
+        require("blink.cmp").hide()
       end
+
       vim.lsp.buf.signature_help()
     end, "Signature help")
   end

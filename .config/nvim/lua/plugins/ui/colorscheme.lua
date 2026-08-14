@@ -1,9 +1,4 @@
-vim.pack.add({
-  {
-    src = "https://github.com/rebelot/kanagawa.nvim",
-    name = "catppuccin-nvim",
-  },
-})
+vim.pack.add({ { src = "https://github.com/catppuccin/nvim", name = "catppuccin" } })
 
 require("catppuccin").setup({
   flavour = "mocha",
@@ -47,6 +42,7 @@ require("catppuccin").setup({
     enabled = true,
   },
   integrations = {
+    blink_cmp = true,
     dashboard = true,
     diffview = true,
     gitsigns = true,
