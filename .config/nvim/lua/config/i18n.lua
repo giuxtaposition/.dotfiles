@@ -50,7 +50,6 @@ local function load_translations()
   local filepath = root .. "/" .. config.translation_file
   local f = io.open(filepath, "r")
   if not f then
-    notify("could not open " .. filepath, vim.log.levels.WARN)
     return
   end
   local content = f:read("*a")

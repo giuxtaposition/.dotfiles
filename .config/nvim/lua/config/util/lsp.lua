@@ -33,7 +33,6 @@ M.diagnostic_go_to = function(count, severity)
     vim.diagnostic.jump({
       count = count == "next" and 1 or -1,
       severity = severity,
-      float = { border = "rounded", max_width = 100 },
     })
   end
 end

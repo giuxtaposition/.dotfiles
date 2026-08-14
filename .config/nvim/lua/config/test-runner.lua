@@ -2,6 +2,7 @@ local M = {}
 
 local KITTY_WINDOW = "nvim-test-runner"
 local LOG_FILE = "/tmp/nvim-test-runner.log"
+local last_cmd = nil
 
 local function detect_runner()
   local pkg = vim.fn.getcwd() .. "/package.json"
@@ -105,11 +106,26 @@ local function build_command(nearest)
 end
 
 local function send_command(cmd)
+  last_cmd = cmd
   vim.fn.system({ "kitty", "@", "close-window", "--match", "title:" .. KITTY_WINDOW })
 
   local logged_cmd = cmd .. " 2>&1 | tee " .. LOG_FILE
   local init = "function fish_title; echo " .. KITTY_WINDOW .. "; end; " .. logged_cmd
   os.execute("kitty --title nvim-test-runner fish -C " .. shell_escape(init) .. " &")
+end
+
+local function build_path_command(path)
+  local runner = detect_runner()
+  if runner == "vitest" then
+    return string.format("pnpm vitest run %s", shell_escape(path))
+  elseif runner == "jest" then
+    return string.format("pnpm jest --colors %s", shell_escape(path))
+  end
+  return "pnpm test " .. shell_escape(path)
+end
+
+local function strip_test_suffix(stem)
+  return stem:gsub("%.spec$", ""):gsub("%.test$", ""):gsub("_spec$", ""):gsub("_test$", "")
 end
 
 M.detect_runner = detect_runner
@@ -128,11 +144,55 @@ function M.test_all()
 end
 
 function M.test_file()
-  send_command(build_command(false))
+  local file_name = vim.fn.expand("%:t")
+  local stem = file_name:match("^(.+)%.[^.]+$") or file_name
+  local query = strip_test_suffix(stem)
+
+  require("fzf-lua").fzf_exec("fd --type f --regex '[._](spec|test)\\.'", {
+    prompt = " ",
+    fzf_opts = { ["--query"] = query },
+    actions = {
+      ["default"] = function(selected)
+        if selected and selected[1] then
+          send_command(build_path_command(selected[1]))
+        end
+      end,
+    },
+  })
 end
 
 function M.test_nearest()
   send_command(build_command(true))
+end
+
+function M.test_last()
+  if last_cmd then
+    send_command(last_cmd)
+  else
+    vim.notify("No previous test to re-run", vim.log.levels.WARN)
+  end
+end
+
+function M.test_folder()
+  local cur_dir = vim.fn.expand("%:.:h")
+  if cur_dir == "" then
+    cur_dir = "."
+  end
+  local cmd = string.format(
+    "{ echo %s; fd --type d --hidden --exclude .git --exclude node_modules; } | awk '!seen[$0]++'",
+    shell_escape(cur_dir)
+  )
+
+  require("fzf-lua").fzf_exec(cmd, {
+    prompt = " ",
+    actions = {
+      ["default"] = function(selected)
+        if selected and selected[1] then
+          send_command(build_path_command(selected[1]))
+        end
+      end,
+    },
+  })
 end
 
 return M

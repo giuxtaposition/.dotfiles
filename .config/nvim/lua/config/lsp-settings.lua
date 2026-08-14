@@ -59,7 +59,15 @@ vim.diagnostic.config({
   severity_sort = true,
   -- Disable signs in the gutter.
   signs = false,
-  on_jump = { float = true },
+  jump = {
+    on_jump = function(_, bufnr)
+      vim.diagnostic.open_float({
+        bufnr = bufnr,
+        scope = "cursor",
+        focus = false,
+      })
+    end,
+  },
 })
 
 -- Sets up LSP keymaps and autocommands for the given buffer.

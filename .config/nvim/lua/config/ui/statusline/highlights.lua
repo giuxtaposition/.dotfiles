@@ -6,6 +6,11 @@ return {
     bg = colors.mauve,
     bold = true,
   },
+  StatusLine_NTerminalMode = {
+    fg = colors.crust,
+    bg = colors.mauve,
+    bold = true,
+  },
   StatusLine_VisualMode = {
     fg = colors.crust,
     bg = colors.pink,

@@ -131,6 +131,7 @@
         background_opacity = "0.9";
         background_blur = "5";
         font_family = "JetBrainsMono Nerd Font Mono";
+        modify_font = "cell_height 110%";
         cursor_shape = "block";
         cursor_trail = "1";
         copy_on_select = "true";

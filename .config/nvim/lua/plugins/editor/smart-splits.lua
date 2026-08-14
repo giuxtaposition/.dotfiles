@@ -44,6 +44,16 @@ set_keymap({ "n", "x", "t" }, "<C-Down>", require("smart-splits").move_cursor_do
 set_keymap({ "n", "x", "t" }, "<C-Up>", require("smart-splits").move_cursor_up, "Focus top window")
 set_keymap({ "n", "x", "t" }, "<C-Right>", require("smart-splits").move_cursor_right, "Focus right window")
 
+-- Zoom toggle (tab-based: `:tab split` isolates current buffer, `:tabclose` restores layout)
+set_keymap("n", "<leader>wz", function()
+  if vim.t.zoomed then
+    vim.cmd("tabclose")
+  else
+    vim.cmd("tab split")
+    vim.t.zoomed = true
+  end
+end, "Toggle zoom window")
+
 -- Swap
 set_keymap({ "n", "x" }, "<leader><leader>h", require("smart-splits").swap_buf_left, "Swap left buffer")
 set_keymap({ "n", "x" }, "<leader><leader>j", require("smart-splits").swap_buf_down, "Swap bottom buffer")

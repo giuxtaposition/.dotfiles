@@ -153,8 +153,8 @@ end
 
 M.remove_all_marks = function()
   vim.cmd("delmarks A-I")
-  for mark, _ in pairs(M.mark_icons) do
-    remove_sign(convert_to_integer(mark))
+  for i = 1, 9 do
+    remove_sign(i)
   end
 end
 

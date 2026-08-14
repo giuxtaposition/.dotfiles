@@ -103,6 +103,8 @@ end, { desc = "Select child treesitter node or inner incremental lsp selections"
 set_keymap("n", "<leader>ta", tr.test_all, "Test all")
 set_keymap("n", "<leader>tf", tr.test_file, "Test file")
 set_keymap("n", "<leader>tn", tr.test_nearest, "Test nearest")
+set_keymap("n", "<leader>tl", tr.test_last, "Test last (re-run)")
+set_keymap("n", "<leader>td", tr.test_folder, "Test folder (pick)")
 
 -- todo comments
 local todo = require("config.todo-comments")

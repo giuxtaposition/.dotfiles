@@ -56,7 +56,7 @@
         tig
       ]
       ++ lib.optionals config.coding.typescript.enable [
-        vscode-langservers-extracted
+        unstable.vscode-langservers-extracted
         nodePackages_latest.typescript-language-server
         emmet-ls
         prettierd

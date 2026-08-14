@@ -37,6 +37,7 @@ opt.background = "dark"
 opt.signcolumn = "yes" -- Show sign column so that text doesn't shift
 opt.colorcolumn = "+2" -- Draw column on the right of maximum width
 opt.winborder = "rounded"
+opt.showmode = false -- Don't show mode since we have a statusline
 
 -- Backspace
 opt.backspace = "indent,eol,start" -- Allow backspace on indent, end of line or insert mode start
@@ -91,3 +92,4 @@ vim.opt.fillchars = {
 opt.smoothscroll = true
 
 opt.undofile = true -- Save undo history
+opt.autoread = true -- Automatically read file when changed outside of Neovim
