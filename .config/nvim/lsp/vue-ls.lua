@@ -1,15 +1,13 @@
 -- https://github.com/vuejs/language-tools/wiki/Neovim
 return {
-  -- cmd = { "vue-language-server", "--stdio" },
-  -- TODO: temp solution while waiting vue-language-server to be updated in nixpkgs
-  cmd = { string.format("%s/node-modules/vls/bin/vls", vim.loop.cwd()), "--stdio" },
+  cmd = { "vue-language-server", "--stdio" },
   filetypes = { "vue" },
   root_markers = { "package.json" },
   on_init = function(client)
     client.handlers["tsserver/request"] = function(_, result, context)
-      local clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = "vtsls" })
+      local clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = "tsgo" })
       if #clients == 0 then
-        vim.notify("Could not find `vtsls` lsp client, `vue_ls` would not work without it.", vim.log.levels.ERROR)
+        vim.notify("Could not find `tsgo` lsp client, `vue_ls` would not work without it.", vim.log.levels.ERROR)
         return
       end
       local ts_client = clients[1]
@@ -17,7 +15,7 @@ return {
       local param = unpack(result)
       local id, command, payload = unpack(param)
       ts_client:exec_cmd({
-        title = "vue_request_forward", -- You can give title anything as it's used to represent a command in the UI, `:h Client:exec_cmd`
+        title = "vue_request_forward",
         command = "typescript.tsserverRequest",
         arguments = {
           command,

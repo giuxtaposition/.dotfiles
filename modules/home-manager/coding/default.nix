@@ -57,17 +57,14 @@
       ]
       ++ lib.optionals config.coding.typescript.enable [
         unstable.vscode-langservers-extracted
-        nodePackages_latest.typescript-language-server
         emmet-ls
         prettierd
         eslint_d
-        vtsls
         tailwindcss-language-server
         nodejs_24
         vscode-js-debug
         pnpm
         unstable.typescript-go
-        vtsls
       ]
       ++ lib.optionals config.coding.vue.enable [
         vue-language-server
