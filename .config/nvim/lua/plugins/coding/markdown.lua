@@ -100,48 +100,50 @@ set_keymap("n", "<leader>pi", "<cmd>PasteImage<cr>", "Paste image")
 set_keymap("n", "<leader>zn", "<cmd>ZkNew { title = vim.fn.input('Title: ') }<cr>", "New note")
 set_keymap("n", "<leader>zo", "<cmd>ZkNotes { sort = { 'modified' } }<cr>", "Open notes")
 set_keymap("n", "<leader>zt", "<cmd>ZkTags<cr>", "Browse tags")
-set_keymap("n", "<leader>zf", function()
-  require("zk.api").list(
-    vim.env.ZK_NOTEBOOK_DIR,
+local function pick_notes(prompt, opts)
+  opts = vim.tbl_extend(
+    "force",
     { sort = { "modified" }, select = { "title", "absPath", "tags", "filenameStem" } },
-    function(err, notes)
-      if err then
-        vim.notify("zk: " .. vim.inspect(err), vim.log.levels.ERROR)
-        return
-      end
-      local items = vim.tbl_map(function(note)
-        local tags = note.tags and #note.tags > 0 and " [" .. table.concat(note.tags, ", ") .. "]" or ""
-        local label = (note.title or note.filenameStem) .. tags
-        return label .. "\t" .. note.absPath
-      end, notes)
-      require("fzf-lua").fzf_exec(items, {
-        prompt = "Notes> ",
-        fzf_opts = {
-          ["--delimiter"] = "\t",
-          ["--with-nth"] = "1",
-          ["--preview"] = "bat --style=plain --color=always {2}",
-        },
-        actions = {
-          ["default"] = function(selected)
-            if not selected or not selected[1] then
-              return
-            end
-            local path = selected[1]:match("\t(.+)$")
-            if path then
-              vim.cmd("edit " .. vim.fn.fnameescape(path))
-            end
-          end,
-        },
-      })
-    end
+    opts or {}
   )
+  require("zk.api").list(vim.env.ZK_NOTEBOOK_DIR, opts, function(err, notes)
+    if err then
+      vim.notify("zk: " .. vim.inspect(err), vim.log.levels.ERROR)
+      return
+    end
+    local items = vim.tbl_map(function(note)
+      local tags = note.tags and #note.tags > 0 and " [" .. table.concat(note.tags, ", ") .. "]" or ""
+      local label = (note.title or note.filenameStem) .. tags
+      return label .. "\t" .. note.absPath
+    end, notes)
+    require("fzf-lua").fzf_exec(items, {
+      prompt = prompt,
+      fzf_opts = {
+        ["--delimiter"] = "\t",
+        ["--with-nth"] = "1",
+        ["--preview"] = "bat --style=plain --color=always {2}",
+      },
+      actions = {
+        ["default"] = function(selected)
+          if not selected or not selected[1] then
+            return
+          end
+          local path = selected[1]:match("\t(.+)$")
+          if path then
+            vim.cmd("edit " .. vim.fn.fnameescape(path))
+          end
+        end,
+      },
+    })
+  end)
+end
+
+set_keymap("n", "<leader>zf", function()
+  pick_notes("Notes> ")
 end, "Search notes (title + tags)")
 set_keymap("v", "<leader>zf", ":'<,'>ZkMatch<cr>", "Search selection")
 set_keymap("n", "<leader>zg", function()
-  local q = vim.fn.input("Grep notes: ")
-  if q ~= "" then
-    require("zk.commands").get("ZkNotes")({ sort = { "modified" }, match = { q } })
-  end
+  require("fzf-lua").live_grep({ cwd = vim.env.ZK_NOTEBOOK_DIR, prompt = "Grep> " })
 end, "Grep notes (full-text)")
 
 vim.api.nvim_create_autocmd("LspAttach", {
