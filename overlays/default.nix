@@ -10,6 +10,8 @@
   modifications = _final: prev: {
     inherit (inputs.nixpkgs-wayland.packages.${prev.stdenv.hostPlatform.system}) wl-gammarelay-rs;
 
+    inherit (inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}) libdisplay-info_0_3;
+
     slack = prev.slack.overrideAttrs (_oldAttrs: {
       fixupPhase = ''
         rm $out/bin/slack
