@@ -7,7 +7,6 @@ local claudecode = require("claudecode")
 
 claudecode.setup({
   auto_start = false,
-  log_level = "debug",
   terminal = {
     split_side = "bottom",
     split_width_percentage = 0.25,
@@ -15,6 +14,7 @@ claudecode.setup({
   },
   diff_opts = {
     open_in_new_tab = true,
+    hide_terminal_in_new_tab = true,
   },
 })
 
