@@ -54,6 +54,14 @@ require("blink.cmp").setup({
     providers = {
       lazydev = { name = "LazyDev", module = "lazydev.integrations.blink", fallbacks = { "lsp" } },
       i18n = { name = "i18n", module = "config.i18n-completion" },
+      path = {
+        opts = {
+          ignore_root_slash = true,
+          get_cwd = function(_)
+            return vim.fn.getcwd()
+          end,
+        },
+      },
     },
     per_filetype = {
       typescript = { "lsp", "path", "snippets", "buffer", "lazydev", "i18n" },
