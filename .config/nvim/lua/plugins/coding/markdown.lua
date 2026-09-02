@@ -1,6 +1,6 @@
 vim.pack.add({
   { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
-  { src = "https://github.com/folke/snacks.nvim" },
+
   { src = "https://github.com/zk-org/zk-nvim" },
   { src = "https://github.com/HakonHarnes/img-clip.nvim" },
 })
@@ -62,26 +62,6 @@ require("render-markdown").setup({
     --   "█████ ",
     --   "██████ ",
     -- },
-  },
-})
-
-require("snacks").setup({
-  styles = {
-    snacks_image = {
-      relative = "editor",
-      col = -1,
-    },
-  },
-  image = {
-    enabled = true,
-    doc = {
-      inline = false,
-      max_width = 45,
-      max_height = 20,
-    },
-    wo = {
-      winhighlight = "FloatBorder:WhichKeyBorder",
-    },
   },
 })
 
