@@ -133,11 +133,24 @@
         libxml2
       ];
 
-    home.file = {
-      ".claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/CLAUDE.md";
-      ".claude/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/settings.json";
-      ".claude/statusline.sh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/statusline.sh";
-      ".claude/skills".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/skills";
+    home = {
+      file = {
+        ".claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/CLAUDE.md";
+        ".claude/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/settings.json";
+        ".claude/statusline.sh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/statusline.sh";
+        ".claude/skills".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/.config/claude/skills";
+      };
+
+      activation.claudeMcpServers = lib.hm.dag.entryAfter ["writeBoundary"] ''
+        MCP_FILE="${config.home.homeDirectory}/.dotfiles/.config/claude/mcp-servers.json"
+        CLAUDE_JSON="$HOME/.claude.json"
+        if [ -f "$MCP_FILE" ] && [ -f "$CLAUDE_JSON" ]; then
+          TMP=$(mktemp)
+          ${pkgs.jq}/bin/jq --slurpfile mcp "$MCP_FILE" \
+            '.mcpServers = ($mcp[0].mcpServers // {})' \
+            "$CLAUDE_JSON" > "$TMP" && mv "$TMP" "$CLAUDE_JSON"
+        fi
+      '';
     };
 
     xdg.desktopEntries = {
