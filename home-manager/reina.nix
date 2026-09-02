@@ -66,5 +66,6 @@
     bash.enable = true;
     markdown.enable = true;
     astro.enable = true;
+    svelte.enable = true;
   };
 }
