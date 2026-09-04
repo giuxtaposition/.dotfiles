@@ -37,5 +37,14 @@
       hibernate.enable = false;
       hybrid-sleep.enable = false;
     };
+
+    # Laptop-as-server: lid/power events must not request suspend,
+    # otherwise logind loops on the masked suspend.target and pegs CPU.
+    services.logind = {
+      lidSwitch = "ignore";
+      lidSwitchDocked = "ignore";
+      lidSwitchExternalPower = "ignore";
+      powerKey = "poweroff";
+    };
   };
 }
