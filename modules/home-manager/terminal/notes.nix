@@ -22,8 +22,14 @@
             ];
             TimeoutStartSec = "5m";
             ExecStart = let
+              notesDir = "${config.home.homeDirectory}/notes";
               script = pkgs.writeShellScript "sync-notes" ''
                 set -euo pipefail
+                if [ ! -d "${notesDir}/.git" ]; then
+                  echo "Cloning notes repo"
+                  git clone git@github.com:giuxtaposition/notes.git "${notesDir}"
+                fi
+                cd "${notesDir}"
                 echo "Syncing notes"
                 git pull --rebase --autostash
                 if [ -n "$(git status --porcelain)" ]; then
@@ -34,7 +40,6 @@
                 fi
               '';
             in "${pkgs.bash}/bin/bash ${script}";
-            WorkingDirectory = "${config.home.homeDirectory}/notes";
           };
         };
       };
