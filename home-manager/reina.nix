@@ -27,11 +27,7 @@
       enableDefaultConfig = false;
       matchBlocks = {
         "kumiko" = {
-          hostname = "kumiko.local";
-          user = "giu";
-        };
-        "kumiko-ts" = {
-          hostname = "kumiko"; # Tailscale MagicDNS — replace with IP if MagicDNS is not enabled
+          hostname = "kumiko"; # Tailscale MagicDNS — .local mDNS not reachable across subnet
           user = "giu";
         };
       };

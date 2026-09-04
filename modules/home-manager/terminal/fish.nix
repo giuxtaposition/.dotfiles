@@ -36,7 +36,8 @@
               return
             end
             if test $CMD_DURATION -gt 30000
-              notify-send 'command finished' "$argv"
+              # Silent on headless (no notification daemon = no DBus name owner).
+              notify-send 'command finished' "$argv" 2>/dev/null
             end
           end
         '';

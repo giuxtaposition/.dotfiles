@@ -40,11 +40,11 @@
 
     # Laptop-as-server: lid/power events must not request suspend,
     # otherwise logind loops on the masked suspend.target and pegs CPU.
-    services.logind = {
-      lidSwitch = "ignore";
-      lidSwitchDocked = "ignore";
-      lidSwitchExternalPower = "ignore";
-      powerKey = "poweroff";
+    services.logind.settings.Login = {
+      HandleLidSwitch = "ignore";
+      HandleLidSwitchDocked = "ignore";
+      HandleLidSwitchExternalPower = "ignore";
+      HandlePowerKey = "poweroff";
     };
   };
 }
