@@ -31,7 +31,7 @@
   amdgpu.enable = true;
 
   services.dst-server = {
-    enable = true;
+    enable = false;
 
     cluster = {
       name = "Giuxtaposition Survival Madness";
