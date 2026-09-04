@@ -4,8 +4,10 @@
 # all Chromium deps baked in). Native JAR on NixOS is unworkable because
 # KCEF spawns `jcef_helper`, a raw ELF that hits NixOS's stub-ld.
 #
-# Uses host networking so it can reach the FlareSolverr NixOS service
-# on 127.0.0.1:8191. WebUI on port 4567.
+# Uses host networking so it can reach the Byparr container
+# on 127.0.0.1:8191 (FlareSolverr-compatible, handles Turnstile
+# challenges vanilla FlareSolverr fails on, e.g. kagane.to).
+# WebUI on port 4567.
 #
 # Storage:
 #   /var/lib/suwayomi   → Tachidesk state (DB, cache, extensions)
@@ -66,12 +68,8 @@ in {
     # --group-add and have new downloads inherit it via the setgid dir.
     users.groups.media.gid = mediaGid;
 
-    # FlareSolverr — Cloudflare bypass proxy on host (localhost only)
-    services.flaresolverr = {
-      enable = true;
-      port = 8191;
-      openFirewall = false;
-    };
+    # Cloudflare bypass provided by the Byparr container (see byparr.nix),
+    # which listens on 127.0.0.1:8191 — same URL Suwayomi already targets.
 
     # WebUI reachable from LAN
     networking.firewall.allowedTCPPorts = [4567];

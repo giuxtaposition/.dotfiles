@@ -17,6 +17,7 @@
 
   # Manga library
   suwayomi.enable = true;
+  byparr.enable = true;
 
   # Document management
   paperless.enable = true;

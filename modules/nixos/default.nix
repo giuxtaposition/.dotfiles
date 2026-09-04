@@ -26,6 +26,7 @@
   immich = import ./services/immich.nix;
   vpn = import ./services/vpn.nix;
   suwayomi = import ./services/suwayomi.nix;
+  byparr = import ./services/byparr.nix;
 
   #  # Game server modules
   dst-server = import ./dont_starve_together/dont_starve_together_server.nix;
