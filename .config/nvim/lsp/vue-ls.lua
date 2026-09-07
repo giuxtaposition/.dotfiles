@@ -5,9 +5,9 @@ return {
   root_markers = { "package.json" },
   on_init = function(client)
     client.handlers["tsserver/request"] = function(_, result, context)
-      local clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = "tsgo" })
+      local clients = vim.lsp.get_clients({ bufnr = context.bufnr, name = "tsc" })
       if #clients == 0 then
-        vim.notify("Could not find `tsgo` lsp client, `vue_ls` would not work without it.", vim.log.levels.ERROR)
+        vim.notify("Could not find `tsc` lsp client, `vue_ls` would not work without it.", vim.log.levels.ERROR)
         return
       end
       local ts_client = clients[1]

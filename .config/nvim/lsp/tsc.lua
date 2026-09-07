@@ -21,7 +21,7 @@ local lang_settings = {
 
 ---@type vim.lsp.Config
 return {
-  cmd = { "tsgo", "--lsp", "--stdio" },
+  cmd = { "tsc", "--lsp", "--stdio" },
   filetypes = {
     "javascript",
     "javascriptreact",
@@ -60,8 +60,8 @@ return {
       return { buffer = bufnr, desc = desc, silent = true }
     end
     vim.keymap.set("n", "<leader>co", code_action("source.organizeImports"), opts("Organize Imports"))
-    vim.keymap.set("n", "<leader>cM", code_action("source.addMissingImports.ts"), opts("Add missing imports"))
-    vim.keymap.set("n", "<leader>cu", code_action("source.removeUnused.ts"), opts("Remove unused imports"))
-    vim.keymap.set("n", "<leader>cD", code_action("source.fixAll.ts"), opts("Fix all diagnostics"))
+    vim.keymap.set("n", "<leader>cu", code_action("source.removeUnusedImports"), opts("Remove unused imports"))
+    vim.keymap.set("n", "<leader>cs", code_action("source.sortImports"), opts("Sort imports"))
+    vim.keymap.set("n", "<leader>cD", code_action("source.fixAll"), opts("Fix all diagnostics"))
   end,
 }

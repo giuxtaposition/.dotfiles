@@ -12,32 +12,44 @@ return {
     "svelte",
     "astro",
   },
-  root_markers = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js", "eslint.config.mjs" },
+  root_markers = {
+    ".eslintrc",
+    ".eslintrc.js",
+    ".eslintrc.cjs",
+    ".eslintrc.json",
+    "eslint.config.js",
+    "eslint.config.mjs",
+    "eslint.config.cjs",
+    "eslint.config.ts",
+    "eslint.config.mts",
+  },
   settings = {
-    validate = "on",
-    packageManager = vim.NIL,
-    useESLintClass = false,
-    experimental = { useFlatConfig = false },
-    codeActionOnSave = { enable = false, mode = "all" },
-    format = false,
-    quiet = false,
-    onIgnoredFiles = "off",
-    options = {},
-    rulesCustomizations = {},
-    run = "onType",
-    problems = { shortenToSingleLine = false },
-    nodePath = "",
-    workingDirectory = { mode = "location" },
-    codeAction = {
-      disableRuleComment = { enable = true, location = "separateLine" },
-      showDocumentation = { enable = true },
+    eslint = {
+      validate = "on",
+      packageManager = vim.NIL,
+      useESLintClass = false,
+      codeActionOnSave = { enable = false, mode = "all" },
+      format = false,
+      quiet = false,
+      onIgnoredFiles = "off",
+      options = {},
+      rulesCustomizations = {},
+      run = "onType",
+      problems = { shortenToSingleLine = false },
+      nodePath = "",
+      workingDirectory = { mode = "location" },
+      codeAction = {
+        disableRuleComment = { enable = true, location = "separateLine" },
+        showDocumentation = { enable = true },
+      },
     },
   },
   before_init = function(params, config)
-    -- Set the workspace folder setting for correct search of tsconfig.json files etc.
-    config.settings.workspaceFolder = {
-      uri = params.rootPath,
-      name = vim.fn.fnamemodify(params.rootPath, ":t"),
+    local root = params.workspaceFolders and params.workspaceFolders[1]
+      or { uri = vim.uri_from_fname(params.rootPath or vim.fn.getcwd()), name = "workspace" }
+    config.settings.eslint.workspaceFolder = {
+      uri = root.uri,
+      name = root.name or vim.fn.fnamemodify(vim.uri_to_fname(root.uri), ":t"),
     }
   end,
   handlers = {

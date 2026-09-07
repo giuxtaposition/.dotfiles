@@ -13,6 +13,7 @@ local lsp_executables = {
   ["svelte"] = "svelteserver",
   ["tailwindcss"] = "tailwindcss-language-server",
   ["copilot"] = "copilot-language-server",
+  ["eslint"] = "vscode-eslint-language-server",
 }
 
 --- Filter LSP names to only those with available executables
