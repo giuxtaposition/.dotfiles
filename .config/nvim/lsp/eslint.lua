@@ -45,8 +45,10 @@ return {
     },
   },
   before_init = function(params, config)
-    local root = params.workspaceFolders and params.workspaceFolders[1]
-      or { uri = vim.uri_from_fname(params.rootPath or vim.fn.getcwd()), name = "workspace" }
+    local folders = params.workspaceFolders
+    local first = (type(folders) == "table" and folders[1] ~= vim.NIL) and folders[1] or nil
+    local rootPath = (params.rootPath ~= nil and params.rootPath ~= vim.NIL) and params.rootPath or vim.fn.getcwd()
+    local root = first or { uri = vim.uri_from_fname(rootPath), name = "workspace" }
     config.settings.eslint.workspaceFolder = {
       uri = root.uri,
       name = root.name or vim.fn.fnamemodify(vim.uri_to_fname(root.uri), ":t"),
