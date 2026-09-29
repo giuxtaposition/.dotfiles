@@ -4,6 +4,7 @@
 
 - Respond in English.
 - Lead with the main answer or conclusion, then provide supporting details.
+- Do not abbreviate domain concepts, class names, or file names with initials in chat (e.g. write "PersonalAccident" not "PA", "InsuranceProductCollection" not "IPC"). Full names only.
 
 ## Development
 
@@ -19,6 +20,7 @@
 - Use comments only when they explain non-obvious intent, constraints, or why something is done.
 - Suggest small refactors that improve readability or maintainability when you encounter them, following the Boy Scout Rule: leave the code a little cleaner than you found it.
 - Avoid excessive abbreviations, especially for variables, functions, types, and domain concepts; prefer clear, descriptive names that make the code easy to understand.
+- Never write `ponytail:` marker comments in source code, even when the ponytail skill says to mark deliberate simplifications. Report the shortcut and its upgrade path in the chat reply instead.
 
 ## TDD
 
