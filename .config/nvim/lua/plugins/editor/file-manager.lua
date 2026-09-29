@@ -52,8 +52,17 @@ vim.api.nvim_create_autocmd("User", {
     end
 
     if args.match == "MiniFilesActionDelete" then
-      vim.api.nvim_buf_delete(buf, { force = true })
+      vim.schedule(function()
+        if vim.api.nvim_buf_is_valid(buf) then
+          vim.api.nvim_buf_delete(buf, { force = true })
+        end
+      end)
       return
+    end
+
+    local target = vim.fn.bufnr(args.data.to)
+    if target ~= -1 and target ~= buf then
+      vim.api.nvim_buf_delete(target, { force = true })
     end
 
     vim.api.nvim_buf_set_name(buf, args.data.to)
