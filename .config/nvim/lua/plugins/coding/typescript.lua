@@ -30,6 +30,6 @@ vim.api.nvim_create_autocmd("FileType", {
   once = true,
   callback = function()
     vim.pack.add({ { src = "https://github.com/dmmulroy/ts-error-translator.nvim" } })
-    require("ts-error-translator").setup({ auto_attach = true, servers = { "tsc" } })
+    require("ts-error-translator").setup({ auto_attach = true, servers = { "vtsls" } })
   end,
 })

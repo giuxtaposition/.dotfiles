@@ -64,7 +64,7 @@
         nodejs_24
         vscode-js-debug
         pnpm
-        typescript7
+        vtsls
       ]
       ++ lib.optionals config.coding.vue.enable [
         vue-language-server

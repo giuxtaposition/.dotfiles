@@ -14,7 +14,7 @@ vim.lsp.enable(util.lsp.filter_available({
   "nixd",
   "phpactor",
   "intelephense",
-  "tsc",
+  "vtsls",
   "eslint",
   "cssls",
   "vue-ls",
