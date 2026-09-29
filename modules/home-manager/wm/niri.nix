@@ -108,6 +108,12 @@
       }
 
       window-rule {
+          match app-id="^Slack$" title="^product-tech-only - viteSicure - Slack$"
+          default-column-width { proportion 1.0; }
+          default-window-height { proportion 1.0; }
+      }
+
+      window-rule {
           match app-id="^kitty$" title="^nvim-test-runner$"
           open-floating true
           default-column-width { proportion 0.8; }
