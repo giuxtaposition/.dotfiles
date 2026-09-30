@@ -26,6 +26,7 @@
   nvim.enable = true;
   yazi.enable = true;
   notes.enable = true;
+  cleanup.enable = true;
 
   catppuccin = {
     enable = true;

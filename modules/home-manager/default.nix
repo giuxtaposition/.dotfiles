@@ -14,6 +14,9 @@
   niri = import ./wm/niri.nix;
   noctalia-shell = import ./wm/noctalia-shell.nix;
 
+  # Services
+  cleanup = import ./services/cleanup.nix;
+
   # Others
   work = import ./work.nix;
   media = import ./media.nix;
