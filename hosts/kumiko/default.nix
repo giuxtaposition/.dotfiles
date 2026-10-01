@@ -52,12 +52,12 @@
     ];
   };
 
-  # Power schedule: wake at 8am, shut down at 11pm
+  # Power schedule: suspend at midnight, RTC wake at 8am
   systemd.services.scheduled-poweroff = {
-    description = "Set RTC wake alarm for 8am and power off";
+    description = "Suspend to RAM with RTC wake alarm for 8am";
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = pkgs.writeShellScript "poweroff-with-wake" ''
+      ExecStart = pkgs.writeShellScript "suspend-with-wake" ''
         set -e
         echo "Stopping DST caves shard..."
         systemctl stop dst-caves.service || true
@@ -71,19 +71,16 @@
           sleep 1
         done
 
-        echo "Setting RTC wake alarm..."
+        echo "Suspending with RTC wake at 08:00..."
         ${pkgs.util-linux}/bin/rtcwake \
-          -m no \
+          -m mem \
           -t $(${pkgs.coreutils}/bin/date -d "today 08:00" +%s)
-
-        echo "Powering off..."
-        systemctl poweroff
       '';
     };
   };
 
   systemd.timers.scheduled-poweroff = {
-    description = "Shut down kumiko at midnight daily";
+    description = "Suspend kumiko at midnight daily";
     wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "*-*-* 00:00:00";
