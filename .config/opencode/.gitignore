@@ -1,0 +1,8 @@
+node_modules/
+bun.lock
+package.json
+agents/
+command/
+hooks/
+get-shit-done/
+gsd-file-manifest.json
