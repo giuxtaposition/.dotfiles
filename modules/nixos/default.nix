@@ -5,6 +5,7 @@
   thunar = import ./thunar.nix;
   fish = import ./fish.nix;
   amdgpu = import ./amdgpu.nix;
+  llama-server = import ./llama-server.nix;
   network = import ./network.nix;
   niri = import ./niri.nix;
   bluetooth = import ./bluetooth.nix;
