@@ -28,6 +28,7 @@
     "/media" = {
       device = "/dev/disk/by-uuid/77209e93-411c-41d1-aed7-77fa3c54d4bc";
       fsType = "ext4";
+      options = ["nofail" "x-systemd.automount" "x-systemd.device-timeout=30s" "x-systemd.idle-timeout=0"];
     };
 
     "/docs" = {
