@@ -23,7 +23,10 @@
     };
     upower.enable = true;
 
-    printing.enable = true;
+    printing = {
+      enable = true;
+      drivers = with pkgs; [gutenprint hplip];
+    };
     gvfs.enable = true;
   };
   security.rtkit.enable = true;
