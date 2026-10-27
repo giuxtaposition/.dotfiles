@@ -1,6 +1,5 @@
 vim.pack.add({
-  { src = "file:///" .. "home/giu/Programming/claudecode.nvim" },
-  -- { src = "https://github.com/coder/claudecode.nvim" },
+  { src = "https://github.com/coder/claudecode.nvim" },
 })
 
 local claudecode = require("claudecode")
@@ -8,7 +7,6 @@ local claudecode = require("claudecode")
 claudecode.setup({
   auto_start = false,
   terminal = {
-    split_side = "bottom",
     split_width_percentage = 0.25,
     provider = "native",
   },
