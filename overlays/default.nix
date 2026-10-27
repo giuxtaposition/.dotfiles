@@ -18,7 +18,7 @@
         makeWrapper $out/lib/slack/slack $out/bin/slack \
           --prefix XDG_DATA_DIRS : $GSETTINGS_SCHEMAS_PATH \
           --suffix PATH : ${prev.lib.makeBinPath [prev.pkgs.xdg-utils]} \
-          --add-flags "--ozone-platform=x11"
+          --add-flags "--ozone-platform=wayland --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations"
       '';
     });
   };
