@@ -18,8 +18,14 @@
 
   fonts.fontconfig.enable = true;
 
+  programs.zathura = {
+    enable = true;
+    options = {
+      recolor = false;
+    };
+  };
+
   home.packages = with pkgs; [
-    zathura
     cbonsai
 
     (pkgs.wrapFirefox
