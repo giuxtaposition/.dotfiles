@@ -72,14 +72,11 @@ in {
         ];
       };
 
-      delta = {
+      hunk = {
         enable = true;
         enableGitIntegration = true;
-        options = {
-          navigate = true;
-          side-by-side = true;
-          diff-highlight = true;
-          true-color = "always";
+        settings = {
+          theme = "catppuccin-mocha";
         };
       };
 
@@ -88,13 +85,6 @@ in {
         package = pkgs.unstable.lazygit;
         settings = {
           git = {
-            diffRenderers = [
-              {
-                command = "delta --dark --paging=never";
-                colorArg = "always";
-                useConfig = true;
-              }
-            ];
             parseEmoji = true;
           };
           os = {
