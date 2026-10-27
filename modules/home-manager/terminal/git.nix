@@ -47,7 +47,9 @@ in {
             name = "giuxtaposition";
             email = "yg97.cs@gmail.com";
           };
-          core = {editor = "nvim";};
+          core = {
+            editor = "nvim";
+          };
           pull.rebase = true;
           push.autoSetupRemote = true;
           fetch.prune = true;
@@ -56,7 +58,12 @@ in {
             conflictStyle = "zdiff3";
           };
           diff = {
+            algorithm = "histogram";
             colorMoved = "default";
+            mnemonicPrefix = "true";
+          };
+          rerere = {
+            enabled = true;
           };
         };
         includes = [
@@ -86,6 +93,12 @@ in {
         settings = {
           git = {
             parseEmoji = true;
+            diffRenderers = [
+              {
+                command = "hunk pager --mode split";
+                colorArg = "always";
+              }
+            ];
           };
           os = {
             edit = "nvim-open {{filename}}";

@@ -72,6 +72,7 @@
         xh # Faster than curl, with a simpler syntax and JSON support
         choose # A tool for interactively filtering and choosing from a list of items
         imagemagick # For image manipulation and previewing
+        ueberzugpp # Terminal image previewer (used by fzf-lua)
         tree # For visualizing directory structures
       ];
     };
