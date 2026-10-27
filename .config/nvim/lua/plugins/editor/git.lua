@@ -44,7 +44,7 @@ local function ensure_codediff()
   end
   codediff_loaded = true
   vim.pack.add({ { src = "https://github.com/esmuellert/codediff.nvim" } })
-  require("codediff").setup()
+  require("codediff").setup({ explorer = { position = "bottom" } })
 end
 
 local function codediff_cmd(args)
