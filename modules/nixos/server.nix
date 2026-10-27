@@ -28,6 +28,7 @@
       ncdu
       iotop
       lsof
+      psmisc
     ];
 
     # Disable suspend/sleep on servers
