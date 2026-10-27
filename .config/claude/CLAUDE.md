@@ -2,78 +2,52 @@
 
 ## Communication
 
-- Respond in English.
-- Lead with the main answer or conclusion, then provide supporting details.
-- Do not abbreviate domain concepts, class names, or file names with initials in chat (e.g. write "PersonalAccident" not "PA", "InsuranceProductCollection" not "IPC"). Full names only.
+- Lead with the answer, then details.
+- No initial-style abbreviations for domain terms, classes, or files (write "PersonalAccident", not "PA").
+- State assumptions. If ambiguous or uncertain, ask before coding.
+- When stuck: name the problem, propose 2-3 options with trade-offs, ask for guidance.
 
-## Development
+## Simplicity
 
-- Use pnpm for package management.
-- Prefer guard clauses over nested conditionals.
-- Follow the single responsibility principle.
-- Prefer simple, readable solutions over clever abstractions.
-- Don't introduce abstractions without a concrete need.
-- Prefer existing patterns over introducing new ones.
-- Make the smallest change that completely solves the problem.
-- Avoid unrelated refactoring.
-- Prefer self-explanatory code over comments.
-- Use comments only when they explain non-obvious intent, constraints, or why something is done.
-- Suggest small refactors that improve readability or maintainability when you encounter them, following the Boy Scout Rule: leave the code a little cleaner than you found it.
-- Avoid excessive abbreviations, especially for variables, functions, types, and domain concepts; prefer clear, descriptive names that make the code easy to understand.
-- Never write `ponytail:` marker comments in source code, even when the ponytail skill says to mark deliberate simplifications. Report the shortcut and its upgrade path in the chat reply instead.
+- Smallest change that solves the problem. KISS / YAGNI / DRY.
+- No speculative features, abstractions for single-use code, unrequested flexibility, or error handling for impossible cases.
+- Reuse before you write: search for existing helpers, utilities, types, and patterns in the codebase before adding new ones. Don't duplicate what already lives a few files over.
+- Guard clauses over nested conditionals. Single responsibility.
+- Soft limits: functions <30 lines, files <300 lines, nesting ≤3.
 
-## TDD
+## Surgical Changes
 
-When implementing features or fixing bugs:
+- Touch only what the task requires. Match existing style.
+- Don't refactor, reformat, or "improve" adjacent code.
+- Remove orphans your change created; leave pre-existing dead code (mention it).
+- Every changed line must trace to the request.
 
-1. Write tests before implementation.
-2. Cover expected behavior, important edge cases, invalid inputs, errors, and relevant boundaries.
-3. Follow Arrange → Act → Assert.
-4. Keep each test focused on one behavior.
-5. Implement the smallest solution that makes the tests pass.
-6. Refactor for clarity and simplicity.
-7. Review the implementation for missed cases and design issues.
-8. Re-run relevant tests until everything is stable.
+## Goal-Driven Execution
 
-Tests should be fast, isolated, deterministic, and self-validating.
+- Turn tasks into verifiable goals ("fix bug" → "write test that reproduces, then make it pass").
+- For multi-step work, state a brief numbered plan with a verify step per item.
 
-Prefer testing behavior through public interfaces rather than implementation details. Avoid unnecessary control flow or complex logic in tests.
+## Naming
 
-Mock external dependencies in unit tests. Use integration or E2E tests when real infrastructure behavior is what needs to be verified.
+- Self-documenting. Booleans `is_` / `has_` / `can_`. Functions = verbs. Classes = nouns.
+- Avoid abbreviations for variables, functions, types, and domain concepts.
 
-## Commits
+## Commits & Git
 
-- Keep commit messages concise and use a subject line only.
-- Refactor commits should explain why the refactor was necessary.
-- Skip the commit body unless it is needed to explain non-obvious context.
+- Subject line only unless non-obvious context is needed. Refactor commits explain _why_.
+- Never commit or push without explicit approval. Never force-push `main`/`master`.
+
+## Security
+
+- Never commit secrets, API keys, tokens, `.env`, credentials, or PII.
+- Validate external input server-side; sanitize before DB queries.
+- Credential locations: project → `.env` (gitignored); global → `~/.env`; SSH → `~/.ssh/`; cloud → `~/.aws/`, `~/.config/gcloud/`; npm → `~/.npmrc`.
+- If exposed: rotate, `git filter-repo`, force-push.
+
+## Package Management
+
+- pnpm for Node projects.
 
 ## Code Review
 
-When reviewing code, consider the areas relevant to the change:
-
-- Security and input validation
-- Correctness and error handling
-- Performance and scalability
-- Architecture and maintainability
-- Complexity and readability
-- Concurrency and resource management
-- Data and state management
-- API contracts and validation
-- Testing and edge cases
-- Dependencies and supply-chain risks
-- Accessibility for frontend code
-- Observability where applicable
-
-Prioritize substantive issues over stylistic preferences.
-
-Treat large files, long functions, high complexity, and excessive abstraction as signals to investigate rather than absolute violations.
-
-## Working With Existing Code
-
-- Inspect the existing implementation before making changes.
-- Follow established project conventions unless there is a good reason not to.
-- Reuse existing utilities, components, patterns, and dependencies where appropriate.
-- Do not introduce a new dependency when the existing stack can solve the problem cleanly.
-- Do not refactor unrelated code unless explicitly asked.
-
-@RTK.md
+Prioritize substance over style. Cover areas relevant to the change: correctness, security, performance, architecture, complexity, concurrency, state, API contracts, tests/edge cases, dependencies, accessibility, observability. Large files, long functions, and heavy abstraction are signals to investigate — not automatic violations.
