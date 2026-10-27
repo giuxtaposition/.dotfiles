@@ -10,6 +10,12 @@ require("render-markdown").setup({
   checkbox = {
     enable = true,
     position = "inline",
+    custom = {
+      released = { raw = "[r]", rendered = "🚀 ", highlight = "RenderMarkdownSuccess" },
+      in_progress = { raw = "[/]", rendered = "🏗️ ", highlight = "RenderMarkdownInfo" },
+      blocked = { raw = "[b]", rendered = "🚧 ", highlight = "RenderMarkdownError" },
+      postponed = { raw = "[p]", rendered = "💤 ", highlight = "RenderMarkdownWarn" },
+    },
   },
   code = {
     sign = false,
@@ -46,22 +52,6 @@ require("render-markdown").setup({
       "",
       "",
     },
-    -- icons = {
-    --   " ",
-    --   " ",
-    --   " ",
-    --   " ",
-    --   " ",
-    --   " ",
-    -- },
-    -- icons = {
-    --   "█ ",
-    --   "██ ",
-    --   "███ ",
-    --   "████ ",
-    --   "█████ ",
-    --   "██████ ",
-    -- },
   },
 })
 
@@ -141,6 +131,9 @@ end
 set_keymap("n", "<leader>zf", function()
   pick_notes("Notes> ")
 end, "Search notes (title + tags)")
+vim.api.nvim_create_user_command("NotesPick", function()
+  pick_notes("Notes> ")
+end, {})
 set_keymap("v", "<leader>zf", ":'<,'>ZkMatch<cr>", "Search selection")
 set_keymap("n", "<leader>zg", function()
   require("fzf-lua").live_grep({ cwd = vim.env.ZK_NOTEBOOK_DIR, prompt = "Grep> " })

@@ -291,6 +291,7 @@
           Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
           Mod+Shift+N repeat=false { spawn-sh "wtype -M ctrl a -m ctrl; wtype -M ctrl c -m ctrl; sleep 0.1; wl-paste > /tmp/nvimedit; kitty --title nvim-scratch -e nvim /tmp/nvimedit; wl-copy -n < /tmp/nvimedit; sleep 0.3; wtype -M ctrl v -m ctrl; rm -f /tmp/nvimedit"; }
+          Mod+N repeat=false { spawn "kitty" "--title" "nvim-notes" "--working-directory" "${config.home.homeDirectory}/notes" "nvim" "-c" "NotesPick"; }
 
           Print      { screenshot; }
           Ctrl+Print { screenshot-screen; }

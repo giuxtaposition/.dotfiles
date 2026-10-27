@@ -1,11 +1,14 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
   options = {fish.enable = lib.mkEnableOption "enables fish module";};
 
   config = lib.mkIf config.fish.enable {
+    home.packages = with pkgs; [texlivePackages.pdfjam imagemagick];
+
     programs = {
       fish = {
         enable = true;
@@ -54,6 +57,51 @@
             if test -n "$selected_repo"
                 cd "$selected_repo" && nvim
             end
+          '';
+          notes-print-images = ''
+                        if test (count $argv) -eq 0
+                            echo "Usage: notes-print-images <note.md>..."
+                            return 1
+                        end
+
+                        set -l out /tmp/notes-images.pdf
+                        set -l imgs (for f in $argv
+                            grep -oE '!\[[^]]*\]\(([^)]+)\)' $f | sed -E 's/.*\(([^)]+)\)/\1/'
+                        end | python3 -c 'import sys, os, urllib.parse
+            home = os.path.expanduser("~/notes")
+            for l in sys.stdin:
+                p = urllib.parse.unquote(l.strip())
+                if not p: continue
+                print(p if p.startswith("/") else os.path.join(home, p))')
+
+                        if test (count $imgs) -eq 0
+                            echo "No images found."
+                            return 1
+                        end
+
+                        magick montage $imgs \
+                            -density 300 \
+                            -tile 6x9 -geometry 380x380+8+8 \
+                            -border 1 -bordercolor gray \
+                            -page A4 $out
+                        xdg-open $out
+          '';
+          pdf-nup-print = ''
+            if test (count $argv) -lt 2
+                echo "Usage: pdf-nup-print <input.pdf> <pages> [nup]"
+                echo "Example: pdf-nup-print file.pdf '71,72,73' 3x1"
+                return 1
+            end
+
+            set -l input $argv[1]
+            set -l pages $argv[2]
+            set -l nup $argv[3]
+            test -z "$nup"; and set nup 3x1
+            set -l out /tmp/pdf-nup.pdf
+
+            pdfjam --nup $nup --a4paper --landscape -- $input $pages -o $out
+            or return 1
+            lp -o media=A4 $out
           '';
           gdiff-card = ''
             if test (count $argv) -eq 0
