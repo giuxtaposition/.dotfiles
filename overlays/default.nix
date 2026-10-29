@@ -12,6 +12,22 @@
 
     inherit (inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}) libdisplay-info_0_3;
 
+    # fpdf2 2.8.5 in 26.05 fails test_image_with_explicit_dimensions — it
+    # compares a rendered-PDF checksum that the pinned Pillow no longer
+    # reproduces. Hydra does not ship it either, so paperless-ngx cannot build
+    # without skipping that one test. Applied through pythonPackagesExtensions
+    # because paperless builds its own python set via python3.override, which
+    # discards any packageOverrides set further out.
+    pythonPackagesExtensions =
+      prev.pythonPackagesExtensions
+      ++ [
+        (_pythonFinal: pythonPrev: {
+          fpdf2 = pythonPrev.fpdf2.overridePythonAttrs (oldAttrs: {
+            disabledTests = oldAttrs.disabledTests ++ ["test_image_with_explicit_dimensions"];
+          });
+        })
+      ];
+
     slack = prev.slack.overrideAttrs (_oldAttrs: {
       fixupPhase = ''
         rm $out/bin/slack

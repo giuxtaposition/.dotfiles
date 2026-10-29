@@ -71,7 +71,7 @@
         vscode-extensions.vue.vscode-typescript-vue-plugin
       ]
       ++ lib.optionals config.coding.svelte.enable [
-        nodePackages_latest.svelte-language-server
+        svelte-language-server
       ]
       ++ lib.optionals config.coding.astro.enable [
         astro-language-server
@@ -106,7 +106,7 @@
         delve
       ]
       ++ lib.optionals config.coding.bash.enable [
-        nodePackages_latest.bash-language-server
+        bash-language-server
         shellcheck
         shfmt
       ]

@@ -15,6 +15,9 @@
       vimdiffAlias = true;
       package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
       withNodeJs = true;
+      withRuby = false;
+      withPython3 = false;
+      sideloadInitLua = true;
       extraLuaPackages = ps: [ps.magick];
       extraPackages = with pkgs; [imagemagick lua51Packages.luarocks];
     };
@@ -23,10 +26,8 @@
       lsof #needed for opencode.nvim
     ];
 
-    home.file."${config.home.homeDirectory}/.config/nvim" = {
-      source =
-        config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/.dotfiles/.config/nvim";
-    };
+    xdg.configFile.nvim.source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${config.home.homeDirectory}/.dotfiles/.config/nvim";
   };
 }

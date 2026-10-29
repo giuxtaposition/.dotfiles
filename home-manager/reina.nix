@@ -25,10 +25,10 @@
     ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
+      settings = {
         "kumiko" = {
-          hostname = "kumiko"; # Tailscale MagicDNS — .local mDNS not reachable across subnet
-          user = "giu";
+          HostName = "kumiko"; # Tailscale MagicDNS — .local mDNS not reachable across subnet
+          User = "giu";
         };
       };
     };

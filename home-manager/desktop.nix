@@ -50,6 +50,7 @@
       name = "Sweet-Dark";
       package = pkgs.sweet;
     };
+    gtk4.theme = null;
     font = {name = "JetBrains Mono";};
     iconTheme = {
       name = "candy-icons";
