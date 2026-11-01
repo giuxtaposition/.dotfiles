@@ -22,6 +22,9 @@
   # Document management
   paperless.enable = true;
 
+  # E-book library
+  calibre.enable = true;
+
   # Photo management
   immich.enable = true;
 

@@ -28,6 +28,7 @@
   vpn = import ./services/vpn.nix;
   suwayomi = import ./services/suwayomi.nix;
   byparr = import ./services/byparr.nix;
+  calibre = import ./services/calibre.nix;
 
   #  # Game server modules
   dst-server = import ./dont_starve_together/dont_starve_together_server.nix;
