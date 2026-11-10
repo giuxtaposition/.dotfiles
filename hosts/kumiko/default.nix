@@ -55,12 +55,23 @@
     ];
   };
 
-  # Power schedule: suspend at midnight, RTC wake at 8am
+  # Power schedule: power off at midnight, firmware RTC alarm wakes at 8am.
+  #
+  # S3 suspend keeps the USB ports partially powered, so the external Fantec
+  # bay holding /media never sees a clean off->on and stays down after resume
+  # ("usb 3-3: USB disconnect" with no re-enumeration), leaving /media dead
+  # until the bay is power-cycled by hand. A full poweroff drops port power and
+  # the bay comes back every morning.
+  #
+  # rtcwake's one-shot alarm from S5 occasionally missed a night, which is why
+  # this used to suspend instead. The wake is now owned by the BIOS "Power On
+  # By RTC Alarm" (daily, 08:00) — the OS must not touch the RTC alarm register
+  # or it clobbers that repeat, so there is no rtcwake call here any more.
   systemd.services.scheduled-poweroff = {
-    description = "Suspend to RAM with RTC wake alarm for 8am";
+    description = "Power off with BIOS RTC alarm waking at 8am";
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = pkgs.writeShellScript "suspend-with-wake" ''
+      ExecStart = pkgs.writeShellScript "poweroff-at-midnight" ''
         set -e
         echo "Stopping DST caves shard..."
         systemctl stop dst-caves.service || true
@@ -74,16 +85,14 @@
           sleep 1
         done
 
-        echo "Suspending with RTC wake at 08:00..."
-        ${pkgs.util-linux}/bin/rtcwake \
-          -m mem \
-          -t $(${pkgs.coreutils}/bin/date -d "today 08:00" +%s)
+        echo "Powering off..."
+        systemctl poweroff
       '';
     };
   };
 
   systemd.timers.scheduled-poweroff = {
-    description = "Suspend kumiko at midnight daily";
+    description = "Power off kumiko at midnight daily";
     wantedBy = ["timers.target"];
     timerConfig = {
       OnCalendar = "*-*-* 00:00:00";
