@@ -31,9 +31,13 @@
       options = ["nofail" "x-systemd.automount" "x-systemd.device-timeout=30s" "x-systemd.idle-timeout=0"];
     };
 
+    # Same Fantec bay as /media (LUN 0 vs LUN 1 of one JMicron bridge), so it
+    # needs the same treatment: without nofail a powered-off bay fails
+    # local-fs.target and drops the boot into emergency mode.
     "/docs" = {
       device = "/dev/disk/by-uuid/b99d161f-c7af-481c-88f6-f9c3b4aeba37";
       fsType = "ext4";
+      options = ["nofail" "x-systemd.automount" "x-systemd.device-timeout=30s" "x-systemd.idle-timeout=0"];
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/AAD2-8417";

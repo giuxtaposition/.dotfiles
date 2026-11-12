@@ -55,23 +55,22 @@
     ];
   };
 
-  # Power schedule: power off at midnight, firmware RTC alarm wakes at 8am.
+  # Power schedule: power off at midnight, RTC wake at 8am.
   #
-  # S3 suspend keeps the USB ports partially powered, so the external Fantec
-  # bay holding /media never sees a clean off->on and stays down after resume
-  # ("usb 3-3: USB disconnect" with no re-enumeration), leaving /media dead
-  # until the bay is power-cycled by hand. A full poweroff drops port power and
-  # the bay comes back every morning.
+  # Must be S5, not S3: suspend keeps the USB ports powered, and the external
+  # Fantec bay holding /media and /docs idles itself off partway through the
+  # night. On resume its JMicron bridge is simply gone from the bus and never
+  # re-enumerates, so both filesystems stay dead until the bay's power button
+  # is pressed by hand. The bay only restarts on a real power cycle, which is
+  # what S5 gives it — verified by waking from S5 with the bay coming back on
+  # its own 5s into the boot.
   #
-  # rtcwake's one-shot alarm from S5 occasionally missed a night, which is why
-  # this used to suspend instead. The wake is now owned by the BIOS "Power On
-  # By RTC Alarm" (daily, 08:00) — the OS must not touch the RTC alarm register
-  # or it clobbers that repeat, so there is no rtcwake call here any more.
+  # The bay must stay on a bus 3 port. On bus 2 it does not come back from S5.
   systemd.services.scheduled-poweroff = {
-    description = "Power off with BIOS RTC alarm waking at 8am";
+    description = "Power off with RTC wake alarm for 8am";
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = pkgs.writeShellScript "poweroff-at-midnight" ''
+      ExecStart = pkgs.writeShellScript "poweroff-with-wake" ''
         set -e
         echo "Stopping DST caves shard..."
         systemctl stop dst-caves.service || true
@@ -85,8 +84,18 @@
           sleep 1
         done
 
-        echo "Powering off..."
-        systemctl poweroff
+        # -m off sets the alarm and then calls shutdown itself, unlike the
+        # 06e5515 predecessor of this service, which set the alarm with -m no
+        # and ran a separate systemctl poweroff. Keeping the two steps in one
+        # command shrinks the window in which the alarm can be clobbered.
+        #
+        # The 8h lead time matters: the alarm has to outlast the shutdown, and
+        # unmounting the bay can be slow. A short alarm fires mid-shutdown, is
+        # consumed, and the machine then stays off.
+        echo "Powering off with RTC wake at 08:00..."
+        ${pkgs.util-linux}/bin/rtcwake \
+          -m off \
+          -t $(${pkgs.coreutils}/bin/date -d "today 08:00" +%s)
       '';
     };
   };
