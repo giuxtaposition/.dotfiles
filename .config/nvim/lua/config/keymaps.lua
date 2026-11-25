@@ -25,6 +25,11 @@ set_keymap("n", "<leader>by", function()
   vim.fn.setreg("+", path)
   vim.notify('Copied "' .. path .. '" to the clipboard!')
 end, "Yank filename path of current buffer")
+set_keymap("n", "<leader>bY", util.editor.yank_path_with_line, "Yank relative path with line number")
+set_keymap("v", "<leader>cc", function()
+  vim.cmd("normal! \27") -- leave visual mode so '< and '> are set
+  util.editor.copy_as_codeblock()
+end, "Copy selection as markdown codeblock")
 
 -- windows
 set_keymap("n", "<leader>ww", "<C-W>p", "Other window", { remap = true })
