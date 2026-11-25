@@ -48,6 +48,9 @@ local function set_highlights()
   end
 end
 
+--- @type table<number, string> window -> breadcrumb last drawn in it
+local last_breadcrumb = {}
+
 --- @type number[]
 local excluded_buftypes = { "nofile", "terminal", "prompt", "help", "quickfix" }
 
@@ -98,13 +101,24 @@ function M.setup()
     end,
   })
 
-  -- Redraw winbar on cursor movement (uses cached symbols, no LSP call)
+  -- Redraw winbar when the cursor enters a different symbol. Resolving the
+  -- breadcrumb walks the cached symbol tree (no LSP call); forcing the redraw
+  -- is what costs, so it is skipped while the cursor stays in the same symbol.
   vim.api.nvim_create_autocmd({ "CursorMoved", "InsertLeave" }, {
     group = group,
     callback = function(args)
-      if should_attach(args.buf) then
-        vim.wo.winbar = vim.o.winbar
+      if not should_attach(args.buf) then
+        return
       end
+
+      local win = vim.api.nvim_get_current_win()
+      local breadcrumb = symbols.breadcrumb_id(args.buf)
+      if last_breadcrumb[win] == breadcrumb then
+        return
+      end
+
+      last_breadcrumb[win] = breadcrumb
+      vim.wo.winbar = vim.o.winbar
     end,
   })
 
@@ -113,6 +127,13 @@ function M.setup()
     group = group,
     callback = function(args)
       symbols.on_buf_delete(args.buf)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd("WinClosed", {
+    group = group,
+    callback = function(args)
+      last_breadcrumb[tonumber(args.match)] = nil
     end,
   })
 

@@ -143,6 +143,9 @@ function M.fetch(bufnr)
       return
     end
     cache[bufnr] = normalize_symbols(result)
+    -- Symbols land after the winbar was last drawn, so ask for one redraw
+    -- instead of waiting for the next cursor move to show the breadcrumb.
+    pcall(vim.cmd.redrawstatus, { bang = true })
   end)
 end
 
@@ -167,6 +170,18 @@ function M.get_breadcrumbs(bufnr)
   local col = cursor[2]
 
   return resolve_path(symbols, line, col, {})
+end
+
+--- Identify the breadcrumb at the cursor, for comparing against the one last
+--- drawn. Two positions inside the same symbol share an id.
+--- @param bufnr number
+--- @return string
+function M.breadcrumb_id(bufnr)
+  local names = { tostring(bufnr) }
+  for _, crumb in ipairs(M.get_breadcrumbs(bufnr)) do
+    names[#names + 1] = crumb.name
+  end
+  return table.concat(names, "\0")
 end
 
 --- Clean up cache for a deleted buffer.
