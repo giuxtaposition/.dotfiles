@@ -10,52 +10,6 @@ vim.pack.add({
 local ts = require("nvim-treesitter")
 local set_keymap = require("config.util.keys").set
 
-ts.install({
-  "bash",
-  "c",
-  "comment",
-  "diff",
-  "dockerfile",
-  "fish",
-  "gitcommit",
-  "gitignore",
-  "go",
-  "gomod",
-  "gosum",
-  "gowork",
-  "ini",
-  "jsdoc",
-  "json",
-  "json5",
-  "lua",
-  "luadoc",
-  "luap",
-  "make",
-  "markdown",
-  "markdown_inline",
-  "nginx",
-  "nix",
-  "php",
-  "query",
-  "regex",
-  "rust",
-  "scss",
-  "sql",
-  "terraform",
-  "toml",
-  "vim",
-  "vimdoc",
-  "xml",
-  "yaml",
-  "javascript",
-  "typescript",
-  "tsx",
-  "html",
-  "svelte",
-  "vue",
-  "astro",
-})
-
 vim.api.nvim_create_autocmd("PackChanged", {
   desc = "Handle nvim-treesitter updates",
   group = vim.api.nvim_create_augroup("nvim-treesitter-pack-changed-update-handler", { clear = true }),
@@ -71,18 +25,60 @@ vim.api.nvim_create_autocmd("PackChanged", {
   end,
 })
 
+-- Parsers are installed on demand instead of from a hardcoded list: the first
+-- time a filetype is opened its parser is fetched, then highlighting and
+-- treesitter indentation start.
+
+--- @type string[]?
+local available
+
+--- @param buf integer
+--- @param lang string
+--- @return boolean started whether a parser was loaded for `lang`
+local function start_treesitter(buf, lang)
+  if not vim.treesitter.language.add(lang) then
+    return false
+  end
+  vim.treesitter.start(buf, lang)
+  vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+  return true
+end
+
+--- @param lang string
+--- @return boolean
+local function is_installable(lang)
+  available = available or ts.get_available()
+  return vim.list_contains(available, lang)
+end
+
+local installing = {}
+
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "*" },
-  callback = function()
-    local filetype = vim.bo.filetype
-    if filetype and filetype ~= "" then
-      local success = pcall(function()
-        vim.treesitter.start()
-      end)
-      if not success then
+  group = vim.api.nvim_create_augroup("treesitter_start", { clear = true }),
+  desc = "Start treesitter, installing the parser on first use",
+  callback = function(event)
+    local lang = vim.treesitter.language.get_lang(event.match)
+    if not lang or start_treesitter(event.buf, lang) then
+      return
+    end
+
+    -- Only try to fetch a parser once per session, so a language without a
+    -- grammar (or a failing build) doesn't retry on every buffer.
+    if installing[lang] or not is_installable(lang) then
+      return
+    end
+    installing[lang] = true
+
+    ts.install(lang):await(function(err)
+      if err then
         return
       end
-    end
+      vim.schedule(function()
+        if vim.api.nvim_buf_is_valid(event.buf) then
+          start_treesitter(event.buf, lang)
+        end
+      end)
+    end)
   end,
 })
 
