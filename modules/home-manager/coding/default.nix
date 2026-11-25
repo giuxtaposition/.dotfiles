@@ -27,6 +27,7 @@
     fish.enable = true;
     git.enable = true;
     direnv.enable = true;
+    tmux.enable = true;
 
     programs.chromium = {
       enable = true;

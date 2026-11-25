@@ -84,6 +84,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
     local hash = vim.fn.sha256(cwd):sub(1, 8)
     local socket = "/tmp/nvim-" .. hash
     vim.fn.serverstart(socket)
+
+    -- A second name that survives :cd, so nvim-open can resolve this instance
+    -- from the tmux pane it runs in instead of guessing at a directory.
+    if vim.env.TMUX_PANE then
+      vim.fn.serverstart("/tmp/nvim-pane-" .. vim.env.TMUX_PANE)
+    end
   end,
 })
 

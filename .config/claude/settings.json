@@ -3,49 +3,90 @@
     "commit": "",
     "pr": ""
   },
-  "model": "opus[1m]",
+  "enabledPlugins": {
+    "caveman@caveman": true,
+    "frontend-design@claude-plugins-official": true,
+    "ponytail@ponytail": true,
+    "stripe@claude-plugins-official": true,
+    "ui-ux-pro-max@ui-ux-pro-max-skill": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "repo": "JuliusBrussee/caveman",
+        "source": "github"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "repo": "DietrichGebert/ponytail",
+        "source": "github"
+      }
+    },
+    "ui-ux-pro-max-skill": {
+      "source": {
+        "repo": "nextlevelbuilder/ui-ux-pro-max-skill",
+        "source": "github"
+      }
+    }
+  },
   "hooks": {
-    "PreToolUse": [
+    "Notification": [
       {
-        "matcher": "Bash",
         "hooks": [
           {
-            "type": "command",
-            "command": "rtk hook claude"
+            "command": "tmux set -w -t \"$TMUX_PANE\" @agent-status waiting 2>/dev/null; true",
+            "type": "command"
+          }
+        ],
+        "matcher": "permission_prompt|elicitation_dialog"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "tmux set -w -t \"$TMUX_PANE\" @agent-status working 2>/dev/null; true",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "rtk hook claude",
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "tmux set -w -t \"$TMUX_PANE\" @agent-status done 2>/dev/null; true",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "tmux set -w -t \"$TMUX_PANE\" @agent-status working 2>/dev/null; true",
+            "type": "command"
           }
         ]
       }
     ]
   },
+  "model": "opus[1m]",
   "statusLine": {
-    "type": "command",
-    "command": "bash \"/home/giu/.claude/statusline.sh\""
-  },
-  "enabledPlugins": {
-    "ui-ux-pro-max@ui-ux-pro-max-skill": true,
-    "caveman@caveman": true,
-    "frontend-design@claude-plugins-official": true,
-    "ponytail@ponytail": true,
-    "stripe@claude-plugins-official": true
-  },
-  "extraKnownMarketplaces": {
-    "ui-ux-pro-max-skill": {
-      "source": {
-        "source": "github",
-        "repo": "nextlevelbuilder/ui-ux-pro-max-skill"
-      }
-    },
-    "caveman": {
-      "source": {
-        "source": "github",
-        "repo": "JuliusBrussee/caveman"
-      }
-    },
-    "ponytail": {
-      "source": {
-        "source": "github",
-        "repo": "DietrichGebert/ponytail"
-      }
-    }
+    "command": "bash \"/home/giu/.claude/statusline.sh\"",
+    "type": "command"
   }
 }

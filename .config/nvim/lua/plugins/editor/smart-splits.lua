@@ -1,26 +1,14 @@
 local set_keymap = require("config.util.keys").set
 
-vim.api.nvim_create_autocmd("PackChanged", {
-  callback = function(ev)
-    if ev.data.spec.name == "smart-splits.nvim" and ev.data.kind == "install" then
-      vim.defer_fn(function()
-        vim.system({
-          "bash",
-          ev.data.path .. "/kitty/install-kittens.bash",
-        }, { cwd = ev.data.path, text = true }, function(obj)
-          print(obj.stdout)
-          print(obj.stderr)
-        end)
-      end, 200)
-    end
-  end,
-})
-
 vim.pack.add({
   { src = "https://github.com/mrjones2014/smart-splits.nvim" },
+  -- Since v2 the multiplexer backends live outside core and are not auto-detected.
+  { src = "https://github.com/smart-splits-nvim/backend-tmux" },
 })
 
-require("smart-splits").setup()
+require("smart-splits").setup({
+  mux = { backend = "smart-splits-backend-tmux" },
+})
 
 -- Resize
 set_keymap({ "n", "x" }, "<A-h>", require("smart-splits").resize_left, "Resize left")

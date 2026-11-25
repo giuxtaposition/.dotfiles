@@ -10,15 +10,37 @@
 
     send_to() {
       local socket="$1"
-      nvim --server "$socket" --remote-tab "$FILE"
+      # --remote (not --remote-tab) so the file opens in the pane that was
+      # focused when lazygit/kitty was launched, instead of a new tab.
+      nvim --server "$socket" --remote "$FILE"
       if [ "$LINE" -gt 0 ] 2>/dev/null; then
         nvim --server "$socket" --remote-send ":''${LINE}<CR>"
       fi
-      if [ -n "$KITTY_LISTEN_ON" ]; then
-        kitty @ focus-window --match "var:IS_NVIM and cwd:$PWD"
-        kitty @ close-window --match "id:$KITTY_WINDOW_ID"
+      # Called from lazygit in a tmux popup: close it so the pane running the
+      # neovim instance that just got the file is visible again.
+      if [ -n "$TMUX" ]; then
+        tmux display-popup -C
       fi
     }
+
+    # Under tmux, find neovim by the pane it runs in: this window first, then
+    # the rest of the session. The directory hash below cannot be trusted here,
+    # because it is taken at startup and :cd moves neovim away from it; knowing
+    # the pane also means the window holding it can be focused afterwards,
+    # which the caller's window usually is not.
+    if [ -n "$TMUX" ]; then
+      NVIM_PANE="$(tmux list-panes -F '#{pane_id}' -f '#{==:#{pane_current_command},nvim}' | head -1)"
+      if [ -z "$NVIM_PANE" ]; then
+        NVIM_PANE="$(tmux list-panes -s -F '#{pane_id}' -f '#{==:#{pane_current_command},nvim}' | head -1)"
+      fi
+
+      if [ -n "$NVIM_PANE" ] && nvim --server "/tmp/nvim-pane-$NVIM_PANE" --remote-expr "1" >/dev/null 2>&1; then
+        send_to "/tmp/nvim-pane-$NVIM_PANE"
+        tmux select-window -t "$(tmux display-message -p -t "$NVIM_PANE" '#{window_id}')"
+        tmux select-pane -t "$NVIM_PANE"
+        exit 0
+      fi
+    fi
 
     # Find neovim instance open in the current directory
     SOCKET="/tmp/nvim-$(echo -n "$PWD" | sha256sum | cut -c1-8)"

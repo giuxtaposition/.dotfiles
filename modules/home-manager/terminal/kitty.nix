@@ -11,152 +11,49 @@
       enable = true;
       shellIntegration.enableFishIntegration = true;
       # enableGitIntegration = true;
+      # Windows, tabs, splits, lazygit, the test runner, scrollback search and
+      # the file:line hints all live in tmux now (the hints as `prefix e`), so
+      # kitty binds none of their keys and passes Ctrl/Alt + hjkl/arrows
+      # straight through. `kitten hints` cannot stay: it hands the program the
+      # directory of the window's foreground process, which under tmux is the
+      # client's, not the pane's, and nvim-open needs the pane's to find the
+      # right socket.
+      # Exception: shift+enter. Kitty only reports it when the app negotiates
+      # the keyboard protocol, which Claude Code does not, so it arrives as a
+      # plain Enter and submits the prompt. Send Esc+Enter instead — tmux
+      # passes the two bytes straight through and Claude Code inserts a
+      # newline.
       keybindings = {
-        "ctrl+j" = "neighboring_window down";
-        "ctrl+k" = "neighboring_window up";
-        "ctrl+h" = "neighboring_window left";
-        "ctrl+l" = "neighboring_window right";
-        "ctrl+down" = "neighboring_window down";
-        "ctrl+up" = "neighboring_window up";
-        "ctrl+left" = "neighboring_window left";
-        "ctrl+right" = "neighboring_window right";
-        "alt+j" = "kitten relative_resize.py down 3";
-        "alt+k" = "kitten relative_resize.py up 3";
-        "alt+h" = "kitten relative_resize.py left 3";
-        "alt+l" = "kitten relative_resize.py right 3";
-        "alt+down" = "kitten relative_resize.py down 3";
-        "alt+up" = "kitten relative_resize.py up 3";
-        "alt+left" = "kitten relative_resize.py left 3";
-        "alt+right" = "kitten relative_resize.py right 3";
-        "kitty_mod+t" = "new_tab_with_cwd";
-        "kitty_mod+enter" = "new_window_with_cwd";
-        "ctrl+shift+g" = "launch --type=background --cwd=current --copy-env kitten quick-access-terminal -- lazygit";
-        "kitty_mod+o" = let
-          open_in_nvim = pkgs.writeShellScript "kitty-open-in-nvim.sh" ''
-            #!${pkgs.bash}/bin/sh
-            # $1 is the full regex match, e.g. "src/utils/Error.test.ts:15"
-            FILE="$(printf '%s' "$1" | cut -d: -f1)"
-            LINE="$(printf '%s' "$1" | cut -d: -f2)"
-            nvim-open "$FILE" "$LINE"
-          '';
-        in "kitten hints --type regex --regex '[^\\s()]+\\.[a-z]+:[0-9]+' --program ${open_in_nvim}";
-        "kitty_mod+e" = let
-          open_in_nvim = pkgs.writeShellScript "kitty-open-in-nvim.sh" ''
-            #!${pkgs.bash}/bin/sh
-            file="$1"
-            line="$2"
-            kitty @ send-text --match "var:IS_NVIM" "$(printf '\033\033:e +%s %s\r' "$line" "$file")"
-          '';
-        in "kitten hints --type=linenum --linenum-action=background ${open_in_nvim} {path} {line}";
-        "kitty_mod+f" = let
-          fzf_ksb_find_script = pkgs.writeShellScript "fzf_ksb_find.sh" ''
-            #! ${pkgs.bash}/bin/sh
-            # Purpose: Fuzzy-find through the Kitty scrollback buffer
-            # and jump to the selected line in the underlying window
-
-            set -euo pipefail
-
-            stdin="$(mktemp)"
-            trap 'rm -f "$stdin"' EXIT
-
-            cat > "$stdin"
-
-            selection=$(
-              nl -ba "$stdin" | fzf \
-                --ansi \
-                --no-sort \
-                --exact \
-                --tac \
-                --delimiter=$'\t' \
-                --with-nth=2.. \
-                --preview "bat --color=always --decorations=never --highlight-line {1} $stdin" \
-                --preview-label 'Scrollback Buffer (Search Result Highlighted)' \
-                --preview-window 'up,80%,border-rounded,+{1}/2' \
-                --bind 'ctrl-c:abort' \
-                --bind 'ctrl-b:preview-half-page-up' \
-                --bind 'ctrl-f:preview-half-page-down'
-            ) || exit 0
-
-            [ -z "$selection" ] && exit 0
-
-            line_no="$(printf '%s\n' "$selection" | cut -f1 | tr -d ' ')"
-            total="$(wc -l < "$stdin" | tr -d ' ')"
-            offset=$((total - line_no))
-
-            parent_id="$(kitty @ ls --match state:overlay_parent 2>/dev/null \
-              | ${pkgs.jq}/bin/jq -r '[.. | objects | select(.is_self == false) | .id] | first // empty')"
-
-            if [ -n "$parent_id" ] && [ "$offset" -gt 0 ]; then
-              setsid sh -c "
-                sleep 0.2
-                kitty @ scroll-window --match id:$parent_id end
-                kitty @ scroll-window --match id:$parent_id ''${offset}l-
-              " </dev/null >/dev/null 2>&1 &
-            fi
-          '';
-        in "launch --type=overlay --stdin-source=@screen_scrollback --stdin-add-formatting --copy-env ${fzf_ksb_find_script}";
-        "kitty_mod+a" = let
-          test_terminal_script = pkgs.writeShellScript "nvim-test-terminal.sh" ''
-            #!${pkgs.bash}/bin/sh
-            if kitty @ focus-window --match "title:nvim-test-runner" 2>/dev/null; then
-              exit 0
-            fi
-            # No window — open one showing previous results (if any)
-            kitty --title nvim-test-runner fish -C 'function fish_title; echo nvim-test-runner; end; cat /tmp/nvim-test-runner.log 2>/dev/null'
-          '';
-        in "launch --type=background --copy-env ${test_terminal_script}";
+        "shift+enter" = "send_text all \\x1b\\r";
       };
-      extraConfig = ''
-        map --when-focus-on title:nvim-test-runner kitty_mod+a close_window
-
-        map --when-focus-on var:IS_NVIM ctrl+j
-        map --when-focus-on var:IS_NVIM ctrl+k
-        map --when-focus-on var:IS_NVIM ctrl+h
-        map --when-focus-on var:IS_NVIM ctrl+l
-        map --when-focus-on var:IS_NVIM ctrl+down
-        map --when-focus-on var:IS_NVIM ctrl+up
-        map --when-focus-on var:IS_NVIM ctrl+left
-        map --when-focus-on var:IS_NVIM ctrl+right
-
-        map --when-focus-on var:IS_NVIM alt+j
-        map --when-focus-on var:IS_NVIM alt+k
-        map --when-focus-on var:IS_NVIM alt+h
-        map --when-focus-on var:IS_NVIM alt+l
-        map --when-focus-on var:IS_NVIM alt+down
-        map --when-focus-on var:IS_NVIM alt+up
-        map --when-focus-on var:IS_NVIM alt+left
-        map --when-focus-on var:IS_NVIM alt+right
-      '';
-      settings = {
-        background_opacity = "0.9";
-        background_blur = "5";
-        font_family = "JetBrainsMono Nerd Font Mono";
-        modify_font = "cell_height 110%";
-        cursor_shape = "block";
-        cursor_trail = "1";
-        copy_on_select = "true";
-        tab_bar_min_tabs = "2";
-        tab_bar_edge = "bottom";
-        tab_bar_style = "powerline";
-        tab_powerline_style = "round";
-        undercurl_style = "thick-dense";
-        focus_follows_mouse = "true";
-        allow_remote_control = "yes";
-        listen_on = "unix:@mykitty";
-        scrollback_lines = "5000";
-        scrollback_pager_history_size = "10";
-      };
-      quickAccessTerminalConfig = {
-        edge = "center";
-      };
-    };
-
-    xdg = {
-      configFile = {
-        "kitty/neighboring_window.py".source = "${pkgs.vimPlugins.smart-splits-nvim}/kitty/neighboring_window.py";
-        "kitty/relative_resize.py".source = "${pkgs.vimPlugins.smart-splits-nvim}/kitty/relative_resize.py";
-        "kitty/split_window.py".source = "${pkgs.vimPlugins.smart-splits-nvim}/kitty/split_window.py";
-      };
+      settings =
+        lib.optionalAttrs config.tmux.enable {
+          # Every kitty window is a tmux client. -A attaches to `main` when it is
+          # already there, including when continuum has just restored it on the
+          # first window after a boot, and creates it otherwise. Putting this
+          # here rather than in the fish config keeps nvim's `:terminal`, `fish
+          # -c`, and script shells out of tmux.
+          shell = "${pkgs.tmux}/bin/tmux new-session -A -s main";
+        }
+        // {
+          background_opacity = "0.9";
+          background_blur = "5";
+          font_family = "JetBrainsMono Nerd Font Mono";
+          modify_font = "cell_height 110%";
+          cursor_shape = "block";
+          cursor_trail = "1";
+          copy_on_select = "true";
+          tab_bar_min_tabs = "2";
+          tab_bar_edge = "bottom";
+          tab_bar_style = "powerline";
+          tab_powerline_style = "round";
+          undercurl_style = "thick-dense";
+          focus_follows_mouse = "true";
+          allow_remote_control = "yes";
+          listen_on = "unix:@mykitty";
+          scrollback_lines = "5000";
+          scrollback_pager_history_size = "10";
+        };
     };
   };
 }

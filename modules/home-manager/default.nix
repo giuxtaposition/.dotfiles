@@ -8,6 +8,7 @@
   direnv = import ./terminal/direnv.nix;
   kitty = import ./terminal/kitty.nix;
   notes = import ./terminal/notes.nix;
+  tmux = import ./terminal/tmux.nix;
 
   # WM
   wayland = import ./wm/wayland.nix;
