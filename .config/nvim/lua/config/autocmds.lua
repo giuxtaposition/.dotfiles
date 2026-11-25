@@ -1,5 +1,11 @@
+local cleared = {}
+
+--- Clears the group the first time a name is used, so groups shared by several
+--- autocmds don't wipe the ones registered before them.
 local function augroup(name)
-  return vim.api.nvim_create_augroup("giuxtaposition_" .. name, { clear = true })
+  local id = vim.api.nvim_create_augroup("giuxtaposition_" .. name, { clear = not cleared[name] })
+  cleared[name] = true
+  return id
 end
 
 -- go to last loc when opening a buffer
@@ -61,17 +67,48 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- Typescript: Change tab width according to prettierrc
-vim.api.nvim_create_autocmd("BufEnter", {
+
+--- @type table<string, number|false> directory -> tabWidth, false when none
+--- ponytail: cached for the session, restart Neovim after editing a prettier config
+local prettier_tab_width = {}
+
+--- Read `tabWidth` from the prettier config nearest to `dir`, searching upward.
+--- @param dir string
+--- @return number|nil
+local function find_prettier_tab_width(dir)
+  if prettier_tab_width[dir] == nil then
+    local width = false
+    local config = vim.fs.find({ ".prettierrc", ".prettierrc.json" }, { path = dir, upward = true })[1]
+    if config then
+      local ok, settings = pcall(vim.json.decode, table.concat(vim.fn.readfile(config), "\n"))
+      if ok and type(settings) == "table" and type(settings.tabWidth) == "number" then
+        width = settings.tabWidth
+      end
+    end
+    prettier_tab_width[dir] = width
+  end
+
+  return prettier_tab_width[dir] or nil
+end
+
+vim.api.nvim_create_autocmd("FileType", {
   group = augroup("change_tab_width_typescript"),
   desc = "Change tab width following prettier config",
-  pattern = { "*.ts, *.tsx" },
-  callback = function()
-    local file_exists = vim.fn.filereadable(".prettierrc")
-
-    if file_exists == 1 then
-      local tabWidth = vim.fn.json_decode(vim.fn.readfile(".prettierrc"))["tabWidth"]
-      vim.bo.shiftwidth = tabWidth
+  pattern = { "typescript", "typescriptreact" },
+  callback = function(event)
+    local name = vim.api.nvim_buf_get_name(event.buf)
+    if name == "" then
+      return
     end
+
+    local width = find_prettier_tab_width(vim.fs.dirname(name))
+    if not width then
+      return
+    end
+
+    vim.bo[event.buf].shiftwidth = width
+    vim.bo[event.buf].tabstop = width
+    vim.bo[event.buf].softtabstop = width
   end,
 })
 
