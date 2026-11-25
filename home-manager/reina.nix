@@ -19,6 +19,31 @@
         position x=4480 y=0
         variable-refresh-rate
     }
+
+    workspace "work" {
+        open-on-output "DP-2"
+    }
+
+    workspace "personal" {
+        open-on-output "DP-3"
+    }
+
+    window-rule {
+        match at-startup=true app-id="^slack$"
+        match at-startup=true app-id="^chromium-browser$"
+        open-on-workspace "work"
+    }
+
+    window-rule {
+        match at-startup=true app-id="^discord$"
+        match at-startup=true app-id="^firefox$"
+        open-on-workspace "personal"
+    }
+
+    spawn-at-startup "slack"
+    spawn-at-startup "chromium"
+    spawn-at-startup "discord"
+    spawn-at-startup "firefox"
   '';
 
   programs = {
