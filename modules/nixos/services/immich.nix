@@ -45,6 +45,12 @@ in {
     # application separately in the Zero Trust dashboard; nothing about it
     # lives here.
     #
+    # The mobile app cannot complete a browser login flow, so the same Access
+    # application carries a second Service Auth policy bound to a service
+    # token. The app sends that token as CF-Access-Client-Id and
+    # CF-Access-Client-Secret under Settings > Advanced > Custom proxy headers.
+    # One token per device, since anyone holding one bypasses the PIN.
+    #
     # Known limit: the free plan caps request bodies at 100 MB, which breaks
     # large uploads through the tunnel. Upload over the tailnet or LAN instead
     # — the cap applies to requests, not responses, so browsing and downloads
