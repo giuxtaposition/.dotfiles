@@ -3,7 +3,6 @@ vim.g.maplocalleader = "\\"
 vim.g.window_zoomed = false
 
 local util = require("config.util.init")
-local tr = require("config.test-runner")
 local set_keymap = util.keys.set
 
 -- Do things without affecting the registers
@@ -99,12 +98,6 @@ vim.keymap.set({ "n", "x", "o" }, "<A-i>", function()
     vim.lsp.buf.selection_range(-vim.v.count1)
   end
 end, { desc = "Select child treesitter node or inner incremental lsp selections" })
-
-set_keymap("n", "<leader>ta", tr.test_all, "Test all")
-set_keymap("n", "<leader>tf", tr.test_file, "Test file")
-set_keymap("n", "<leader>tn", tr.test_nearest, "Test nearest")
-set_keymap("n", "<leader>tl", tr.test_last, "Test last (re-run)")
-set_keymap("n", "<leader>td", tr.test_folder, "Test folder (pick)")
 
 -- todo comments
 local todo = require("config.todo-comments")

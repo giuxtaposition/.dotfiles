@@ -114,19 +114,6 @@
       }
 
       window-rule {
-          match app-id="^kitty$" title="^nvim-test-runner$"
-          open-floating true
-          default-column-width { proportion 0.8; }
-          default-window-height { proportion 0.8; }
-          border {
-              on
-              width 2
-              active-color "#a6e3a1"
-              inactive-color "#a6e3a1"
-          }
-      }
-
-      window-rule {
           match app-id="Emulator"
           default-column-width { fixed 1080; }
           default-window-height { fixed 2400; }

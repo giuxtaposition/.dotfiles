@@ -131,8 +131,10 @@ end
 
 local function debug_test_file()
   ensure_dap()
-  local tr = require("config.test-runner")
-  local runner = tr.detect_runner()
+  -- vim-test already resolves the runner, e.g. "javascript#vitest". It returns 0
+  -- when it recognises nothing, hence the type check.
+  local resolved = vim.fn["test#determine_runner"](vim.fn.expand("%"))
+  local runner = (type(resolved) == "string" and resolved:match("#(.+)$")) or "jest"
   local file = vim.fn.expand("%:p")
   local cwd = vim.fn.getcwd()
   local cmd = runner == "vitest" and { "pnpm", "vitest", "run", file } or { "pnpm", "jest", "--runInBand", file }
