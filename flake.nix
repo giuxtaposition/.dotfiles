@@ -33,10 +33,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hunk = {
-      url = "github:modem-dev/hunk";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -102,7 +98,6 @@
       commonModules = [
         nix-index-database.homeModules.nix-index
         catppuccin.homeModules.catppuccin
-        inputs.hunk.homeManagerModules.default
       ];
     in {
       "giu@asuka" = home-manager.lib.homeManagerConfiguration {

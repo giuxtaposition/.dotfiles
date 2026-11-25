@@ -79,26 +79,12 @@ in {
         ];
       };
 
-      hunk = {
-        enable = true;
-        enableGitIntegration = true;
-        settings = {
-          theme = "catppuccin-mocha";
-        };
-      };
-
       lazygit = {
         enable = true;
         package = pkgs.unstable.lazygit;
         settings = {
           git = {
             parseEmoji = true;
-            diffRenderers = [
-              {
-                command = "hunk pager --mode split";
-                colorArg = "always";
-              }
-            ];
           };
           os = {
             edit = "nvim-open {{filename}}";
