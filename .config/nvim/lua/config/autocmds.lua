@@ -195,25 +195,27 @@ vim.api.nvim_create_autocmd({ "BufLeave", "WinLeave" }, {
   end,
 })
 
--- Highlight the current word under the cursor using LSP reference highlight groups
-vim.api.nvim_create_autocmd("CursorMoved", {
+-- Highlight the current word under the cursor using LSP reference highlight groups.
+-- Runs on CursorHold rather than CursorMoved so one request is sent per pause
+-- instead of one per cursor move; 'updatetime' sets the delay.
+vim.api.nvim_create_autocmd("CursorHold", {
   group = augroup("highlight_word_under_cursor"),
   desc = "Highlight the current word under the cursor using LSP reference highlight groups",
   callback = function()
-    if vim.fn.mode() ~= "i" then
-      local clients = vim.lsp.get_clients({ bufnr = 0 })
-      local support_highlight = false
-      for _, client in pairs(clients) do
-        if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-          support_highlight = true
-          break
-        end
-      end
-      if support_highlight then
-        vim.lsp.buf.clear_references()
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    for _, client in pairs(clients) do
+      if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
         vim.lsp.buf.document_highlight()
+        return
       end
     end
+  end,
+})
+vim.api.nvim_create_autocmd("CursorMoved", {
+  group = augroup("highlight_word_under_cursor"),
+  desc = "Clear LSP reference highlights when the cursor moves",
+  callback = function()
+    vim.lsp.buf.clear_references()
   end,
 })
 vim.api.nvim_create_autocmd("CursorMovedI", {

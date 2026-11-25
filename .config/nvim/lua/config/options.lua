@@ -91,5 +91,7 @@ vim.opt.fillchars = {
 
 opt.smoothscroll = true
 
+opt.updatetime = 250 -- Idle delay before CursorHold fires (word highlight, image preview)
+
 opt.undofile = true -- Save undo history
 opt.autoread = true -- Automatically read file when changed outside of Neovim
