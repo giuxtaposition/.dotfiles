@@ -77,7 +77,7 @@ require("img-clip").setup({
   default = {
     dir_path = vim.fn.expand("~/notes/assets"),
     use_absolute_path = false,
-    relative_to_current_file = false,
+    relative_to_current_file = true,
     url_encode_path = true,
     template = "![]($FILE_PATH)",
     prompt_for_file_name = false,
