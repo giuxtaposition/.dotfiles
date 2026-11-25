@@ -35,38 +35,30 @@ require("gitsigns").setup({
   end,
 })
 
--- Lazy-loaded: codediff deferred to first use
-local codediff_loaded = false
+-- Lazy-loaded: diffview deferred to first use
+local diffview_loaded = false
 
-local function ensure_codediff()
-  if codediff_loaded then
+local function ensure_diffview()
+  if diffview_loaded then
     return
   end
-  codediff_loaded = true
-  vim.pack.add({ { src = "https://github.com/esmuellert/codediff.nvim" } })
-  require("codediff").setup({ explorer = { position = "bottom" } })
+  diffview_loaded = true
+  vim.pack.add({ { src = "https://github.com/dlyongemallo/diffview-plus.nvim" } })
+  require("diffview").setup()
 end
 
-local function codediff_cmd(args)
+local function diffview_cmd(cmd)
   return function()
-    ensure_codediff()
-    vim.cmd("CodeDiff " .. args)
+    ensure_diffview()
+    vim.cmd(cmd)
   end
 end
 
-vim.keymap.set("n", "<leader>gr", codediff_cmd("history"), { desc = "Repo History", silent = true })
-vim.keymap.set("n", "<leader>gf", codediff_cmd("history %"), { desc = "File history", silent = true })
-vim.keymap.set("v", "<leader>gl", function()
-  ensure_codediff()
-  vim.cmd("'<,'>CodeDiff history")
-end, { desc = "Visual Range history", silent = true })
-vim.keymap.set("n", "<leader>gl", function()
-  ensure_codediff()
-  vim.cmd("'<,'>CodeDiff history")
-end, { desc = "Line history", silent = true })
-vim.keymap.set("n", "<leader>gd", codediff_cmd(""), { desc = "Repo Diff", silent = true })
+vim.keymap.set("n", "<leader>gr", diffview_cmd("DiffviewFileHistory"), { desc = "Repo History", silent = true })
+vim.keymap.set("n", "<leader>gf", diffview_cmd("DiffviewFileHistory %"), { desc = "File history", silent = true })
+vim.keymap.set("n", "<leader>gd", diffview_cmd("DiffviewOpen"), { desc = "Repo Diff", silent = true })
 
 vim.api.nvim_create_user_command("GdiffCard", function(opts)
-  ensure_codediff()
-  vim.cmd("CodeDiff " .. opts.args)
+  ensure_diffview()
+  vim.cmd("DiffviewOpen " .. opts.args)
 end, { nargs = 1 })
