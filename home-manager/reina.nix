@@ -74,6 +74,7 @@
     wvkbd
 
     calibre # Library Management
+    waypipe # Wayland forwarding — runs kumiko's calibre GUI on this screen
     ns-usbloader
     openrgb-with-all-plugins
     kdePackages.konversation

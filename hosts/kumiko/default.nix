@@ -25,6 +25,13 @@
   # E-book library
   calibre.enable = true;
 
+  # Library edits (adding books, tagging, plugins) happen in the calibre GUI
+  # run here and forwarded to reina's screen with waypipe, because the GUI
+  # cannot open a Content server as a library and calibre refuses to support
+  # libraries on network shares. Stop calibre-server for the session: it writes
+  # metadata.db too, and two writers lose each other's changes.
+  environment.systemPackages = with pkgs; [calibre waypipe];
+
   # Photo management
   immich.enable = true;
 
