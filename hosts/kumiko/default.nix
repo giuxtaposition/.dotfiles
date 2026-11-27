@@ -28,9 +28,28 @@
   # Library edits (adding books, tagging, plugins) happen in the calibre GUI
   # run here and forwarded to reina's screen with waypipe, because the GUI
   # cannot open a Content server as a library and calibre refuses to support
-  # libraries on network shares. Stop calibre-server for the session: it writes
-  # metadata.db too, and two writers lose each other's changes.
-  environment.systemPackages = with pkgs; [calibre waypipe];
+  # libraries on network shares.
+  #
+  # From reina:  waypipe ssh -t kumiko calibre-session
+  #
+  # One argument, deliberately: waypipe only wraps the first remote command, so
+  # a `stop; calibre; start` chain would run calibre outside waypipe's
+  # environment and it would fall back to xcb with no display. The chain lives
+  # in this script instead, where calibre inherits WAYLAND_DISPLAY as a child.
+  #
+  # The server has to stop for the session — it writes metadata.db too, and two
+  # writers lose each other's changes. The trap restarts it even if calibre
+  # crashes or the connection drops.
+  environment.systemPackages = with pkgs; [
+    calibre
+    waypipe
+    (writeShellScriptBin "calibre-session" ''
+      set -e
+      sudo systemctl stop calibre-server
+      trap 'sudo systemctl start calibre-server' EXIT
+      ${calibre}/bin/calibre "$@"
+    '')
+  ];
 
   # Photo management
   immich.enable = true;
